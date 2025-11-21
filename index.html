@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Ritual Apps | Open Source Tools for Team Health & Collaboration</title>
+    <meta name="description" content="Open source tools for modern teams. Connection Tools for team health and trust. Ritual Tools for collaboration and key moments. Built using the Triad model.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            color: #3D3D3D;
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .hero .tagline {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #E8F4F3;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: #8EA8C3;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero .cta {
+            display: inline-block;
+            padding: 16px 32px;
+            background: #DAA520;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .hero .cta:hover {
+            background: #B8860B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.4);
+        }
+
+        /* Content Sections */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section.intro-section {
+            background-image: url('./images/team-ritual-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            padding: 80px 20px;
+        }
+
+        .section.intro-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.92);
+            z-index: 1;
+        }
+
+        .section.intro-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section h2 {
+            font-size: 36px;
+            color: #0B2A2F;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section .intro {
+            text-align: center;
+            font-size: 18px;
+            color: #5B7553;
+            max-width: 800px;
+            margin: 0 auto 48px;
+        }
+
+        .section .intro a {
+            color: #2B7A78;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .section .intro a:hover {
+            text-decoration: underline;
+        }
+
+        /* Category Headers */
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .category-header.sophisticated {
+            background: linear-gradient(135deg, #0D3B2A 0%, #0D3B2A 100%);
+            color: white;
+        }
+
+        .category-header.quick {
+            background: linear-gradient(135deg, #0B2A2F 0%, #0B2A2F 100%);
+            color: white;
+        }
+
+        .category-header .icon {
+            font-size: 32px;
+        }
+
+        .category-header h3 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .category-header .description {
+            font-size: 14px;
+            color: #E8F4F3;
+            margin-top: 4px;
+        }
+
+        /* App Cards Grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .app-card.sophisticated {
+            border: 2px solid #0D3B2A;
+        }
+
+        .app-card.quick {
+            border: 2px solid #0B2A2F;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-card .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .app-card h4 {
+            font-size: 20px;
+            color: #0B2A2F;
+            margin-bottom: 12px;
+        }
+
+        .app-card .tagline {
+            font-size: 14px;
+            color: #3D3D3D;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+
+        .app-card .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .app-card .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: block;
+        }
+
+        .app-card .btn-launch {
+            background: #DAA520;
+            color: white;
+        }
+
+        .app-card .btn-launch:hover {
+            background: #B8860B;
+        }
+
+        .app-card .btn-github {
+            background: transparent;
+            color: #2B7A78;
+            border: 2px solid #2B7A78;
+        }
+
+        .app-card .btn-github:hover {
+            background: #E8F4F3;
+        }
+
+        .app-card .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .app-card .status-badge.live {
+            background: #E8F4F3;
+            color: #0D3B2A;
+        }
+
+        .app-card .status-badge.coming-soon {
+            background: #FFF5E1;
+            color: #DAA520;
+        }
+
+        /* Open Source Section */
+        .opensource {
+            background: #F7FAFC;
+            padding: 60px 20px;
+        }
+
+        .opensource h2 {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .opensource-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .opensource-item {
+            text-align: center;
+        }
+
+        .opensource-item .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .opensource-item h3 {
+            font-size: 20px;
+            color: #0B2A2F;
+            margin-bottom: 12px;
+        }
+
+        .opensource-item p {
+            color: #5B7553;
+            font-size: 16px;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .about h2 {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            font-size: 18px;
+            margin-bottom: 24px;
+            color: #3D3D3D;
+        }
+
+        .triad-list {
+            list-style: none;
+            margin: 32px 0;
+        }
+
+        .triad-list li {
+            font-size: 18px;
+            margin-bottom: 16px;
+            padding-left: 8px;
+        }
+
+        .triad-list strong {
+            color: #0B2A2F;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #DAA520;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer .links a {
+            color: #E8F4F3;
+            font-weight: 600;
+        }
+
+        .footer p {
+            color: #8EA8C3;
+            margin-top: 24px;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero .tagline {
+                font-size: 20px;
+            }
+
+            .section h2 {
+                font-size: 28px;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Team Ritual Apps</h1>
+        <p class="tagline">Open source tools for team health and collaboration</p>
+        <p class="subtitle">For modern teams – remote, hybrid, or in-person. Built using the Triad model.</p>
+        <a href="#apps" class="cta">View All Apps ↓</a>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section intro-section">
+        <h2>What Are Team Ritual Apps?</h2>
+        <div class="intro">
+            <p>These are tools for modern teams – whether you're all in a conference room, fully distributed, or somewhere in between. The <strong>Connection Tools</strong> help you build and maintain team health and trust. The <strong>Ritual Tools</strong> give structure to collaboration and ensure everyone has a voice in key team moments.</p>
+            <p>Built using <a href="https://thehumanailoop.com/" target="_blank">The Human AI Loop</a> methodology, these tools demonstrate what's possible when AI is on your team, not just in your toolkit.</p>
+            <p><strong>All tools are open source.</strong> Fork them, customize them, make them yours. Contributions welcome.</p>
+        </div>
+    </section>
+
+    <!-- Sophisticated Tools Section -->
+    <section class="section" id="apps">
+        <div class="category-header sophisticated">
+            <span class="icon">🎯</span>
+            <div>
+                <h3>Ritual Tools</h3>
+                <p class="description">Structured practices for collaboration and key team moments</p>
+            </div>
+        </div>
+
+        <div class="app-grid">
+            <!-- AlignFirst -->
+            <div class="app-card sophisticated">
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">🎯</span>
+                <h4>AlignFirst</h4>
+                <p class="tagline">Real-time team voting for key decisions. Ensure everyone has a voice before you commit.</p>
+                <div class="buttons">
+                    <a href="https://maurakrandall.github.io/align-first/" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/align-first" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Project Binder Generator -->
+            <div class="app-card sophisticated">
+                <span class="status-badge coming-soon">Coming Soon</span>
+                <span class="icon">📚</span>
+                <h4>Project Binder Generator</h4>
+                <p class="tagline">Set up AI collaboration context in 15 minutes instead of 60. The foundation for everything else.</p>
+                <div class="buttons">
+                    <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
+                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Decision Record -->
+            <div class="app-card sophisticated">
+                <span class="status-badge coming-soon">Coming Soon</span>
+                <span class="icon">📋</span>
+                <h4>Decision Record</h4>
+                <p class="tagline">Document decisions in 5 minutes. Capture what, why, and what you're NOT doing.</p>
+                <div class="buttons">
+                    <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
+                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Sprint Kickoff -->
+            <div class="app-card sophisticated">
+                <span class="status-badge coming-soon">Coming Soon</span>
+                <span class="icon">🚀</span>
+                <h4>Sprint Kickoff</h4>
+                <p class="tagline">Start iterations with a structured ritual. 5 questions to align everyone on goals and approach.</p>
+                <div class="buttons">
+                    <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
+                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Retrospective Runner -->
+            <div class="app-card sophisticated">
+                <span class="status-badge coming-soon">Coming Soon</span>
+                <span class="icon">🔄</span>
+                <h4>Retrospective Runner</h4>
+                <p class="tagline">Facilitate retrospectives that give everyone a voice. Structured prompts and action tracking.</p>
+                <div class="buttons">
+                    <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
+                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connection Tools Section -->
+        <div class="category-header quick">
+            <span class="icon">⚡</span>
+            <div>
+                <h3>Connection Tools</h3>
+                <p class="description">Quick syncs for team health, trust, and connection</p>
+            </div>
+        </div>
+
+        <div class="app-grid">
+            <!-- Temp Check -->
+            <div class="app-card quick">
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">🌡️</span>
+                <h4>Temp Check</h4>
+                <p class="tagline">Quick sync to gauge team energy and mood. See how everyone's feeling in under 2 minutes.</p>
+                <div class="buttons">
+                    <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/temp-check.html" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Trust Check -->
+            <div class="app-card quick">
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">🤝</span>
+                <h4>Trust Check</h4>
+                <p class="tagline">Build team health through psychological safety. 4 honest questions about how you work together.</p>
+                <div class="buttons">
+                    <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/trust-check.html" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Daily Drop -->
+            <div class="app-card quick">
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">💡</span>
+                <h4>Daily Drop</h4>
+                <p class="tagline">Daily team pick-me-up. Quick inspiration and actionable prompts for alignment and connection.</p>
+                <div class="buttons">
+                    <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/daily-drop.html" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Warm-Up -->
+            <div class="app-card quick">
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">🎲</span>
+                <h4>Warm-Up</h4>
+                <p class="tagline">Quick connection moment before meetings. Random questions to help teams connect as humans.</p>
+                <div class="buttons">
+                    <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/warmup-qotd.html" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Source Section -->
+    <section class="opensource">
+        <h2>Open Source & Customizable</h2>
+        <div class="opensource-grid">
+            <div class="opensource-item">
+                <div class="icon">🍴</div>
+                <h3>Fork & Customize</h3>
+                <p>All apps are MIT licensed. Take the code, modify it for your team's needs, and make it your own.</p>
+            </div>
+            <div class="opensource-item">
+                <div class="icon">🔧</div>
+                <h3>Simple Stack</h3>
+                <p>Vanilla JavaScript, no dependencies (except Firebase where needed). Easy to understand and extend.</p>
+            </div>
+            <div class="opensource-item">
+                <div class="icon">💚</div>
+                <h3>Contribute</h3>
+                <p>See a bug? Have an improvement? Pull requests welcome. Let's make these tools better together.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <h2>About the Triad</h2>
+        <div class="about-content">
+            <p>These tools were built using the <strong>Triad collaboration model</strong> – one human working with two AI teammates, each with distinct roles and strengths.</p>
+            
+            <ul class="triad-list">
+                <li>💫 <strong>Maura (Human):</strong> Product vision, UX design, emotional architecture, strategic direction</li>
+                <li>🎙️ <strong>CP (ChatGPT):</strong> Technical structure, system logic, JSON schemas, backend infrastructure</li>
+                <li>🔮 <strong>Soph (Claude):</strong> Content drafting, narrative flow, strategic thinking, documentation</li>
+            </ul>
+
+            <p>This isn't "AI-assisted" work – it's true collaboration. Each teammate brings unique capabilities, and the work is better because of the diversity of thought.</p>
+            
+            <p>Learn more about <a href="https://thehumanailoop.com/" target="_blank">The Human AI Loop methodology</a> and how to build your own Triad.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="links">
+            <a href="https://github.com/maurakrandall" target="_blank">GitHub</a>
+            <a href="https://thehumanailoop.com/" target="_blank">The Human AI Loop</a>
+            <a href="https://www.linkedin.com/in/maurakrandall/" target="_blank">LinkedIn</a>
+        </div>
+        <p>© 2025 Maura Randall | MIT License | Built with the Triad model</p>
+        <p>Last updated: November 2025</p>
+    </footer>
+</body>
+</html>
