@@ -22,25 +22,47 @@
         .hero {
             background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
             color: white;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
-            min-height: 60vh;
+            min-height: 40vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: 'âœ“ â—‹ â—‡ â˜† â—Ž âœ“ â—‹ â—‡ â˜† â—Ž âœ“ â—‹ â—‡ â˜† â—Ž';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 48px;
+            color: rgba(255, 245, 225, 0.08);
+            letter-spacing: 60px;
+            line-height: 120px;
+            pointer-events: none;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .hero h1 {
             font-size: 48px;
             margin-bottom: 24px;
             font-weight: 700;
+            position: relative;
+            z-index: 2;
         }
 
         .hero .tagline {
             font-size: 24px;
             margin-bottom: 16px;
             color: #E8F4F3;
+            position: relative;
+            z-index: 2;
         }
 
         .hero .subtitle {
@@ -48,6 +70,8 @@
             color: #8EA8C3;
             max-width: 600px;
             margin: 0 auto 40px;
+            position: relative;
+            z-index: 2;
         }
 
         .hero .cta {
@@ -60,6 +84,8 @@
             font-weight: 600;
             font-size: 18px;
             transition: all 0.2s;
+            position: relative;
+            z-index: 2;
         }
 
         .hero .cta:hover {
@@ -81,7 +107,8 @@
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
-            padding: 80px 20px;
+            padding: 80px 20px 80px 20px;
+            margin-bottom: 0;
         }
 
         .section.intro-section::before {
@@ -91,13 +118,25 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.85);
             z-index: 1;
         }
 
         .section.intro-section > * {
             position: relative;
             z-index: 2;
+        }
+
+        .section.intro-section h2 {
+            font-weight: 700;
+        }
+
+        .section.intro-section .intro {
+            font-weight: 500;
+        }
+
+        .section.intro-section .intro p {
+            font-weight: 500;
         }
 
         .section h2 {
@@ -402,24 +441,24 @@
     <section class="hero">
         <h1>Team Ritual Apps</h1>
         <p class="tagline">Open source tools for team health and collaboration</p>
-        <p class="subtitle">For modern teams – remote, hybrid, or in-person. Built using the Triad model.</p>
-        <a href="#apps" class="cta">View All Apps ↓</a>
+        <p class="subtitle">For modern teams â€“ remote, hybrid, or in-person. Built using the Triad model.</p>
+        <a href="#apps" class="cta">View All Apps â†“</a>
     </section>
 
     <!-- Introduction Section -->
     <section class="section intro-section">
         <h2>What Are Team Ritual Apps?</h2>
         <div class="intro">
-            <p>These are tools for modern teams – whether you're all in a conference room, fully distributed, or somewhere in between. The <strong>Connection Tools</strong> help you build and maintain team health and trust. The <strong>Ritual Tools</strong> give structure to collaboration and ensure everyone has a voice in key team moments.</p>
+            <p>These are tools for modern teams â€“ whether you're all in a conference room, fully distributed, or somewhere in between. The <strong>Connection Tools</strong> help you build and maintain team health and trust. The <strong>Ritual Tools</strong> give structure to collaboration and ensure everyone has a voice in key team moments.</p>
             <p>Built using <a href="https://thehumanailoop.com/" target="_blank">The Human AI Loop</a> methodology, these tools demonstrate what's possible when AI is on your team, not just in your toolkit.</p>
             <p><strong>All tools are open source.</strong> Fork them, customize them, make them yours. Contributions welcome.</p>
         </div>
     </section>
 
     <!-- Sophisticated Tools Section -->
-    <section class="section" id="apps">
+    <section class="section" id="apps" style="margin-top: 0; padding-top: 60px;">
         <div class="category-header sophisticated">
-            <span class="icon">🎯</span>
+            <span class="icon">ðŸŽ¯</span>
             <div>
                 <h3>Ritual Tools</h3>
                 <p class="description">Structured practices for collaboration and key team moments</p>
@@ -429,68 +468,68 @@
         <div class="app-grid">
             <!-- AlignFirst -->
             <div class="app-card sophisticated">
-                <span class="status-badge live">✓ Live</span>
-                <span class="icon">🎯</span>
+                <span class="status-badge live">âœ“ Live</span>
+                <span class="icon">ðŸŽ¯</span>
                 <h4>AlignFirst</h4>
                 <p class="tagline">Real-time team voting for key decisions. Ensure everyone has a voice before you commit.</p>
                 <div class="buttons">
                     <a href="https://maurakrandall.github.io/align-first/" class="btn btn-launch">Launch App</a>
-                    <a href="https://github.com/maurakrandall/align-first" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://github.com/maurakrandall/align-first" class="btn btn-github">View on GitHub â†’</a>
                 </div>
             </div>
 
             <!-- Project Binder Generator -->
             <div class="app-card sophisticated">
-                <span class="status-badge coming-soon">Coming Soon</span>
-                <span class="icon">📚</span>
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">ðŸ“š</span>
                 <h4>Project Binder Generator</h4>
                 <p class="tagline">Set up AI collaboration context in 15 minutes instead of 60. The foundation for everything else.</p>
                 <div class="buttons">
-                    <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
-                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://maurakrandall.github.io/project-binder-generator.html" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/maurakrandall.github.io" class="btn btn-github">View on GitHub →</a>
                 </div>
             </div>
 
-            <!-- Decision Record -->
+            <!-- Co-Sign -->
             <div class="app-card sophisticated">
-                <span class="status-badge coming-soon">Coming Soon</span>
-                <span class="icon">📋</span>
-                <h4>Decision Record</h4>
-                <p class="tagline">Document decisions in 5 minutes. Capture what, why, and what you're NOT doing.</p>
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">✍️</span>
+                <h4>Co-Sign</h4>
+                <p class="tagline">Lightweight commitment for team decisions. Get clear sign-off line-by-line, with friendly accountability that actually sticks.</p>
                 <div class="buttons">
-                    <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
-                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://maurakrandall.github.io/co-sign.html" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/maurakrandall.github.io" class="btn btn-github">View on GitHub →</a>
                 </div>
             </div>
 
             <!-- Sprint Kickoff -->
             <div class="app-card sophisticated">
-                <span class="status-badge coming-soon">Coming Soon</span>
-                <span class="icon">🚀</span>
+                <span class="status-badge live">✓ Live</span>
+                <span class="icon">ðŸš€</span>
                 <h4>Sprint Kickoff</h4>
                 <p class="tagline">Start iterations with a structured ritual. 5 questions to align everyone on goals and approach.</p>
                 <div class="buttons">
-                    <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
-                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://maurakrandall.github.io/sprint-kickoff.html" class="btn btn-launch">Launch App</a>
+                    <a href="https://github.com/maurakrandall/maurakrandall.github.io" class="btn btn-github">View on GitHub →</a>
                 </div>
             </div>
 
             <!-- Retrospective Runner -->
             <div class="app-card sophisticated">
                 <span class="status-badge coming-soon">Coming Soon</span>
-                <span class="icon">🔄</span>
+                <span class="icon">ðŸ”„</span>
                 <h4>Retrospective Runner</h4>
                 <p class="tagline">Facilitate retrospectives that give everyone a voice. Structured prompts and action tracking.</p>
                 <div class="buttons">
                     <a href="#" class="btn btn-launch" style="opacity: 0.5; cursor: not-allowed;">Launching Soon</a>
-                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://github.com/maurakrandall/ritual-apps" class="btn btn-github">View on GitHub â†’</a>
                 </div>
             </div>
         </div>
 
         <!-- Connection Tools Section -->
         <div class="category-header quick">
-            <span class="icon">⚡</span>
+            <span class="icon">âš¡</span>
             <div>
                 <h3>Connection Tools</h3>
                 <p class="description">Quick syncs for team health, trust, and connection</p>
@@ -500,49 +539,49 @@
         <div class="app-grid">
             <!-- Temp Check -->
             <div class="app-card quick">
-                <span class="status-badge live">✓ Live</span>
-                <span class="icon">🌡️</span>
+                <span class="status-badge live">âœ“ Live</span>
+                <span class="icon">ðŸŒ¡ï¸</span>
                 <h4>Temp Check</h4>
                 <p class="tagline">Quick sync to gauge team energy and mood. See how everyone's feeling in under 2 minutes.</p>
                 <div class="buttons">
                     <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/temp-check.html" class="btn btn-launch">Launch App</a>
-                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub â†’</a>
                 </div>
             </div>
 
             <!-- Trust Check -->
             <div class="app-card quick">
-                <span class="status-badge live">✓ Live</span>
-                <span class="icon">🤝</span>
+                <span class="status-badge live">âœ“ Live</span>
+                <span class="icon">ðŸ¤</span>
                 <h4>Trust Check</h4>
                 <p class="tagline">Build team health through psychological safety. 4 honest questions about how you work together.</p>
                 <div class="buttons">
                     <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/trust-check.html" class="btn btn-launch">Launch App</a>
-                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub â†’</a>
                 </div>
             </div>
 
             <!-- Daily Drop -->
             <div class="app-card quick">
-                <span class="status-badge live">✓ Live</span>
-                <span class="icon">💡</span>
+                <span class="status-badge live">âœ“ Live</span>
+                <span class="icon">ðŸ’¡</span>
                 <h4>Daily Drop</h4>
                 <p class="tagline">Daily team pick-me-up. Quick inspiration and actionable prompts for alignment and connection.</p>
                 <div class="buttons">
                     <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/daily-drop.html" class="btn btn-launch">Launch App</a>
-                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub â†’</a>
                 </div>
             </div>
 
             <!-- Warm-Up -->
             <div class="app-card quick">
-                <span class="status-badge live">✓ Live</span>
-                <span class="icon">🎲</span>
+                <span class="status-badge live">âœ“ Live</span>
+                <span class="icon">ðŸŽ²</span>
                 <h4>Warm-Up</h4>
                 <p class="tagline">Quick connection moment before meetings. Random questions to help teams connect as humans.</p>
                 <div class="buttons">
                     <a href="https://maurakrandall.github.io/ai-collaboration-tools/rituals/warmup-qotd.html" class="btn btn-launch">Launch App</a>
-                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub →</a>
+                    <a href="https://github.com/maurakrandall/ai-collaboration-tools" class="btn btn-github">View on GitHub â†’</a>
                 </div>
             </div>
         </div>
@@ -553,17 +592,17 @@
         <h2>Open Source & Customizable</h2>
         <div class="opensource-grid">
             <div class="opensource-item">
-                <div class="icon">🍴</div>
+                <div class="icon">ðŸ´</div>
                 <h3>Fork & Customize</h3>
                 <p>All apps are MIT licensed. Take the code, modify it for your team's needs, and make it your own.</p>
             </div>
             <div class="opensource-item">
-                <div class="icon">🔧</div>
+                <div class="icon">ðŸ”§</div>
                 <h3>Simple Stack</h3>
                 <p>Vanilla JavaScript, no dependencies (except Firebase where needed). Easy to understand and extend.</p>
             </div>
             <div class="opensource-item">
-                <div class="icon">💚</div>
+                <div class="icon">ðŸ’š</div>
                 <h3>Contribute</h3>
                 <p>See a bug? Have an improvement? Pull requests welcome. Let's make these tools better together.</p>
             </div>
@@ -574,15 +613,15 @@
     <section class="about">
         <h2>About the Triad</h2>
         <div class="about-content">
-            <p>These tools were built using the <strong>Triad collaboration model</strong> – one human working with two AI teammates, each with distinct roles and strengths.</p>
+            <p>These tools were built using the <strong>Triad collaboration model</strong> â€“ one human working with two AI teammates, each with distinct roles and strengths.</p>
             
             <ul class="triad-list">
-                <li>💫 <strong>Maura (Human):</strong> Product vision, UX design, emotional architecture, strategic direction</li>
-                <li>🎙️ <strong>CP (ChatGPT):</strong> Technical structure, system logic, JSON schemas, backend infrastructure</li>
-                <li>🔮 <strong>Soph (Claude):</strong> Content drafting, narrative flow, strategic thinking, documentation</li>
+                <li>ðŸ’« <strong>Maura (Human):</strong> Product vision, UX design, emotional architecture, strategic direction</li>
+                <li>ðŸŽ™ï¸ <strong>CP (ChatGPT):</strong> Technical structure, system logic, JSON schemas, backend infrastructure</li>
+                <li>ðŸ”® <strong>Soph (Claude):</strong> Content drafting, narrative flow, strategic thinking, documentation</li>
             </ul>
 
-            <p>This isn't "AI-assisted" work – it's true collaboration. Each teammate brings unique capabilities, and the work is better because of the diversity of thought.</p>
+            <p>This isn't "AI-assisted" work â€“ it's true collaboration. Each teammate brings unique capabilities, and the work is better because of the diversity of thought.</p>
             
             <p>Learn more about <a href="https://thehumanailoop.com/" target="_blank">The Human AI Loop methodology</a> and how to build your own Triad.</p>
         </div>
@@ -595,7 +634,7 @@
             <a href="https://thehumanailoop.com/" target="_blank">The Human AI Loop</a>
             <a href="https://www.linkedin.com/in/maurakrandall/" target="_blank">LinkedIn</a>
         </div>
-        <p>© 2025 Maura Randall | MIT License | Built with the Triad model</p>
+        <p>Â© 2025 Maura Randall | MIT License | Built with the Triad model</p>
         <p>Last updated: November 2025</p>
     </footer>
 </body>
