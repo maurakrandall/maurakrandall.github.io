@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -28,7 +28,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 40px;
             text-align: center;
@@ -74,11 +74,11 @@
         }
 
         .progress-step.active:not(:last-child)::after {
-            background: #0D3B2A;
+            background: #667eea;
         }
 
         .progress-step.completed:not(:last-child)::after {
-            background: #DAA520;
+            background: #28a745;
         }
 
         .progress-number {
@@ -97,11 +97,11 @@
         }
 
         .progress-step.active .progress-number {
-            background: #0D3B2A;
+            background: #667eea;
         }
 
         .progress-step.completed .progress-number {
-            background: #DAA520;
+            background: #28a745;
         }
 
         .progress-label {
@@ -111,7 +111,7 @@
         }
 
         .progress-step.active .progress-label {
-            color: #0D3B2A;
+            color: #667eea;
             font-weight: 600;
         }
 
@@ -147,7 +147,7 @@
             margin-bottom: 30px;
             padding: 20px;
             background: #f7fafc;
-            border-left: 4px solid #0D3B2A;
+            border-left: 4px solid #667eea;
             border-radius: 4px;
         }
 
@@ -193,7 +193,7 @@
 
         .text-input:focus, .textarea-input:focus {
             outline: none;
-            border-color: #0D3B2A;
+            border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
@@ -243,7 +243,7 @@
         }
 
         .nav-button.primary {
-            background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             flex: 1;
         }
@@ -384,7 +384,7 @@
                 </div>
 
                 <div class="multi-mind-note">
-                    <strong>ðŸ’¡ Multi-Mind Insight:</strong>
+                    <strong>💡 Multi-Mind Insight:</strong>
                     <p>When we align on what we're building at the start, we're not just setting expectations for the teamâ€”we're creating shared context that helps everyone (including AI teammates) understand priorities, make decisions, and stay focused throughout the sprint.</p>
                 </div>
 
@@ -446,7 +446,7 @@
                 </div>
 
                 <div class="multi-mind-note">
-                    <strong>ðŸ’¡ Multi-Mind Insight:</strong>
+                    <strong>💡 Multi-Mind Insight:</strong>
                     <p>Clear success criteria help everyoneâ€”human team members and AI collaboratorsâ€”know what to optimize for. When we define success up front, we make better decisions about scope, quality, and tradeoffs throughout the sprint.</p>
                 </div>
 
@@ -676,7 +676,7 @@
 
             // Update next button
             if (currentStep === totalSteps) {
-                nextBtn.textContent = 'ðŸ“¥ Download Kickoff';
+                nextBtn.textContent = '📥 Download Kickoff';
             } else {
                 nextBtn.textContent = 'Continue â†’';
             }
@@ -723,13 +723,13 @@
 
 ---
 
-## ðŸŽ¯ What We're Building
+## 🎯 What We're Building
 
 ${formData.whatBuilding}
 
 ---
 
-## ðŸ’¡ Why This Matters
+## 💡 Why This Matters
 
 ${formData.whyMatters}
 
@@ -741,7 +741,7 @@ ${formData.successCriteria}
 
 ---
 
-## ðŸ‘¥ Team & Roles
+## 📥 Team & Roles
 
 ${formData.teamContext}
 
@@ -777,5 +777,37 @@ ${formData.constraints}
         // Initialize
         init();
     </script>
+
+    <!-- Import Context Card Modal -->
+    <div id="importContextCardModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 12px; padding: 32px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <h3 style="margin: 0 0 16px 0; color: #0B2A2F;">Import Team Context Card</h3>
+            <p style="margin: 0 0 20px 0; font-size: 14px; color: #718096;">
+                Upload your Team Context Card JSON file or paste the JSON content below:
+            </p>
+            
+            <input type="file" id="contextCardFileInput" accept=".json" style="display: none;" onchange="handleContextCardFile(event)">
+            
+            <button onclick="document.getElementById('contextCardFileInput').click()" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 16px; font-size: 14px;">
+                📤 Upload JSON File
+            </button>
+            
+            <div style="text-align: center; margin: 16px 0; color: #718096; font-size: 14px;">
+                OR
+            </div>
+            
+            <textarea id="contextCardJsonInput" placeholder='Paste JSON here...' style="width: 100%; min-height: 150px; padding: 12px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: monospace; font-size: 12px; margin-bottom: 16px;"></textarea>
+            
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button onclick="closeImportContextCard()" style="padding: 10px 20px; background: #E2E8F0; color: #4A5568; border: none; border-radius: 8px; cursor: pointer;">
+                    Cancel
+                </button>
+                <button onclick="processContextCardImport()" style="padding: 10px 20px; background: #22c55e; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    Import
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
