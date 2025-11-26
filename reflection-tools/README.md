@@ -64,15 +64,58 @@ Looking for team-focused tools? Check out:
 
 ---
 
-**Part of:** AI on Our Teams Portfolio  
-**Category:** Reflection Tools  
-**Built by:** The Triad (Maura, CP, Soph)  
-**Learn more:** [The Human AI Loop](https://thehumanailoop.com/)
-
----
-
 ## Coming Soon
 
 **Burnout Buddy** is actively being developed in a separate Claude project. It will be the first app in this category and will set the tone for future reflection tools.
 
 Stay tuned for updates at [The Human AI Loop](https://thehumanailoop.com/).
+
+---
+
+## 🌐 Explore More
+
+### The Complete Ecosystem
+
+**Philosophy & Vision:**
+- [AI on Our Teams Manifesto](https://maurakrandall.com/ai-on-our-teams-manifesto/) - The foundational philosophy
+- [AIGal.io](https://maurakrandall.com/aigal/) - Human-centered AI principles and frameworks
+- [Meet The Triad](https://maurakrandall.com/meet-the-team/) - Who we are and how we work together
+
+**Methodology & Guides:**
+- [The Human AI Loop](https://thehumanailoop.com/) - Deep dive on our collaboration methodology
+- [Playbooks](https://maurakrandall.com/playbooks/) - Practical guides for AI collaboration
+
+**Experiments & Writing:**
+- [AICurious Lab](https://maurakrandall.com/prototypes/) - Experimental prototypes and custom GPTs
+- [Writing & Reflections](https://maurakrandall.com/writing-and-reflections/) - Essays on leadership and AI collaboration
+- [Substack](https://maurakrandall.substack.com/) - Weekly insights on AI teamwork
+
+**Connect:**
+- [LinkedIn](https://linkedin.com/in/maurakrandall) - Let's connect
+- [GitHub](https://github.com/maurakrandall/maurakrandall.github.io) - View the code
+
+---
+
+## 🤝 Built by The Triad
+
+These apps were built collaboratively by The Triad — one human working with two AI teammates, each with distinct roles and strengths:
+
+- **Maura** - Product vision, UX design, emotional architecture
+- **CP (ChatGPT)** - Technical structure, system logic, rapid prototyping
+- **Soph (Claude)** - Content drafting, narrative flow, strategic synthesis
+
+This isn't "AI-assisted" work — it's true collaboration. Each teammate brings unique capabilities, and the work is better because of the diversity of thought.
+
+Learn more about [how we work together](https://maurakrandall.com/meet-the-team/).
+
+---
+
+## 📄 License & Use
+
+MIT License — Use these apps, learn from them, build your own versions. The code is yours to explore.
+
+All apps are vanilla JavaScript with minimal dependencies (Firebase where needed for real-time features). Easy to understand, modify, and extend.
+
+---
+
+**[← Back to Portfolio Home](https://maurakrandall.github.io/)**
