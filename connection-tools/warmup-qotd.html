@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warm-Up Question of the Day - AI Collaboration Tools</title>
+    <meta name="description" content="Search, filter, or let luck decide. Copy in one click.">
+    <style>
+        :root {
+          --bg: #fff8f0;
+          --ink: #222;
+          --sub: #636a73;
+          --bord: #e6e2da;
+          --teal: #2a9d8f;
+        }
+        body {
+          margin: 0;
+          background: var(--bg);
+          font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          color: var(--ink);
+        }
+        .wrap {
+          max-width: 680px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+        h1 {
+          font-size: 22px;
+          margin: 0 0 6px;
+        }
+        .sub {
+          margin: 0 0 14px;
+          color: var(--sub);
+        }
+        .bar {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+          margin: 0 0 12px;
+        }
+        input,
+        select,
+        button {
+          border: 1px solid var(--bord);
+          border-radius: 12px;
+          padding: 8px 10px;
+          font-weight: 600;
+        }
+        input[type="search"] {
+          flex: 1;
+          min-width: 180px;
+        }
+        .primary {
+          background: var(--teal);
+          border-color: var(--teal);
+          color: #fff;
+        }
+        .card {
+          border: 1px solid var(--bord);
+          border-radius: 14px;
+          padding: 14px;
+          background: #fff;
+          font-size: 18px;
+        }
+        .meta {
+          display: flex;
+          gap: 8px;
+          margin-top: 10px;
+        }
+        .pill {
+          border: 1px solid var(--bord);
+          border-radius: 999px;
+          padding: 4px 10px;
+          font-size: 12px;
+          background: #fff;
+        }
+        .tiny {
+          font-size: 12px;
+          color: var(--sub);
+          margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap" role="region" aria-labelledby="t">
+      <h1 id="t">☀️ Warm-Up — Question of the Day</h1>
+      <p class="sub">Search, filter, or let luck decide. Copy in one click.</p>
+      <div class="bar">
+        <input id="qSearch" type="search" placeholder="Search questions…" />
+        <select id="qCat" aria-label="Filter by category">
+          <option value="">All categories</option>
+          <option>🎉 Funny</option>
+          <option>🗺️ Background</option>
+          <option>🪞 Deep</option>
+          <option>⚖️ Either/Or</option>
+          <option>✨ If you could…</option>
+          <option>🙏 Gratitude</option>
+          <option>🎨 Creative</option>
+          <option>💟 Check-in</option>
+          <option>🚀 Aspirational</option>
+          <option>💬 Feedback</option>
+          <option>🍦 National Day</option>
+        </select>
+        <button id="btnSurprise" class="primary">🎲 Surprise me</button>
+        <button id="btnCopy">📋 Copy</button>
+      </div>
+      <div id="qText" class="card">Loading…</div>
+      <div class="meta">
+        <span id="qCatLabel" class="pill">—</span>
+        <span id="qDate" class="pill"></span>
+      </div>
+      <div class="tiny">
+        Tip: run one question daily in stand-up or retro. Consistency builds culture.
+      </div>
+    </div>
+
+    <script>
+        const DATA = [
+          { q: "What is your most-used emoji?", c: "🎉 Funny" },
+          { q: "What was the worst style choice you ever made?", c: "🎉 Funny" },
+          { q: "If you had to eat one meal for the rest of your life, what would it be?", c: "🎉 Funny" },
+          { q: "What game show do you think you could win?", c: "🎉 Funny" },
+          { q: "What song is guaranteed to make you sing?", c: "🎉 Funny" },
+          { q: "Which movie made you laugh the hardest?", c: "🎉 Funny" },
+          { q: "What's your earliest childhood memory?", c: "🗺️ Background" },
+          { q: "Where's your favorite place you've ever been on vacation?", c: "🗺️ Background" },
+          { q: "What was your favorite subject in school?", c: "🗺️ Background" },
+          { q: "What was your first job?", c: "🗺️ Background" },
+          { q: "What is one of your worst fears?", c: "🪞 Deep" },
+          { q: "What is the most important thing still on your bucket list?", c: "🪞 Deep" },
+          { q: "Who was your most influential role model — and why?", c: "🪞 Deep" },
+          { q: "What book had the biggest impact on your life?", c: "🪞 Deep" },
+          { q: "Coffee or tea?", c: "⚖️ Either/Or" },
+          { q: "Dogs or cats?", c: "⚖️ Either/Or" },
+          { q: "Ocean or mountains?", c: "⚖️ Either/Or" },
+          { q: "Teleportation or mind-reading?", c: "⚖️ Either/Or" },
+          { q: "If you could have coffee with anyone, who would it be — and why?", c: "✨ If you could…" },
+          { q: "If you could experience something again for the first time, what would it be?", c: "✨ If you could…" },
+          { q: "If you could create a new ice-cream flavor, what would it be?", c: "✨ If you could…" },
+          { q: "What are your three simple joys?", c: "🙏 Gratitude" },
+          { q: "Who helped make your job easier recently — and how?", c: "🙏 Gratitude" },
+          { q: "What lesson are you grateful for learning?", c: "🙏 Gratitude" },
+          { q: "What's the strangest gift you've ever received?", c: "🎨 Creative" },
+          { q: "What song could you listen to on repeat today?", c: "🎨 Creative" },
+          { q: "How are you feeling today — in a word or two?", c: "💟 Check-in" },
+          { q: "If your mood were a color today, what would it be — and why?", c: "💟 Check-in" },
+          { q: "What small thing gave you energy yesterday?", c: "💟 Check-in" },
+          { q: "What boundary will you protect this week?", c: "💟 Check-in" },
+          { q: "What professional skill would you like to develop next?", c: "🚀 Aspirational" },
+          { q: "What is one skill you improved in the last year — and how?", c: "🚀 Aspirational" },
+          { q: "What does your ideal workday look like?", c: "🚀 Aspirational" },
+          { q: "If you had to move to a different country, where would you go — and what would you miss?", c: "🚀 Aspirational" },
+          { q: "What would you rather hear first: good news or bad news?", c: "💬 Feedback" },
+          { q: "Think of a time when feedback felt like a gift — why did it feel that way?", c: "💬 Feedback" },
+          { q: "How do you ensure your feedback is candid but kind?", c: "💬 Feedback" },
+          { q: "It's National Ice-Cream Day 🍨 — what flavor are you celebrating with?", c: "🍦 National Day" },
+          { q: "It's World Gratitude Day 🙏 — what's one thing you appreciate right now?", c: "🍦 National Day" }
+        ];
+
+        const $ = (id) => document.getElementById(id);
+        const card = $("qText"),
+          cat = $("qCatLabel"),
+          dateEl = $("qDate"),
+          sel = $("qCat"),
+          search = $("qSearch");
+
+        function todayLabel() {
+          return new Date().toLocaleDateString(undefined, {
+            weekday: "short",
+            month: "short",
+            day: "numeric"
+          });
+        }
+
+        function filtered() {
+          const t = (search.value || "").toLowerCase();
+          const c = sel.value || "";
+          return DATA.filter(
+            (x) => (!c || x.c === c) && (!t || x.q.toLowerCase().includes(t))
+          );
+        }
+
+        function render(item) {
+          card.textContent = item.q;
+          cat.textContent = item.c;
+          dateEl.textContent = todayLabel();
+        }
+
+        function pick(list) {
+          const L = list.length;
+          render(list[(Math.random() * L) | 0]);
+        }
+
+        function pickToday() {
+          const list = filtered();
+          if (list.length === 0) return render(DATA[0]);
+          const index = new Date().getDate() % list.length;
+          render(list[index]);
+        }
+
+        function copy() {
+          navigator.clipboard
+            .writeText("Question of the Day: " + card.textContent)
+            .then(() => {
+              const o = card.textContent;
+              card.textContent = "✅ Copied! Paste anywhere.";
+              setTimeout(() => (card.textContent = o), 900);
+            });
+        }
+
+        $("btnSurprise").onclick = () => pick(filtered());
+        $("btnCopy").onclick = copy;
+        sel.onchange = pickToday;
+        search.oninput = pickToday;
+
+        // init
+        dateEl.textContent = todayLabel();
+        pickToday();
+    </script>
+</body>
+</html>

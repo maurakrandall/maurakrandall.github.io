@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Temp Check - AI Collaboration Tools</title>
+    <meta name="description" content="Rate each signal 1–5 (5 is strong). Get an instant index you can copy to Slack or your retro doc.">
+    <style>
+        :root{
+          --bg:#FFF8F0;
+          --ink:#222;
+          --sub:#636a73;
+          --bord:#e6e2da;
+          --teal:#2A9D8F;
+        }
+        *{box-sizing:border-box}
+        body{
+          margin:0;
+          background:var(--bg);
+          color:var(--ink);
+          font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+        }
+        .wrap{max-width:780px;margin:0 auto;padding:20px}
+        h1{font-size:22px;margin:0 0 6px}
+        .h2{font-size:18px;margin:0 0 8px}
+        .sub{margin:0 0 14px;color:var(--sub)}
+        .grid{
+          display:grid;
+          grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+          gap:14px;
+        }
+        .card{
+          border:1px solid var(--bord);
+          border-radius:16px;
+          background:#fff;
+          padding:18px 16px 14px;
+          position:relative;
+          box-shadow:0 1px 3px rgba(0,0,0,0.04);
+        }
+        legend{
+          position:absolute;
+          top:-12px;
+          left:18px;
+          background:#fff8f0;
+          padding:0 6px;
+          font-weight:700;
+          font-size:15px;
+          color:var(--teal);
+        }
+        .q{margin:10px 0 12px;font-size:15px;color:var(--ink)}
+        .row{display:flex;gap:8px;flex-wrap:wrap}
+        label.score{
+          border:1px solid var(--bord);
+          border-radius:10px;
+          padding:6px 10px;
+          cursor:pointer;
+          background:#fff;
+          transition:background .2s,border-color .2s;
+        }
+        input[type=radio]{display:none}
+        input[type=radio]:checked + span{
+          font-weight:700;
+          color:var(--teal);
+        }
+        input[type=radio]:checked ~ label{background:#f0fcfa}
+        .btns{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+        button{
+          border:1px solid var(--bord);
+          border-radius:12px;
+          padding:8px 12px;
+          font-weight:700;
+          cursor:pointer;
+          background:#fff;
+        }
+        .primary{
+          background:var(--teal);
+          border-color:var(--teal);
+          color:#fff;
+        }
+        .out{
+          white-space:pre-wrap;
+          border:1px solid var(--bord);
+          border-radius:12px;
+          background:#fff;
+          padding:12px;
+        }
+        .tiny{font-size:12px;color:var(--sub);margin:8px 0 0}
+    </style>
+</head>
+<body>
+    <div class="wrap" role="region" aria-labelledby="t">
+      <h1 id="t">🌡️ Temp Check — Team Pulse</h1>
+      <p class="sub">Rate each signal 1–5 (5 is strong). Get an instant index you can copy to Slack or your retro doc.</p>
+      <form id="form" class="grid">
+        <!-- Energy -->
+        <fieldset class="card">
+          <legend>⚡ Energy</legend>
+          <p class="q">How energized do you feel about our work this week?</p>
+          <div class="row" data-key="Energy"></div>
+        </fieldset>
+        <!-- Clarity -->
+        <fieldset class="card">
+          <legend>🎯 Clarity</legend>
+          <p class="q">How clear are our priorities and next steps?</p>
+          <div class="row" data-key="Clarity"></div>
+        </fieldset>
+        <!-- Creativity -->
+        <fieldset class="card">
+          <legend>🎨 Creativity</legend>
+          <p class="q">How free do you feel to propose ideas and experiments?</p>
+          <div class="row" data-key="Creativity"></div>
+        </fieldset>
+        <!-- Momentum -->
+        <fieldset class="card">
+          <legend>🚀 Momentum</legend>
+          <p class="q">How confident are you that we'll follow through this week?</p>
+          <div class="row" data-key="Momentum"></div>
+        </fieldset>
+        <!-- Connection -->
+        <fieldset class="card">
+          <legend>🤝 Connection</legend>
+          <p class="q">How supported and connected do you feel to this team?</p>
+          <div class="row" data-key="Connection"></div>
+        </fieldset>
+      </form>
+      <div class="btns">
+        <button id="calc" class="primary">📊 Calculate Index</button>
+        <button id="copy">📋 Copy Summary</button>
+        <button id="reset">♻️ Reset</button>
+      </div>
+      <section id="result" class="card" style="display:none">
+        <h2 class="h2">Results</h2>
+        <pre id="summary" class="out" aria-live="polite"></pre>
+        <p class="tiny">Tip: run this weekly; track the index trend. Pair with 💧 Daily Drop or 🪞 Warm-Up when Energy or Connection are low.</p>
+      </section>
+    </div>
+
+    <script>
+        // ----- build 1–5 radios for each row -----
+        const KEYS = ["Energy","Clarity","Creativity","Momentum","Connection"];
+        document.querySelectorAll(".row").forEach(row=>{
+          const key=row.dataset.key;
+          for(let i=1;i<=5;i++){
+            const lab=document.createElement("label");
+            lab.className="score";
+            const input=document.createElement("input");
+            input.type="radio"; input.name=key; input.value=i; input.setAttribute('aria-label', `${key} ${i}`);
+            const span=document.createElement("span"); span.textContent=i;
+            lab.appendChild(input); lab.appendChild(span);
+            row.appendChild(lab);
+          }
+        });
+        const $ = (s)=>document.querySelector(s);
+        const sel = ()=> KEYS.map(k=>({k, v:+(document.querySelector(`input[name="${k}"]:checked`))?.value||0}));
+        const summaryEl=$("#summary"), result=$("#result");
+        const calcBtn=$("#calc"), copyBtn=$("#copy"), resetBtn=$("#reset");
+        // Suggested micro-ritual per low signal
+        const SUG = {
+          Energy:      "Run the Low Energy Sprint loop (tiny wins + one thing to drop).",
+          Clarity:     "Close today's stand-up with /next3: owners + dates on top 3 actions.",
+          Creativity:  "Start the retro with a 3-minute Warm-Up brainstorm.",
+          Momentum:    "Finish meetings by writing the /next3 together in-channel.",
+          Connection:  "Open tomorrow with a Warm-Up question to reconnect."
+        };
+        function calc(){
+          const vals=sel();
+          if(vals.some(x=>x.v===0)){ alert("Please answer all five questions."); return; }
+          const avg=(vals.reduce((a,x)=>a+x.v,0)/vals.length).toFixed(2);
+          const lows=vals.filter(x=>x.v<=3).map(x=>x.k);
+          const lines=[
+            "🌡 Temp Check — Team Pulse",
+            "",
+            ...vals.map(x=>`${x.k}: ${x.v}/5`),
+            "",
+            `Index: ${avg} / 5`,
+            lows.length ? `Lowest signals: ${lows.join(", ")}` : "All signals healthy 👍",
+            "",
+            "Try next loop:",
+            ...(lows.length? lows.map(k=>"• "+SUG[k]) : ["• Keep your rhythm; celebrate a tiny win today."])
+          ];
+          summaryEl.textContent = lines.join("\n");
+          result.style.display="block";
+        }
+        function copy(){
+          navigator.clipboard.writeText(summaryEl.textContent).then(()=>{
+            const o=copyBtn.textContent; copyBtn.textContent="✅ Copied";
+            setTimeout(()=>copyBtn.textContent=o,900);
+          });
+        }
+        function reset(){
+          document.querySelectorAll('input[type="radio"]').forEach(i=>i.checked=false);
+          result.style.display="none";
+        }
+        calcBtn.onclick=calc;
+        copyBtn.onclick=copy;
+        resetBtn.onclick=reset;
+    </script>
+</body>
+</html>
