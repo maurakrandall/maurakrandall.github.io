@@ -110,7 +110,7 @@
         }
 
         .progress-step.active .progress-label {
-            color: #0D3B2A;
+            color: #2B7A78;
             font-weight: 600;
         }
 
@@ -150,7 +150,7 @@
             margin-bottom: 20px;
             font-size: 0.95em;
             color: #4a5568;
-            border-left: 3px solid #5B7553;
+            border-left: 3px solid #4299e1;
         }
 
         .example-box strong {
@@ -181,7 +181,7 @@
 
         .text-input:focus, .textarea-input:focus, .select-input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #2B7A78;
         }
 
         .textarea-input {
@@ -221,7 +221,7 @@
             background: white;
             padding: 15px;
             border-radius: 8px;
-            border-left: 4px solid #2B7A78;
+            border-left: 4px solid #48bb78;
             color: #2d3748;
             font-style: italic;
             display: none;
@@ -246,8 +246,8 @@
         }
 
         .remove-btn {
-            background: #E97451;
-            color: white;
+            background: #fed7d7;
+            color: #c53030;
             border: none;
             padding: 8px 15px;
             border-radius: 8px;
@@ -256,7 +256,7 @@
         }
 
         .add-btn {
-            background: #E8F4F3;
+            background: #e6f2ff;
             color: #2B7A78;
             border: 2px dashed #2B7A78;
             padding: 10px 20px;
@@ -268,7 +268,7 @@
         }
 
         .add-btn:hover {
-            background: #2B7A78;
+            background: #0D3B2A;
             color: white;
         }
 
@@ -333,23 +333,22 @@
         }
 
         .nav-button.primary {
-            background: #DAA520;
+            background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
             color: white;
         }
 
         .nav-button.primary:hover {
-            background: #B8860B;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.4);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
         .nav-button.secondary {
-            background: #FFF5E1;
-            color: #3D3D3D;
+            background: #e2e8f0;
+            color: #4a5568;
         }
 
         .nav-button.secondary:hover {
-            background: #F5E6C8;
+            background: #cbd5e0;
         }
 
         .nav-button:disabled {
@@ -358,7 +357,7 @@
         }
 
         .download-btn {
-            background: #DAA520;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
             padding: 15px 40px;
             border: none;
@@ -372,46 +371,8 @@
         }
 
         .download-btn:hover {
-            background: #B8860B;
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(218, 165, 32, 0.4);
-        }
-
-        .footer {
-            background: #F7FAFC;
-            padding: 30px 40px;
-            border-top: 2px solid #E2E8F0;
-            text-align: center;
-            color: #5B7553;
-            font-size: 14px;
-        }
-
-        .footer p {
-            margin: 8px 0;
-        }
-
-        .footer strong {
-            color: #0B2A2F;
-        }
-
-        .footer ul {
-            list-style: none;
-            padding: 0;
-            margin: 16px 0;
-        }
-
-        .footer li {
-            margin: 8px 0;
-        }
-
-        .footer a {
-            color: #2B7A78;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
+            box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -433,7 +394,7 @@
     <div class="container">
         <div class="header">
             <h1>Project Binder Generator</h1>
-            <p>Build your AI collaboration foundation in 7 steps</p>
+            <p>Build your team's collaboration foundation in 7 steps</p>
         </div>
 
         <div class="progress-bar" id="progressBar"></div>
@@ -441,7 +402,7 @@
         <div class="content">
             <!-- Step 0: I Believe Exercise -->
             <div class="step-content active" data-step="0">
-                <h2>Let's start with your beliefs 🤖</h2>
+                <h2>Let's start with your beliefs 🌟</h2>
                 <p class="step-intro">
                     These beliefs ground your approach to working with AI. They're your team's philosophy—what you believe about AI collaboration and what makes it powerful. Create 3 belief statements by choosing from each column.
                 </p>
@@ -461,7 +422,7 @@
                 </p>
                 
                 <div class="example-box">
-                    <strong>Example:</strong> "We're building a guide series on AI collaboration to help non-technical teams work confidently with AI teammates. Success looks like readers can set up their first Project Binder in under 15 minutes."
+                    <strong>Example:</strong> "We're building a guide series to help non-technical teams work confidently together. Success looks like readers can set up their first Project Binder in under 15 minutes."
                 </div>
                 
                 <div class="form-field">
@@ -473,7 +434,7 @@
                 <div class="form-field">
                     <label>What's your goal? What are you hoping to accomplish?</label>
                     <textarea class="textarea-input" id="projectGoal" rows="3"
-                              placeholder="e.g., help people work effectively with AI teammates, reduce burnout through better tools"></textarea>
+                              placeholder="e.g., help people work effectively as a team, reduce burnout through better tools"></textarea>
                 </div>
 
                 <div class="form-field">
@@ -527,28 +488,43 @@
                 </div>
             </div>
 
-            <!-- Step 3: AI Teammates -->
+            <!-- Step 3: Team Members -->
             <div class="step-content" data-step="3">
-                <h2>Who's on your AI team? 🤖</h2>
+                <h2>Who's on your team? 👥</h2>
                 <p class="step-intro">
-                    Tell me about your AI teammates. Who are they? What are their strengths? When do you call on each of them?
+                    Tell me about everyone on your team—humans and AI. Who are they? What are their primary responsibilities?
                 </p>
                 
                 <div class="example-box">
                     <strong>Example:</strong><br>
-                    <strong>CP (ChatGPT)</strong> - Strengths: System thinking, technical architecture. When to use: Building structured systems, code generation.<br>
-                    <strong>Soph (Claude)</strong> - Strengths: Narrative, strategy, content creation. When to use: Writing guides, strategic planning.
+                    <strong>Maura (Human)</strong> - Title/Role: Product Lead. Primary Responsibilities: Final product decisions, strategic direction, user perspective.<br>
+                    <strong>CP (AI - ChatGPT)</strong> - Title/Role: Creative Partner. Primary Responsibilities: Rapid ideation, multiple variations, creative exploration.<br>
+                    <strong>Soph (AI - Claude)</strong> - Title/Role: Chief of Staff. Primary Responsibilities: Synthesis, documentation, technical architecture.
                 </div>
                 
                 <div id="teammatesContainer"></div>
                 <button class="add-btn" onclick="addTeammate()">+ Add Another Teammate</button>
+                
+                <!-- Alpha Redi Suggestion -->
+                <div class="info-box" style="margin-top: 30px; background: #e8f5e9; border-left: 4px solid #4caf50;">
+                    <h4 style="color: #2e7d32; margin-bottom: 10px;">💡 Consider adding Alpha Redi</h4>
+                    <p style="margin-bottom: 10px;">
+                        <strong>Alpha Redi</strong> is an AI assistant designed specifically for team rituals and decision-making tools. 
+                        Redi provides contextual help within your apps—acting as a Consensus Driver in Co-Sign, Pattern Analyzer in AlignFirst, 
+                        and Risk Navigator in Sprint Kickoff.
+                    </p>
+                    <p style="margin: 0; font-size: 0.9em; color: #555;">
+                        <strong>Title/Role:</strong> Team Facilitator<br>
+                        <strong>Primary Responsibilities:</strong> Consensus driving, pattern recognition, decision support, contextual recommendations
+                    </p>
+                </div>
             </div>
 
             <!-- Step 4: Context Library -->
             <div class="step-content" data-step="4">
                 <h2>Your context library 📚</h2>
                 <p class="step-intro">
-                    What essential documents, decisions, or references should your AI teammates always have access to? This is your team's institutional knowledge.
+                    What essential documents, decisions, or references should your team always have access to? This is your team's institutional knowledge.
                 </p>
                 
                 <div class="example-box">
@@ -567,7 +543,7 @@
 
             <!-- Step 5: Communication Protocols -->
             <div class="step-content" data-step="5">
-                <h2>How does your team sync? 🔄</h2>
+                <h2>How does your team sync? 📄</h2>
                 <p class="step-intro">
                     Communication protocols keep your team aligned. How often do you check in? How do you pass context when threads end?
                 </p>
@@ -631,7 +607,8 @@
             <div class="step-content" data-step="7">
                 <h2>Your Project Binder is ready! 🎉</h2>
                 <p class="step-intro">
-                    Here's everything we built together. Review it, download it, and share it with your AI teammates.
+                    Here's everything we built together. You can download the complete Project Binder for documentation,
+                    or just the Team Context Card to import across your ritual apps.
                 </p>
 
                 <div class="success-message">
@@ -640,10 +617,18 @@
                 
                 <div id="reviewContainer"></div>
 
-                <button class="download-btn" onclick="downloadBinder()">📥 Download Your Project Binder</button>
+                <div style="display: flex; gap: 15px; margin: 30px 0; flex-wrap: wrap;">
+                    <button class="download-btn" onclick="downloadBinder()" style="flex: 1; min-width: 250px;">
+                        📥 Download Full Project Binder
+                    </button>
+                    <button class="download-btn" onclick="downloadContextCard()" style="flex: 1; min-width: 250px; background: #2B7A78;">
+                        🎴 Download Team Context Card
+                    </button>
+                </div>
 
                 <p style="color: #718096; text-align: center; margin: 20px 0;">
-                    Your binder will download as a Markdown (.md) file.
+                    <strong>Full Project Binder:</strong> Markdown file with all your project context<br>
+                    <strong>Team Context Card:</strong> JSON file to import into Co-Sign, Sprint Kickoff, and other ritual apps
                 </p>
             </div>
         </div>
@@ -652,21 +637,6 @@
             <button class="nav-button secondary" id="prevBtn" onclick="previousStep()">← Previous</button>
             <button class="nav-button primary" id="nextBtn" onclick="nextStep()">Next →</button>
         </div>
-
-        <div class="footer">
-            <p><strong>Part of the Team Ritual Apps collection</strong></p>
-            <p><a href="https://maurakrandall.github.io/" target="_blank">View all ritual tools →</a></p>
-            
-            <p style="margin-top: 20px;"><strong>Built using the "Triad" collaboration model:</strong></p>
-            <ul>
-                <li>💫 <strong>Maura (Human):</strong> Product vision, UX design, emotional architecture</li>
-                <li>🎙️ <strong>CP (ChatGPT):</strong> Technical structure, system logic, JSON schemas</li>
-                <li>🔮 <strong>Soph (Claude):</strong> Content drafting, narrative flow, strategic thinking</li>
-            </ul>
-            
-            <p>Learn more about <a href="https://thehumanailoop.com/" target="_blank">The Human AI Loop methodology</a>.</p>
-        </div>
-
     </div>
 
     <script>
@@ -680,16 +650,16 @@
             ],
             voiceTraits: ['', '', ''],
             voiceAvoid: ['', ''],
-            teammates: [{name: '', strengths: '', whenToUse: ''}],
-            docs: [''],
-            decisions: ['']
+            teammates: [{name: '', type: '', role: '', responsibilities: ''}],
+            docs: [{link: '', summary: ''}],
+            decisions: [{text: '', summary: ''}]
         };
 
         const steps = [
-            { title: "Beliefs", desc: "Your AI collaboration principles" },
+            { title: "Beliefs", desc: "Your team collaboration principles" },
             { title: "Purpose", desc: "What you're building" },
             { title: "Voice", desc: "How you communicate" },
-            { title: "Teammates", desc: "Your AI team" },
+            { title: "Teammates", desc: "Your team" },
             { title: "Context", desc: "Essential knowledge" },
             { title: "Protocols", desc: "How you sync" },
             { title: "Decisions", desc: "Your framework" },
@@ -849,20 +819,29 @@
                     <div class="form-field">
                         <label>Name or identifier</label>
                         <input type="text" class="text-input" value="${teammate.name}"
-                               placeholder="e.g., CP (ChatGPT), Soph (Claude)"
+                               placeholder="e.g., Maura, CP (ChatGPT), Soph (Claude)"
                                oninput="state.teammates[${index}].name = this.value">
                     </div>
                     <div class="form-field">
-                        <label>Their strengths</label>
-                        <textarea class="textarea-input" rows="2"
-                                  placeholder="e.g., technical architecture, emotional nuance, long-form writing"
-                                  oninput="state.teammates[${index}].strengths = this.value">${teammate.strengths}</textarea>
+                        <label>Type</label>
+                        <select class="text-input" 
+                                onchange="state.teammates[${index}].type = this.value">
+                            <option value="" ${!teammate.type ? 'selected' : ''}>Select type...</option>
+                            <option value="human" ${teammate.type === 'human' ? 'selected' : ''}>👤 Human</option>
+                            <option value="ai" ${teammate.type === 'ai' ? 'selected' : ''}>🤖 AI</option>
+                        </select>
                     </div>
                     <div class="form-field">
-                        <label>When to use them</label>
-                        <textarea class="textarea-input" rows="2"
-                                  placeholder="e.g., when building systems, when writing narrative content"
-                                  oninput="state.teammates[${index}].whenToUse = this.value">${teammate.whenToUse}</textarea>
+                        <label>Title/Role</label>
+                        <input type="text" class="text-input" value="${teammate.role || ''}"
+                               placeholder="e.g., Product Lead, Chief of Staff, Content Strategist"
+                               oninput="state.teammates[${index}].role = this.value">
+                    </div>
+                    <div class="form-field">
+                        <label>Primary Responsibilities</label>
+                        <textarea class="textarea-input" rows="3"
+                                  placeholder="e.g., Final product decisions, strategic direction, user research and validation"
+                                  oninput="state.teammates[${index}].responsibilities = this.value">${teammate.responsibilities || ''}</textarea>
                     </div>
                     ${state.teammates.length > 1 ? `<button class="remove-btn" onclick="removeTeammate(${index})">Remove Teammate</button>` : ''}
                 </div>
@@ -870,7 +849,7 @@
         }
 
         function addTeammate() {
-            state.teammates.push({name: '', strengths: '', whenToUse: ''});
+            state.teammates.push({name: '', type: '', role: '', responsibilities: ''});
             renderTeammates();
         }
 
@@ -885,17 +864,22 @@
         function renderDocs() {
             const container = document.getElementById('docsContainer');
             container.innerHTML = state.docs.map((doc, index) => `
-                <div class="item-entry">
-                    <input type="text" class="text-input" value="${doc}"
-                           placeholder="e.g., Brand voice guide, Product roadmap"
-                           oninput="state.docs[${index}] = this.value">
-                    ${state.docs.length > 1 ? `<button class="remove-btn" onclick="removeDoc(${index})">✕</button>` : ''}
+                <div class="item-entry" style="display: block; margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <input type="text" class="text-input" value="${doc.link || ''}"
+                           placeholder="e.g., https://wiki.company.com/brand-guidelines"
+                           oninput="state.docs[${index}].link = this.value"
+                           style="margin-bottom: 10px;">
+                    <textarea class="textarea-input" rows="2"
+                              placeholder="Optional: Paste AI-generated summary to help your team understand this doc without reading the full thing"
+                              oninput="state.docs[${index}].summary = this.value"
+                              style="margin-bottom: 0; font-size: 0.9em; color: #666;">${doc.summary || ''}</textarea>
+                    ${state.docs.length > 1 ? `<button class="remove-btn" onclick="removeDoc(${index})" style="position: absolute; top: 15px; right: 15px;">✕</button>` : ''}
                 </div>
             `).join('');
         }
 
         function addDoc() {
-            state.docs.push('');
+            state.docs.push({link: '', summary: ''});
             renderDocs();
         }
 
@@ -909,17 +893,22 @@
         function renderDecisions() {
             const container = document.getElementById('decisionsContainer');
             container.innerHTML = state.decisions.map((decision, index) => `
-                <div class="item-entry">
-                    <input type="text" class="text-input" value="${decision}"
+                <div class="item-entry" style="display: block; margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <input type="text" class="text-input" value="${decision.text || ''}"
                            placeholder="e.g., We're focusing on non-technical users first"
-                           oninput="state.decisions[${index}] = this.value">
-                    ${state.decisions.length > 1 ? `<button class="remove-btn" onclick="removeDecision(${index})">✕</button>` : ''}
+                           oninput="state.decisions[${index}].text = this.value"
+                           style="margin-bottom: 10px;">
+                    <textarea class="textarea-input" rows="2"
+                              placeholder="Optional: Add context or rationale to help your team understand why this decision was made"
+                              oninput="state.decisions[${index}].summary = this.value"
+                              style="margin-bottom: 0; font-size: 0.9em; color: #666;">${decision.summary || ''}</textarea>
+                    ${state.decisions.length > 1 ? `<button class="remove-btn" onclick="removeDecision(${index})" style="position: absolute; top: 15px; right: 15px;">✕</button>` : ''}
                 </div>
             `).join('');
         }
 
         function addDecision() {
-            state.decisions.push('');
+            state.decisions.push({text: '', summary: ''});
             renderDecisions();
         }
 
@@ -994,11 +983,15 @@
             
             const teammates = state.teammates
                 .filter(t => t.name)
-                .map(t => `<li><strong>${t.name}</strong> - ${t.strengths || '[strengths]'}</li>`)
+                .map(t => {
+                    const typeEmoji = t.type === 'human' ? '👤' : t.type === 'ai' ? '🤖' : '';
+                    const role = t.role ? ` - ${t.role}` : '';
+                    return `<li><strong>${typeEmoji} ${t.name}</strong>${role}<br>Primary Responsibilities: ${t.responsibilities || '[responsibilities]'}</li>`;
+                })
                 .join('');
 
-            const docs = state.docs.filter(d => d).join(', ') || 'None added';
-            const decisions = state.decisions.filter(d => d).join(', ') || 'None added';
+            const docs = state.docs.filter(d => d.link).map(d => d.link).join(', ') || 'None added';
+            const decisions = state.decisions.filter(d => d.text).map(d => d.text).join(', ') || 'None added';
 
             const syncPattern = document.getElementById('syncPattern').value || 'Not specified';
             const standupFrequency = document.getElementById('standupFrequency').value || 'Not specified';
@@ -1019,7 +1012,7 @@
                     <p>What we avoid: ${state.voiceAvoid.filter(t => t).join(', ') || 'Not specified'}</p>
                 </div>
                 <div class="review-section">
-                    <h3>4. AI Teammates</h3>
+                    <h3>4. Team Members</h3>
                     <ul>${teammates || '<li>None added</li>'}</ul>
                 </div>
                 <div class="review-section">
@@ -1052,20 +1045,41 @@
 
             const teammates = state.teammates
                 .filter(t => t.name)
-                .map(t => `**${t.name}**\n- Strengths: ${t.strengths || '[describe their strengths]'}\n- When to use: ${t.whenToUse || '[when to call on this teammate]'}`)
+                .map(t => {
+                    const typeEmoji = t.type === 'human' ? '👤' : t.type === 'ai' ? '🤖' : '';
+                    const role = t.role ? `\n- Title/Role: ${t.role}` : '';
+                    return `**${typeEmoji} ${t.name}**${role}\n- Primary Responsibilities: ${t.responsibilities || '[describe their primary responsibilities]'}`;
+                })
                 .join('\n\n');
 
-            const docs = state.docs.filter(d => d).map(d => `- ${d}`).join('\n');
-            const decisions = state.decisions.filter(d => d).map(d => `- ${d}`).join('\n');
+            const docs = state.docs
+                .filter(d => d.link)
+                .map(d => {
+                    if (d.summary) {
+                        return `- ${d.link}\n  *Summary: ${d.summary}*`;
+                    }
+                    return `- ${d.link}`;
+                })
+                .join('\n');
+            
+            const decisions = state.decisions
+                .filter(d => d.text)
+                .map(d => {
+                    if (d.summary) {
+                        return `- ${d.text}\n  *Context: ${d.summary}*`;
+                    }
+                    return `- ${d.text}`;
+                })
+                .join('\n');
 
             const markdown = `# PROJECT BINDER
 Generated: ${new Date().toLocaleDateString()}
 
 ---
 
-## 1. I BELIEVE: MY AI COLLABORATION PRINCIPLES
+## 1. I BELIEVE: TEAM COLLABORATION PRINCIPLES
 
-${beliefs || 'Define your beliefs about AI collaboration.'}
+${beliefs || 'Define your beliefs about team collaboration.'}
 
 ---
 
@@ -1096,9 +1110,9 @@ ${state.voiceAvoid.filter(t => t).map(t => `- ${t}`).join('\n') || '- [Thing to 
 
 ---
 
-## 4. AI TEAMMATE PROFILES
+## 4. TEAM PROFILES
 
-${teammates || 'Define your AI teammates.'}
+${teammates || 'Define your team members.'}
 
 ---
 
@@ -1138,7 +1152,7 @@ Your Project Binder is ready!
 
 **To use it:**
 1. Save this file to Google Docs, Notion, or your preferred tool
-2. Share the link with your AI teammates at the start of each thread
+2. Share it with your team at the start of each project phase
 3. Update it as your project evolves
 4. Reference it when you need to maintain consistency
 
@@ -1155,6 +1169,37 @@ Your Project Binder is ready!
             a.href = url;
             const projectName = document.getElementById('projectName').value || 'new';
             a.download = `project-binder-${projectName.toLowerCase().replace(/\s+/g, '-')}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadContextCard() {
+            // Generate Context Card JSON
+            const projectName = document.getElementById('projectName').value || 'Untitled Project';
+            
+            const contextCard = {
+                version: "1.0",
+                projectName: projectName,
+                exportDate: new Date().toISOString(),
+                team: state.teammates
+                    .filter(t => t.name && t.name.trim() !== '')
+                    .map(t => ({
+                        name: t.name,
+                        type: t.type || 'human',
+                        role: t.role || '',
+                        responsibilities: t.responsibilities || ''
+                    }))
+            };
+            
+            // Download as JSON
+            const json = JSON.stringify(contextCard, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `team_context_card_${projectName.toLowerCase().replace(/\s+/g, '-')}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
