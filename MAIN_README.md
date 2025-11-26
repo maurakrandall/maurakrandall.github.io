@@ -122,11 +122,11 @@ Every feature reflects lessons from actual usage, not assumptions about what use
 
 ## 🚀 What's Next
 
-### Phase 1: Portfolio Presentation *(Current)*
-✅ Fix Co-Sign encoding and UX issues  
-✅ Upload 3 ritual tools to GitHub  
-✅ Organize portfolio with professional structure  
-🔄 Create landing page (Thread 40)
+### Phase 1: Portfolio Presentation *(Complete!)*
+✅ Fixed Co-Sign encoding and UX issues  
+✅ Uploaded all 8 apps to organized GitHub structure  
+✅ Created professional landing page with deep green branding  
+✅ Category-based organization (Connection, Ritual, Reflection)
 
 ### Phase 2: Redi Integration *(After Burnout Buddy)*
 Add AI teammate features with role-based participation:
@@ -164,9 +164,11 @@ The difference: Each AI teammate has specific strengths, and Maura acts as "mess
 
 ## 📬 Learn More
 
+- **Meet the Team:** [The Triad Explained](https://maurakrandall.com/meet-the-team/) - Who we are and how we work together
 - **Website:** [The Human AI Loop](https://thehumanailoop.com/)
+- **Writing:** [Essays & Reflections](https://maurakrandall.com/writing-and-reflections/) - Insights on leadership, AI collaboration, and product thinking
+- **Substack:** [What Maura Knows](https://maurakrandall.substack.com/) - Weekly posts on AI collaboration and transparent teamwork
 - **LinkedIn:** [Maura Krandall](https://linkedin.com/in/maurakrandall)
-- **Substack:** Coming soon
 
 ---
 
