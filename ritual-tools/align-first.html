@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlignFirst - Team Decision Voting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #3D3D3D;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #0B2A2F;
+            margin-bottom: 12px;
+        }
+
+        .header .tagline {
+            font-size: 18px;
+            color: #3D3D3D;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            color: #5B7553;
+            font-style: italic;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #3D3D3D;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #2B7A78;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .option-input {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .option-input input {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #DAA520;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #B8860B;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.4);
+        }
+
+        .btn-secondary {
+            background: #FFF5E1;
+            color: #3D3D3D;
+        }
+
+        .btn-secondary:hover {
+            background: #F5E6C8;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+
+        .btn-danger {
+            background: #E97451;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #D15A3A;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-large {
+            padding: 20px 32px;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .code-display {
+            background: #0B2A2F;
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .code-display h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8EA8C3;
+            margin-bottom: 16px;
+        }
+
+        .code-display .code {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: #DAA520;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-display p {
+            margin-top: 16px;
+            color: #8EA8C3;
+            font-size: 14px;
+        }
+
+        .code-input-box {
+            max-width: 400px;
+            margin: 32px auto;
+        }
+
+        .code-input-box input {
+            text-align: center;
+            font-size: 32px;
+            letter-spacing: 8px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+        }
+
+        .voting-option {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .voting-option:hover {
+            border-color: #2B7A78;
+            background: white;
+        }
+
+        .voting-option.selected {
+            border-color: #2B7A78;
+            background: #E8F4F3;
+        }
+
+        .voting-option input[type="radio"] {
+            margin-right: 12px;
+        }
+
+        .vote-bar {
+            background: #e2e8f0;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 8px;
+        }
+
+        .vote-bar-fill {
+            background: linear-gradient(90deg, #DAA520 0%, #d29c71 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .vote-count {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
+            color: #3D3D3D;
+            font-size: 14px;
+        }
+
+        .results-option {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .results-option h3 {
+            color: #3D3D3D;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .discussion-prompt {
+            background: #FFF9E6;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #E3B448;
+            margin: 24px 0;
+        }
+
+        .discussion-prompt h3 {
+            color: #0D3B2A;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .discussion-prompt p {
+            color: #3D3D3D;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #E8F4F3;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #2B7A78;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            color: #0B2A2F;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-waiting {
+            background: #FFE4D6;
+            color: #8B4513;
+        }
+
+        .status-voting {
+            background: #D4E8D7;
+            color: #0D3B2A;
+        }
+
+        .voter-list {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .voter-list p {
+            font-size: 14px;
+            color: #3D3D3D;
+            margin-bottom: 4px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #3D3D3D;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+
+        .error {
+            background: #FFE4D9;
+            color: #8B2500;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #E97451;
+        }
+
+        .success {
+            background: #D4E8D7;
+            color: #0D3B2A;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #5B7553;
+        }
+
+        .checkbox-group {
+            margin: 20px 0;
+            padding: 16px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 2px solid #e2e8f0;
+            font-size: 13px;
+            color: #5B7553;
+            line-height: 1.8;
+        }
+
+        .footer p {
+            margin-bottom: 12px;
+        }
+
+        .footer strong {
+            color: #3D3D3D;
+        }
+
+        .footer ul {
+            list-style: none;
+            margin: 12px 0;
+            padding-left: 0;
+        }
+
+        .footer li {
+            margin-bottom: 8px;
+        }
+
+        .footer a {
+            color: #2B7A78;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            color: #0D3B2A;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 24px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .code-display .code {
+                font-size: 40px;
+                letter-spacing: 4px;
+            }
+
+            .footer {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AlignFirst</h1>
+            <p class="tagline">Align first, move faster. Get everyone rowing in the same direction.</p>
+            <p class="subtitle">A ritual app from the AI on Our Teams playbook</p>
+        </div>
+
+        <!-- Home View -->
+        <div id="home-view" class="view active">
+            <div class="info-box">
+                <p>Most tools focus on decisions AFTER they're made. AlignFirst helps you GET to decisions with true team alignment.</p>
+            </div>
+
+            <div class="two-column">
+                <button class="btn btn-primary btn-full btn-large" onclick="app.showView('create')">
+                    Start a Session
+                </button>
+                <button class="btn btn-secondary btn-full btn-large" onclick="app.showView('join')">
+                    Join a Session
+                </button>
+            </div>
+        </div>
+
+        <!-- Join Session View -->
+        <div id="join-view" class="view">
+            <h2 style="margin-bottom: 24px; color: #0B2A2F; text-align: center;">Join a Session</h2>
+
+            <div class="code-input-box">
+                <label for="join-code" style="text-align: center;">Enter the 5-digit session code</label>
+                <input type="number" id="join-code" placeholder="12345" maxlength="5" pattern="\d{5}" />
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="app.showView('home')">
+                    Cancel
+                </button>
+                <button class="btn btn-primary" onclick="app.joinSession()">
+                    Join Session
+                </button>
+            </div>
+
+            <div id="join-error"></div>
+        </div>
+
+        <!-- Create Session View -->
+        <div id="create-view" class="view">
+            <h2 style="margin-bottom: 24px; color: #0B2A2F;">Create Decision Session</h2>
+
+            <div class="form-group">
+                <label for="decision-question">What are we deciding? *</label>
+                <textarea id="decision-question" placeholder="Example: Should we launch the new feature in Q1 (MVP) or Q4 (full build)?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Voting Options (2-6 options) *</label>
+                <div id="options-container">
+                    <div class="option-input">
+                        <input type="text" placeholder="Option 1" class="option-field" />
+                    </div>
+                    <div class="option-input">
+                        <input type="text" placeholder="Option 2" class="option-field" />
+                    </div>
+                </div>
+                <button class="btn btn-secondary btn-small" onclick="app.addOptionField()" style="margin-top: 8px;">
+                    + Add Option
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label>Voting Mode</label>
+                <select id="voting-mode" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 16px;">
+                    <option value="anonymous">Anonymous (recommended for psychological safety)</option>
+                    <option value="named">Named (show who voted for what)</option>
+                </select>
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="facilitator-votes" checked />
+                    <span>I will be voting too</span>
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="app.showView('home')">
+                    Cancel
+                </button>
+                <button class="btn btn-primary" onclick="app.createSession()">
+                    Create Session
+                </button>
+            </div>
+
+            <div id="create-error"></div>
+        </div>
+
+        <!-- Show Code View -->
+        <div id="code-view" class="view">
+            <h2 style="margin-bottom: 24px; color: #0B2A2F; text-align: center;">Session Created!</h2>
+
+            <div class="code-display">
+                <h2>Session Code</h2>
+                <div class="code" id="session-code-display"></div>
+                <p>Share this code with your team</p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Instructions for your team:</strong> Open AlignFirst and click "Join a Session", then enter the code above to vote.</p>
+            </div>
+
+            <div class="button-group" id="facilitator-next-buttons">
+                <!-- Will be populated based on whether facilitator is voting -->
+            </div>
+        </div>
+
+        <!-- Voting View -->
+        <div id="voting-view" class="view">
+            <h2 style="color: #0B2A2F; margin-bottom: 24px;" id="voting-question"></h2>
+
+            <div id="voting-instructions" class="info-box">
+                <p>Select your preferred option. Your vote will be recorded in real-time.</p>
+            </div>
+
+            <div id="voting-options"></div>
+
+            <div class="button-group">
+                <button class="btn btn-primary btn-full" onclick="app.submitVote()" id="submit-vote-btn" disabled>
+                    Submit Vote
+                </button>
+            </div>
+
+            <div id="vote-success"></div>
+            <div id="voting-results-display" style="margin-top: 32px;"></div>
+        </div>
+
+        <!-- Facilitator View -->
+        <div id="facilitator-view" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                <h2 style="color: #0B2A2F; margin: 0;" id="facilitator-question"></h2>
+                <span id="facilitator-status" class="status-indicator status-waiting">Waiting</span>
+            </div>
+
+            <div class="code-display" style="margin-bottom: 24px;">
+                <h2>Session Code</h2>
+                <div class="code" id="facilitator-code-display" style="font-size: 40px;"></div>
+                <p>Share this code with your team</p>
+            </div>
+
+            <div id="facilitator-controls" style="margin-bottom: 24px;">
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="app.toggleResultsVisibility()" id="toggle-results-btn">
+                        Hide Results from Voters
+                    </button>
+                    <button class="btn btn-danger" onclick="app.endSession()" id="end-session-btn">
+                        End Session
+                    </button>
+                </div>
+            </div>
+
+            <div id="facilitator-results"></div>
+        </div>
+
+        <!-- Discussion & Capture View -->
+        <div id="discussion-view" class="view">
+            <h2 style="color: #0B2A2F; margin-bottom: 24px;">Discussion & Decision Capture</h2>
+
+            <div id="discussion-question" style="font-size: 18px; color: #3D3D3D; margin-bottom: 24px;"></div>
+
+            <div id="discussion-results"></div>
+
+            <div id="discussion-prompts"></div>
+
+            <div style="margin-top: 40px;">
+                <h3 style="color: #0B2A2F; margin-bottom: 16px;">Capture the Decision</h3>
+                
+                <div class="form-group">
+                    <label for="decision-what">What did we decide? *</label>
+                    <textarea id="decision-what" placeholder="Example: We will launch Q1 MVP"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="decision-why">Why did we decide this? *</label>
+                    <textarea id="decision-why" placeholder="Example: Customer feedback shows urgency, team capacity is limited"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="decision-not-doing">What are we NOT doing? *</label>
+                    <textarea id="decision-not-doing" placeholder="Example: Not delaying to Q4, not compromising quality bar, not building full feature set in V1"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="app.showView('facilitator')">
+                        Back to Results
+                    </button>
+                    <button class="btn btn-primary" onclick="app.captureDecision()">
+                        Export Decision
+                    </button>
+                </div>
+
+                <div id="capture-success"></div>
+            </div>
+        </div>
+
+        <!-- Export View -->
+        <div id="export-view" class="view">
+            <h2 style="color: #0B2A2F; margin-bottom: 24px;">Decision Captured! 🎉</h2>
+
+            <div class="success">
+                Your decision has been documented and is ready to share with your team.
+            </div>
+
+            <div style="background: #f7fafc; padding: 20px; border-radius: 8px; margin: 24px 0;">
+                <pre id="markdown-output" style="white-space: pre-wrap; word-wrap: break-word; font-family: monospace; font-size: 14px; line-height: 1.6;"></pre>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="app.copyMarkdown()">
+                    Copy to Clipboard
+                </button>
+                <button class="btn btn-primary" onclick="app.downloadMarkdown()">
+                    Download Decision
+                </button>
+            </div>
+
+            <div style="margin-top: 32px;">
+                <button class="btn btn-secondary btn-full" onclick="app.downloadFullResults()">
+                    Download Full Results (Votes + Decision)
+                </button>
+            </div>
+
+            <div style="margin-top: 32px; text-align: center;">
+                <button class="btn btn-secondary" onclick="app.startNewSession()">
+                    Start New Decision
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading View -->
+        <div id="loading-view" class="view">
+            <div class="loading">Loading session</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><em>Inspired by Planning Poker and other collaborative decision-making tools</em></p>
+            
+            <p><strong>These tools were built using the "Triad" collaboration model:</strong></p>
+            <ul>
+                <li>💫 <strong>Maura (Human):</strong> Product vision, UX design, emotional architecture</li>
+                <li>🎙️ <strong>CP (ChatGPT):</strong> Technical structure, system logic, JSON schemas</li>
+                <li>🔮 <strong>Soph (Claude):</strong> Content drafting, narrative flow, strategic thinking</li>
+            </ul>
+            
+            <p>Learn more about <a href="https://thehumanailoop.com/" target="_blank">how we work together</a>.</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Check if Firebase loaded
+        if (typeof firebase === 'undefined') {
+            alert('Error: Firebase SDK failed to load. Please check your internet connection and refresh the page.');
+            throw new Error('Firebase SDK not loaded');
+        }
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDTEDAjvGZH4-MOlo-xcDBRqcRQRioV-b4",
+            authDomain: "decision-alignment-tool.firebaseapp.com",
+            databaseURL: "https://decision-alignment-tool-default-rtdb.firebaseio.com",
+            projectId: "decision-alignment-tool",
+            storageBucket: "decision-alignment-tool.firebasestorage.app",
+            messagingSenderId: "911538633564",
+            appId: "1:911538633564:web:17808f5cf9aa178eb51f99"
+        };
+
+        // Initialize Firebase
+        let database;
+        
+        try {
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            alert('Error initializing Firebase: ' + error.message);
+            throw error;
+        }
+
+        // Main application
+        const app = {
+            currentSession: null,
+            currentCode: null,
+            currentVote: null,
+            isVoter: false,
+            isFacilitator: false,
+            facilitatorVotes: false,
+            voterId: null,
+            sessionData: null,
+
+            init() {
+                // Generate or retrieve voter ID
+                this.voterId = localStorage.getItem('voterId') || this.generateId();
+                localStorage.setItem('voterId', this.voterId);
+
+                // Check URL for session code
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get('code');
+
+                if (code) {
+                    this.autoJoinSession(code);
+                } else {
+                    this.showView('home');
+                }
+            },
+
+            generateId() {
+                return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            },
+
+            generateSessionCode() {
+                return Math.floor(10000 + Math.random() * 90000).toString();
+            },
+
+            showView(viewName) {
+                document.querySelectorAll('.view').forEach(view => {
+                    view.classList.remove('active');
+                });
+                document.getElementById(viewName + '-view').classList.add('active');
+            },
+
+            addOptionField() {
+                const container = document.getElementById('options-container');
+                const count = container.querySelectorAll('.option-input').length;
+                
+                if (count >= 6) {
+                    alert('Maximum 6 options allowed');
+                    return;
+                }
+
+                const div = document.createElement('div');
+                div.className = 'option-input';
+                div.innerHTML = `
+                    <input type="text" placeholder="Option ${count + 1}" class="option-field" />
+                    <button class="btn btn-danger btn-small" onclick="this.parentElement.remove()">Remove</button>
+                `;
+                container.appendChild(div);
+            },
+
+            async createSession() {
+                const question = document.getElementById('decision-question').value.trim();
+                const votingMode = document.getElementById('voting-mode').value;
+                const facilitatorVotes = document.getElementById('facilitator-votes').checked;
+                const optionFields = document.querySelectorAll('.option-field');
+                
+                const options = Array.from(optionFields)
+                    .map(field => field.value.trim())
+                    .filter(value => value !== '');
+
+                // Validation
+                if (!question) {
+                    this.showError('create-error', 'Please enter a decision question');
+                    return;
+                }
+
+                if (options.length < 2) {
+                    this.showError('create-error', 'Please enter at least 2 options');
+                    return;
+                }
+
+                // Generate 5-digit code
+                const code = this.generateSessionCode();
+                
+                const sessionData = {
+                    code: code,
+                    question: question,
+                    options: options,
+                    votingMode: votingMode,
+                    createdAt: Date.now(),
+                    createdBy: this.voterId,
+                    status: 'active',
+                    resultsVisible: true,
+                    facilitatorVotes: facilitatorVotes,
+                    votes: {}
+                };
+
+                try {
+                    await database.ref('sessions/' + code).set(sessionData);
+                    this.currentCode = code;
+                    this.currentSession = sessionData;
+                    this.isFacilitator = true;
+                    this.facilitatorVotes = facilitatorVotes;
+                    this.showCodeView(code, facilitatorVotes);
+                } catch (error) {
+                    this.showError('create-error', 'Error creating session: ' + error.message);
+                }
+            },
+
+            showCodeView(code, facilitatorVotes) {
+                this.showView('code');
+                document.getElementById('session-code-display').textContent = code;
+
+                const buttonsContainer = document.getElementById('facilitator-next-buttons');
+                
+                if (facilitatorVotes) {
+                    buttonsContainer.innerHTML = `
+                        <button class="btn btn-primary btn-full" onclick="app.proceedToVoting()">
+                            Continue to Vote
+                        </button>
+                    `;
+                } else {
+                    buttonsContainer.innerHTML = `
+                        <button class="btn btn-primary btn-full" onclick="app.proceedToFacilitator()">
+                            View Results Dashboard
+                        </button>
+                    `;
+                }
+            },
+
+            async proceedToVoting() {
+                const snapshot = await database.ref('sessions/' + this.currentCode).once('value');
+                const sessionData = snapshot.val();
+                this.isVoter = true;
+                this.loadVotingView(this.currentCode, sessionData);
+            },
+
+            async proceedToFacilitator() {
+                this.loadFacilitatorView(this.currentCode);
+            },
+
+            async joinSession() {
+                const codeInput = document.getElementById('join-code').value.trim();
+                
+                if (!codeInput || codeInput.length !== 5) {
+                    this.showError('join-error', 'Please enter a valid 5-digit code');
+                    return;
+                }
+
+                this.showView('loading');
+
+                try {
+                    const snapshot = await database.ref('sessions/' + codeInput).once('value');
+                    const sessionData = snapshot.val();
+
+                    if (!sessionData) {
+                        this.showView('join');
+                        this.showError('join-error', 'Session not found. Please check the code and try again.');
+                        return;
+                    }
+
+                    if (sessionData.status === 'ended') {
+                        this.showView('join');
+                        this.showError('join-error', 'This session has ended.');
+                        return;
+                    }
+
+                    this.currentCode = codeInput;
+                    this.isVoter = true;
+                    this.loadVotingView(codeInput, sessionData);
+                } catch (error) {
+                    this.showView('join');
+                    this.showError('join-error', 'Error joining session: ' + error.message);
+                }
+            },
+
+            async autoJoinSession(code) {
+                // Auto-join from URL parameter
+                this.showView('loading');
+                
+                try {
+                    const snapshot = await database.ref('sessions/' + code).once('value');
+                    const sessionData = snapshot.val();
+
+                    if (!sessionData) {
+                        this.showView('home');
+                        alert('Session not found');
+                        return;
+                    }
+
+                    this.currentCode = code;
+
+                    // Check if user is facilitator
+                    if (sessionData.createdBy === this.voterId) {
+                        this.isFacilitator = true;
+                        if (sessionData.facilitatorVotes) {
+                            this.loadVotingView(code, sessionData);
+                        } else {
+                            this.loadFacilitatorView(code);
+                        }
+                    } else {
+                        this.isVoter = true;
+                        this.loadVotingView(code, sessionData);
+                    }
+                } catch (error) {
+                    this.showView('home');
+                    alert('Error loading session: ' + error.message);
+                }
+            },
+
+            loadFacilitatorView(code) {
+                this.showView('facilitator');
+                document.getElementById('facilitator-code-display').textContent = code;
+
+                // Listen for session updates
+                database.ref('sessions/' + code).on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        this.sessionData = data;
+                        this.updateFacilitatorDisplay(data);
+                    }
+                });
+            },
+
+            updateFacilitatorDisplay(sessionData) {
+                // Update question
+                document.getElementById('facilitator-question').textContent = sessionData.question;
+
+                // Update status
+                const statusEl = document.getElementById('facilitator-status');
+                const voteCount = Object.keys(sessionData.votes || {}).length;
+                
+                if (voteCount === 0) {
+                    statusEl.className = 'status-indicator status-waiting';
+                    statusEl.textContent = 'Waiting for Votes';
+                } else {
+                    statusEl.className = 'status-indicator status-voting';
+                    statusEl.textContent = voteCount + ' Vote' + (voteCount !== 1 ? 's' : '');
+                }
+
+                // Display results
+                this.displayResults('facilitator-results', sessionData, true);
+
+                // Update toggle button
+                const toggleBtn = document.getElementById('toggle-results-btn');
+                toggleBtn.textContent = sessionData.resultsVisible ? 'Hide Results from Voters' : 'Show Results to Voters';
+            },
+
+            displayResults(containerId, sessionData, showDiscussionLink = false) {
+                const container = document.getElementById(containerId);
+                const votes = sessionData.votes || {};
+                const options = sessionData.options;
+                const votingMode = sessionData.votingMode;
+
+                // Count votes for each option
+                const voteCounts = {};
+                const votersByOption = {};
+                
+                options.forEach(opt => {
+                    voteCounts[opt] = 0;
+                    votersByOption[opt] = [];
+                });
+
+                Object.entries(votes).forEach(([voterId, voteData]) => {
+                    const option = voteData.option;
+                    if (voteCounts[option] !== undefined) {
+                        voteCounts[option]++;
+                        if (votingMode === 'named' && voteData.voterName) {
+                            votersByOption[option].push(voteData.voterName);
+                        }
+                    }
+                });
+
+                const totalVotes = Object.values(voteCounts).reduce((a, b) => a + b, 0);
+
+                // Generate HTML
+                let html = '';
+
+                options.forEach(option => {
+                    const count = voteCounts[option];
+                    const percentage = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
+
+                    html += `
+                        <div class="results-option">
+                            <h3>${option}</h3>
+                            <div class="vote-bar">
+                                <div class="vote-bar-fill" style="width: ${percentage}%">
+                                    ${percentage > 10 ? percentage + '%' : ''}
+                                </div>
+                                <div class="vote-count">${count} vote${count !== 1 ? 's' : ''} (${percentage}%)</div>
+                            </div>
+                            ${votingMode === 'named' && votersByOption[option].length > 0 ? `
+                                <div class="voter-list">
+                                    <p><strong>Voters:</strong> ${votersByOption[option].join(', ')}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                if (totalVotes === 0) {
+                    html = '<div class="info-box"><p>No votes yet. Waiting for team members to vote using code ' + sessionData.code + '</p></div>';
+                }
+
+                container.innerHTML = html;
+
+                // Add discussion button for facilitator
+                if (showDiscussionLink && totalVotes > 0) {
+                    const discussBtn = document.createElement('button');
+                    discussBtn.className = 'btn btn-primary btn-full';
+                    discussBtn.textContent = 'Continue to Discussion & Decision Capture';
+                    discussBtn.onclick = () => this.loadDiscussionView(sessionData);
+                    discussBtn.style.marginTop = '24px';
+                    container.appendChild(discussBtn);
+                }
+            },
+
+            loadVotingView(code, sessionData) {
+                this.showView('voting');
+
+                // Display question
+                document.getElementById('voting-question').textContent = sessionData.question;
+
+                // Display options
+                const optionsContainer = document.getElementById('voting-options');
+                let html = '';
+
+                sessionData.options.forEach((option, index) => {
+                    html += `
+                        <div class="voting-option" onclick="app.selectOption(${index})">
+                            <input type="radio" name="vote" value="${index}" id="option-${index}">
+                            <label for="option-${index}" style="cursor: pointer; display: inline; margin: 0;">
+                                ${option}
+                            </label>
+                        </div>
+                    `;
+                });
+
+                optionsContainer.innerHTML = html;
+
+                // Check if user already voted
+                const userVote = sessionData.votes && sessionData.votes[this.voterId];
+                if (userVote) {
+                    document.getElementById('submit-vote-btn').disabled = true;
+                    document.getElementById('vote-success').innerHTML = `
+                        <div class="success">Your vote has been recorded: ${userVote.option}</div>
+                    `;
+                    
+                    // Select the option they voted for
+                    const optionIndex = sessionData.options.indexOf(userVote.option);
+                    if (optionIndex !== -1) {
+                        document.querySelector(`#option-${optionIndex}`).checked = true;
+                        document.querySelector(`#option-${optionIndex}`).closest('.voting-option').classList.add('selected');
+                    }
+
+                    // If facilitator who voted, show button to go to dashboard
+                    if (this.isFacilitator) {
+                        const successDiv = document.getElementById('vote-success');
+                        const dashboardBtn = document.createElement('button');
+                        dashboardBtn.className = 'btn btn-primary btn-full';
+                        dashboardBtn.textContent = 'View Results Dashboard';
+                        dashboardBtn.onclick = () => this.loadFacilitatorView(code);
+                        dashboardBtn.style.marginTop = '16px';
+                        successDiv.appendChild(dashboardBtn);
+                    }
+                }
+
+                // Listen for results visibility and display if enabled
+                database.ref('sessions/' + code).on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data && data.resultsVisible) {
+                        this.displayResults('voting-results-display', data, false);
+                    } else {
+                        document.getElementById('voting-results-display').innerHTML = '';
+                    }
+                });
+            },
+
+            selectOption(index) {
+                // Enable submit button
+                document.getElementById('submit-vote-btn').disabled = false;
+                
+                // Visual selection
+                document.querySelectorAll('.voting-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                document.querySelector(`#option-${index}`).closest('.voting-option').classList.add('selected');
+                
+                // Select radio
+                document.querySelector(`#option-${index}`).checked = true;
+                
+                this.currentVote = index;
+            },
+
+            async submitVote() {
+                if (this.currentVote === null) {
+                    alert('Please select an option');
+                    return;
+                }
+
+                try {
+                    const snapshot = await database.ref('sessions/' + this.currentCode).once('value');
+                    const sessionData = snapshot.val();
+                    const selectedOption = sessionData.options[this.currentVote];
+
+                    const voteData = {
+                        option: selectedOption,
+                        timestamp: Date.now(),
+                        voterId: this.voterId
+                    };
+
+                    // Add voter name if named voting
+                    if (sessionData.votingMode === 'named') {
+                        const voterName = prompt('Enter your name (optional):') || 'Anonymous';
+                        voteData.voterName = voterName;
+                    }
+
+                    await database.ref('sessions/' + this.currentCode + '/votes/' + this.voterId).set(voteData);
+
+                    document.getElementById('submit-vote-btn').disabled = true;
+                    const successDiv = document.getElementById('vote-success');
+                    successDiv.innerHTML = `
+                        <div class="success">Your vote has been recorded! Thank you for participating.</div>
+                    `;
+
+                    // If facilitator who just voted, show button to go to dashboard
+                    if (this.isFacilitator) {
+                        const dashboardBtn = document.createElement('button');
+                        dashboardBtn.className = 'btn btn-primary btn-full';
+                        dashboardBtn.textContent = 'View Results Dashboard';
+                        dashboardBtn.onclick = () => this.loadFacilitatorView(this.currentCode);
+                        dashboardBtn.style.marginTop = '16px';
+                        successDiv.appendChild(dashboardBtn);
+                    }
+
+                } catch (error) {
+                    alert('Error submitting vote: ' + error.message);
+                }
+            },
+
+            async toggleResultsVisibility() {
+                try {
+                    const snapshot = await database.ref('sessions/' + this.currentCode + '/resultsVisible').once('value');
+                    const currentValue = snapshot.val();
+                    await database.ref('sessions/' + this.currentCode + '/resultsVisible').set(!currentValue);
+                } catch (error) {
+                    alert('Error toggling results: ' + error.message);
+                }
+            },
+
+            async endSession() {
+                if (!confirm('Are you sure you want to end this session? Voters will no longer be able to vote.')) {
+                    return;
+                }
+
+                try {
+                    await database.ref('sessions/' + this.currentCode + '/status').set('ended');
+                    alert('Session ended');
+                    this.showView('home');
+                } catch (error) {
+                    alert('Error ending session: ' + error.message);
+                }
+            },
+
+            loadDiscussionView(sessionData) {
+                this.showView('discussion');
+
+                // Display question
+                document.getElementById('discussion-question').textContent = sessionData.question;
+
+                // Display results
+                this.displayResults('discussion-results', sessionData, false);
+
+                // Generate discussion prompts
+                this.generateDiscussionPrompts(sessionData);
+            },
+
+            generateDiscussionPrompts(sessionData) {
+                const container = document.getElementById('discussion-prompts');
+                const votes = sessionData.votes || {};
+                const options = sessionData.options;
+
+                // Count votes
+                const voteCounts = {};
+                options.forEach(opt => voteCounts[opt] = 0);
+                Object.values(votes).forEach(vote => {
+                    if (voteCounts[vote.option] !== undefined) {
+                        voteCounts[vote.option]++;
+                    }
+                });
+
+                const totalVotes = Object.values(voteCounts).reduce((a, b) => a + b, 0);
+                const maxVotes = Math.max(...Object.values(voteCounts));
+                const winningOptions = options.filter(opt => voteCounts[opt] === maxVotes);
+
+                let prompts = [];
+
+                // Check for split decision
+                if (winningOptions.length > 1 || maxVotes / totalVotes < 0.6) {
+                    prompts.push({
+                        title: 'Split Decision Detected',
+                        text: 'The votes are divided. Before moving forward, discuss: What concerns need to be addressed? What information are we missing?'
+                    });
+                }
+
+                // Check for strong alignment
+                if (winningOptions.length === 1 && maxVotes / totalVotes >= 0.75) {
+                    prompts.push({
+                        title: 'Strong Alignment',
+                        text: 'The team shows strong alignment on one option. Before finalizing, ask: Is there anything we\'re not seeing? Any risks or concerns we haven\'t discussed?'
+                    });
+                }
+
+                // General prompt
+                prompts.push({
+                    title: 'For Those Who Voted Differently',
+                    text: 'What perspectives or concerns do the minority voters have? Understanding the full picture makes for better decisions.'
+                });
+
+                // Render prompts
+                let html = '';
+                prompts.forEach(prompt => {
+                    html += `
+                        <div class="discussion-prompt">
+                            <h3>${prompt.title}</h3>
+                            <p>${prompt.text}</p>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            },
+
+            async captureDecision() {
+                const what = document.getElementById('decision-what').value.trim();
+                const why = document.getElementById('decision-why').value.trim();
+                const notDoing = document.getElementById('decision-not-doing').value.trim();
+
+                if (!what || !why || !notDoing) {
+                    alert('Please fill in all decision fields');
+                    return;
+                }
+
+                try {
+                    // Get session data for context
+                    const snapshot = await database.ref('sessions/' + this.currentCode).once('value');
+                    const sessionData = snapshot.val();
+
+                    // Generate markdown
+                    const markdown = this.generateDecisionMarkdown(sessionData, what, why, notDoing);
+
+                    // Store in session
+                    await database.ref('sessions/' + this.currentCode + '/decision').set({
+                        what: what,
+                        why: why,
+                        notDoing: notDoing,
+                        capturedAt: Date.now(),
+                        capturedBy: this.voterId
+                    });
+
+                    // Show export view
+                    document.getElementById('markdown-output').textContent = markdown;
+                    this.currentMarkdown = markdown;
+                    this.sessionData = sessionData;
+                    this.showView('export');
+
+                } catch (error) {
+                    alert('Error capturing decision: ' + error.message);
+                }
+            },
+
+            generateDecisionMarkdown(sessionData, what, why, notDoing) {
+                const date = new Date().toLocaleDateString();
+                const votes = sessionData.votes || {};
+                const totalVotes = Object.keys(votes).length;
+
+                let markdown = `# Decision Record\n\n`;
+                markdown += `**Date:** ${date}\n`;
+                markdown += `**Session Code:** ${sessionData.code}\n`;
+                markdown += `**Participants:** ${totalVotes} team member${totalVotes !== 1 ? 's' : ''}\n\n`;
+                markdown += `## Question\n\n${sessionData.question}\n\n`;
+                markdown += `## What We Decided\n\n${what}\n\n`;
+                markdown += `## Why We Decided This\n\n${why}\n\n`;
+                markdown += `## What We're NOT Doing\n\n${notDoing}\n\n`;
+                markdown += `---\n\n`;
+                markdown += `*Decision captured using AlignFirst*\n`;
+                markdown += `*Part of the AI on Our Teams methodology - learn more at [The Human AI Loop](https://thehumanailoop.com/)*`;
+
+                return markdown;
+            },
+
+            generateFullResultsMarkdown(sessionData) {
+                const date = new Date().toLocaleDateString();
+                const votes = sessionData.votes || {};
+                const options = sessionData.options;
+                const votingMode = sessionData.votingMode;
+                const decision = sessionData.decision || {};
+
+                // Count votes
+                const voteCounts = {};
+                const votersByOption = {};
+                
+                options.forEach(opt => {
+                    voteCounts[opt] = 0;
+                    votersByOption[opt] = [];
+                });
+
+                Object.entries(votes).forEach(([voterId, voteData]) => {
+                    const option = voteData.option;
+                    if (voteCounts[option] !== undefined) {
+                        voteCounts[option]++;
+                        if (votingMode === 'named' && voteData.voterName) {
+                            votersByOption[option].push(voteData.voterName);
+                        }
+                    }
+                });
+
+                const totalVotes = Object.values(voteCounts).reduce((a, b) => a + b, 0);
+
+                let markdown = `# AlignFirst Session - Full Results\n\n`;
+                markdown += `**Date:** ${date}\n`;
+                markdown += `**Session Code:** ${sessionData.code}\n`;
+                markdown += `**Total Participants:** ${totalVotes}\n`;
+                markdown += `**Voting Mode:** ${votingMode === 'anonymous' ? 'Anonymous' : 'Named'}\n\n`;
+                
+                markdown += `---\n\n`;
+                markdown += `## Question\n\n${sessionData.question}\n\n`;
+                
+                markdown += `## Voting Results\n\n`;
+                options.forEach(option => {
+                    const count = voteCounts[option];
+                    const percentage = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
+                    markdown += `### ${option}\n`;
+                    markdown += `- **Votes:** ${count} (${percentage}%)\n`;
+                    if (votingMode === 'named' && votersByOption[option].length > 0) {
+                        markdown += `- **Voters:** ${votersByOption[option].join(', ')}\n`;
+                    }
+                    markdown += `\n`;
+                });
+
+                if (decision.what) {
+                    markdown += `---\n\n`;
+                    markdown += `## Final Decision\n\n`;
+                    markdown += `### What We Decided\n\n${decision.what}\n\n`;
+                    markdown += `### Why We Decided This\n\n${decision.why}\n\n`;
+                    markdown += `### What We're NOT Doing\n\n${decision.notDoing}\n\n`;
+                }
+
+                markdown += `---\n\n`;
+                markdown += `*Session results from AlignFirst*\n`;
+                markdown += `*Part of the AI on Our Teams methodology - learn more at [The Human AI Loop](https://thehumanailoop.com/)*`;
+
+                return markdown;
+            },
+
+            copyMarkdown() {
+                navigator.clipboard.writeText(this.currentMarkdown).then(() => {
+                    alert('Decision record copied to clipboard!');
+                });
+            },
+
+            downloadMarkdown() {
+                const blob = new Blob([this.currentMarkdown], { type: 'text/markdown' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'decision-record-' + this.currentCode + '.md';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            },
+
+            downloadFullResults() {
+                const fullResults = this.generateFullResultsMarkdown(this.sessionData);
+                const blob = new Blob([fullResults], { type: 'text/markdown' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'alignfirst-full-results-' + this.currentCode + '.md';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            },
+
+            startNewSession() {
+                // Clear current session
+                this.currentCode = null;
+                this.currentSession = null;
+                this.isFacilitator = false;
+                this.isVoter = false;
+                this.currentVote = null;
+                
+                // Reset forms
+                document.getElementById('decision-question').value = '';
+                document.querySelectorAll('.option-field').forEach(field => field.value = '');
+                
+                // Show home
+                this.showView('home');
+            },
+
+            showError(containerId, message) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = `<div class="error">${message}</div>`;
+                setTimeout(() => {
+                    container.innerHTML = '';
+                }, 5000);
+            }
+        };
+
+        // Initialize app when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
