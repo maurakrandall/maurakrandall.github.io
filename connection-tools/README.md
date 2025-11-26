@@ -34,7 +34,7 @@ Replace synchronous standups with quick async updates. Perfect for:
 
 ---
 
-### 🎮 [Warm-Up](https://maurakrandall.github.io/connection-tools/warm-up.html)
+### 🎮 [Warm-Up](https://maurakrandall.github.io/connection-tools/warmup-qotd.html)
 **Pre-meeting connection builder**
 
 Get the team talking before diving into work. Perfect for:
