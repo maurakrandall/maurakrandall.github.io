@@ -228,18 +228,13 @@
         }
 
         .teammate-item .icon-select {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 32px;
             text-align: center;
-            padding: 12px 8px;
+            padding: 8px;
+            cursor: pointer;
             border: 2px solid #2B7A78;
             border-radius: 6px;
             background: white;
-            color: #0B2A2F;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 48px;
         }
 
         .session-created {
@@ -808,7 +803,7 @@
         <div id="addLinesScreen" class="screen">
             <h2 style="margin-bottom: 16px; color: #0B2A2F;">Commitments to Sign</h2>
             <p style="color: #718096; margin-bottom: 24px; line-height: 1.5;">
-                Create a line for each decision you're seeking agreement on. Your teammates will respond to each line individually—so you'll know exactly what people commit to and where they have questions.
+                Create a line for each decision you're seeking agreement on. Your teammates will respond to each line individually—so you'll know exactly what people commit to and where they have questions.
             </p>
             
             <div id="linesContainer">
@@ -831,7 +826,10 @@
                 <!-- Teammates will be added dynamically -->
             </div>
 
-            <button class="add-more-btn" onclick="addTeammate()">+ Add Teammate</button>
+            <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                <button class="add-more-btn" onclick="addTeammate()" style="width: 50%;">+ Add Teammate</button>
+                <button id="importContextCardBtn" class="add-more-btn" onclick="showImportModal()" style="width: 50%; background: #2B7A78; color: white; border: 2px solid #2B7A78;">🎴 Import from Context Card</button>
+            </div>
 
             <div class="btn-group">
                 <button class="btn btn-secondary" onclick="showScreen('addLinesScreen')">Back</button>
@@ -842,7 +840,7 @@
         <!-- Session Created Screen -->
         <div id="sessionCreatedScreen" class="screen">
             <div class="session-created">
-                <h2 style="color: #0B2A2F; margin-bottom: 16px;">✓ Session Created!</h2>
+                <h2 style="color: #0B2A2F; margin-bottom: 16px;">✅ Session Created!</h2>
                 
                 <div id="sessionSummary">
                     <!-- Will be populated dynamically -->
@@ -889,30 +887,33 @@
             <div id="sessionInfoBox" style="background: #F0F9F8; border: 2px solid #2B7A78; border-radius: 6px; padding: 16px; margin-bottom: 24px;">
                 <p style="color: #0B2A2F; margin: 0;"><strong id="sessionNameDisplay"></strong></p>
                 <p style="color: #718096; margin: 8px 0 0 0; font-size: 14px;" id="sessionDetailsDisplay"></p>
+                <div id="joinContextDisplay" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #2B7A78; display: none;">
+                    <p style="color: #0B2A2F; margin: 0 0 4px 0; font-size: 13px; font-weight: 600;">Context:</p>
+                    <p style="color: #3D3D3D; margin: 0; font-size: 13px; word-break: break-word;" id="joinContextText"></p>
+                </div>
             </div>
 
-            <div id="joinDropdownContainer" class="form-group" style="display: none;">
-                <label>Who are you? <span class="required">*</span></label>
-                <select id="teammateDropdown" onchange="handleTeammateSelection()">
-                    <option value="">-- Select your name --</option>
-                </select>
+            <div class="form-group">
+                <label>Choose your icon:</label>
+                <button type="button" class="icon-select" id="joinIconButton" onclick="openJoinIconPicker()">
+                    <span class="selected-icon" id="joinSelectedIcon">?</span>
+                </button>
+                <p class="helper-text">Pick an emoji that represents you</p>
             </div>
 
-            <div id="joinManualContainer">
-                <div class="form-group">
-                    <label>Your name: <span class="required">*</span></label>
-                    <input type="text" id="joinName" placeholder="e.g., Alex">
-                </div>
+            <div class="form-group">
+                <label>Your name: <span class="required">*</span></label>
+                <input type="text" id="joinName" placeholder="e.g., Alex">
+            </div>
 
-                <div class="form-group">
-                    <label>Your role (optional):</label>
-                    <input type="text" id="joinRole" placeholder="e.g., Engineering, Product, Design">
-                </div>
+            <div class="form-group">
+                <label>Your role (optional):</label>
+                <input type="text" id="joinRole" placeholder="e.g., Engineering, Product, Design">
             </div>
 
             <div class="btn-group">
                 <button class="btn btn-secondary" onclick="showScreen('joinScreen')">Back</button>
-                <button class="btn btn-primary" onclick="confirmJoin()">Next: Review Decisions</button>
+                <button class="btn btn-primary" onclick="confirmJoin()">Continue to Review</button>
             </div>
         </div>
 
@@ -932,7 +933,7 @@
         <!-- Confirmation Screen (after submitting) -->
         <div id="confirmationScreen" class="screen">
             <div style="text-align: center; padding: 40px 0;">
-                <div style="font-size: 64px; margin-bottom: 16px;">âœ“</div>
+                <div style="font-size: 64px; margin-bottom: 16px;">✓</div>
                 <h2 style="color: #0B2A2F; margin-bottom: 16px;">Responses Submitted!</h2>
                 <p style="color: #718096; margin-bottom: 32px;">Your responses have been recorded. The facilitator can now see your commitments.</p>
                 
@@ -948,6 +949,10 @@
                 <div>
                     <h2 style="margin: 0 0 8px 0; color: #0B2A2F;" id="dashboardSessionName"></h2>
                     <p style="color: #718096; margin: 0;" id="dashboardSessionInfo"></p>
+                    <div id="dashboardContext" style="margin-top: 12px; padding: 12px; background: #F0F9F8; border-left: 3px solid #2B7A78; border-radius: 4px; display: none;">
+                        <p style="margin: 0; font-size: 14px; color: #0B2A2F; font-weight: 600;">Context:</p>
+                        <p style="margin: 4px 0 0 0; font-size: 14px; color: #3D3D3D; word-break: break-word;" id="dashboardContextText"></p>
+                    </div>
                 </div>
                 <div>
                     <p style="margin: 0; font-size: 14px; color: #718096;">Session Code:</p>
@@ -979,15 +984,22 @@
             <p style="margin-top: 20px;"><strong>Built using the "Triad" model:</strong></p>
             <ul>
                 <li>👤 <strong>Maura:</strong> Product vision, UX design</li>
-                <li>🎨 <strong>CP:</strong> Technical structure, system logic</li>
-                <li>📮 <strong>Soph:</strong> Content drafting, strategic thinking</li>
+                <li>🤖 <strong>CP:</strong> Technical structure, system logic</li>
+                <li>🔮 <strong>Soph:</strong> Content drafting, strategic thinking</li>
             </ul>
             
             <p>Learn more at <a href="https://thehumanailoop.com/">The Human AI Loop</a></p>
         </div>
     </div>
 
-    
+    <!-- Icon Picker Modal -->
+    <div id="iconPickerModal" class="icon-picker-modal">
+        <div class="icon-picker-content">
+            <h3 style="margin-bottom: 16px; color: #0B2A2F;">Choose Your Icon</h3>
+            <div class="icon-grid" id="iconGrid"></div>
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 16px;" onclick="closeIconPicker()">Close</button>
+        </div>
+    </div>
 
     <!-- Export Modal -->
     <div id="exportModal" class="icon-picker-modal">
@@ -1018,15 +1030,8 @@
             teammates: []
         };
 
-        // Helper function to generate initials from name
-        window.getInitials = function(name) {
-            if (!name) return '?';
-            const words = name.trim().split(' ');
-            if (words.length === 1) {
-                return words[0].substring(0, 2).toUpperCase();
-            }
-            return (words[0][0] + words[words.length - 1][0]).toUpperCase();
-        }
+        // Available Icons
+        const availableIcons = ['👤', '❡', '🎯', '👀', '✨', '🔥', '💡', '🌟', '💼', '🎨', '📊', '🔧', '💪', '🎭', '🌈', '⭕', '🎪', '🎬', '📱', '💻', '🎮', '🎵', '🎸', '🎹', '🎺', '🎻', '🥁', '🎤', '🎧', '📻', '📺', '📷', '📸', '🎥'];
 
         // Initialize Firebase when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
@@ -1137,7 +1142,7 @@
             teammateDiv.className = 'teammate-item';
             teammateDiv.id = `teammate-${teammateCounter}`;
             teammateDiv.innerHTML = `
-                <div class="icon-select" id="teammateIcon-${teammateCounter}">
+                <div class="icon-select" id="teammateIcon-${teammateCounter}" onclick="openIconPicker(${teammateCounter})">
                     👤
                 </div>
                 <div>
@@ -1150,16 +1155,75 @@
                 </div>
             `;
             container.appendChild(teammateDiv);
-            
-            // Update icon display when name changes
-            document.getElementById(`teammateName-${teammateCounter}`).addEventListener('input', function() {
-                const name = this.value;
-                const iconDiv = document.getElementById(`teammateIcon-${teammateCounter}`);
-                iconDiv.textContent = getInitials(name);
-            });
         }
 
-;
+        // Icon Picker - GLOBAL
+        window.openIconPicker = function(index) {
+            currentTeammateIndex = index;
+            const modal = document.getElementById('iconPickerModal');
+            const grid = document.getElementById('iconGrid');
+            grid.innerHTML = '';
+            
+            availableIcons.forEach(icon => {
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'icon-option';
+                iconDiv.textContent = icon;
+                iconDiv.onclick = () => selectIcon(icon);
+                grid.appendChild(iconDiv);
+            });
+            
+            modal.classList.add('active');
+        }
+
+        window.selectIcon = function(icon) {
+            if (currentTeammateIndex === 'join') {
+                // Join flow - set icon for joining teammate
+                document.getElementById('joinSelectedIcon').textContent = icon;
+            } else if (currentTeammateIndex !== null) {
+                // Create flow - set icon for teammate being added
+                document.getElementById(`teammateIcon-${currentTeammateIndex}`).textContent = icon;
+            }
+            closeIconPicker();
+        }
+
+        window.closeIconPicker = function() {
+            document.getElementById('iconPickerModal').classList.remove('active');
+            currentTeammateIndex = null;
+        }
+
+        // Create Session - GLOBAL
+        window.createSession = async function() {
+            try {
+                // Validate inputs
+                const sessionName = document.getElementById('sessionName').value.trim();
+                if (!sessionName) {
+                    alert('Please enter a decision name');
+                    showScreen('setupScreen');
+                    return;
+                }
+
+                const commitButtonText = document.getElementById('commitButtonText').value.trim() || "I'm in";
+                if (commitButtonText.length < 2 || commitButtonText.length > 20) {
+                    alert('Commit button text must be 2-20 characters');
+                    showScreen('customizeButtonsScreen');
+                    return;
+                }
+
+                // Collect lines
+                const lines = {};
+                let lineOrder = 1;
+                const lineElements = document.querySelectorAll('[id^="lineText-"]');
+                
+                lineElements.forEach((element) => {
+                    const lineText = element.value.trim();
+                    if (lineText) {
+                        const lineId = `line-${Date.now()}-${lineOrder}`;
+                        lines[lineId] = {
+                            text: lineText,
+                            order: lineOrder++,
+                            requiredSigners: "all",
+                            responses: {}
+                        };
                     }
                 });
 
@@ -1300,41 +1364,18 @@
                     document.getElementById('sessionDetailsDisplay').textContent = 
                         `${lineCount} commitment${lineCount !== 1 ? 's' : ''} | ${teammateCount} teammate${teammateCount !== 1 ? 's' : ''} already joined`;
                     
-                    // Check if session has pre-defined teammates
-                    const existingTeammates = session.teammates || {};
-                    const teammateCount = Object.keys(existingTeammates).length;
-                    
-                    if (teammateCount > 0) {
-                        // Show dropdown for pre-defined team
-                        document.getElementById('joinDropdownContainer').style.display = 'block';
-                        document.getElementById('joinManualContainer').style.display = 'none';
-                        
-                        // Populate dropdown
-                        const dropdown = document.getElementById('teammateDropdown');
-                        dropdown.innerHTML = '<option value="">-- Select your name --</option>';
-                        
-                        Object.keys(existingTeammates).forEach(teammateId => {
-                            const teammate = existingTeammates[teammateId];
-                            const option = document.createElement('option');
-                            option.value = teammateId;
-                            option.textContent = `${teammate.name}${teammate.role ? ' (' + teammate.role + ')' : ''}`;
-                            option.setAttribute('data-name', teammate.name);
-                            option.setAttribute('data-role', teammate.role || '');
-                            dropdown.appendChild(option);
-                        });
-                        
-                        // Add "Other" option for unlisted teammates
-                        const otherOption = document.createElement('option');
-                        otherOption.value = 'other';
-                        otherOption.textContent = '-- Other (enter manually) --';
-                        dropdown.appendChild(otherOption);
+                    // Display context if provided
+                    const joinContextDiv = document.getElementById('joinContextDisplay');
+                    const joinContextText = document.getElementById('joinContextText');
+                    if (session.context && session.context.trim()) {
+                        joinContextText.textContent = session.context;
+                        joinContextDiv.style.display = 'block';
                     } else {
-                        // Show manual entry
-                        document.getElementById('joinDropdownContainer').style.display = 'none';
-                        document.getElementById('joinManualContainer').style.display = 'block';
+                        joinContextDiv.style.display = 'none';
                     }
                     
-                    // Reset form
+                    // Reset join form
+                    document.getElementById('joinSelectedIcon').textContent = '?';
                     document.getElementById('joinName').value = '';
                     document.getElementById('joinRole').value = '';
                     
@@ -1348,34 +1389,21 @@
             }
         }
 
-
-
-
-        // Handle teammate selection from dropdown - GLOBAL
-        window.handleTeammateSelection = function() {
-            const dropdown = document.getElementById('teammateDropdown');
-            const selectedValue = dropdown.value;
-            
-            if (selectedValue === 'other') {
-                // Show manual entry
-                document.getElementById('joinDropdownContainer').style.display = 'block';
-                document.getElementById('joinManualContainer').style.display = 'block';
-            } else if (selectedValue) {
-                // Auto-fill from selection
-                const selectedOption = dropdown.options[dropdown.selectedIndex];
-                const name = selectedOption.getAttribute('data-name');
-                const role = selectedOption.getAttribute('data-role');
-                
-                document.getElementById('joinName').value = name;
-                document.getElementById('joinRole').value = role;
-            }
+        // Open icon picker for join flow - GLOBAL
+        window.openJoinIconPicker = function() {
+            openIconPicker('join');  // Pass 'join' as the index for join flow
         }
 
         // Confirm join (save teammate to Firebase) - GLOBAL
         window.confirmJoin = async function() {
+            const icon = document.getElementById('joinSelectedIcon').textContent;
             const name = document.getElementById('joinName').value.trim();
             const role = document.getElementById('joinRole').value.trim();
             
+            if (icon === '?') {
+                alert('Please choose an icon');
+                return;
+            }
             if (!name) {
                 alert('Please enter your name');
                 return;
@@ -1387,9 +1415,6 @@
                 
                 // Generate unique teammate ID
                 const teammateId = `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-                
-                // Generate initials for this teammate
-                const icon = getInitials(name);
                 
                 // Create teammate object
                 const teammate = {
@@ -1440,10 +1465,10 @@
                             ${session.buttonLabels.commit}
                         </button>
                         <button class="response-btn needinfo-btn" onclick="selectResponse('${lineId}', 'needInfo')">
-                            ${session.buttonLabels.needInfo} ▾
+                            ${session.buttonLabels.needInfo} â–¾
                         </button>
                         <button class="response-btn cantcommit-btn" onclick="selectResponse('${lineId}', 'cantCommit')">
-                            ${session.buttonLabels.cantCommit} ▾
+                            ${session.buttonLabels.cantCommit} â–¾
                         </button>
                     </div>
                     
@@ -1615,6 +1640,16 @@
             document.getElementById('dashboardSessionName').textContent = session.name;
             document.getElementById('dashboardSessionCode').textContent = session.code;
             
+            // Display context if provided
+            const contextDiv = document.getElementById('dashboardContext');
+            const contextText = document.getElementById('dashboardContextText');
+            if (session.context && session.context.trim()) {
+                contextText.textContent = session.context;
+                contextDiv.style.display = 'block';
+            } else {
+                contextDiv.style.display = 'none';
+            }
+            
             const lines = session.lines || {};
             const teammates = session.teammates || {};
             const lineCount = Object.keys(lines).length;
@@ -1683,7 +1718,7 @@
                     <div class="dashboard-line-header">
                         <h4>${line.text}</h4>
                         <span class="response-status ${status}">
-                            ${responseCount}/${teammateCount} ${status === 'complete' ? 'âœ“' : ''}
+                            ${responseCount}/${teammateCount} ${status === 'complete' ? '✓' : ''}
                         </span>
                     </div>
                 `;
@@ -1729,7 +1764,7 @@
                     
                     html += '</div>';
                 } else {
-                    html += '<p style="color: #718096; font-size: 14px; margin-top: 8px;">â³ Waiting for responses...</p>';
+                    html += '<p style="color: #718096; font-size: 14px; margin-top: 8px;">⏳ Waiting for responses...</p>';
                 }
                 
                 lineDiv.innerHTML = html;
@@ -1789,7 +1824,7 @@
                     </div>
                     <div class="dashboard-teammate-progress">
                         <div class="percentage">${stat.responseCount}/${lineCount}</div>
-                        <div class="label">${stat.percentage === 100 ? 'âœ“ Complete' : stat.percentage > 0 ? 'â³ In Progress' : 'â³ Pending'}</div>
+                        <div class="label">${stat.percentage === 100 ? '✓ Complete' : stat.percentage > 0 ? '⏳ In Progress' : '⏳ Pending'}</div>
                     </div>
                 `;
                 
@@ -1861,7 +1896,7 @@
             md += `**Session:** ${session.code}  \n`;
             md += `**Created by:** ${session.createdBy}  \n`;
             md += `**Date:** ${new Date(session.createdAt).toLocaleDateString()}  \n`;
-            md += `**Status:** ${responseRate === 100 ? '✓ Complete' : '⚠ In Progress'} (${totalResponses}/${totalLines * totalTeammates} responded)  \n\n`;
+            md += `**Status:** ${responseRate === 100 ? '✅ Complete' : '⏳ In Progress'} (${totalResponses}/${totalLines * totalTeammates} responded)  \n\n`;
             
             if (session.context) {
                 md += `**Context:** ${session.context}\n\n`;
@@ -1881,7 +1916,7 @@
                 const responseCount = Object.keys(responses).length;
                 
                 // Line header with status
-                const statusIcon = responseCount === totalTeammates ? '✓' : responseCount > 0 ? '⚠' : '⭕';
+                const statusIcon = responseCount === totalTeammates ? '✅' : responseCount > 0 ? '⏳' : '⭕';
                 md += `### ${statusIcon} ${line.text}\n\n`;
                 
                 if (responseCount === 0) {
@@ -1910,7 +1945,7 @@
                     // Export committed responses
                     if (committed.length > 0) {
                         committed.forEach(({ teammate, response, timestamp }) => {
-                            md += `- ${teammate.icon} **${teammate.name}:** "${session.buttonLabels.commit}" Ã¢Å“" *(${timestamp})*\n`;
+                            md += `- ${teammate.icon} **${teammate.name}:** "${session.buttonLabels.commit}" âœ" *(${timestamp})*\n`;
                             if (response.note) {
                                 md += `  _"${response.note}"_\n`;
                             }
@@ -1958,7 +1993,7 @@
                 });
                 
                 const percentage = totalLines > 0 ? Math.round((responseCount / totalLines) * 100) : 0;
-                const status = percentage === 100 ? '✓ Complete' : percentage > 0 ? '⚠ In Progress' : '⭕ Pending';
+                const status = percentage === 100 ? '✅ Complete' : percentage > 0 ? '⏳ In Progress' : '⭕ Pending';
                 
                 md += `| ${teammate.icon} ${teammate.name} | ${teammate.role || 'N/A'} | ${responseCount}/${totalLines} | ${status} |\n`;
             });
@@ -2036,7 +2071,7 @@
             });
             
             html += `<p style="color: #718096; margin-bottom: 16px;">`;
-            if (commitCount > 0) html += `âœ“ ${commitCount} committed | `;
+            if (commitCount > 0) html += `✓ ${commitCount} committed | `;
             if (needInfoCount > 0) html += `? ${needInfoCount} need info | `;
             if (cantCommitCount > 0) html += `âš  ${cantCommitCount} can't commit`;
             html += `</p>`;
@@ -2045,6 +2080,127 @@
             showScreen('confirmationScreen');
         }
 
+        // Context Card Import Functions
+        window.showImportModal = function() {
+            const modal = document.getElementById('import-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        window.hideImportModal = function() {
+            const modal = document.getElementById('import-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.getElementById('context-card-paste').value = '';
+            }
+        }
+
+        window.handleContextCardFile = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const json = JSON.parse(e.target.result);
+                    processContextCardImport(json);
+                } catch (error) {
+                    alert('Error reading file. Please make sure it\'s a valid Context Card JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        window.importFromPaste = function() {
+            const jsonText = document.getElementById('context-card-paste').value.trim();
+            if (!jsonText) {
+                alert('Please paste Context Card JSON first');
+                return;
+            }
+
+            try {
+                const json = JSON.parse(jsonText);
+                processContextCardImport(json);
+            } catch (error) {
+                alert('Invalid JSON. Please check your Context Card format.');
+            }
+        }
+
+        window.processContextCardImport = function(contextCard) {
+            // Validate structure
+            if (!contextCard.team || !Array.isArray(contextCard.team)) {
+                alert('Invalid Context Card format. Missing team array.');
+                return;
+            }
+
+            // Clear existing teammates
+            const container = document.getElementById('teammatesContainer');
+            container.innerHTML = '';
+            teammateCounter = 0;
+
+            // Add each team member
+            contextCard.team.forEach(member => {
+                teammateCounter++;
+                const teammateDiv = document.createElement('div');
+                teammateDiv.className = 'teammate-item';
+                teammateDiv.id = `teammate-${teammateCounter}`;
+                
+                // Determine icon based on type
+                const icon = member.type === 'human' ? '👤' : '🤖';
+                
+                teammateDiv.innerHTML = `
+                    <div class="icon-select" id="teammateIcon-${teammateCounter}" onclick="openIconPicker(${teammateCounter})">
+                        ${icon}
+                    </div>
+                    <div>
+                        <label>Name:</label>
+                        <input type="text" id="teammateName-${teammateCounter}" value="${member.name || ''}" placeholder="Name" required>
+                    </div>
+                    <div>
+                        <label>Role (optional):</label>
+                        <input type="text" id="teammateRole-${teammateCounter}" value="${member.role || ''}" placeholder="Role">
+                    </div>
+                `;
+                container.appendChild(teammateDiv);
+            });
+
+            // Hide modal and show success
+            hideImportModal();
+            alert(`✅ Team imported! ${contextCard.team.length} team members added.`);
+            
+            // Hide import button since team is already imported
+            const importBtn = document.getElementById('importContextCardBtn');
+            if (importBtn) {
+                importBtn.style.display = 'none';
+            }
+        }
+
     </script>
+
+    <!-- Import Modal -->
+    <div id="import-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 12px; padding: 30px; max-width: 500px; width: 90%;">
+            <h3 style="margin: 0 0 20px 0; color: #0B2A2F;">🎴 Import Team Context Card</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #0B2A2F;">Upload JSON File</label>
+                <input type="file" accept=".json" onchange="handleContextCardFile(event)" style="width: 100%; padding: 10px; border: 2px solid #2B7A78; border-radius: 8px; background: white; color: #3D3D3D;">
+            </div>
+
+            <div style="margin: 20px 0; text-align: center; color: #718096;">— OR —</div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #0B2A2F;">Paste JSON</label>
+                <textarea id="context-card-paste" placeholder='Paste your Context Card JSON here...' style="width: 100%; min-height: 150px; padding: 12px; border: 2px solid #2B7A78; border-radius: 8px; font-family: monospace; font-size: 13px; resize: vertical; background: white; color: #3D3D3D;"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button onclick="hideImportModal()" style="padding: 10px 20px; background: #718096; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px;">Cancel</button>
+                <button onclick="importFromPaste()" style="padding: 10px 20px; background: #DAA520; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600;">Import</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
