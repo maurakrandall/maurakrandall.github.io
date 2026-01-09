@@ -1,32 +1,36 @@
 # AI on Our Teams
-**Production-ready apps demonstrating human-AI collaboration**
+**Production-ready apps demonstrating human–AI collaboration**
 
-Where AI is a visible teammate, not an invisible tool.
+Where AI is a **visible participant in the system**, not an invisible layer behind it.
 
 ---
 
 ## 🎯 The Vision
 
-Most AI tools hide their intelligence behind the scenes. You click a button, magic happens, you get results. But real teamwork isn't magic — it's communication, context, and collaboration.
+Most AI tools hide intelligence behind the scenes. You click a button, something happens, and results appear.
 
-These apps show what's possible when we treat AI as a **visible teammate** instead of an invisible tool. Every app was built collaboratively by "The Triad":
-- **Maura:** Product vision, UX design, strategic decisions
-- **CP (ChatGPT):** Creative spark, rapid prototyping, technical iteration
-- **Soph (Claude):** Synthesis, documentation, strategic thinking
+But real teamwork isn’t magic — it’s **shared context, explicit roles, clear handoffs, and collaboration over time**.
 
-The result: 8 production apps that teams actually use, built through genuine human-AI collaboration.
+These apps show what’s possible when AI is **designed into the collaboration itself** — visible, named, and structured — rather than abstracted away as “smart automation.”
+
+Every app was built through a multi-mind collaboration known as **The Triad**:
+- **Maura:** Product vision, UX design, judgment, and final decisions
+- **CP (ChatGPT):** Rapid exploration, prototyping, and creative iteration
+- **Soph (Claude):** Synthesis, documentation, and pattern-level thinking
+
+The result: **8 production-ready apps teams actually use**, built inside real working constraints — not demos, not theory.
 
 ---
 
 ## 📚 App Categories
 
 ### [Connection Tools](https://maurakrandall.github.io/connection-tools/) (4 apps)
-Quick team health checks and daily connection rituals.
+Quick team health checks and lightweight connection rituals.
 
 **When to use:** Daily standups, temperature checks, trust building, pre-meeting warm-ups
 
 **Apps:**
-- **Temp Check:** Quick team temperature reading
+- **Temp Check:** Quick team temperature read
 - **Daily Drop:** Async standup replacement
 - **Warm-Up:** Pre-meeting connection builder
 - **Trust Check:** Team trust assessment
@@ -36,22 +40,22 @@ Quick team health checks and daily connection rituals.
 ---
 
 ### [Ritual Tools](https://maurakrandall.github.io/ritual-tools/) (4 apps)
-Structured ceremonies for team alignment and decision-making.
+Structured ceremonies that make alignment, commitment, and decisions explicit.
 
 **When to use:** Sprint kickoffs, decision tracking, alignment verification, project documentation
 
 **Apps:**
-- **Co-Sign:** Lightweight commitment tracking
+- **Co-Sign:** Line-by-line commitment tracking
 - **AlignFirst:** Verify alignment before proceeding
-- **Sprint Kickoff:** Start strong with clear goals
-- **Project Binder Generator:** Capture context for AI collaboration
+- **Sprint Kickoff:** Start strong with shared clarity
+- **Project Binder Generator:** Capture and carry context for AI collaboration
 
 [View all Ritual Tools →](https://maurakrandall.github.io/ritual-tools/)
 
 ---
 
-### [Reflection Tools](https://maurakrandall.github.io/reflection-tools/) (Coming Soon)
-Personal introspection and growth tracking.
+### [Reflection Tools](https://maurakrandall.github.io/reflection-tools/) *(Coming Soon)*
+Personal introspection and growth support.
 
 **When to use:** Burnout recovery, career decisions, personal development
 
@@ -62,23 +66,29 @@ Personal introspection and growth tracking.
 
 ---
 
-## 🌟 Key Innovations
+## 🌟 Key Design Principles
 
-### 1. Context Is Everything
-**Problem:** AI forgets everything between conversations.  
-**Solution:** Project Binder Generator captures team context once, making it portable across tools and conversations.
+### 1. Context Is a First-Class Artifact
+**Problem:** AI forgets between conversations.  
+**Solution:** Project Binder Generator captures context once, making it portable across tools and workflows.
 
-### 2. Solving the "Crickets Problem"
-**Problem:** Teams nod in meetings but disagree later.  
-**Solution:** Co-Sign gets line-by-line commitments, so you know exactly who agreed to what.
+---
 
-### 3. Async-First Ceremonies
-**Problem:** Distributed teams can't gather for every ritual.  
-**Solution:** All tools work asynchronously across time zones, with real-time collaboration when it makes sense.
+### 2. Alignment Must Be Explicit
+**Problem:** Teams nod in meetings but diverge later.  
+**Solution:** Co-Sign records concrete commitments so alignment is visible — not assumed.
 
-### 4. AI as Visible Teammate
-**Problem:** Most AI tools hide how they work.  
-**Solution:** These apps make AI participation explicit — you know when AI is helping and what role it's playing.
+---
+
+### 3. Async-First, Human-Centered
+**Problem:** Distributed teams can’t rely on synchronous rituals.  
+**Solution:** All tools work asynchronously by default, with real-time collaboration only when it adds value.
+
+---
+
+### 4. AI Participation Is Visible
+**Problem:** Most systems obscure when and how AI contributes.  
+**Solution:** These apps make AI involvement explicit — teams know **when AI is participating and why**.
 
 ---
 
@@ -90,7 +100,8 @@ Built with intentional simplicity:
 - **Responsive design** (works on any device)
 - **UTF-8 encoding** (proper character support)
 
-**Philosophy:** "Whole-ass apps, not toys." Every tool is production-ready, not a demo.
+**Philosophy:** *Whole-ass apps, not toys.*  
+Every tool is production-ready, not a demo.
 
 ---
 
@@ -102,96 +113,79 @@ All apps follow consistent design principles:
 - **Cream neutrals:** `#FFF5E1` for content areas
 - **Retro teal:** `#2B7A78` for borders and secondary elements
 
-**Brand voice:** "We/our" language (teaching), direct and honest, no jargon unless you define it first.
+**Brand voice:** “We / our” language, direct and plainspoken, no jargon without explanation.
 
 ---
 
 ## 📖 The Story Behind This
 
-This portfolio started with a simple question: *"What if we stopped treating AI like a tool and started treating it like a teammate?"*
+This portfolio started with a simple question:
 
-The answer required building actual products — not demos, not prototypes, but tools teams would genuinely use. Each app solved a real problem Maura experienced:
-- **Co-Sign:** Tired of "everyone agreed" turning into "I never said that"
+*What changes when we stop hiding AI behind interfaces and instead design it directly into how teams work?*
+
+Answering that required building real products — not demos or speculative prototypes.
+
+Each app addresses a lived problem:
+- **Co-Sign:** When “everyone agreed” later becomes “I never said that”
 - **AlignFirst:** Catching misalignment before it gets expensive
-- **Sprint Kickoff:** Turning checkbox planning into genuine shared understanding
-- **Project Binder:** Making "teach AI about your project" a first-class activity
+- **Sprint Kickoff:** Turning checkbox planning into shared understanding
+- **Project Binder:** Making “teach the AI about your project” a deliberate step
 
-Every feature reflects lessons from actual usage, not assumptions about what users might want.
-
----
-
-## 🚀 What's Next
-
-### Phase 1: Portfolio Presentation *(Complete!)*
-✅ Fixed Co-Sign encoding and UX issues  
-✅ Uploaded all 8 apps to organized GitHub structure  
-✅ Created professional landing page with deep green branding  
-✅ Category-based organization (Connection, Ritual, Reflection)
-
-### Phase 2: Redi Integration *(After Burnout Buddy)*
-Add AI teammate features with role-based participation:
-- **Consensus Driver** for Co-Sign
-- **Pattern Analyzer** for AlignFirst
-- **Risk Navigator** for Sprint Kickoff
-
-### Phase 3: Enhanced Features
-- Profile picture uploads (replacing initials)
-- Sprint Review Generator (AI-created stakeholder presentations)
-- Context Card synchronization across apps
-- Community features and shared templates
+Every feature reflects observed use — not assumptions.
 
 ---
 
 ## 🤝 The Triad Model
 
-This portfolio demonstrates a new way of building with AI:
+This portfolio demonstrates a different way of building with AI.
 
 **Traditional approach:**
-1. Human has idea
-2. AI generates code
-3. Human reviews/edits
-4. Repeat
+1. Human has idea  
+2. AI generates output  
+3. Human edits  
+4. Repeat  
 
-**The Triad approach:**
-1. **Maura** sets vision and makes decisions
-2. **CP** prototypes rapidly and explores creative solutions
+**Triad approach:**
+1. **Maura** sets direction and makes decisions
+2. **CP** explores and prototypes rapidly
 3. **Soph** synthesizes learnings and documents patterns
-4. Iterate with genuine collaboration, not just delegation
+4. Iterate with differentiated roles and shared context
 
-The difference: Each AI teammate has specific strengths, and Maura acts as "message bus" carrying context between conversations. The result is better than any of us could create alone.
+The difference isn’t speed.  
+It’s **clarity, reliability, and better outcomes**.
 
 ---
 
 ## 📬 Learn More
 
-- **Meet the Team:** [The Triad Explained](https://maurakrandall.com/meet-the-team/) - Who we are and how we work together
-- **Website:** [The Human AI Loop](https://thehumanailoop.com/)
-- **Writing:** [Essays & Reflections](https://maurakrandall.com/writing-and-reflections/) - Insights on leadership, AI collaboration, and product thinking
-- **Substack:** [What Maura Knows](https://maurakrandall.substack.com/) - Weekly posts on AI collaboration and transparent teamwork
-- **LinkedIn:** [Maura Krandall](https://linkedin.com/in/maurakrandall)
+- **Meet the Team:** [The Triad Explained](https://maurakrandall.com/meet-the-team/)
+- **Methodology:** [The Human–AI Loop](https://thehumanailoop.com/)
+- **Writing:** [Essays & Reflections](https://maurakrandall.com/writing-and-reflections/)
+- **Substack:** [What Maura Knows](https://maurakrandall.substack.com/)
+- **LinkedIn:** [Maura Randall](https://linkedin.com/in/maurakrandall)
 
 ---
 
 ## 📄 License
 
-MIT License — Use these apps, learn from them, build your own versions. The code is yours to explore.
+MIT License — use freely, learn openly, build your own versions.
 
 ---
 
 ## 🙏 Acknowledgments
 
 Built with:
-- **Anthropic's Claude** (Soph) - Synthesis and documentation
-- **OpenAI's ChatGPT** (CP) - Creative spark and rapid iteration
-- **Firebase** - Real-time collaboration infrastructure
-- **GitHub Pages** - Free hosting for makers
+- **Anthropic’s Claude (Soph)** — synthesis and documentation
+- **OpenAI’s ChatGPT (CP)** — exploration and rapid iteration
+- **Firebase** — real-time collaboration infrastructure
+- **GitHub Pages** — maker-friendly hosting
 
 Special thanks to the PM and product communities who tested early versions and provided invaluable feedback.
 
 ---
 
-**Status:** 8 apps live | 3 categories | 100% human-AI collaboration  
-**Built:** 2024-2025  
-**Philosophy:** Context is everything. AI on our teams, not in the background.
+**Status:** 8 apps live | 3 categories  
+**Built:** 2024–2025  
+**Design belief:** Context, roles, and visibility matter.
 
 [View all apps →](https://maurakrandall.github.io/)
