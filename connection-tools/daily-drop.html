@@ -35,11 +35,11 @@
     .meta{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap }
     .pill{ border:1px solid var(--bord); border-radius:999px; padding:4px 10px; font-size:12px; background:#fff }
     .tiny{ font-size:12px; color:var(--muted); margin-top:10px }
+    .debug{ margin-top:12px; font-size:12px; color:#9a1b1b; display:none; white-space:pre-wrap; }
   </style>
 </head>
 
 <body>
-  <!-- Pep'r · Daily Drop (Inspiration + Reflection) -->
   <div class="wrap" role="region" aria-labelledby="t">
     <h1 id="t">💧 Daily Drop — Inspiration &amp; Reflection</h1>
     <p class="sub">Pick a drop by theme, or let luck decide. Copy in one click.</p>
@@ -55,8 +55,8 @@
         <option>Process</option>
       </select>
 
-      <button id="btnSurprise" class="primary">🎲 Surprise me</button>
-      <button id="btnCopy">📋 Copy</button>
+      <button id="btnSurprise" class="primary" type="button">🎲 Surprise me</button>
+      <button id="btnCopy" type="button">📋 Copy</button>
     </div>
 
     <article class="card" id="ddCard">
@@ -76,293 +76,308 @@
     <div class="tiny">
       Tip: Ask Pep'r for a <em>Daily Drop</em> at stand-up, during a lull, or before retros. Consistency compounds.
     </div>
+
+    <div id="debug" class="debug"></div>
   </div>
 
   <script>
-    /* Pep'r · Daily Drop data (40 entries)
-       Theme tags: Energy • Clarity • Momentum • Alignment • Trust • Process
-    */
-
-    function d(q, w, t, c){ return { q, w, t, c }; }
-
-    const DROPS = [
-      // 1–10
-      d("Progress is not linear — but it is cumulative.",
-        "Momentum comes from little nudges that stack. Not every day will feel productive — and that's okay.",
-        "What's one imperfect action you can take today that future-you will thank you for?",
-        "Momentum"),
-
-      d("Done is better than perfect.",
-        "Perfection can stall momentum; clarity often comes after shipping.",
-        "Choose one thing to let be “good enough” today so the team can move forward.",
-        "Momentum"),
-
-      d("Energy is data.",
-        "When energy dips, it's a signal to explore — not a personal failure.",
-        "Ask: “What's draining us this week?” Share one small shift that could help.",
-        "Energy"),
-
-      d("Build the muscle, not just the plan.",
-        "Routines matter more than resolutions; reps reshape how we work.",
-        "What's one ritual you can protect or reinforce this week?",
-        "Process"),
-
-      d("Uncertainty is not the enemy — silence is.",
-        "Teams don't need perfect answers. They need transparency, curiosity, and care.",
-        "Share one thing you're wondering or unsure about. Invite the team to do the same.",
-        "Trust"),
-
-      d("Celebrate tiny wins — they build trust and energy.",
-        "Micro-celebrations say: what we're doing matters.",
-        "Shout out one recent teammate win (big or small). Bonus if it's usually overlooked.",
-        "Energy"),
-
-      d("If everything is a priority, nothing is.",
-        "Alignment requires explicit “not now.”",
-        "Name one task or goal you will consciously pause this week.",
-        "Alignment"),
-
-      d("Reflection is how we protect our energy.",
-        "Teams burn out from unprocessed work more than from hard work.",
-        "End your day with one note: “What helped me feel like a teammate today?”",
-        "Energy"),
-
-      d("Psychological safety starts with modeling.",
-        "Your openness makes it easier for others to show up real.",
-        "Be first to share a moment of doubt, mess, or growth.",
-        "Trust"),
-
-      d("Agile is a rhythm, not a checklist.",
-        "It's about sensing, adjusting, and staying connected — not performing ceremonies.",
-        "Where can you loosen process this week to better support focus and energy?",
-        "Process"),
-
-      // 11–20
-      d("Momentum loves a visible path.",
-        "Even strong teams stall when “done” is fuzzy.",
-        "Clarify the next visible mile marker — not the whole map.",
-        "Momentum"),
-
-      d("The process is the product.",
-        "How you work is part of what you build.",
-        "Ask: “What's one way our process showed up well this week?”",
-        "Process"),
-
-      d("Alignment without energy is just agreement.",
-        "Agreement keeps things polite; energy makes things move.",
-        "Ask: “What part of this work actually excites you?”",
-        "Energy"),
-
-      d("Unblocking isn't just tactical — it's emotional.",
-        "People stay stuck when they feel alone in the stuckness.",
-        "Ask: “Where are you hesitating — and what support would help?”",
-        "Trust"),
-
-      d("Your calendar is your culture.",
-        "Time reveals true priorities.",
-        "Scan the week ahead. What's misaligned between values and time?",
-        "Alignment"),
-
-      d("No one builds trust faster than someone who listens well.",
-        "Reflection earns more trust than reaction.",
-        "Pause and say: “Tell me more — I'm listening.”",
-        "Trust"),
-
-      d("Rest is part of the loop.",
-        "Productivity and rest are partners, not rivals.",
-        "Schedule a 15-minute break without guilt — and protect it.",
-        "Energy"),
-
-      d("Rituals don't need to be rigid — they need to be real.",
-        "Great stand-ups feel like check-ins, not checklists.",
-        "Refresh one ritual this week to feel more human.",
-        "Process"),
-
-      d("Clarity comes from doing, not just thinking.",
-        "Overthinking stays theoretical; action invites feedback.",
-        "Ship one tiny test today, even if imperfect.",
-        "Clarity"),
-
-      d("Work isn't always heavy — sometimes it just needs air.",
-        "Tension builds when there's no room to breathe or laugh.",
-        "Start the next meeting with a playful check-in. 3 minutes, no work talk.",
-        "Energy"),
-
-      // 21–40
-      d("Urgency is contagious — but so is calm.",
-        "Your tone sets the team's tempo.",
-        "How will you model presence today — even under pressure?",
-        "Trust"),
-
-      d("Trust is built in micro-moments.",
-        "Follow-ups and quiet support shape culture more than big speeches.",
-        "What small signal of reliability can you send today?",
-        "Trust"),
-
-      d("Sometimes the best action is subtraction.",
-        "Removing noise often reveals the path.",
-        "What habit, tool, or meeting can you question this week?",
-        "Clarity"),
-
-      d("Attention is the rarest — and most generous — form of generosity.",
-        "Focused presence is fuel when everyone's stretched.",
-        "Who needs your undivided attention today, even briefly?",
-        "Trust"),
-
-      d("If nothing feels urgent, ask what's important.",
-        "Stillness can be strategic.",
-        "What quiet priority deserves more focus this week?",
-        "Clarity"),
-
-      d("You don't need a new system — you need to trust the next step.",
-        "Build from where you are, not where you wish you were.",
-        "What's the next right thing you already know to do?",
-        "Momentum"),
-
-      d("The most powerful retro question might be: What are we not saying?",
-        "Safety fuels candor; candor fuels progress.",
-        "What needs permission to be named?",
-        "Trust"),
-
-      d("Done is a feeling, not just a status.",
-        "Closure protects energy and attention.",
-        "Which open loop will you intentionally close today?",
-        "Energy"),
-
-      d("Burnout isn't just about overwork — it's about under-celebration.",
-        "Teams need feedback loops of meaning.",
-        "What can you name and honor from the last sprint?",
-        "Energy"),
-
-      d("You can't debug a system you're afraid to examine.",
-        "Courage + curiosity = better systems.",
-        "Where are you tolerating a bug that deserves a fix?",
-        "Process"),
-
-      d("Confidence doesn't mean certainty — it means willingness.",
-        "You're allowed to move forward unsure.",
-        "Where are you ready to act, even if imperfect?",
-        "Momentum"),
-
-      d("A team isn't just who's on the call — it's who feels heard.",
-        "Belonging is built one interaction at a time.",
-        "What's one signal of inclusion you can send today?",
-        "Alignment"),
-
-      d("Deadlines don't create clarity — design does.",
-        "Panic is not a planning tool.",
-        "Which definition or interface could you re-design together?",
-        "Clarity"),
-
-      d("Every blocker is also a message.",
-        "There's wisdom inside friction.",
-        "What blocker could you listen to more deeply?",
-        "Process"),
-
-      d("You don't need to know the answer — just ask the better question.",
-        "Progress begins with curiosity.",
-        "What question do you wish someone would ask? Ask it.",
-        "Clarity"),
-
-      d("Momentum compounds when clarity is shared.",
-        "Ambiguity slows; alignment flows.",
-        "Which goal or definition will you re-clarify this week?",
-        "Alignment"),
-
-      d("Honesty doesn't have to be heavy.",
-        "Levity builds trust too.",
-        "What truth could you share playfully today?",
-        "Trust"),
-
-      d("Systems drift unless we course-correct.",
-        "Good habits fade without awareness.",
-        "Which system needs a check-in before it breaks?",
-        "Process"),
-
-      d("What we measure shapes what we value.",
-        "Be careful not to neglect the immeasurable.",
-        "What part of your team's magic is invisible right now?",
-        "Alignment"),
-
-      d("Hope isn't a plan — but it is a powerful input.",
-        "Belief fuels the will to build.",
-        "Name one hopeful vision out loud today.",
-        "Energy")
-    ];
-
-    // ——— helpers ———
-    const $ = (id) => document.getElementById(id);
-
-    const quote   = $("quote");
-    const why     = $("why");
-    const tri     = $("try");
-    const catPill = $("catPill");
-    const datePill= $("datePill");
-    const sel     = $("ddCat");
-
-    function todayLabel(){
-      return new Date().toLocaleDateString(undefined, {
-        weekday:"short", month:"short", day:"numeric"
-      });
-    }
-    datePill.textContent = todayLabel();
-
-    function filtered(){
-      const c = sel.value || "";
-      return DROPS.filter(x => !c || x.c === c);
-    }
-
-    function render(item){
-      quote.textContent = `“${item.q}”`;
-      why.textContent   = item.w;
-      tri.textContent   = item.t;
-      catPill.textContent = item.c;
-    }
-
-    function pick(list){
-      if (!list.length) return;
-      render(list[Math.floor(Math.random() * list.length)]);
-    }
-
-    function pickToday(){
-      const list = filtered();
-      if (!list.length) return;
-
-      // deterministic daily index for each category filter
-      const now = new Date();
-      const start = new Date(now.getFullYear(), 0, 0);
-      const dayOfYear = Math.floor((now - start) / 86400000);
-      const idx = dayOfYear % list.length;
-
-      render(list[idx]);
-    }
-
-    async function copy(){
-      const txt = [
-        `💧 Daily Drop — ${catPill.textContent}`,
-        `${quote.textContent}`,
-        `Why it matters: ${why.textContent}`,
-        `Try this: ${tri.textContent}`
-      ].join("\n");
+    document.addEventListener("DOMContentLoaded", () => {
+      const debugEl = document.getElementById("debug");
+      const showError = (msg) => {
+        debugEl.style.display = "block";
+        debugEl.textContent = msg;
+      };
 
       try {
-        await navigator.clipboard.writeText(txt);
-        const prev = quote.textContent;
-        quote.textContent = "✅ Copied! Paste anywhere.";
-        setTimeout(() => { quote.textContent = prev; }, 900);
-      } catch (e) {
-        // fallback if clipboard blocked
-        window.prompt("Copy this Daily Drop:", txt);
+        // data helper
+        const d = (q, w, t, c) => ({ q, w, t, c });
+
+        // Daily Drops
+        const DROPS = [
+          d("Progress is not linear — but it is cumulative.",
+            "Momentum comes from little nudges that stack. Not every day will feel productive — and that's okay.",
+            "What's one imperfect action you can take today that future-you will thank you for?",
+            "Momentum"),
+
+          d("Done is better than perfect.",
+            "Perfection can stall momentum; clarity often comes after shipping.",
+            'Choose one thing to let be "good enough" today so the team can move forward.',
+            "Momentum"),
+
+          d("Energy is data.",
+            "When energy dips, it's a signal to explore — not a personal failure.",
+            'Ask: "What\'s draining us this week?" Share one small shift that could help.',
+            "Energy"),
+
+          d("Build the muscle, not just the plan.",
+            "Routines matter more than resolutions; reps reshape how we work.",
+            "What's one ritual you can protect or reinforce this week?",
+            "Process"),
+
+          d("Uncertainty is not the enemy — silence is.",
+            "Teams don't need perfect answers. They need transparency, curiosity, and care.",
+            "Share one thing you're wondering or unsure about. Invite the team to do the same.",
+            "Trust"),
+
+          d("Celebrate tiny wins — they build trust and energy.",
+            "Micro-celebrations say: what we're doing matters.",
+            "Shout out one recent teammate win (big or small). Bonus if it's usually overlooked.",
+            "Energy"),
+
+          d("If everything is a priority, nothing is.",
+            'Alignment requires explicit "not now."',
+            "Name one task or goal you will consciously pause this week.",
+            "Alignment"),
+
+          d("Reflection is how we protect our energy.",
+            "Teams burn out from unprocessed work more than from hard work.",
+            'End your day with one note: "What helped me feel like a teammate today?"',
+            "Energy"),
+
+          d("Psychological safety starts with modeling.",
+            "Your openness makes it easier for others to show up real.",
+            "Be first to share a moment of doubt, mess, or growth.",
+            "Trust"),
+
+          d("Agile is a rhythm, not a checklist.",
+            "It's about sensing, adjusting, and staying connected — not performing ceremonies.",
+            "Where can you loosen process this week to better support focus and energy?",
+            "Process"),
+
+          d("Momentum loves a visible path.",
+            'Even strong teams stall when "done" is fuzzy.',
+            "Clarify the next visible mile marker — not the whole map.",
+            "Momentum"),
+
+          d("The process is the product.",
+            "How you work is part of what you build.",
+            'Ask: "What\'s one way our process showed up well this week?"',
+            "Process"),
+
+          d("Alignment without energy is just agreement.",
+            "Agreement keeps things polite; energy makes things move.",
+            'Ask: "What part of this work actually excites you?"',
+            "Energy"),
+
+          d("Unblocking isn't just tactical — it's emotional.",
+            "People stay stuck when they feel alone in the stuckness.",
+            'Ask: "Where are you hesitating — and what support would help?"',
+            "Trust"),
+
+          d("Your calendar is your culture.",
+            "Time reveals true priorities.",
+            "Scan the week ahead. What's misaligned between values and time?",
+            "Alignment"),
+
+          d("No one builds trust faster than someone who listens well.",
+            "Reflection earns more trust than reaction.",
+            'Pause and say: "Tell me more — I\'m listening."',
+            "Trust"),
+
+          d("Rest is part of the loop.",
+            "Productivity and rest are partners, not rivals.",
+            "Schedule a 15-minute break without guilt — and protect it.",
+            "Energy"),
+
+          d("Rituals don't need to be rigid — they need to be real.",
+            "Great stand-ups feel like check-ins, not checklists.",
+            "Refresh one ritual this week to feel more human.",
+            "Process"),
+
+          d("Clarity comes from doing, not just thinking.",
+            "Overthinking stays theoretical; action invites feedback.",
+            "Ship one tiny test today, even if imperfect.",
+            "Clarity"),
+
+          d("Work isn't always heavy — sometimes it just needs air.",
+            "Tension builds when there's no room to breathe or laugh.",
+            "Start the next meeting with a playful check-in. 3 minutes, no work talk.",
+            "Energy"),
+
+          d("Urgency is contagious — but so is calm.",
+            "Your tone sets the team's tempo.",
+            "How will you model presence today — even under pressure?",
+            "Trust"),
+
+          d("Trust is built in micro-moments.",
+            "Follow-ups and quiet support shape culture more than big speeches.",
+            "What small signal of reliability can you send today?",
+            "Trust"),
+
+          d("Sometimes the best action is subtraction.",
+            "Removing noise often reveals the path.",
+            "What habit, tool, or meeting can you question this week?",
+            "Clarity"),
+
+          d("Attention is the rarest — and most generous — form of generosity.",
+            "Focused presence is fuel when everyone's stretched.",
+            "Who needs your undivided attention today, even briefly?",
+            "Trust"),
+
+          d("If nothing feels urgent, ask what's important.",
+            "Stillness can be strategic.",
+            "What quiet priority deserves more focus this week?",
+            "Clarity"),
+
+          d("You don't need a new system — you need to trust the next step.",
+            "Build from where you are, not where you wish you were.",
+            "What's the next right thing you already know to do?",
+            "Momentum"),
+
+          d("The most powerful retro question might be: What are we not saying?",
+            "Safety fuels candor; candor fuels progress.",
+            "What needs permission to be named?",
+            "Trust"),
+
+          d("Done is a feeling, not just a status.",
+            "Closure protects energy and attention.",
+            "Which open loop will you intentionally close today?",
+            "Energy"),
+
+          d("Burnout isn't just about overwork — it's about under-celebration.",
+            "Teams need feedback loops of meaning.",
+            "What can you name and honor from the last sprint?",
+            "Energy"),
+
+          d("You can't debug a system you're afraid to examine.",
+            "Courage + curiosity = better systems.",
+            "Where are you tolerating a bug that deserves a fix?",
+            "Process"),
+
+          d("Confidence doesn't mean certainty — it means willingness.",
+            "You're allowed to move forward unsure.",
+            "Where are you ready to act, even if imperfect?",
+            "Momentum"),
+
+          d("A team isn't just who's on the call — it's who feels heard.",
+            "Belonging is built one interaction at a time.",
+            "What's one signal of inclusion you can send today?",
+            "Alignment"),
+
+          d("Deadlines don't create clarity — design does.",
+            "Panic is not a planning tool.",
+            "Which definition or interface could you re-design together?",
+            "Clarity"),
+
+          d("Every blocker is also a message.",
+            "There's wisdom inside friction.",
+            "What blocker could you listen to more deeply?",
+            "Process"),
+
+          d("You don't need to know the answer — just ask the better question.",
+            "Progress begins with curiosity.",
+            "What question do you wish someone would ask? Ask it.",
+            "Clarity"),
+
+          d("Momentum compounds when clarity is shared.",
+            "Ambiguity slows; alignment flows.",
+            "Which goal or definition will you re-clarify this week?",
+            "Alignment"),
+
+          d("Honesty doesn't have to be heavy.",
+            "Levity builds trust too.",
+            "What truth could you share playfully today?",
+            "Trust"),
+
+          d("Systems drift unless we course-correct.",
+            "Good habits fade without awareness.",
+            "Which system needs a check-in before it breaks?",
+            "Process"),
+
+          d("What we measure shapes what we value.",
+            "Be careful not to neglect the immeasurable.",
+            "What part of your team's magic is invisible right now?",
+            "Alignment"),
+
+          d("Hope isn't a plan — but it is a powerful input.",
+            "Belief fuels the will to build.",
+            "Name one hopeful vision out loud today.",
+            "Energy")
+        ];
+
+        // DOM helpers
+        const $ = (id) => document.getElementById(id);
+
+        const quote   = $("quote");
+        const why     = $("why");
+        const tri     = $("try");
+        const catPill = $("catPill");
+        const datePill= $("datePill");
+        const sel     = $("ddCat");
+        const btnSurprise = $("btnSurprise");
+        const btnCopy = $("btnCopy");
+
+        // sanity check
+        const missing = ["quote","why","try","catPill","datePill","ddCat","btnSurprise","btnCopy"]
+          .filter(id => !$(id));
+        if (missing.length) {
+          throw new Error("Missing DOM elements: " + missing.join(", "));
+        }
+
+        const todayLabel = () =>
+          new Date().toLocaleDateString(undefined, { weekday:"short", month:"short", day:"numeric" });
+
+        datePill.textContent = todayLabel();
+
+        const filtered = () => {
+          const c = sel.value || "";
+          return DROPS.filter(x => !c || x.c === c);
+        };
+
+        const render = (item) => {
+          quote.textContent = `“${item.q}”`;
+          why.textContent   = item.w;
+          tri.textContent   = item.t;
+          catPill.textContent = item.c;
+        };
+
+        const pick = (list) => {
+          if (!list.length) return;
+          render(list[Math.floor(Math.random() * list.length)]);
+        };
+
+        const pickToday = () => {
+          const list = filtered();
+          if (!list.length) return;
+
+          const now = new Date();
+          const start = new Date(now.getFullYear(), 0, 0);
+          const dayOfYear = Math.floor((now - start) / 86400000);
+          const idx = dayOfYear % list.length;
+
+          render(list[idx]);
+        };
+
+        const copy = async () => {
+          const txt = [
+            `💧 Daily Drop — ${catPill.textContent}`,
+            `${quote.textContent}`,
+            `Why it matters: ${why.textContent}`,
+            `Try this: ${tri.textContent}`
+          ].join("\n");
+
+          try {
+            await navigator.clipboard.writeText(txt);
+            const prev = quote.textContent;
+            quote.textContent = "✅ Copied! Paste anywhere.";
+            setTimeout(() => { quote.textContent = prev; }, 900);
+          } catch {
+            window.prompt("Copy this Daily Drop:", txt);
+          }
+        };
+
+        // wire up
+        btnSurprise.addEventListener("click", () => pick(filtered()));
+        btnCopy.addEventListener("click", copy);
+        sel.addEventListener("change", pickToday);
+
+        // init
+        pickToday();
+
+      } catch (err) {
+        showError("Daily Drop error:\n" + (err && err.stack ? err.stack : String(err)));
       }
-    }
-
-    // wire up
-    $("btnSurprise").onclick = () => pick(filtered());
-    $("btnCopy").onclick = copy;
-    sel.onchange = pickToday;
-
-    // init
-    pickToday();
+    });
   </script>
 </body>
 </html>
