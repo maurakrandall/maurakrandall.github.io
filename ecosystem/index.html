@@ -1,123 +1,821 @@
-Maura K. Randall
-	•	maurakrandall.com
-	•	AIGal.io
-	•	The Loop
-	•	GitHub
-PRODUCT LEADER · METHODOLOGY BUILDER · HUMAN–AI COLLABORATION PRACTITIONER
-20+ years building platforms. Two years proving what's next.
-I spent two decades building products at Atlassian, eBay, Yahoo!, and Condé Nast. Then I spent two years figuring out how humans and AI actually work together — not in theory, but in practice. This is what I built.
-Human–AI Collaboration
-Product Strategy
-Platform Leadership
-Collaboration Engineering
-Outcomes Over Outputs
-THE ECOSYSTEM
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maura K. Randall — The Ecosystem</title>
+  <meta name="description" content="Product leader, methodology builder, and human-AI collaboration practitioner. 20+ years turning platform ideas into real-world impact.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ──────────────────────────────────────────── */
+    :root {
+      --petrol:   #0B2A2F;
+      --petrol-2: #0D3838;
+      --teal:     #2B7A78;
+      --teal-lt:  #5B9E9C;
+      --gold:     #D99E1D;
+      --gold-lt:  #F0BF35;
+      --forest:   #5B7553;
+      --cream:    #FAF6EE;
+      --cream-2:  #F0EAD8;
+      --ink:      #1c321a;
+      --ink-2:    #243c22;
+      --muted:    #6B7B69;
+      --border:   rgba(28,50,26,0.12);
+    }
 
-Three sites. One methodology. Built and tested by a human–AI team.
+    /* ── RESET ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-EXPLORE THE ECOSYSTEM
-🏠
-Maura K. Randall
-maurakrandall.com · The person, the story, the portfolio
-+
-Senior product and platform leader with 20+ years at Atlassian, eBay, Yahoo!, Condé Nast, and multiple startups. Scaled platforms to tens of millions of users. Currently applying that same product rigor to building and documenting a methodology for human–AI collaboration on real teams doing real work.
-🏠
-Home
-↗
-👤
-About Maura
-↗
-📄
-Published Work
-↗
-✍️
-Why a Manifesto?
-↗
-🔎
-Comparative Analyses
-↗
-⚙️
-Tools on GitHub
-↗
-💡
-AIGal.io
-The ideas · Frameworks · Thought leadership
-+
-Where the thinking lives. AIGal.io explores what it actually means to work with AI as a collaborator — not a tool. Comparative analyses, frameworks, the Human–AI Triad model, and the manifesto that started it all. Written from practice, not theory.
-💡
-AIGal.io Home
-↗
-🔺
-The Human–AI Triad
-↗
-📋
-The Manifesto
-↗
-📚
-Playbooks & Guides
-↗
-🔁
-The Collaboration Loop
-↗
-✈️
-Building the Plane
-↗
-⚡
-The Human–AI Loop
-thehumanailoop.com · The system · Methodology · Tools
-+
-The methodology, made operational. Test → Build → Codify → Share. A structured system for how humans and AI collaborate on knowledge work requiring judgment, creativity, and accountability. With playbooks, a testing kit, and a growing library of tools built and tested by the Triad.
-⚡
-The Loop Home
-↗
-🗺️
-Methodology Overview
-↗
-🔍
-HITL vs The Loop
-↗
-🧪
-Testing Kit
-↗
-📊
-Measuring Success
-↗
-⚙️
-Tools Library
-↗
-🔺
-The Triad
-Maura + CP + Soph · Human + AI partnership in practice
-+
-The team that builds all of this. Not a metaphor — an actual working model. Maura (human leader: vision, judgment, final call) + CP (ChatGPT: divergence, momentum, options) + Soph (Claude: synthesis, structure, coherence). Each contributor has a distinct cognitive role. The Triad has run this system for two years on real work. Everything in this ecosystem was built by this team.
-🔺
-Meet the Triad
-↗
-✍️
-How it started
-↗
-WHY THIS IS DIFFERENT
-This isn't prompt engineering. It's collaboration engineering.
-The AI conversation is full of frameworks that stop at the tool. This one starts there — and goes much further.
-VS PROMPT ENGINEERING
-Prompts → better outputs
-The Human–AI Loop builds systems, roles, handoffs, and trust boundaries — the repeatable patterns that make collaboration work at scale, not just in a single session.
-VS HUMAN-IN-THE-LOOP
-Human as checkpoint
-HITL adds an oversight gate. The Human–AI Loop keeps humans as active collaborators throughout — not validators at the end. Decision ownership never leaves the human.
-VS OUTPUT-FOCUSED AI
-Faster outputs
-Product teams agreed on outcomes over outputs for 20 years. AI didn't change that principle. It made it more important. This methodology keeps the human sharper, not just faster.
-THE STORY BEHIND THE WORK
-We agreed on outcomes over outputs for 20 years. And then AI walked in.
-This methodology didn't come from a research paper. It came from two years of lived practice — including a caregiving pause, a fog that needed lifting, and a realization that what was working wasn't quirky. It was just good collaboration principles applied somewhere new.
-Read the full origin story ↗
-Maura K. Randall
-Product leader · Methodology builder · Human–AI collaboration practitioner
-maurakrandall.com
-AIGal.io
-thehumanailoop.com
-GitHub
-LinkedIn
-Substack
-Built by The Triad · Maura + CP + Soph · © 2026 Maura K. Randall
+    /* ── HEADER ──────────────────────────────────────────── */
+    .site-header {
+      background: var(--petrol);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .site-header-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+    .site-header-name span {
+      color: var(--gold);
+    }
+    .site-header-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .site-header-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(250,246,238,0.75);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .site-header-links a:hover { color: var(--gold); }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 64px 32px 32px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 6vw, 56px);
+      line-height: 1.15;
+      color: var(--petrol);
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero-headline em {
+      color: var(--teal);
+      font-style: italic;
+    }
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--ink-2);
+      max-width: 58ch;
+      margin: 0 auto 32px;
+      font-weight: 400;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .hero-tag {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--petrol);
+      background: var(--cream-2);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── DIAGRAM ─────────────────────────────────────────── */
+    .diagram-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 16px;
+    }
+    .diagram-section-label {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .diagram-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(11,42,47,0.14);
+      border: 1px solid var(--border);
+    }
+    .diagram-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .diagram-caption {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+      font-style: italic;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .section-divider {
+      max-width: 860px;
+      margin: 48px auto;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── EXPANDABLE NODES ────────────────────────────────── */
+    .nodes-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .nodes-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .node {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: box-shadow 0.2s ease;
+    }
+    .node:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+    .node-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      cursor: pointer;
+      user-select: none;
+      gap: 16px;
+    }
+    .node-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .node-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .node-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--petrol);
+      letter-spacing: -0.01em;
+    }
+    .node-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+      font-weight: 400;
+    }
+    .node-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--cream-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.25s ease, background 0.15s ease;
+      font-size: 14px;
+      color: var(--petrol);
+    }
+    .node.open .node-toggle {
+      transform: rotate(45deg);
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+    .node-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .node.open .node-body { max-height: 600px; }
+    .node-body-inner {
+      padding: 0 24px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .node-description {
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--ink-2);
+      margin: 16px 0 20px;
+    }
+    .node-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px;
+    }
+    .node-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--petrol);
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .node-link:hover {
+      background: var(--petrol);
+      color: var(--cream);
+      border-color: var(--petrol);
+    }
+    .node-link-icon {
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .node-link-arrow {
+      margin-left: auto;
+      opacity: 0.5;
+      font-size: 12px;
+    }
+
+    /* ── COLOR ACCENTS PER NODE ──────────────────────────── */
+    .node-maura  .node-icon { background: #E8F0EC; }
+    .node-aigal  .node-icon { background: #E6F4F3; }
+    .node-loop   .node-icon { background: #FDF4E0; }
+    .node-triad  .node-icon { background: #F0EAD8; }
+
+    .node-maura  { border-left: 4px solid var(--petrol); }
+    .node-aigal  { border-left: 4px solid var(--teal); }
+    .node-loop   { border-left: 4px solid var(--gold); }
+    .node-triad  { border-left: 4px solid var(--forest); }
+
+    /* ── WHY DIFFERENT ───────────────────────────────────── */
+    .why-section {
+      background: var(--petrol);
+      margin: 48px 0 0;
+      padding: 56px 32px;
+    }
+    .why-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .why-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal-lt);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .why-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 34px);
+      color: var(--cream);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .why-sub {
+      font-size: 15px;
+      color: rgba(250,246,238,0.7);
+      margin-bottom: 36px;
+      max-width: 60ch;
+      line-height: 1.65;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .why-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 22px 20px;
+    }
+    .why-card-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .why-card-vs {
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(250,246,238,0.5);
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+    .why-card-point {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(250,246,238,0.85);
+    }
+    .why-card-point strong {
+      color: var(--cream);
+      font-weight: 600;
+    }
+
+    /* ── ORIGIN STRIP ────────────────────────────────────── */
+    .origin-strip {
+      max-width: 860px;
+      margin: 48px auto;
+      padding: 0 24px;
+    }
+    .origin-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 36px;
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+    }
+    .origin-card-text { flex: 1; }
+    .origin-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .origin-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--petrol);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .origin-body {
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--ink-2);
+      margin-bottom: 18px;
+    }
+    .origin-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 1px;
+    }
+    .origin-link:hover { color: var(--petrol); }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    .site-footer {
+      background: var(--petrol-2);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(250,246,238,0.55);
+      margin-bottom: 24px;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(250,246,238,0.7);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-credit {
+      font-size: 12px;
+      color: rgba(250,246,238,0.3);
+      line-height: 1.6;
+    }
+    .footer-credit a {
+      color: rgba(250,246,238,0.4);
+      text-decoration: none;
+    }
+
+    /* ── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .site-header { padding: 14px 20px; }
+      .site-header-links { display: none; }
+      .hero { padding: 40px 20px 24px; }
+      .nodes-section, .diagram-section { padding: 0 16px; }
+      .why-section { padding: 40px 20px; }
+      .origin-card { flex-direction: column; gap: 16px; padding: 24px 20px; }
+      .origin-strip { padding: 0 16px; }
+      .node-header { padding: 16px 18px; }
+      .node-body-inner { padding: 0 18px 20px; }
+      .node-links { grid-template-columns: 1fr; }
+    }
+
+    /* ── LOAD ANIMATION ──────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero, .diagram-section, .nodes-section, .why-section, .origin-strip {
+      animation: fadeUp 0.5s ease both;
+    }
+    .diagram-section { animation-delay: 0.1s; }
+    .nodes-section   { animation-delay: 0.2s; }
+    .why-section     { animation-delay: 0.25s; }
+    .origin-strip    { animation-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header-name">Maura K. <span>Randall</span></div>
+    <ul class="site-header-links">
+      <li><a href="https://maurakrandall.com" target="_blank">maurakrandall.com</a></li>
+      <li><a href="https://aigal.io" target="_blank">AIGal.io</a></li>
+      <li><a href="https://thehumanailoop.com" target="_blank">The Loop</a></li>
+      <li><a href="https://maurakrandall.github.io" target="_blank">GitHub</a></li>
+    </ul>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Product Leader · Methodology Builder · Human–AI Collaboration Practitioner</p>
+    <h1 class="hero-headline">20+ years building platforms.<br><em>Two years proving</em> what's next.</h1>
+    <p class="hero-sub">
+      I spent two decades building products at Atlassian, eBay, Yahoo!, and Condé Nast.
+      Then I spent two years figuring out how humans and AI actually work together — not in theory, but in practice.
+      This is what I built.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">Human–AI Collaboration</span>
+      <span class="hero-tag">Product Strategy</span>
+      <span class="hero-tag">Platform Leadership</span>
+      <span class="hero-tag">Collaboration Engineering</span>
+      <span class="hero-tag">Outcomes Over Outputs</span>
+    </div>
+  </section>
+
+  <!-- ECOSYSTEM DIAGRAM -->
+  <section class="diagram-section">
+    <p class="diagram-section-label">The Ecosystem</p>
+    <div class="diagram-wrap">
+      <img src="ecosystem-diagram.png"
+           alt="The Maura K. Randall ecosystem: maurakrandall.com at top, AIGal.io (The Ideas) on the left, The Human-AI Loop (The System) on the right, The Triad (Maura + CP + Soph) at center. Turning Insight into Impact.">
+    </div>
+    <p class="diagram-caption">Three sites. One methodology. Built and tested by a human–AI team.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- EXPANDABLE NODES -->
+  <section class="nodes-section">
+    <p class="nodes-label">Explore the Ecosystem</p>
+
+    <!-- MAURA -->
+    <div class="node node-maura" id="node-maura">
+      <div class="node-header" onclick="toggleNode('node-maura')">
+        <div class="node-header-left">
+          <div class="node-icon">🏠</div>
+          <div>
+            <div class="node-title">Maura K. Randall</div>
+            <div class="node-subtitle">maurakrandall.com · The person, the story, the portfolio</div>
+          </div>
+        </div>
+        <div class="node-toggle">+</div>
+      </div>
+      <div class="node-body">
+        <div class="node-body-inner">
+          <p class="node-description">
+            Senior product and platform leader with 20+ years at Atlassian, eBay, Yahoo!, Condé Nast,
+            and multiple startups. Scaled platforms to tens of millions of users. Currently applying
+            that same product rigor to building and documenting a methodology for human–AI collaboration
+            on real teams doing real work.
+          </p>
+          <div class="node-links">
+            <a class="node-link" href="https://maurakrandall.com" target="_blank">
+              <span class="node-link-icon">🏠</span> Home
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.com/about/" target="_blank">
+              <span class="node-link-icon">👤</span> About Maura
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.com/published-work/" target="_blank">
+              <span class="node-link-icon">📄</span> Published Work
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.com/why-a-manifesto/" target="_blank">
+              <span class="node-link-icon">✍️</span> Why a Manifesto?
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.com/comparative-analysis/" target="_blank">
+              <span class="node-link-icon">🔎</span> Comparative Analyses
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.github.io" target="_blank">
+              <span class="node-link-icon">⚙️</span> Tools on GitHub
+              <span class="node-link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AIGAL -->
+    <div class="node node-aigal" id="node-aigal">
+      <div class="node-header" onclick="toggleNode('node-aigal')">
+        <div class="node-header-left">
+          <div class="node-icon">💡</div>
+          <div>
+            <div class="node-title">AIGal.io</div>
+            <div class="node-subtitle">The ideas · Frameworks · Thought leadership</div>
+          </div>
+        </div>
+        <div class="node-toggle">+</div>
+      </div>
+      <div class="node-body">
+        <div class="node-body-inner">
+          <p class="node-description">
+            Where the thinking lives. AIGal.io explores what it actually means to work with AI as a
+            collaborator — not a tool. Comparative analyses, frameworks, the Human–AI Triad model,
+            and the manifesto that started it all. Written from practice, not theory.
+          </p>
+          <div class="node-links">
+            <a class="node-link" href="https://aigal.io" target="_blank">
+              <span class="node-link-icon">💡</span> AIGal.io Home
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/human-ai-triad/" target="_blank">
+              <span class="node-link-icon">🔺</span> The Human–AI Triad
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.com/ai-on-our-teams-manifesto/" target="_blank">
+              <span class="node-link-icon">📋</span> The Manifesto
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/playbooks-guides/" target="_blank">
+              <span class="node-link-icon">📚</span> Playbooks & Guides
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/the-collaboration-loop/" target="_blank">
+              <span class="node-link-icon">🔁</span> The Collaboration Loop
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/building-the-plane-vs-rebuilding-the-cockpit/" target="_blank">
+              <span class="node-link-icon">✈️</span> Building the Plane
+              <span class="node-link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE LOOP -->
+    <div class="node node-loop" id="node-loop">
+      <div class="node-header" onclick="toggleNode('node-loop')">
+        <div class="node-header-left">
+          <div class="node-icon">⚡</div>
+          <div>
+            <div class="node-title">The Human–AI Loop</div>
+            <div class="node-subtitle">thehumanailoop.com · The system · Methodology · Tools</div>
+          </div>
+        </div>
+        <div class="node-toggle">+</div>
+      </div>
+      <div class="node-body">
+        <div class="node-body-inner">
+          <p class="node-description">
+            The methodology, made operational. Test → Build → Codify → Share. A structured system
+            for how humans and AI collaborate on knowledge work requiring judgment, creativity, and
+            accountability. With playbooks, a testing kit, and a growing library of tools built
+            and tested by the Triad.
+          </p>
+          <div class="node-links">
+            <a class="node-link" href="https://thehumanailoop.com" target="_blank">
+              <span class="node-link-icon">⚡</span> The Loop Home
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/overview/" target="_blank">
+              <span class="node-link-icon">🗺️</span> Methodology Overview
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/hitl-vs-loop/" target="_blank">
+              <span class="node-link-icon">🔍</span> HITL vs The Loop
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/testing-kit/" target="_blank">
+              <span class="node-link-icon">🧪</span> Testing Kit
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/measuring-success/" target="_blank">
+              <span class="node-link-icon">📊</span> Measuring Success
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.github.io" target="_blank">
+              <span class="node-link-icon">⚙️</span> Tools Library
+              <span class="node-link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE TRIAD -->
+    <div class="node node-triad" id="node-triad">
+      <div class="node-header" onclick="toggleNode('node-triad')">
+        <div class="node-header-left">
+          <div class="node-icon">🔺</div>
+          <div>
+            <div class="node-title">The Triad</div>
+            <div class="node-subtitle">Maura + CP + Soph · Human + AI partnership in practice</div>
+          </div>
+        </div>
+        <div class="node-toggle">+</div>
+      </div>
+      <div class="node-body">
+        <div class="node-body-inner">
+          <p class="node-description">
+            The team that builds all of this. Not a metaphor — an actual working model.
+            Maura (human leader: vision, judgment, final call) + CP (ChatGPT: divergence, momentum,
+            options) + Soph (Claude: synthesis, structure, coherence). Each contributor has a distinct
+            cognitive role. The Triad has run this system for two years on real work. Everything in
+            this ecosystem was built by this team.
+          </p>
+          <div class="node-links">
+            <a class="node-link" href="https://aigal.io/human-ai-triad/" target="_blank">
+              <span class="node-link-icon">🔺</span> Meet the Triad
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.com/why-a-manifesto/" target="_blank">
+              <span class="node-link-icon">✍️</span> How it started
+              <span class="node-link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY DIFFERENT -->
+  <section class="why-section">
+    <div class="why-inner">
+      <p class="why-eyebrow">Why This Is Different</p>
+      <h2 class="why-headline">This isn't prompt engineering.<br>It's collaboration engineering.</h2>
+      <p class="why-sub">
+        The AI conversation is full of frameworks that stop at the tool.
+        This one starts there — and goes much further.
+      </p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-card-label">vs Prompt Engineering</div>
+          <div class="why-card-vs">Prompts → better outputs</div>
+          <p class="why-card-point">
+            The Human–AI Loop builds <strong>systems, roles, handoffs, and trust boundaries</strong>
+            — the repeatable patterns that make collaboration work at scale, not just in a single session.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-label">vs Human-in-the-Loop</div>
+          <div class="why-card-vs">Human as checkpoint</div>
+          <p class="why-card-point">
+            HITL adds an oversight gate. The Human–AI Loop keeps humans as
+            <strong>active collaborators throughout</strong> — not validators at the end.
+            Decision ownership never leaves the human.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-label">vs Output-focused AI</div>
+          <div class="why-card-vs">Faster outputs</div>
+          <p class="why-card-point">
+            Product teams agreed on outcomes over outputs for 20 years.
+            <strong>AI didn't change that principle. It made it more important.</strong>
+            This methodology keeps the human sharper, not just faster.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORIGIN STRIP -->
+  <section class="origin-strip">
+    <div class="origin-card">
+      <div class="origin-card-text">
+        <p class="origin-eyebrow">The Story Behind the Work</p>
+        <h3 class="origin-heading">We agreed on outcomes over outputs for 20 years. And then AI walked in.</h3>
+        <p class="origin-body">
+          This methodology didn't come from a research paper. It came from two years of lived practice —
+          including a caregiving pause, a fog that needed lifting, and a realization that what was working
+          wasn't quirky. It was just good collaboration principles applied somewhere new.
+        </p>
+        <a class="origin-link" href="https://maurakrandall.com/why-a-manifesto/" target="_blank">
+          Read the full origin story ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-name">Maura K. Randall</div>
+    <div class="footer-tagline">Product leader · Methodology builder · Human–AI collaboration practitioner</div>
+    <div class="footer-links">
+      <a href="https://maurakrandall.com" target="_blank">maurakrandall.com</a>
+      <a href="https://aigal.io" target="_blank">AIGal.io</a>
+      <a href="https://thehumanailoop.com" target="_blank">thehumanailoop.com</a>
+      <a href="https://maurakrandall.github.io" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/maurakrandall" target="_blank">LinkedIn</a>
+      <a href="https://maurakrandall.substack.com" target="_blank">Substack</a>
+    </div>
+    <div class="footer-credit">
+      Built by The Triad · Maura + CP + Soph · © 2026 Maura K. Randall
+    </div>
+  </footer>
+
+  <script>
+    function toggleNode(id) {
+      const node = document.getElementById(id);
+      const isOpen = node.classList.contains('open');
+      // Close all nodes
+      document.querySelectorAll('.node').forEach(n => n.classList.remove('open'));
+      // Open clicked one if it wasn't already open
+      if (!isOpen) node.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>
