@@ -3,324 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI on Our Teams | Maura Krandall Portfolio</title>
+    <title>AI on Our Teams | Maura K. Randall Portfolio</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%);
             color: #3D3D3D;
             min-height: 100vh;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            color: white;
-            padding: 60px 20px 80px;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-
-        .hero .tagline {
-            font-size: 24px;
-            color: #E8F4F3;
-            margin-bottom: 12px;
-            font-weight: 300;
-        }
-
-        .hero .subtitle {
-            font-size: 18px;
-            color: #B8D4D2;
-            max-width: 700px;
-            margin: 0 auto 32px;
-            line-height: 1.6;
-        }
-
-        .hero .cta {
-            display: inline-block;
-            padding: 14px 32px;
-            background: #DAA520;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .hero .cta:hover {
-            background: #B8860B;
-            transform: translateY(-2px);
-        }
-
-        /* Category Section */
-        .category {
-            background: white;
-            border-radius: 16px;
-            padding: 48px 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
-            border-bottom: 3px solid #2B7A78;
-        }
-
-        .category-icon {
-            font-size: 48px;
-            line-height: 1;
-        }
-
-        .category-title-group h2 {
-            font-size: 32px;
-            color: #0B2A2F;
-            margin-bottom: 8px;
-        }
-
-        .category-description {
-            font-size: 16px;
-            color: #5B7553;
-            line-height: 1.5;
-        }
-
-        /* App Grid */
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .app-card {
-            border: 2px solid #E8F4F3;
-            border-radius: 12px;
-            padding: 28px;
-            transition: all 0.3s;
-            background: #FAFAFA;
-        }
-
-        .app-card:hover {
-            border-color: #2B7A78;
-            box-shadow: 0 6px 20px rgba(43, 122, 120, 0.15);
-            transform: translateY(-4px);
-        }
-
-        .app-card h3 {
-            font-size: 22px;
-            color: #0B2A2F;
-            margin-bottom: 12px;
-        }
-
-        .app-card .app-description {
-            font-size: 14px;
-            color: #5B7553;
-            margin-bottom: 20px;
-            line-height: 1.6;
-            min-height: 60px;
-        }
-
-        .app-card .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #DAA520;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s;
-            width: 100%;
-            text-align: center;
-        }
-
-        .app-card .btn:hover {
-            background: #B8860B;
-        }
-
-        .app-card .btn-secondary {
-            background: #2B7A78;
-            margin-top: 8px;
-        }
-
-        .app-card .btn-secondary:hover {
-            background: #236663;
-        }
-
-        /* Coming Soon Badge */
-        .coming-soon {
-            display: inline-block;
-            background: #E97451;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        /* Footer */
-        .footer {
-            background: white;
-            border-radius: 16px;
-            padding: 48px 40px;
-            margin-top: 40px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .footer h3 {
-            font-size: 24px;
-            color: #0B2A2F;
-            margin-bottom: 16px;
-        }
-
-        .footer p {
-            font-size: 16px;
-            color: #5B7553;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto 24px;
-        }
-
-        .footer .team {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 32px 0;
-            flex-wrap: wrap;
-        }
-
-        .footer .team-member {
-            text-align: center;
-        }
-
-        .footer .team-member .name {
-            font-weight: 600;
-            color: #0B2A2F;
-            margin-bottom: 4px;
-        }
-
-        .footer .team-member .role {
-            font-size: 14px;
-            color: #5B7553;
-        }
-
-        .footer .links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 32px;
-            flex-wrap: wrap;
-        }
-
-        .footer .links a {
-            color: #2B7A78;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .footer .links a:hover {
-            color: #DAA520;
-        }
-
-        /* Mobile Responsive */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .hero { text-align: center; color: white; padding: 60px 20px 80px; }
+        .hero h1 { font-size: 48px; font-weight: 700; margin-bottom: 16px; line-height: 1.2; }
+        .hero .tagline { font-size: 24px; color: #E8F4F3; margin-bottom: 12px; font-weight: 300; }
+        .hero .subtitle { font-size: 18px; color: #B8D4D2; max-width: 700px; margin: 0 auto 32px; line-height: 1.6; }
+        .hero .cta { display: inline-block; padding: 14px 32px; background: #DAA520; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; transition: all 0.3s; }
+        .hero .cta:hover { background: #B8860B; transform: translateY(-2px); }
+        .category { background: white; border-radius: 16px; padding: 48px 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .category-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 3px solid #2B7A78; }
+        .category-icon { font-size: 48px; line-height: 1; }
+        .category-title-group h2 { font-size: 32px; color: #0B2A2F; margin-bottom: 8px; }
+        .category-description { font-size: 16px; color: #5B7553; line-height: 1.5; }
+        .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .app-card { border: 2px solid #E8F4F3; border-radius: 12px; padding: 28px; transition: all 0.3s; background: #FAFAFA; }
+        .app-card:hover { border-color: #2B7A78; box-shadow: 0 6px 20px rgba(43,122,120,0.15); transform: translateY(-4px); }
+        .app-card h3 { font-size: 22px; color: #0B2A2F; margin-bottom: 12px; }
+        .app-card .app-description { font-size: 14px; color: #5B7553; margin-bottom: 20px; line-height: 1.6; min-height: 60px; }
+        .app-card .btn { display: inline-block; padding: 10px 20px; background: #DAA520; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: all 0.3s; width: 100%; text-align: center; }
+        .app-card .btn:hover { background: #B8860B; }
+        .app-card .btn-secondary { background: #2B7A78; margin-top: 8px; }
+        .app-card .btn-secondary:hover { background: #236663; }
+        .coming-soon { display: inline-block; background: #E97451; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+        .footer { background: white; border-radius: 16px; padding: 48px 40px; margin-top: 40px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .footer h3 { font-size: 24px; color: #0B2A2F; margin-bottom: 16px; }
+        .footer p { font-size: 16px; color: #5B7553; line-height: 1.8; max-width: 800px; margin: 0 auto 24px; }
+        .footer .team { display: flex; justify-content: center; gap: 40px; margin: 32px 0; flex-wrap: wrap; }
+        .footer .team-member { text-align: center; }
+        .footer .team-member .name { font-weight: 600; color: #0B2A2F; margin-bottom: 4px; }
+        .footer .team-member .role { font-size: 14px; color: #5B7553; }
+        .footer .links { display: flex; justify-content: center; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+        .footer .links a { color: #2B7A78; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        .footer .links a:hover { color: #DAA520; }
+        .stats { display: flex; justify-content: center; gap: 60px; margin: 40px 0; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 48px; font-weight: 700; color: #DAA520; line-height: 1; }
+        .stat-label { font-size: 14px; color: #B8D4D2; margin-top: 8px; }
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero .tagline {
-                font-size: 20px;
-            }
-
-            .hero .subtitle {
-                font-size: 16px;
-            }
-
-            .category {
-                padding: 32px 24px;
-            }
-
-            .category-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .category-title-group h2 {
-                font-size: 26px;
-            }
-
-            .app-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer {
-                padding: 32px 24px;
-            }
-
-            .footer .team {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
-
-        /* Stats Section */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            color: #DAA520;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #B8D4D2;
-            margin-top: 8px;
+            .hero h1 { font-size: 36px; }
+            .hero .tagline { font-size: 20px; }
+            .hero .subtitle { font-size: 16px; }
+            .category { padding: 32px 24px; }
+            .category-header { flex-direction: column; text-align: center; }
+            .category-title-group h2 { font-size: 26px; }
+            .app-grid { grid-template-columns: 1fr; }
+            .footer { padding: 32px 24px; }
+            .footer .team { flex-direction: column; gap: 20px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Hero Section -->
         <div class="hero">
             <h1>AI on Our Teams</h1>
             <div class="tagline">Production-ready apps demonstrating human-AI collaboration</div>
             <div class="subtitle">Where AI is a visible teammate, not an invisible tool. Built collaboratively by The Triad to solve real team problems.</div>
-            
             <div class="stats">
                 <div class="stat">
                     <div class="stat-number">8</div>
@@ -335,11 +81,9 @@
                     <div class="stat-label">Open Source</div>
                 </div>
             </div>
-
-            <a href="https://thehumanailoop.com" class="cta">Learn About The Triad →</a>
+            <a href="https://thehumanailoop.com" class="cta">Explore the Methodology →</a>
         </div>
 
-        <!-- Ritual Tools Category -->
         <div class="category">
             <div class="category-header">
                 <div class="category-icon">🎯</div>
@@ -348,7 +92,6 @@
                     <div class="category-description">Structured ceremonies for team alignment and decision-making. Use these to solve the "crickets problem" where teams give casual approval but later claim they never agreed.</div>
                 </div>
             </div>
-
             <div class="app-grid">
                 <div class="app-card">
                     <h3>Co-Sign</h3>
@@ -356,21 +99,18 @@
                     <a href="ritual-tools/co-sign.html" class="btn">Launch App</a>
                     <a href="ritual-tools/#co-sign" class="btn btn-secondary">Read More</a>
                 </div>
-
                 <div class="app-card">
                     <h3>AlignFirst</h3>
                     <div class="app-description">Real-time team voting for key decisions. Ensure everyone has a voice and verify alignment before you commit to action.</div>
                     <a href="ritual-tools/align-first.html" class="btn">Launch App</a>
                     <a href="ritual-tools/#align-first" class="btn btn-secondary">Read More</a>
                 </div>
-
                 <div class="app-card">
                     <h3>Sprint Kickoff</h3>
                     <div class="app-description">Start iterations with a structured ritual. 5 questions to align everyone on goals, approach, and success criteria.</div>
                     <a href="ritual-tools/sprint-kickoff.html" class="btn">Launch App</a>
                     <a href="ritual-tools/#sprint-kickoff" class="btn btn-secondary">Read More</a>
                 </div>
-
                 <div class="app-card">
                     <h3>Project Binder</h3>
                     <div class="app-description">Set up AI collaboration context in 15 minutes. Create comprehensive project documentation that makes AI a true teammate.</div>
@@ -380,7 +120,6 @@
             </div>
         </div>
 
-        <!-- Connection Tools Category -->
         <div class="category">
             <div class="category-header">
                 <div class="category-icon">💚</div>
@@ -389,7 +128,6 @@
                     <div class="category-description">Quick team health checks and daily connection rituals. Build trust, gauge energy, and maintain team health through lightweight, async-friendly practices.</div>
                 </div>
             </div>
-
             <div class="app-grid">
                 <div class="app-card">
                     <h3>Temp Check</h3>
@@ -397,21 +135,18 @@
                     <a href="connection-tools/temp-check.html" class="btn">Launch App</a>
                     <a href="connection-tools/#temp-check" class="btn btn-secondary">Read More</a>
                 </div>
-
                 <div class="app-card">
                     <h3>Trust Check</h3>
                     <div class="app-description">Build team health through psychological safety. 4 honest questions about how you work together, tracked over time.</div>
                     <a href="connection-tools/trust-check.html" class="btn">Launch App</a>
                     <a href="connection-tools/#trust-check" class="btn btn-secondary">Read More</a>
                 </div>
-
                 <div class="app-card">
                     <h3>Daily Drop</h3>
                     <div class="app-description">Daily team pick-me-up. Quick inspiration and actionable prompts for alignment and connection in your async workflow.</div>
                     <a href="connection-tools/daily-drop.html" class="btn">Launch App</a>
                     <a href="connection-tools/#daily-drop" class="btn btn-secondary">Read More</a>
                 </div>
-
                 <div class="app-card">
                     <h3>Warm-Up</h3>
                     <div class="app-description">Quick connection moment before meetings. Random questions to help teams connect as humans, not just coworkers.</div>
@@ -421,7 +156,6 @@
             </div>
         </div>
 
-        <!-- Reflection Tools Category -->
         <div class="category">
             <div class="category-header">
                 <div class="category-icon">🌱</div>
@@ -430,10 +164,9 @@
                     <div class="category-description">Personal introspection and growth tracking. Navigate burnout, reflect on leadership, and track your development journey with compassion and practical guidance.</div>
                 </div>
             </div>
-
             <div class="app-grid">
                 <div class="app-card">
-                    <div class="coming-soon">Coming Soon</div>
+                    <div class="coming-soon">In Progress</div>
                     <h3>Burnout Buddy</h3>
                     <div class="app-description">Navigate burnout with compassion and practical guidance. Recognize patterns, honor your limits, and chart a path back to sustainable work.</div>
                     <a href="reflection-tools/#burnout-buddy" class="btn" style="opacity: 0.6; cursor: not-allowed;">In Development</a>
@@ -441,15 +174,13 @@
             </div>
         </div>
 
-        <!-- Footer / About -->
         <div class="footer">
             <h3>Built Using The Triad Model</h3>
-            <p>These apps demonstrate what's possible when AI is on your team, not just in your toolkit. Built collaboratively by The Triad—one human working with two AI teammates, each with distinct roles and strengths. This isn't "AI-assisted" work—it's true collaboration where each teammate brings unique capabilities, and the work is better because of the diversity of thought.</p>
-
+            <p>These apps demonstrate what's possible when AI is on your team, not just in your toolkit. Built collaboratively by The Triad — one human working with two AI teammates, each with distinct roles and strengths. This isn't "AI-assisted" work — it's true collaboration where each teammate brings unique capabilities, and the work is better because of the diversity of thought.</p>
             <div class="team">
                 <div class="team-member">
                     <div class="name">Maura</div>
-                    <div class="role">Product Vision & UX Design</div>
+                    <div class="role">Product Vision & Direction</div>
                 </div>
                 <div class="team-member">
                     <div class="name">CP</div>
@@ -460,14 +191,12 @@
                     <div class="role">Synthesis & Strategic Thinking</div>
                 </div>
             </div>
-
             <p style="font-size: 14px; color: #3D3D3D; margin-top: 32px;">
                 All apps are MIT licensed. Take the code, modify it for your team's needs, and make it your own. Vanilla JavaScript, no dependencies (except Firebase where needed). Easy to understand and extend.
             </p>
-
             <div class="links">
-                <a href="https://maurakrandall.com/meet-the-team/">Meet The Team</a>
-                <a href="https://thehumanailoop.com">The Human AI Loop</a>
+                <a href="https://aigal.io/human-ai-triad/">Meet The Triad</a>
+                <a href="https://thehumanailoop.com">The Human–AI Loop</a>
                 <a href="https://maurakrandall.substack.com/">Writing & Reflections</a>
                 <a href="https://linkedin.com/in/maurakrandall">LinkedIn</a>
                 <a href="https://github.com/maurakrandall/maurakrandall.github.io">GitHub</a>
@@ -478,27 +207,20 @@
     <!-- ECOSYSTEM FOOTER -->
     <div style="background: linear-gradient(135deg, #0B2A2F 0%, #0D3B2A 100%); color: white; padding: 60px 20px 40px; margin-top: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
         <div style="max-width: 1000px; margin: 0 auto;">
-            
             <h3 style="color: #DAA520; font-size: 24px; margin: 0 0 24px 0; text-align: center; font-weight: 600;">
                 🌐 Explore the AI on Our Teams Ecosystem
             </h3>
-            
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-bottom: 40px;">
-                
-                <!-- Our Guides -->
                 <div>
-                    <h4 style="color: #DAA520; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">📚 Our Guides</h4>
+                    <h4 style="color: #DAA520; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">📚 Guides & Playbooks</h4>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
-                        <a href="https://maurakrandall.com/playbooks-guides/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ All Playbooks</a>
+                        <a href="https://aigal.io/playbooks-guides/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ All Playbooks</a>
                         <a href="https://maurakrandall.com/ai-teams-guide-1-project-binder/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Project Binder Setup</a>
                         <a href="https://maurakrandall.com/guide-2-message-bus/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Message Bus Protocol</a>
                         <a href="https://maurakrandall.com/guide-3-teach-ai-your-voice/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Teach AI Your Voice</a>
-                        <a href="https://maurakrandall.com/guide-4-ai-roles/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Identify AI Strengths & Roles</a>
                         <a href="https://maurakrandall.com/guide-5-organize-workspace/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Organize Your Workspace</a>
                     </div>
                 </div>
-
-                <!-- Our Tools -->
                 <div>
                     <h4 style="color: #DAA520; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">🛠️ Our Tools</h4>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -506,44 +228,33 @@
                         <a href="https://maurakrandall.github.io/ritual-tools/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Ritual Tools</a>
                         <a href="https://maurakrandall.github.io/connection-tools/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Connection Tools</a>
                         <a href="https://maurakrandall.github.io/reflection-tools/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Reflection Tools</a>
-                        <a href="https://maurakrandall.com/prototypes/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Our Lab - AICurious</a>
                     </div>
                 </div>
-
-                <!-- Our Team & Philosophy -->
                 <div>
-                    <h4 style="color: #DAA520; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">🙌 Our Team & Philosophy</h4>
+                    <h4 style="color: #DAA520; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">🙌 Philosophy & Methodology</h4>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
-                        <a href="https://maurakrandall.com/meet-the-team/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Meet The Triad</a>
+                        <a href="https://aigal.io/human-ai-triad/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Meet The Triad</a>
                         <a href="https://maurakrandall.com/ai-on-our-teams-manifesto/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Our Manifesto</a>
-                        <a href="https://thehumanailoop.com/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ The Loop Methodology</a>
-                        <a href="https://maurakrandall.com/aigal/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ AIGal Philosophy</a>
+                        <a href="https://thehumanailoop.com/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ The Human–AI Loop</a>
+                        <a href="https://aigal.io/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ AIGal.io</a>
                     </div>
                 </div>
-
-                <!-- Our Writing & Connect -->
                 <div>
-                    <h4 style="color: #DAA520; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">✍️ Our Writing & Connect</h4>
+                    <h4 style="color: #DAA520; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">✍️ Writing & Connect</h4>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         <a href="https://maurakrandall.com/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ maurakrandall.com</a>
                         <a href="https://maurakrandall.com/about/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ About Maura</a>
-                        <a href="https://maurakrandall.substack.com/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Substack Blog</a>
+                        <a href="https://maurakrandall.substack.com/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Substack</a>
                         <a href="https://www.linkedin.com/in/maurakrandall/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ LinkedIn</a>
-                        <a href="https://github.com/maurakrandall" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ GitHub</a>
                     </div>
                 </div>
-                
             </div>
-
-            <div style="height: 2px; background: rgba(218, 165, 32, 0.3); margin: 40px 0 32px;"></div>
-
+            <div style="height: 2px; background: rgba(218,165,32,0.3); margin: 40px 0 32px;"></div>
             <div style="text-align: center; color: #8EA8C3; font-size: 14px;">
-                <p style="margin: 8px 0;"><strong>Built by The Triad:</strong> Maura (Product), CP (Structure), Soph (Synthesis)</p>
-                <p style="margin: 8px 0;">© 2025 Maura Krandall | All apps MIT licensed</p>
+                <p style="margin: 8px 0;"><strong>Built by The Triad:</strong> Maura (direction + final call) · CP (divergence + prototyping) · Soph (synthesis + documentation)</p>
+                <p style="margin: 8px 0;">© 2026 Maura K. Randall · All apps MIT licensed</p>
             </div>
-            
         </div>
     </div>
-
 </body>
 </html>
