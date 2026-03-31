@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triad-in-Slack Infographic · Human AI Loop</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A2E2E;
+  --bg-deep:#061C1C;
+  --bg-mid:#0F3838;
+  --bg-lifted:#133E3E;
+  --border:rgba(255,255,255,0.07);
+  --border-soft:rgba(255,255,255,0.13);
+  --text-1:#DCF0F0;
+  --text-2:#7AABAB;
+  --text-3:#3E6E6E;
+  --teal:#2ECECE;
+  --teal-dim:rgba(46,206,206,0.10);
+  --teal-mid:rgba(46,206,206,0.18);
+  --amber:#F5A847;
+  --amber-dim:rgba(245,168,71,0.10);
+  --purple:#A87FE0;
+  --purple-dim:rgba(168,127,224,0.10);
+  --green:#3DD68C;
+  --green-dim:rgba(61,214,140,0.09);
+  --w:760px;
+}
+html{background:var(--bg-deep)}
+body{font-family:'DM Sans',sans-serif;color:var(--text-1);background:var(--bg-deep);max-width:var(--w);margin:0 auto;line-height:1.5}
+
+/* PANEL BASE */
+.panel{padding:64px 56px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.panel:last-child{border-bottom:none}
+
+/* EYEBROW */
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--teal);opacity:.6;flex-shrink:0}
+
+/* HEADLINE */
+.headline{font-family:'Syne',sans-serif;font-weight:800;line-height:1.15;color:var(--text-1);margin-bottom:20px}
+.hl-xl{font-size:clamp(32px,5vw,48px)}
+.hl-lg{font-size:clamp(26px,4vw,38px)}
+.hl-md{font-size:clamp(22px,3.5vw,30px)}
+
+/* BODY */
+.body{font-size:15px;color:var(--text-2);line-height:1.75;max-width:600px}
+.body p{margin-bottom:14px}
+.body p:last-child{margin-bottom:0}
+
+/* CALLOUT */
+.callout{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:10px 16px;background:var(--teal-dim);border:1px solid rgba(46,206,206,.2);border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:.04em}
+.callout-amber{background:var(--amber-dim);border-color:rgba(245,168,71,.22);color:var(--amber)}
+.callout-green{background:var(--green-dim);border-color:rgba(61,214,140,.22);color:var(--green)}
+
+/* DIVIDER DOTS */
+.p-num{position:absolute;top:24px;right:28px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);letter-spacing:.06em}
+
+/* ─── PANEL 1 — OPENING ─────────────────────────── */
+.p1{background:var(--bg-deep);padding:80px 56px}
+.p1-kicker{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:28px;opacity:.8}
+.p1-h{font-family:'Syne',sans-serif;font-size:clamp(38px,6vw,58px);font-weight:800;line-height:1.1;color:var(--text-1);margin-bottom:28px}
+.p1-h em{color:var(--teal);font-style:normal}
+.p1-sub{font-size:16px;color:var(--text-2);line-height:1.8;max-width:520px;margin-bottom:32px}
+.p1-rule{width:48px;height:2px;background:var(--teal);margin-bottom:32px;opacity:.5}
+.p1-q{font-family:'Syne',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:var(--text-1);line-height:1.3;border-left:3px solid var(--teal);padding-left:20px;max-width:520px}
+
+/* ─── PANEL 2 — THE TEAM ────────────────────────── */
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.team-col{background:var(--bg-mid);border:1px solid var(--border-soft);border-radius:8px;padding:20px}
+.team-col-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+.team-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.team-row:last-child{border-bottom:none}
+.team-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-human{background:var(--amber)}
+.dot-ai-s{background:var(--teal)}
+.dot-ai-c{background:var(--purple)}
+.team-name{font-size:13px;color:var(--text-2)}
+.team-role{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);margin-left:auto}
+.p2-diff{font-size:16px;font-weight:500;color:var(--text-1);margin:24px 0 8px;line-height:1.5}
+
+/* ─── PANEL 3 — ROLES ───────────────────────────── */
+.role-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.role-card{border-radius:8px;padding:24px}
+.role-card-c{background:var(--teal-dim);border:1px solid rgba(46,206,206,.2)}
+.role-card-s{background:var(--purple-dim);border:1px solid rgba(168,127,224,.2)}
+.role-tag{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.role-tag-c{color:var(--teal)}
+.role-tag-s{color:var(--purple)}
+.role-badge{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.badge-c{background:var(--teal)}
+.badge-s{background:var(--purple)}
+.role-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:8px}
+.role-desc{font-size:13px;color:var(--text-2);line-height:1.6}
+.roles-divider{margin:20px 0;border:none;border-top:1px solid var(--border)}
+.same-ws{background:var(--bg-mid);border:1px solid var(--border-soft);border-radius:6px;padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
+.swi{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2)}
+.swi::before{content:'→';color:var(--teal);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0}
+
+/* ─── PANEL 4 — SPRINT BEGINS ───────────────────── */
+.workflow-strip{display:flex;align-items:center;gap:0;margin:28px 0;overflow:hidden}
+.wf-step{flex:1;text-align:center;padding:16px 10px;background:var(--bg-mid);border:1px solid var(--border);position:relative}
+.wf-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--teal);font-family:'DM Mono',monospace;font-size:12px;z-index:2;background:var(--bg-deep);padding:0 2px}
+.wf-step:first-child{border-radius:6px 0 0 6px}
+.wf-step:last-child{border-radius:0 6px 6px 0}
+.wf-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px}
+.wf-val{font-size:13px;font-weight:500;color:var(--text-2)}
+.p4-note{font-size:14px;color:var(--text-2);margin-top:20px;padding:14px 18px;background:var(--bg-mid);border-left:2px solid var(--teal);border-radius:0 6px 6px 0;font-style:italic}
+
+/* ─── PANEL 5 — POLL MOMENT ─────────────────────── */
+.poll-ui{background:var(--bg-mid);border:1px solid var(--border-soft);border-radius:10px;padding:20px;margin:24px 0}
+.poll-title{font-size:13px;font-weight:500;color:var(--text-1);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.poll-title::before{content:'📊';font-size:14px}
+.poll-options{display:flex;flex-direction:column;gap:8px}
+.poll-row{display:flex;align-items:center;gap:10px}
+.poll-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-2);width:34px;flex-shrink:0}
+.poll-bar-wrap{flex:1;background:rgba(255,255,255,.05);border-radius:3px;height:22px;overflow:hidden;position:relative}
+.poll-bar{height:100%;border-radius:3px;transition:width .6s ease;display:flex;align-items:center;padding-left:8px}
+.bar-1{background:rgba(46,206,206,.15);width:12%}
+.bar-2{background:rgba(46,206,206,.28);width:24%}
+.bar-3{background:rgba(46,206,206,.45);width:38%}
+.bar-4{background:rgba(46,206,206,.18);width:14%}
+.poll-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);width:24px;text-align:right;flex-shrink:0}
+.ai-bubble{margin-top:16px;padding:12px 16px;background:var(--teal-dim);border:1px solid rgba(46,206,206,.2);border-radius:6px;display:flex;gap:10px}
+.ai-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);flex-shrink:0;margin-top:2px}
+.ai-text{font-size:13px;color:var(--text-2);line-height:1.6}
+.ai-text strong{color:var(--text-1);font-weight:500}
+.poll-foot{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);margin-top:10px;text-align:center}
+.p5-arrow{display:flex;align-items:center;gap:12px;margin:20px 0;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-3)}
+.p5-arrow::before,.p5-arrow::after{content:'';flex:1;height:1px;background:var(--border-soft)}
+
+/* ─── PANEL 6 — PROACTIVE ───────────────────────── */
+.big-quote{margin:28px 0;padding:28px 32px;background:var(--bg-mid);border-radius:10px;border-left:3px solid var(--amber);position:relative}
+.bq-mark{font-family:'Syne',sans-serif;font-size:48px;line-height:.5;color:var(--amber);opacity:.25;position:absolute;top:20px;left:24px}
+.bq-text{font-family:'Syne',sans-serif;font-size:clamp(16px,2.5vw,20px);font-weight:600;color:var(--text-1);line-height:1.55;position:relative;z-index:1}
+.bq-attr{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);margin-top:12px;letter-spacing:.06em}
+.no-prompt{margin-top:20px;display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);padding:8px 14px;background:var(--amber-dim);border:1px solid rgba(245,168,71,.2);border-radius:5px}
+
+/* ─── PANEL 7 — DEPENDENCY ──────────────────────── */
+.dep-visual{margin:28px 0;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
+.dep-box{padding:18px;background:var(--bg-mid);border:1px solid var(--border-soft);border-radius:8px;text-align:center}
+.dep-box-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+.dep-box-name{font-size:14px;font-weight:500;color:var(--text-1)}
+.dep-arrow{display:flex;flex-direction:column;align-items:center;gap:4px}
+.dep-arrow-line{width:2px;height:40px;background:linear-gradient(to bottom,var(--amber),transparent);border-radius:1px}
+.dep-arrow-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:.08em;writing-mode:vertical-lr;transform:rotate(180deg)}
+.dep-flag{padding:14px 18px;background:var(--amber-dim);border:1px solid rgba(245,168,71,.2);border-radius:6px;font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:20px;font-style:italic}
+.dep-flag strong{color:var(--amber);font-weight:500;font-style:normal}
+
+/* ─── PANEL 8 — HUMAN DECIDES ───────────────────── */
+.decision-block{margin:28px 0;background:var(--bg-mid);border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.db-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.db-tag{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+.db-moment{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.06em}
+.db-msg{padding:20px;font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--text-1);line-height:1.4;border-bottom:1px solid var(--border)}
+.db-msg-attr{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text-3);margin-top:6px;font-weight:400}
+.db-badges{padding:16px 20px;display:flex;gap:10px;flex-wrap:wrap}
+.db-badge{font-family:'DM Mono',monospace;font-size:10px;padding:6px 12px;border-radius:4px;display:flex;align-items:center;gap:5px}
+.badge-reloop{background:rgba(61,214,140,.1);border:1px solid rgba(61,214,140,.25);color:var(--green)}
+.badge-preserve{background:var(--teal-dim);border:1px solid rgba(46,206,206,.2);color:var(--teal)}
+.p8-note{font-size:14px;color:var(--text-2);line-height:1.75;padding:16px 20px;background:var(--teal-dim);border-top:1px solid rgba(46,206,206,.15)}
+.p8-note strong{color:var(--text-1)}
+
+/* ─── PANEL 9 — RESOLUTION ──────────────────────── */
+.resolution-steps{display:flex;flex-direction:column;gap:10px;margin:28px 0}
+.res-step{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--bg-mid);border:1px solid var(--border);border-radius:7px}
+.res-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
+.ri-check{background:var(--green-dim);border:1px solid rgba(61,214,140,.25)}
+.res-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:3px}
+.res-val{font-size:14px;color:var(--text-1);font-weight:500}
+.ai-update{margin-top:12px;padding:12px 16px;background:var(--teal-dim);border:1px solid rgba(46,206,206,.15);border-radius:6px;font-size:13px;color:var(--teal);font-family:'DM Mono',monospace}
+
+/* ─── PANEL 10 — SPRINT LOCKED ──────────────────── */
+.lock-visual{margin:28px 0;background:var(--bg-mid);border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.lv-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.lv-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.lv-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
+.lv-items{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.lv-item{padding:16px 20px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.lv-item:nth-child(even){border-right:none}
+.lv-item:nth-last-child(-n+2){border-bottom:none}
+.lv-item-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:5px}
+.lv-item-val{font-size:13px;color:var(--text-1);font-weight:500}
+.artifact-pill{margin:16px 20px 20px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--teal-dim);border:1px solid rgba(46,206,206,.25);border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;color:var(--teal)}
+.ap-icon{font-size:14px}
+
+/* ─── PANEL 11 — CONTINUITY ─────────────────────── */
+.next-ritual{margin:28px 0;padding:28px;background:var(--bg-mid);border:1px solid var(--border-soft);border-radius:10px;position:relative}
+.nr-eye{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.nr-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:8px}
+.nr-time{font-family:'DM Mono',monospace;font-size:12px;color:var(--amber);margin-bottom:20px}
+.nr-actions{display:flex;flex-direction:column;gap:7px}
+.nr-action{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2)}
+.nr-action::before{content:'→';font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);flex-shrink:0}
+.system-badge{position:absolute;top:20px;right:20px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:4px 8px;border-radius:4px}
+.p11-body{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:0}
+
+/* ─── PANEL 12 — CLOSING ────────────────────────── */
+.p12{background:var(--bg-deep);padding:80px 56px}
+.p12-rule{width:48px;height:2px;background:var(--teal);margin-bottom:40px;opacity:.5}
+.p12-shift{margin-bottom:32px}
+.p12-shift .eyebrow{margin-bottom:12px}
+.shift-list{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.shift-item{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--text-2)}
+.shift-item::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.hero-line{font-family:'Syne',sans-serif;font-size:clamp(26px,4.5vw,40px);font-weight:800;color:var(--text-1);line-height:1.2;margin:40px 0 20px;padding-top:40px;border-top:1px solid var(--border)}
+.closing-line{font-size:16px;color:var(--teal);font-weight:500;margin-bottom:48px}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);line-height:1.7;padding-top:32px;border-top:1px solid var(--border);max-width:580px}
+
+/* PANEL NUMBER LABELS */
+.pn{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-3);letter-spacing:.1em;opacity:.5;margin-bottom:20px}
+
+/* ACCENT LINES */
+.accent-bar{width:100%;height:1px;background:linear-gradient(to right,var(--teal),transparent);margin:32px 0;opacity:.3}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 1 — OPENING
+══════════════════════════════════════════════ -->
+<section class="panel p1">
+  <div class="p1-kicker">Triad-in-Slack · Human AI Loop</div>
+  <h1 class="p1-h">The future of teamwork isn't human <em>vs</em> AI.</h1>
+  <div class="p1-rule"></div>
+  <div class="p1-sub">It's human + AI — working inside the same system.</div>
+  <p class="p1-q">What happens when AI isn't a tool… but a teammate?</p>
+  <p style="margin-top:28px;font-size:14px;color:var(--text-3)">Follow a sprint planning session inside a shared workspace — with humans and AI working together in real time.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 2 — SETUP: THE TEAM
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg)">
+  <div class="pn">02 / 12</div>
+  <div class="eyebrow">A standard product team</div>
+  <h2 class="headline hl-lg">Nothing about this team is unusual.</h2>
+
+  <div class="team-grid">
+    <div class="team-col">
+      <div class="team-col-label">Human Members</div>
+      <div class="team-row"><div class="team-dot dot-human"></div><span class="team-name">PM</span><span class="team-role">Direction</span></div>
+      <div class="team-row"><div class="team-dot dot-human"></div><span class="team-name">Engineering Lead</span><span class="team-role">Build</span></div>
+      <div class="team-row"><div class="team-dot dot-human"></div><span class="team-name">Designer</span><span class="team-role">Design</span></div>
+    </div>
+    <div class="team-col">
+      <div class="team-col-label">Where they work</div>
+      <div class="team-row"><div class="team-dot" style="background:var(--teal);opacity:.5"></div><span class="team-name">Sprint planning</span><span class="team-role">Slack</span></div>
+      <div class="team-row"><div class="team-dot" style="background:var(--teal);opacity:.5"></div><span class="team-name">Stories &amp; estimates</span><span class="team-role">Backlog</span></div>
+      <div class="team-row"><div class="team-dot" style="background:var(--teal);opacity:.5"></div><span class="team-name">Dependencies</span><span class="team-role">Cross-team</span></div>
+    </div>
+  </div>
+
+  <p class="p2-diff">The only difference?</p>
+  <p class="body">AI teammates are present — with defined roles.</p>
+  <div class="callout">AI isn't bolted on. It's part of the team.</div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 3 — ROLES
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg-mid)">
+  <div class="pn">03 / 12</div>
+  <div class="eyebrow">Clear roles, shared system</div>
+  <h2 class="headline hl-lg">AI has responsibilities —<br>not just responses.</h2>
+
+  <div class="role-cards">
+    <div class="role-card role-card-c">
+      <div class="role-tag role-tag-c"><div class="role-badge badge-c"></div>Convergence AI</div>
+      <div class="role-name">Identifies risk</div>
+      <div class="role-desc">Surfaces gaps, inconsistencies, and blockers before they become problems.</div>
+    </div>
+    <div class="role-card role-card-s">
+      <div class="role-tag role-tag-s"><div class="role-badge badge-s"></div>Synthesis AI</div>
+      <div class="role-name">Maintains state</div>
+      <div class="role-desc">Captures decisions, updates the shared workspace, creates artifacts.</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px;color:var(--text-2);margin-bottom:16px;font-style:italic">Just like human teammates:</p>
+  <div class="same-ws">
+    <div class="swi">Different strengths</div>
+    <div class="swi">Same workspace</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 4 — SPRINT PLANNING BEGINS
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg)">
+  <div class="pn">04 / 12</div>
+  <div class="eyebrow">Familiar workflow</div>
+  <h2 class="headline hl-lg">The team starts planning the sprint.</h2>
+
+  <div class="workflow-strip">
+    <div class="wf-step">
+      <div class="wf-label">Stories</div>
+      <div class="wf-val">Reviewed</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-label">Estimates</div>
+      <div class="wf-val">Discussed</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-label">Sizing</div>
+      <div class="wf-val">Slack polls</div>
+    </div>
+  </div>
+
+  <div class="p4-note">Nothing new. The tools are the same. The primitives are the same. The workflow is the same.</div>
+  <div class="callout" style="margin-top:20px">AI augments the ritual — it doesn't replace it</div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 5 — AI AUGMENTS (POLL MOMENT)
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg-mid)">
+  <div class="pn">05 / 12</div>
+  <div class="eyebrow">Same tools, new intelligence</div>
+  <h2 class="headline hl-lg">AI doesn't replace the poll —<br>it interprets it.</h2>
+
+  <div class="body"><p>The team votes. AI reads the distribution.</p></div>
+
+  <div class="poll-ui">
+    <div class="poll-title">Poll: Story #14 estimate</div>
+    <div class="poll-options">
+      <div class="poll-row">
+        <span class="poll-label">2 pts</span>
+        <div class="poll-bar-wrap"><div class="poll-bar bar-1"></div></div>
+        <span class="poll-count">1</span>
+      </div>
+      <div class="poll-row">
+        <span class="poll-label">3 pts</span>
+        <div class="poll-bar-wrap"><div class="poll-bar bar-2"></div></div>
+        <span class="poll-count">2</span>
+      </div>
+      <div class="poll-row">
+        <span class="poll-label">5 pts</span>
+        <div class="poll-bar-wrap"><div class="poll-bar bar-3"></div></div>
+        <span class="poll-count">3</span>
+      </div>
+      <div class="poll-row">
+        <span class="poll-label">8 pts</span>
+        <div class="poll-bar-wrap"><div class="poll-bar bar-4"></div></div>
+        <span class="poll-count">1</span>
+      </div>
+    </div>
+    <div class="ai-bubble">
+      <span class="ai-tag">AI ·</span>
+      <span class="ai-text"><strong>"No convergence yet</strong> — recommend quick clarification before locking."</span>
+    </div>
+    <div class="poll-foot">Vote distribution: 3 / 5 / 5 / 8 — no majority</div>
+  </div>
+
+  <div class="p5-arrow">Slack primitive → AI insight</div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 6 — PROACTIVE TEAMMATE
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg)">
+  <div class="pn">06 / 12</div>
+  <div class="eyebrow">What humans miss</div>
+  <h2 class="headline hl-lg">AI surfaces what's not being said.</h2>
+
+  <div class="big-quote">
+    <div class="bq-mark">"</div>
+    <p class="bq-text">Story #14 has no owner. It overlaps with another component. Recommend resolving before sizing.</p>
+    <div class="bq-attr">AI (Convergence) · unprompted</div>
+  </div>
+
+  <div class="no-prompt">No prompt required.</div>
+
+  <p style="font-size:14px;color:var(--text-2);margin-top:20px;line-height:1.75">A tool responds to prompts. A teammate notices things. The difference is initiative — and this is what it looks like.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 7 — DEPENDENCY AWARENESS
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg-mid)">
+  <div class="pn">07 / 12</div>
+  <div class="eyebrow">Hidden risk</div>
+  <h2 class="headline hl-lg">AI tracks what spans beyond the room.</h2>
+
+  <div class="dep-flag">
+    <strong>"This story depends on the API team.</strong> That dependency hasn't been discussed."
+    <div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--amber)">AI (Synthesis) · context not lost</div>
+  </div>
+
+  <div class="dep-visual">
+    <div class="dep-box">
+      <div class="dep-box-label">Current Sprint</div>
+      <div class="dep-box-name">Story #14</div>
+    </div>
+    <div class="dep-arrow">
+      <div class="dep-arrow-line"></div>
+      <div class="dep-arrow-label" style="color:var(--amber);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em">depends on</div>
+    </div>
+    <div class="dep-box" style="border-color:rgba(245,168,71,.2)">
+      <div class="dep-box-label">External Team</div>
+      <div class="dep-box-name">API Platform</div>
+    </div>
+  </div>
+
+  <p class="body">Context is not lost.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 8 — THE HUMAN DECIDES
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg)">
+  <div class="pn">08 / 12</div>
+  <div class="eyebrow">Control stays human</div>
+  <h2 class="headline hl-lg">The system doesn't decide.<br>The human does.</h2>
+
+  <div class="decision-block">
+    <div class="db-header">
+      <span class="db-tag">PM · Direction</span>
+      <span class="db-moment">Decision moment</span>
+    </div>
+    <div class="db-msg">
+      "Pause — we're not ready to lock. Let's resolve dependencies first."
+      <div class="db-msg-attr">PM pauses the sprint. Redirects the team.</div>
+    </div>
+    <div class="db-badges">
+      <div class="db-badge badge-reloop">↺ Re-loop initiated</div>
+      <div class="db-badge badge-preserve">Context preserved</div>
+      <div class="db-badge badge-preserve">Prior votes retained</div>
+    </div>
+    <div class="p8-note">
+      <strong>This is the moment the Loop is designed for.</strong> The human doesn't just approve or deny — they redirect the entire team. AI holds the context. Work continues from where it left off.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 9 — RESOLUTION
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg-mid)">
+  <div class="pn">09 / 12</div>
+  <div class="eyebrow">Back to flow</div>
+  <h2 class="headline hl-lg">Work continues —<br>without losing momentum.</h2>
+
+  <div class="resolution-steps">
+    <div class="res-step">
+      <div class="res-icon ri-check">✓</div>
+      <div>
+        <div class="res-label">Votes</div>
+        <div class="res-val">Converged — Story locked at 5 points (4/5 aligned)</div>
+      </div>
+    </div>
+    <div class="res-step">
+      <div class="res-icon ri-check">✓</div>
+      <div>
+        <div class="res-label">Ownership</div>
+        <div class="res-val">Assigned — no ambiguity</div>
+      </div>
+    </div>
+    <div class="res-step">
+      <div class="res-icon ri-check">✓</div>
+      <div>
+        <div class="res-label">Dependencies</div>
+        <div class="res-val">Acknowledged — API team notified</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-update">AI (Synthesis) · Estimate recorded · Sprint plan updated · Shared state current</div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 10 — SPRINT LOCKED
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg)">
+  <div class="pn">10 / 12</div>
+  <div class="eyebrow">Decision captured</div>
+  <h2 class="headline hl-lg">The sprint is committed.</h2>
+
+  <div class="lock-visual">
+    <div class="lv-header">
+      <div class="lv-dot"></div>
+      <span class="lv-title">Sprint Plan · Locked</span>
+    </div>
+    <div class="lv-items">
+      <div class="lv-item">
+        <div class="lv-item-label">Estimates</div>
+        <div class="lv-item-val">Finalized</div>
+      </div>
+      <div class="lv-item">
+        <div class="lv-item-label">Ownership</div>
+        <div class="lv-item-val">Assigned</div>
+      </div>
+      <div class="lv-item" style="border-bottom:none">
+        <div class="lv-item-label">Dependencies</div>
+        <div class="lv-item-val">Noted</div>
+      </div>
+      <div class="lv-item" style="border-bottom:none">
+        <div class="lv-item-label">Blockers</div>
+        <div class="lv-item-val">0 remaining</div>
+      </div>
+    </div>
+    <div class="artifact-pill">
+      <span class="ap-icon">📄</span>
+      Artifact created and pinned to channel
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 11 — SYSTEM CONTINUITY
+══════════════════════════════════════════════ -->
+<section class="panel" style="background:var(--bg-mid)">
+  <div class="pn">11 / 12</div>
+  <div class="eyebrow">Work doesn't stop</div>
+  <h2 class="headline hl-lg">The system carries<br>the team forward.</h2>
+
+  <div class="next-ritual">
+    <div class="system-badge">System · Scheduled</div>
+    <div class="nr-eye">Next Ritual</div>
+    <div class="nr-title">Backlog Refinement</div>
+    <div class="nr-time">Scheduled · 72 hours</div>
+    <div class="nr-actions">
+      <div class="nr-action">Add tickets</div>
+      <div class="nr-action">Vote on priorities</div>
+      <div class="nr-action">Flag dependencies</div>
+    </div>
+  </div>
+
+  <p class="p11-body" style="margin-top:24px;font-size:15px;color:var(--text-2);line-height:1.75">No context lost between sessions. No reconstruction overhead. The team picks up exactly where they left off.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PANEL 12 — CLOSING
+══════════════════════════════════════════════ -->
+<section class="panel p12">
+  <div class="pn">12 / 12</div>
+  <div class="p12-rule"></div>
+
+  <div class="p12-shift">
+    <div class="eyebrow">The shift</div>
+    <h2 class="headline hl-lg">AI isn't replacing teamwork.</h2>
+    <p class="body" style="margin-top:16px">It's making it more complete.</p>
+    <div class="shift-list">
+      <div class="shift-item">Less lost context</div>
+      <div class="shift-item">Faster decisions</div>
+      <div class="shift-item">Clearer ownership</div>
+    </div>
+  </div>
+
+  <div class="hero-line">Work that neither could produce alone.</div>
+  <p class="closing-line">AI isn't replacing teamwork. It's making it more complete.</p>
+
+  <div class="footer-note">
+    This is a simulated prototype based on real workflows. Built to explore how human and AI teammates operate together inside existing systems.<br><br>
+    <span style="color:var(--teal)">thehumanailoop.com/methodology</span>
+  </div>
+</section>
+
+</body>
+</html>
