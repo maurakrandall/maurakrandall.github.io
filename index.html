@@ -21,19 +21,25 @@
         .hero .cta:hover { background: #B8860B; transform: translateY(-2px); }
         .category { background: white; border-radius: 16px; padding: 48px 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .category-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 3px solid #2B7A78; }
+        .category-header.itl-header { border-bottom-color: #DAA520; }
         .category-icon { font-size: 48px; line-height: 1; }
         .category-title-group h2 { font-size: 32px; color: #0B2A2F; margin-bottom: 8px; }
         .category-description { font-size: 16px; color: #5B7553; line-height: 1.5; }
         .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
         .app-card { border: 2px solid #E8F4F3; border-radius: 12px; padding: 28px; transition: all 0.3s; background: #FAFAFA; }
         .app-card:hover { border-color: #2B7A78; box-shadow: 0 6px 20px rgba(43,122,120,0.15); transform: translateY(-4px); }
+        .app-card.itl-card { border-color: rgba(218,165,32,0.25); background: #FFFDF5; }
+        .app-card.itl-card:hover { border-color: #DAA520; box-shadow: 0 6px 20px rgba(218,165,32,0.15); transform: translateY(-4px); }
         .app-card h3 { font-size: 22px; color: #0B2A2F; margin-bottom: 12px; }
         .app-card .app-description { font-size: 14px; color: #5B7553; margin-bottom: 20px; line-height: 1.6; min-height: 60px; }
         .app-card .btn { display: inline-block; padding: 10px 20px; background: #DAA520; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: all 0.3s; width: 100%; text-align: center; }
         .app-card .btn:hover { background: #B8860B; }
         .app-card .btn-secondary { background: #2B7A78; margin-top: 8px; }
         .app-card .btn-secondary:hover { background: #236663; }
+        .app-card .btn-itl { background: #0B2A2F; margin-top: 8px; }
+        .app-card .btn-itl:hover { background: #DAA520; }
         .coming-soon { display: inline-block; background: #E97451; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+        .itl-badge { display: inline-block; background: #DAA520; color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
         .footer { background: white; border-radius: 16px; padding: 48px 40px; margin-top: 40px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .footer h3 { font-size: 24px; color: #0B2A2F; margin-bottom: 16px; }
         .footer p { font-size: 16px; color: #5B7553; line-height: 1.8; max-width: 800px; margin: 0 auto 24px; }
@@ -69,11 +75,11 @@
             <div class="subtitle">Where AI is a visible teammate, not an invisible tool. Built collaboratively by The Triad to solve real team problems.</div>
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-number">8</div>
+                    <div class="stat-number">10</div>
                     <div class="stat-label">Production Apps</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">3</div>
+                    <div class="stat-number">4</div>
                     <div class="stat-label">Categories</div>
                 </div>
                 <div class="stat">
@@ -84,6 +90,7 @@
             <a href="https://thehumanailoop.com" class="cta">Explore the Methodology →</a>
         </div>
 
+        <!-- RITUAL TOOLS -->
         <div class="category">
             <div class="category-header">
                 <div class="category-icon">🎯</div>
@@ -120,6 +127,7 @@
             </div>
         </div>
 
+        <!-- CONNECTION TOOLS -->
         <div class="category">
             <div class="category-header">
                 <div class="category-icon">💚</div>
@@ -156,6 +164,7 @@
             </div>
         </div>
 
+        <!-- REFLECTION TOOLS -->
         <div class="category">
             <div class="category-header">
                 <div class="category-icon">🌱</div>
@@ -174,6 +183,34 @@
             </div>
         </div>
 
+        <!-- INSIDE THE LOOP -->
+        <div class="category">
+            <div class="category-header itl-header">
+                <div class="category-icon">🎬</div>
+                <div class="category-title-group">
+                    <h2>Inside the Loop</h2>
+                    <div class="category-description">Not tools to use — demonstrations of the methodology in action. See what it actually looks like when a human and AI teammates run a real sprint together inside a shared workspace.</div>
+                </div>
+            </div>
+            <div class="app-grid">
+                <div class="app-card itl-card">
+                    <div class="itl-badge">Interactive Demo</div>
+                    <h3>Triad in Slack — Prototype</h3>
+                    <div class="app-description">A guided sprint planning session with The Triad — Maura, Soph, and CP — inside a shared Slack-like workspace. Follow two paths: proceed or re-loop. Watch shared state update in real time as the team works.</div>
+                    <a href="https://maurakrandall.github.io/triad-in-slack/" class="btn">Launch Demo</a>
+                    <a href="https://thehumanailoop.com" class="btn btn-itl">About the Methodology</a>
+                </div>
+                <div class="app-card itl-card">
+                    <div class="itl-badge">Visual</div>
+                    <h3>Triad in Slack — Infographic</h3>
+                    <div class="app-description">12-panel visual narrative showing how AI teammates augment a sprint planning workflow — from poll interpretation to proactive risk flagging to sprint lock. Built to make the methodology tangible at a glance.</div>
+                    <a href="https://maurakrandall.github.io/triad-in-slack-infographic/" class="btn">View Infographic</a>
+                    <a href="https://aigal.io/human-ai-triad/" class="btn btn-itl">Meet the Triad</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
         <div class="footer">
             <h3>Built Using The Triad Model</h3>
             <p>These apps demonstrate what's possible when AI is on your team, not just in your toolkit. Built collaboratively by The Triad — one human working with two AI teammates, each with distinct roles and strengths. This isn't "AI-assisted" work — it's true collaboration where each teammate brings unique capabilities, and the work is better because of the diversity of thought.</p>
@@ -228,6 +265,8 @@
                         <a href="https://maurakrandall.github.io/ritual-tools/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Ritual Tools</a>
                         <a href="https://maurakrandall.github.io/connection-tools/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Connection Tools</a>
                         <a href="https://maurakrandall.github.io/reflection-tools/" style="color: #E8F4F3; text-decoration: none; font-size: 16px; display: block;">→ Reflection Tools</a>
+                        <a href="https://maurakrandall.github.io/triad-in-slack/" style="color: #DAA520; text-decoration: none; font-size: 16px; display: block;">→ Inside the Loop: Prototype</a>
+                        <a href="https://maurakrandall.github.io/triad-in-slack-infographic/" style="color: #DAA520; text-decoration: none; font-size: 16px; display: block;">→ Inside the Loop: Infographic</a>
                     </div>
                 </div>
                 <div>
