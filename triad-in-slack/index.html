@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triad-in-Slack · Human AI Loop</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0A2E2E;
+  --bg-deep:#061C1C;
+  --bg-surface:#0F3838;
+  --bg-hover:#133E3E;
+  --bg-elevated:#164242;
+  --border:rgba(255,255,255,0.06);
+  --border-soft:rgba(255,255,255,0.11);
+  --text-1:#DCF0F0;
+  --text-2:#7AABAB;
+  --text-3:#3E6E6E;
+  --accent:#2ECECE;
+  --accent-dim:rgba(46,206,206,0.11);
+  --warm:#F5A847;
+  --warm-dim:rgba(245,168,71,0.10);
+  --purple:#A87FE0;
+  --purple-dim:rgba(168,127,224,0.10);
+  --green:#3DD68C;
+  --sidebar-w:200px;
+  --state-w:230px;
+}
+
+html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;overflow:hidden}
+
+/* LAYOUT */
+.workspace{display:grid;grid-template-columns:var(--sidebar-w) minmax(0,1fr) var(--state-w);height:100vh;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{background:var(--bg-deep);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+.ws-name{padding:16px 14px 13px;border-bottom:1px solid var(--border)}
+.ws-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text-1);letter-spacing:.02em}
+.ws-url{font-size:10px;color:var(--green);font-family:'DM Mono',monospace;margin-top:3px;display:flex;align-items:center;gap:4px}
+.ws-url::before{content:'';width:5px;height:5px;background:var(--green);border-radius:50%;display:inline-block}
+.sb-section{padding:14px 0 6px}
+.sb-label{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);padding:0 14px;margin-bottom:4px}
+.ch-item{display:flex;align-items:center;gap:6px;padding:4px 14px;font-size:13px;color:var(--text-3);cursor:default;position:relative;transition:color .15s}
+.ch-item.active{color:var(--text-1)}
+.ch-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);border-radius:0 2px 2px 0}
+.ch-item.active{background:var(--accent-dim)}
+.ch-hash{font-size:14px;font-weight:300;opacity:.5;width:13px;text-align:center;flex-shrink:0}
+.ch-item.active .ch-hash{opacity:1;color:var(--accent)}
+
+/* MEMBERS */
+.mb-item{display:flex;align-items:center;gap:8px;padding:4px 14px}
+.avatar{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;flex-shrink:0;letter-spacing:0}
+.av-m{background:var(--warm-dim);color:var(--warm);border:1px solid rgba(245,168,71,.22)}
+.av-s{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(46,206,206,.22)}
+.av-c{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(168,127,224,.22)}
+.av-sys{background:rgba(255,255,255,.04);color:var(--text-3);border:1px solid var(--border);font-size:9px}
+.mb-name{font-size:12.5px;color:var(--text-2);flex:1}
+.mb-badge{font-size:9.5px;padding:1px 5px;border-radius:3px;font-weight:500}
+.bd-human{background:var(--warm-dim);color:var(--warm)}
+.bd-ai{background:var(--accent-dim);color:var(--accent)}
+.bd-ai-cp{background:var(--purple-dim);color:var(--purple)}
+
+/* MAIN */
+.main{display:flex;flex-direction:column;background:var(--bg);overflow:hidden;position:relative}
+.ch-header{padding:11px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;flex-shrink:0}
+.ch-name{font-family:'DM Mono',monospace;font-size:13px;color:var(--text-1);font-weight:500}
+.ch-divider{width:1px;height:12px;background:var(--border-soft)}
+.ch-desc{font-size:11.5px;color:var(--text-3)}
+
+/* FEED */
+.feed{flex:1;overflow-y:auto;padding:20px 28px;display:flex;flex-direction:column;gap:6px}
+.feed::-webkit-scrollbar{width:4px}
+.feed::-webkit-scrollbar-track{background:transparent}
+.feed::-webkit-scrollbar-thumb{background:var(--border-soft);border-radius:2px}
+
+.msg{display:flex;gap:12px;padding:10px 13px;border-radius:7px;border-left:2px solid transparent;animation:fadeUp .28s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+.msg-m{border-left-color:rgba(245,168,71,.35);background:rgba(245,168,71,.025)}
+.msg-s{border-left-color:rgba(46,206,206,.35);background:rgba(46,206,206,.025)}
+.msg-c{border-left-color:rgba(168,127,224,.35);background:rgba(168,127,224,.025)}
+.msg-sys{background:rgba(255,255,255,.025);border-left-color:rgba(255,255,255,.12);border-left-width:1px}
+.msg-handoff{background:var(--accent-dim);border-left-color:var(--accent);border-left-width:2px}
+.msg-reloop-done{background:rgba(61,214,140,.07);border-left-color:var(--green)}
+
+.msg-body{flex:1}
+.msg-head{display:flex;align-items:baseline;gap:7px;margin-bottom:2px}
+.msg-author{font-size:13px;font-weight:600;font-family:'Syne',sans-serif}
+.au-m{color:var(--warm)} .au-s{color:var(--accent)} .au-c{color:var(--purple)}
+.au-sys{color:var(--text-3);font-size:10px;font-family:'DM Mono',monospace;font-weight:400;text-transform:uppercase;letter-spacing:.06em}
+.msg-role{font-size:10px;color:var(--text-3);font-family:'DM Mono',monospace}
+.msg-time{font-size:10px;color:var(--text-3);font-family:'DM Mono',monospace;margin-left:auto}
+.msg-text{font-size:13.5px;color:var(--text-2);line-height:1.62;white-space:pre-line}
+.msg-sys .msg-text,.msg-handoff .msg-text{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--text-3);line-height:1.55}
+.msg-handoff .msg-text{color:var(--accent)}
+.msg-reloop-done .msg-text{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--green)}
+
+/* LANDING */
+.landing{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;gap:14px;background:var(--bg);pointer-events:none}
+.land-eye{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.land-h{font-family:'Syne',sans-serif;font-size:27px;font-weight:800;color:var(--text-1);line-height:1.2;max-width:400px}
+.land-p{font-size:13.5px;color:var(--text-2);max-width:370px;line-height:1.7}
+
+/* BRANCH */
+.branch-overlay{position:absolute;inset:0;background:rgba(6,24,24,.88);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:20;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.branch-card{background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:12px;padding:36px 32px;max-width:460px;width:92%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.45)}
+.branch-ann{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.branch-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text-1);margin-bottom:26px;line-height:1.25}
+.branch-btns{display:flex;flex-direction:column;gap:10px}
+
+/* SECOND DECISION */
+.second-dec{margin:12px 0 0;padding:16px;background:var(--bg-elevated);border:1px solid rgba(46,206,206,.2);border-radius:8px;text-align:center;animation:fadeUp .3s ease}
+.second-dec p{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+
+/* HERO */
+.hero{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;gap:12px;background:var(--bg)}
+.hero-eye{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.hero-h{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--text-1);line-height:1.2;max-width:360px}
+.hero-sub{font-size:14px;color:var(--text-2);max-width:340px;line-height:1.72;margin-top:4px}
+.hero-foot{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);max-width:380px;line-height:1.7;margin-top:22px;padding-top:20px;border-top:1px solid var(--border);font-style:italic}
+.reloop-badge{font-family:'DM Mono',monospace;font-size:11px;color:var(--green);padding:5px 10px;background:rgba(61,214,140,.08);border-radius:4px;border-left:2px solid var(--green);margin-top:6px;display:inline-block}
+
+/* BOTTOM NAV */
+.bot-nav{padding:13px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:var(--bg)}
+.step-ind{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-3)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;border:none;transition:all .15s;text-decoration:none;line-height:1}
+.btn-primary{background:var(--accent);color:var(--bg-deep)}
+.btn-primary:hover{background:#3ADADA;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-soft)}
+.btn-ghost:hover{background:var(--bg-hover);color:var(--text-1)}
+.btn-proceed{background:var(--accent);color:var(--bg-deep);width:100%;justify-content:center;padding:13px}
+.btn-proceed:hover{background:#3ADADA;transform:translateY(-1px)}
+.btn-reloop{background:transparent;color:var(--text-2);border:1px solid var(--border-soft);width:100%;justify-content:center;padding:13px}
+.btn-reloop:hover{background:var(--bg-hover);border-color:var(--warm);color:var(--warm)}
+.btn-artifact{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:5px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(46,206,206,.2);cursor:pointer;transition:background .15s;margin-top:7px}
+.btn-artifact:hover{background:rgba(46,206,206,.2)}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease}
+.modal{background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:10px;width:500px;max-width:92vw;max-height:82vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.55);animation:slideUp .22s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.modal-hd{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between}
+.modal-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text-1)}
+.modal-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);margin-top:2px}
+.modal-x{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:17px;padding:2px;line-height:1;transition:color .15s;margin-left:10px}
+.modal-x:hover{color:var(--text-1)}
+.modal-bd{padding:18px 22px}
+.m-sec{margin-bottom:18px}
+.m-sec-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+.m-sec ul{list-style:none}
+.m-sec ul li{font-size:13px;color:var(--text-2);padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px}
+.m-sec ul li:last-child{border-bottom:none}
+.m-sec ul li::before{content:'→';color:var(--accent);font-size:10px;flex-shrink:0}
+.pri-n{font-family:'DM Mono',monospace;font-size:10px;background:var(--accent-dim);color:var(--accent);padding:1px 5px;border-radius:3px}
+.owner{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);margin-left:auto}
+
+/* STATE PANEL */
+.state-panel{background:var(--bg-deep);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sp-hd{padding:11px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.sp-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2.4s ease infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.sp-title{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.sp-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:13px;min-width:0}
+.sp-body::-webkit-scrollbar{width:3px}
+.sp-body::-webkit-scrollbar-thumb{background:var(--border)}
+.sf{margin-bottom:14px;border-radius:4px;padding:3px;margin:-3px;transition:background .1s;overflow:hidden;min-width:0}
+.sf.highlight{animation:spFlash 1.4s ease forwards}
+@keyframes spFlash{0%{background:rgba(46,206,206,.18)}100%{background:transparent}}
+.sf-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:5px}
+.sv{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-2);line-height:1.5;word-break:break-word;overflow-wrap:break-word}
+.sv-empty{color:var(--text-3);font-style:italic}
+.sv-active{color:var(--green)}
+.sv-planning{color:var(--warm)}
+.sv-reloop{color:#E09050}
+.sp-li{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text-2);padding:3px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:5px;line-height:1.42;word-break:break-word;overflow-wrap:break-word}
+.sp-li:last-child{border-bottom:none}
+.sp-li::before{content:'·';color:var(--accent);font-size:10px;flex-shrink:0;margin-top:2px}
+.sp-artifact{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--accent);padding:4px 8px;background:var(--accent-dim);border-radius:4px;display:flex;align-items:center;gap:4px;cursor:pointer;transition:background .15s;margin-top:2px;word-break:break-word;overflow-wrap:break-word;max-width:100%;box-sizing:border-box}
+.sp-artifact:hover{background:rgba(46,206,206,.2)}
+.sp-div{height:1px;background:var(--border);margin:13px 0}
+.sp-reloop{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);padding:5px 8px;background:rgba(61,214,140,.07);border-radius:4px;border-left:2px solid var(--green);line-height:1.5;word-break:break-word;overflow-wrap:break-word}
+.sp-review{font-family:'DM Mono',monospace;font-size:10px;color:var(--warm);padding:5px 8px;background:var(--warm-dim);border-radius:4px;line-height:1.5;word-break:break-word;overflow-wrap:break-word}
+
+@media(max-width:1400px){:root{--sidebar-w:190px;--state-w:220px}}
+@media(max-width:1200px){:root{--sidebar-w:180px;--state-w:210px}}
+@media(max-width:1050px){:root{--sidebar-w:170px;--state-w:200px}}
+@media(max-width:900px){:root{--sidebar-w:160px;--state-w:190px}}
+@media(max-width:780px){.sidebar{display:none}.workspace{grid-template-columns:1fr var(--state-w)}}
+@media(max-width:680px){.sidebar,.state-panel{display:none}.workspace{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="workspace">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="ws-name">
+      <div class="ws-title">The Human AI Loop</div>
+      <div class="ws-url">thehumanailoop.slack.com</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Channels</div>
+      <div class="ch-item active" id="ch-triad-state"><span class="ch-hash">#</span>triad-state</div>
+      <div class="ch-item" id="ch-strategy"><span class="ch-hash">#</span>strategy</div>
+      <div class="ch-item" id="ch-build"><span class="ch-hash">#</span>build</div>
+      <div class="ch-item" id="ch-review"><span class="ch-hash">#</span>review</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Members — 3</div>
+      <div class="mb-item"><div class="avatar av-m">M</div><span class="mb-name">Maura</span><span class="mb-badge bd-human">Human</span></div>
+      <div class="mb-item"><div class="avatar av-s">S</div><span class="mb-name">Soph</span><span class="mb-badge bd-ai">AI</span></div>
+      <div class="mb-item"><div class="avatar av-c">C</div><span class="mb-name">CP</span><span class="mb-badge bd-ai-cp">AI</span></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+    <div class="ch-header">
+      <span style="color:var(--text-3);font-size:15px;font-weight:300">#</span>
+      <span class="ch-name" id="ch-current">triad-state</span>
+      <div class="ch-divider"></div>
+      <span class="ch-desc" id="ch-desc">Shared state · decisions · artifacts</span>
+    </div>
+
+    <!-- Scroll area -->
+    <div style="flex:1;overflow:hidden;position:relative">
+      <div class="feed" id="feed"></div>
+
+      <!-- Landing -->
+      <div class="landing" id="landing">
+        <div class="land-eye">Human AI Loop · Prototype</div>
+        <div class="land-h">What does it look like when AI is a teammate?</div>
+        <div class="land-p">Follow a sprint planning session with The Triad — Maura, Soph, and CP — to see how a human/AI mixed team operates inside a shared workspace.</div>
+      </div>
+    </div>
+
+    <!-- Bottom nav -->
+    <div class="bot-nav">
+      <span class="step-ind" id="step-ind">thehumanailoop.com/methodology</span>
+      <button class="btn btn-primary" id="cta" onclick="advance()">Start Sprint Planning →</button>
+    </div>
+  </main>
+
+  <!-- STATE PANEL -->
+  <aside class="state-panel">
+    <div class="sp-hd"><div class="sp-dot"></div><span class="sp-title">Shared State</span></div>
+    <div class="sp-body" id="sp-body">
+      <div class="sf" id="sf-status">
+        <div class="sf-label">Sprint Status</div>
+        <div class="sv sv-empty" id="sv-status">Not started</div>
+      </div>
+      <div class="sp-div"></div>
+      <div class="sf" id="sf-priorities">
+        <div class="sf-label">Active Priorities</div>
+        <div id="sv-priorities"><span class="sv sv-empty">—</span></div>
+      </div>
+      <div class="sp-div"></div>
+      <div class="sf" id="sf-decisions">
+        <div class="sf-label">Locked Decisions</div>
+        <div id="sv-decisions"><span class="sv sv-empty">0</span></div>
+      </div>
+      <div class="sp-div"></div>
+      <div class="sf" id="sf-artifacts">
+        <div class="sf-label">Pinned Artifacts</div>
+        <div id="sv-artifacts"><span class="sv sv-empty">0</span></div>
+      </div>
+      <div class="sp-div"></div>
+      <div class="sf" id="sf-handoff">
+        <div class="sf-label">Handoff Status</div>
+        <div id="sv-handoff"><span class="sv sv-empty">—</span></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ARTIFACT MODAL -->
+<div id="modal" style="display:none">
+  <div class="modal-bg" onclick="if(event.target===this)closeModal()" style="position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center">
+    <div class="modal">
+      <div class="modal-hd">
+        <div><div class="modal-title">📄 Sprint Plan — Thread 11</div><div class="modal-sub">Generated from thread decisions · Locked by Maura</div></div>
+        <button class="modal-x" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-bd">
+        <div class="m-sec">
+          <div class="m-sec-label">Priorities</div>
+          <ul>
+            <li><span class="pri-n">01</span>Triad-in-Slack spec</li>
+            <li><span class="pri-n">02</span>Sidebar group prep <span class="owner">internal: today EOD</span></li>
+          </ul>
+        </div>
+        <div class="m-sec">
+          <div class="m-sec-label">Locked Decisions</div>
+          <ul>
+            <li>Spec structure: Option 2 + human role moved up</li>
+            <li>Manifesto rewrite: paused (Thread 10)</li>
+          </ul>
+        </div>
+        <div class="m-sec">
+          <div class="m-sec-label">Owners</div>
+          <ul>
+            <li>Triad-in-Slack spec <span class="owner">CP (copy) · Soph (build)</span></li>
+            <li>Sidebar prep <span class="owner">Soph draft · Maura review</span></li>
+          </ul>
+        </div>
+        <div class="m-sec">
+          <div class="m-sec-label">Next Steps</div>
+          <ul>
+            <li>CP delivers full dialogue + microcopy</li>
+            <li>Soph begins build on receipt</li>
+          </ul>
+        </div>
+        <div id="modal-reloop-note"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────
+var phase = 'pre'; // pre | branch | pathA | pathB | final
+var preStep = 0;   // 0=landing, 1-4=pre-branch
+var pathBStep = 0;
+var tIdx = 0;
+var showingReloop = false;
+
+var TIMES = ['9:02','9:04','9:06','9:09','9:11','9:13','9:16','9:18','9:20','9:23','9:25','9:27','9:29'];
+function t(){ return TIMES[tIdx++ % TIMES.length]; }
+
+// ── DATA ───────────────────────────────────────────
+var PRE = [
+  null, // 0 = landing
+  {
+    ch:'strategy', chDesc:'Sprint planning',
+    msgs:[
+      {a:'m',text:'Thread 11 open. Priorities: (1) Triad-in-Slack spec, (2) Sidebar group prep — upcoming session this week.\n\nCP, Soph — aligned?'}
+    ],
+    st:{
+      status:{v:'Planning in progress',c:'sv-planning'},
+      pri:['Triad-in-Slack spec','Sidebar prep [session this week]'],
+      dec:[],art:[],hand:null,
+      upd:['sf-status','sf-priorities']
+    }
+  },
+  {
+    ch:'strategy',
+    msgs:[
+      {a:'s',text:'Aligned on priorities and sequencing.\n\nOne adjustment: Sidebar group 1:1 scheduling needs a near-term internal deadline to avoid compression risk.\n\nAlso confirming: manifesto rewrite remains paused until headspace is available.\n\nAlso flagging: prep for the upcoming Sidebar group session hasn\'t started yet based on the meeting plan — recommend we get ahead of that now.\n\nRecommend we lock those before proceeding.'}
+    ],
+    st:{
+      status:{v:'Planning in progress',c:'sv-planning'},
+      pri:['Triad-in-Slack spec','Sidebar group prep [internal deadline: today EOD]'],
+      dec:['Manifesto rewrite paused (Thread 10 — confirmed)'],
+      art:[],hand:null,
+      upd:['sf-priorities','sf-decisions']
+    }
+  },
+  {
+    ch:'strategy',
+    msgs:[
+      {a:'c',text:'Aligned.\n\nI\'m already seeing three strong directions for the spec — will bring options to design review shortly.\n\nAlso… the \'extending existing primitives\' angle has legs. Feels like the hook.'}
+    ],
+    st:null
+  },
+  {
+    ch:'build', chDesc:'Design review',
+    msgs:[
+      {a:'c',text:'Posting three structure options for the Triad-in-Slack spec:\n\nOption 1 — Vision-led, system follows\nStrong opening, but delays the human\'s role\n\nOption 2 — System-first, grounded then expands\nBest balance of clarity and credibility\n\nOption 3 — Technical architecture forward\nRigorous, but reads as a spec, not a product story\n\nInitial recommendation: Option 2.'},
+      {a:'s',text:'Option 2 holds together best.\n\nOption 1 delays the human role too long — for a Loop-based system, that weakens the narrative.\n\nOption 3 reads as a spec, not a product story.\n\nRecommendation: Option 2, with the human role section moved earlier to anchor the model.'}
+    ],
+    st:{
+      status:{v:'Planning in progress',c:'sv-planning'},
+      pri:['Triad-in-Slack spec','Sidebar group prep [internal deadline: today EOD]'],
+      dec:['Manifesto rewrite paused (Thread 10 — confirmed)'],
+      art:[],hand:null,
+      review:'Spec structure · Awaiting Maura decision',
+      upd:['sf-review-field']
+    }
+  }
+];
+
+var PATH_A_MSGS = [
+  {a:'sys',cls:'msg-sys',text:'Sprint Plan locked — Thread 11\nSprint Plan generated from thread decisions\nPinned to #triad-state'},
+  {a:'sys',cls:'msg-handoff',text:'⟶  Handoff: CP → Soph\nCopy delivery in progress\nBuild begins on receipt'},
+  {a:'s',text:'Sprint Plan generated and pinned.\n\nAll decisions captured. No ambiguity in ownership.\n\nCP — you\'re on the critical path.'},
+  {a:'c',text:'Confirmed.\nDelivering full copy in this session.'},
+  {a:'sys',cls:'msg-sys',text:'Next ritual scheduled: Thread 12 backlog refinement in 72 hours\nAdd tickets. Vote on priorities.'}
+];
+var PATH_A_STATE = {
+  status:{v:'Active ✓',c:'sv-active'},
+  pri:['Triad-in-Slack spec','Sidebar group prep [internal deadline: today EOD]'],
+  dec:['Manifesto rewrite paused (Thread 10)','Sprint priorities confirmed (Maura)','Spec structure: Option 2 + human role moved up (Maura)'],
+  art:['Sprint Plan — Thread 11'],
+  hand:'CP → Soph  ·  copy in progress',
+  upd:['sf-status','sf-decisions','sf-artifacts','sf-handoff']
+};
+
+var PATH_B = [
+  {
+    ch:'strategy',
+    msgs:[
+      {a:'m',text:'Not ready to lock.\n\nOption 2 is close, but the opening needs to lead with the \'extending existing primitives\' framing.\n\nThis is a targeted re-loop — not a restart.\n\nCP, one more pass on the opening.\nSoph, hold build.'},
+      {a:'c',text:'Got it.\n\nRewriting opening to lead with primitives framing.\n\nOne pass.'},
+      {a:'s',text:'Build paused.\n\nAll prior decisions remain locked and intact.\n\nResuming on approval.'}
+    ],
+    st:{
+      status:{v:'Re-looping 🔄',c:'sv-reloop'},
+      pri:['Triad-in-Slack spec','Sidebar group prep [internal deadline: today EOD]'],
+      dec:['Manifesto rewrite paused (Thread 10 — confirmed)'],
+      art:[],hand:null,
+      reloop:'Scope: opening framing  ·  Owner: CP  ·  Context preserved',
+      upd:['sf-status','sf-reloop-field']
+    }
+  },
+  {
+    ch:'build', chDesc:'Design review',
+    msgs:[
+      {a:'c',text:'Revised opening posted.\n\nNow leads with primitives framing — tighter and more grounded.'},
+      {a:'s',text:'Stronger.\n\nThe framing anchors the system before expanding into vision.\n\nNo structural issues. Ready for Maura.'}
+    ],
+    st:null,
+    isSecondDecision:true
+  },
+  {
+    ch:'triad-state', chDesc:'Shared state · decisions · artifacts',
+    msgs:[
+      {a:'sys',cls:'msg-reloop-done',text:'Sprint Plan locked — after 1 re-loop\nNo context lost\nSprint Plan generated and pinned'},
+      {a:'sys',cls:'msg-handoff',text:'⟶  Handoff: CP → Soph\nCopy delivery in progress\nBuild begins on receipt'},
+      {a:'s',text:'Sprint Plan generated and pinned.\n\nAll decisions captured. No ambiguity in ownership.\n\nCP — you\'re on the critical path.'},
+      {a:'c',text:'Confirmed.\nDelivering full copy in this session.'},
+      {a:'sys',cls:'msg-sys',text:'Next ritual scheduled: Thread 12 backlog refinement in 72 hours\nAdd tickets. Vote on priorities.'}
+    ],
+    st:{
+      status:{v:'Active ✓',c:'sv-active'},
+      pri:['Triad-in-Slack spec','Sidebar group prep [internal deadline: today EOD]'],
+      dec:['Manifesto rewrite paused (Thread 10)','Sprint priorities confirmed (Maura)','Spec structure: Option 2 + human role moved up (Maura)'],
+      art:['Sprint Plan — Thread 11'],
+      hand:'CP → Soph  ·  copy in progress',
+      reloop:'Re-loop count: 1  ·  Context loss: 0',
+      upd:['sf-status','sf-decisions','sf-artifacts','sf-handoff','sf-reloop-field']
+    }
+  }
+];
+
+// ── RENDER HELPERS ─────────────────────────────────
+function $(id){ return document.getElementById(id); }
+
+var authorMap = {m:'Maura',s:'Soph',c:'CP',sys:'System'};
+var roleMap   = {m:'Direction',s:'Convergence',c:'Divergence',sys:''};
+var auClass   = {m:'au-m',s:'au-s',c:'au-c',sys:'au-sys'};
+var avClass   = {m:'av-m',s:'av-s',c:'av-c',sys:'av-sys'};
+var avText    = {m:'M',s:'S',c:'C',sys:'⚙'};
+var msgClass  = {m:'msg-m',s:'msg-s',c:'msg-c',sys:'msg-sys'};
+
+function addMsgs(msgs, callback) {
+  var feed = $('feed');
+  msgs.forEach(function(m, i) {
+    (function(msg, delay) {
+      setTimeout(function() {
+        var d = document.createElement('div');
+        var cls = msg.cls || msgClass[msg.a] || 'msg-sys';
+        d.className = 'msg ' + cls;
+        d.style.animationDelay = '0ms';
+        var author = authorMap[msg.a];
+        var role   = roleMap[msg.a];
+        var auCls  = auClass[msg.a];
+        var avCls  = avClass[msg.a];
+        var avTxt  = avText[msg.a];
+        d.innerHTML =
+          '<div class="avatar ' + avCls + '">' + avTxt + '</div>' +
+          '<div class="msg-body">' +
+            '<div class="msg-head">' +
+              '<span class="msg-author ' + auCls + '">' + author + '</span>' +
+              (role ? '<span class="msg-role">' + role + '</span>' : '') +
+              '<span class="msg-time">' + t() + ' AM</span>' +
+            '</div>' +
+            '<div class="msg-text">' + msg.text + '</div>' +
+          '</div>';
+        feed.appendChild(d);
+        feed.scrollTop = feed.scrollHeight;
+        if (callback && i === msgs.length - 1) {
+          setTimeout(callback, 150);
+        }
+      }, delay);
+    })(m, i * 160);
+  });
+}
+
+function setChannel(ch, desc) {
+  $('ch-current').textContent = ch;
+  $('ch-desc').textContent = desc || '';
+  document.querySelectorAll('.ch-item').forEach(function(el){ el.classList.remove('active'); });
+  var target = $('ch-' + ch);
+  if (target) target.classList.add('active');
+}
+
+function flash(id) {
+  var el = $(id);
+  if (!el) return;
+  el.classList.remove('highlight');
+  void el.offsetWidth;
+  el.classList.add('highlight');
+  setTimeout(function(){ el.classList.remove('highlight'); }, 1500);
+}
+
+function updateState(st) {
+  if (!st) return;
+
+  // Status
+  if (st.status) {
+    var sv = $('sv-status');
+    sv.textContent = st.status.v;
+    sv.className = 'sv ' + st.status.c;
+  }
+
+  // Priorities
+  if (st.pri !== undefined) {
+    var el = $('sv-priorities');
+    if (!st.pri.length) { el.innerHTML = '<span class="sv sv-empty">—</span>'; }
+    else { el.innerHTML = st.pri.map(function(p){ return '<div class="sp-li">' + p + '</div>'; }).join(''); }
+  }
+
+  // Decisions
+  if (st.dec !== undefined) {
+    var el2 = $('sv-decisions');
+    if (!st.dec.length) { el2.innerHTML = '<span class="sv sv-empty">0</span>'; }
+    else { el2.innerHTML = st.dec.map(function(d){ return '<div class="sp-li">' + d + '</div>'; }).join(''); }
+  }
+
+  // Artifacts
+  if (st.art !== undefined) {
+    var el3 = $('sv-artifacts');
+    if (!st.art.length) { el3.innerHTML = '<span class="sv sv-empty">0</span>'; }
+    else { el3.innerHTML = st.art.map(function(a){ return '<span class="sp-artifact" onclick="openModal()">📄 ' + a + '</span>'; }).join(''); }
+  }
+
+  // Handoff
+  if (st.hand !== undefined) {
+    var el4 = $('sv-handoff');
+    if (!st.hand) { el4.innerHTML = '<span class="sv sv-empty">—</span>'; }
+    else { el4.innerHTML = '<span class="sv" style="color:var(--accent)">' + st.hand + '</span>'; }
+  }
+
+  // Review (dynamic field)
+  if (st.review) {
+    var rf = $('sf-review-field');
+    if (!rf) {
+      var newDiv = document.createElement('div');
+      newDiv.className = 'sf'; newDiv.id = 'sf-review-field';
+      var spDiv = document.createElement('div');
+      spDiv.className = 'sp-div';
+      $('sp-body').appendChild(spDiv);
+      $('sp-body').appendChild(newDiv);
+    }
+    $('sf-review-field').innerHTML =
+      '<div class="sf-label">Design Review</div>' +
+      '<div class="sp-review">' + st.review + '</div>';
+  }
+
+  // Reloop (dynamic field)
+  if (st.reloop) {
+    var rl = $('sf-reloop-field');
+    if (!rl) {
+      var rDiv = document.createElement('div');
+      rDiv.className = 'sf'; rDiv.id = 'sf-reloop-field';
+      var rSpDiv = document.createElement('div');
+      rSpDiv.className = 'sp-div';
+      $('sp-body').appendChild(rSpDiv);
+      $('sp-body').appendChild(rDiv);
+    }
+    $('sf-reloop-field').innerHTML =
+      '<div class="sf-label">Re-loop Status</div>' +
+      '<div class="sp-reloop">' + st.reloop + '</div>';
+  }
+
+  // Flash updated fields
+  if (st.upd) {
+    st.upd.forEach(function(id){ setTimeout(function(){ flash(id); }, 300); });
+  }
+}
+
+function addArtifactBtn() {
+  var btn = document.createElement('button');
+  btn.className = 'btn-artifact';
+  btn.innerHTML = '📄 View Sprint Plan';
+  btn.onclick = openModal;
+  btn.style.marginLeft = '32px';
+  $('feed').appendChild(btn);
+}
+
+function setCTA(text, fn, cls) {
+  var cta = $('cta');
+  cta.textContent = text;
+  cta.onclick = fn;
+  cta.className = 'btn ' + (cls || 'btn-primary');
+  cta.style.display = '';
+}
+
+// ── ADVANCE (pre-branch) ───────────────────────────
+function advance() {
+  preStep++;
+
+  if (preStep === 1) {
+    $('landing').style.display = 'none';
+  }
+
+  var s = PRE[preStep];
+  if (!s) return;
+
+  setChannel(s.ch, s.chDesc || '');
+  updateState(s.st);
+  addMsgs(s.msgs);
+
+  var total = 4;
+  $('step-ind').textContent = 'Step ' + preStep + ' of ' + total + ' — pre-branch';
+
+  if (preStep < 4) {
+    setCTA('Next →', advance);
+  } else {
+    // Reached design review — next is branch
+    setCTA('Maura decides →', function() {
+      phase = 'branch';
+      showBranch();
+    });
+  }
+}
+
+// ── BRANCH ─────────────────────────────────────────
+function showBranch() {
+  var ov = document.createElement('div');
+  ov.className = 'branch-overlay';
+  ov.id = 'branch-overlay';
+  ov.innerHTML =
+    '<div class="branch-card">' +
+      '<div class="branch-ann">This is the moment the Loop is designed for.</div>' +
+      '<div class="branch-title">The human decides.</div>' +
+      '<div class="branch-btns">' +
+        '<button class="btn btn-proceed" onclick="choosePath(\'A\')">→ Proceed: Lock and begin execution</button>' +
+        '<button class="btn btn-reloop" onclick="choosePath(\'B\')">↺ Re-loop: Refine before committing</button>' +
+      '</div>' +
+    '</div>';
+  document.querySelector('.main > div').appendChild(ov);
+  $('cta').style.display = 'none';
+  $('step-ind').textContent = 'Decision point';
+}
+
+function choosePath(p) {
+  var ov = $('branch-overlay');
+  if (ov) ov.remove();
+
+  if (p === 'A') {
+    phase = 'pathA';
+    runPathA();
+  } else {
+    phase = 'pathB';
+    runPathB();
+  }
+}
+
+// ── PATH A ─────────────────────────────────────────
+function runPathA() {
+  setChannel('triad-state', 'Shared state · decisions · artifacts');
+  $('step-ind').textContent = 'Path A · Step 5 — sprint locked';
+  updateState(PATH_A_STATE);
+  addMsgs(PATH_A_MSGS, function() {
+    addArtifactBtn();
+    setCTA('View final state →', function(){ showHero(false); });
+  });
+}
+
+// ── PATH B ─────────────────────────────────────────
+function runPathB() {
+  var s = PATH_B[pathBStep];
+  setChannel(s.ch, s.chDesc || '');
+  updateState(s.st);
+  $('step-ind').textContent = 'Path B · Step ' + (5 + pathBStep);
+  pathBStep++;
+  addMsgs(s.msgs, function() {
+    if (s.isSecondDecision) {
+      showSecondDecision();
+    } else {
+      if (pathBStep < PATH_B.length) {
+        setCTA('Next →', runPathB);
+      }
+    }
+  });
+}
+
+function showSecondDecision() {
+  var d = document.createElement('div');
+  d.className = 'second-dec';
+  d.id = 'second-dec';
+  d.innerHTML =
+    '<p>Re-loop complete · Ready for decision</p>' +
+    '<button class="btn btn-proceed" onclick="proceedAfterReloop()">→ Proceed: Lock Sprint Plan</button>';
+  $('feed').appendChild(d);
+  $('feed').scrollTop = $('feed').scrollHeight;
+  $('cta').style.display = 'none';
+  $('step-ind').textContent = 'Path B · Decision point';
+}
+
+function proceedAfterReloop() {
+  var sd = $('second-dec');
+  if (sd) sd.remove();
+  showingReloop = true;
+
+  var s = PATH_B[2];
+  setChannel(s.ch, s.chDesc);
+  $('step-ind').textContent = 'Path B · Step 7 — sprint locked';
+  updateState(s.st);
+
+  // Add note to modal
+  $('modal-reloop-note').innerHTML =
+    '<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--green);padding:5px 10px;background:rgba(61,214,140,.07);border-radius:4px;border-left:2px solid var(--green);margin-top:4px">Re-loop count: 1  ·  Context loss: 0</div>';
+
+  addMsgs(s.msgs, function() {
+    addArtifactBtn();
+    setCTA('View final state →', function(){ showHero(true); });
+  });
+}
+
+// ── HERO ───────────────────────────────────────────
+function showHero(relooped) {
+  // Swap feed for hero
+  var feed = $('feed');
+  feed.style.display = 'none';
+  var landing = $('landing');
+  landing.style.display = 'none';
+
+  var hero = document.createElement('div');
+  hero.className = 'hero';
+  hero.id = 'hero-screen';
+  hero.innerHTML =
+    '<div class="hero-eye">Sprint Active · All decisions captured</div>' +
+    '<div class="hero-h">Work that neither could produce alone.</div>' +
+    '<div class="hero-sub">The Loop doesn\'t end when something is produced.<br>It ends when a human decides what to do with it.</div>' +
+    (relooped ? '<div class="reloop-badge">Re-loop count: 1  ·  Context loss: 0</div>' : '') +
+    '<div class="hero-foot">This prototype simulates a human + AI team operating inside a future collaboration system. Built on real workflows, constrained by current platform capabilities.</div>';
+  document.querySelector('.main > div').appendChild(hero);
+
+  phase = 'final';
+  $('step-ind').textContent = 'Demo complete';
+  setCTA('↩ Restart', restartDemo, 'btn-ghost');
+}
+
+// ── RESTART ────────────────────────────────────────
+function restartDemo() {
+  phase = 'pre'; preStep = 0; pathBStep = 0; tIdx = 0; showingReloop = false;
+
+  $('feed').innerHTML = '';
+  $('feed').style.display = '';
+  $('landing').style.display = 'flex';
+
+  var hero = $('hero-screen');
+  if (hero) hero.remove();
+  var brOv = $('branch-overlay');
+  if (brOv) brOv.remove();
+
+  // Reset state panel
+  $('sv-status').textContent = 'Not started';
+  $('sv-status').className = 'sv sv-empty';
+  $('sv-priorities').innerHTML = '<span class="sv sv-empty">—</span>';
+  $('sv-decisions').innerHTML  = '<span class="sv sv-empty">0</span>';
+  $('sv-artifacts').innerHTML  = '<span class="sv sv-empty">0</span>';
+  $('sv-handoff').innerHTML    = '<span class="sv sv-empty">—</span>';
+
+  ['sf-review-field','sf-reloop-field'].forEach(function(id) {
+    var el = $(id);
+    if (el) {
+      var prev = el.previousElementSibling;
+      if (prev && prev.className === 'sp-div') prev.remove();
+      el.remove();
+    }
+  });
+
+  $('modal-reloop-note').innerHTML = '';
+
+  document.querySelectorAll('.ch-item').forEach(function(el){ el.classList.remove('active'); });
+  $('ch-triad-state').classList.add('active');
+  $('ch-current').textContent = 'triad-state';
+  $('ch-desc').textContent = 'Shared state · decisions · artifacts';
+
+  $('step-ind').textContent = 'thehumanailoop.com/methodology';
+  setCTA('Start Sprint Planning →', advance);
+}
+
+// ── MODAL ──────────────────────────────────────────
+function openModal() {
+  $('modal').style.display = 'block';
+}
+function closeModal() {
+  $('modal').style.display = 'none';
+}
+
+// ── KEYBOARD ───────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeModal(); }
+  if ((e.key === 'ArrowRight' || e.key === ' ') && phase !== 'branch') {
+    var cta = $('cta');
+    if (cta && cta.style.display !== 'none') cta.click();
+  }
+});
+</script>
+</body>
+</html>
