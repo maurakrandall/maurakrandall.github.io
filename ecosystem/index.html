@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maura K. Randall — The Ecosystem</title>
-  <meta name="description" content="Product leader, methodology builder, and human-AI collaboration practitioner. 20+ years turning platform ideas into real-world impact.">
+  <meta name="description" content="A methodology and ecosystem for integrating AI into teams in motion — wherever you are in the journey. Built from two years of real practice.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -14,6 +14,7 @@
       --petrol-2: #0D3838;
       --teal:     #2B7A78;
       --teal-lt:  #5B9E9C;
+      --teal-bright: #2ECECE;
       --gold:     #D99E1D;
       --gold-lt:  #F0BF35;
       --forest:   #5B7553;
@@ -54,9 +55,7 @@
       color: var(--cream);
       letter-spacing: -0.01em;
     }
-    .site-header-name span {
-      color: var(--gold);
-    }
+    .site-header-name span { color: var(--gold); }
     .site-header-links {
       display: flex;
       gap: 24px;
@@ -76,8 +75,7 @@
     .hero {
       max-width: 860px;
       margin: 0 auto;
-      padding: 64px 32px 32px;
-      text-align: center;
+      padding: 72px 32px 40px;
     }
     .hero-eyebrow {
       font-size: 11px;
@@ -85,15 +83,16 @@
       text-transform: uppercase;
       color: var(--forest);
       font-weight: 600;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
     .hero-headline {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 6vw, 56px);
-      line-height: 1.15;
+      font-size: clamp(32px, 5.5vw, 52px);
+      line-height: 1.12;
       color: var(--petrol);
       letter-spacing: -0.02em;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      max-width: 680px;
     }
     .hero-headline em {
       color: var(--teal);
@@ -101,35 +100,198 @@
     }
     .hero-sub {
       font-size: 17px;
-      line-height: 1.7;
+      line-height: 1.75;
       color: var(--ink-2);
       max-width: 58ch;
-      margin: 0 auto 32px;
+      margin-bottom: 36px;
       font-weight: 400;
     }
-    .hero-tags {
+    .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 48px;
+      gap: 12px;
+      margin-bottom: 0;
     }
-    .hero-tag {
-      font-size: 12px;
+    .hero-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--petrol);
+      color: var(--cream);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .hero-cta-primary:hover { background: var(--teal); }
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: var(--teal);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 8px;
+      border: 1.5px solid var(--teal);
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .hero-cta-secondary:hover {
+      background: var(--teal);
+      color: var(--cream);
+    }
+
+    /* ── CHALLENGE SECTION ───────────────────────────────── */
+    .challenge-section {
+      background: var(--petrol);
+      padding: 64px 32px;
+      margin: 0;
+    }
+    .challenge-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .challenge-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal-lt);
       font-weight: 600;
-      color: var(--petrol);
-      background: var(--cream-2);
-      border: 1px solid var(--border);
-      padding: 5px 12px;
+      margin-bottom: 16px;
+    }
+    .challenge-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3.5vw, 32px);
+      color: var(--cream);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      line-height: 1.2;
+      max-width: 600px;
+    }
+    .challenge-sub {
+      font-size: 15px;
+      color: rgba(250,246,238,0.65);
+      margin-bottom: 40px;
+      max-width: 56ch;
+      line-height: 1.65;
+    }
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .challenge-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 24px 22px;
+      position: relative;
+    }
+    .challenge-card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(217,158,29,0.12);
+      border: 1px solid rgba(217,158,29,0.2);
+      padding: 3px 9px;
       border-radius: 999px;
-      letter-spacing: 0.02em;
+      margin-bottom: 14px;
+    }
+    .challenge-card-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      color: var(--cream);
+      line-height: 1.3;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .challenge-card-body {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: rgba(250,246,238,0.65);
+    }
+
+    /* ── ENTRY MAP ───────────────────────────────────────── */
+    .entry-map-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 32px 16px;
+    }
+    .entry-map-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .entry-map-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3.5vw, 30px);
+      color: var(--petrol);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      line-height: 1.25;
+      max-width: 560px;
+    }
+    .entry-map-sub {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-2);
+      max-width: 56ch;
+      margin-bottom: 32px;
+    }
+    .entry-map-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .entry-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 18px;
+      text-decoration: none;
+      display: block;
+      transition: box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .entry-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      border-color: var(--teal);
+    }
+    .entry-card-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .entry-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--petrol);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .entry-card-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.55;
     }
 
     /* ── DIAGRAM ─────────────────────────────────────────── */
     .diagram-section {
       max-width: 900px;
       margin: 0 auto;
-      padding: 0 24px 16px;
+      padding: 8px 24px 16px;
     }
     .diagram-section-label {
       text-align: center;
@@ -253,7 +415,7 @@
       overflow: hidden;
       transition: max-height 0.35s ease;
     }
-    .node.open .node-body { max-height: 800px; }
+    .node.open .node-body { max-height: 600px; }
     .node-body-inner {
       padding: 0 24px 24px;
       border-top: 1px solid var(--border);
@@ -288,28 +450,21 @@
       color: var(--cream);
       border-color: var(--petrol);
     }
-    .node-link-icon {
-      font-size: 15px;
-      flex-shrink: 0;
-    }
-    .node-link-arrow {
-      margin-left: auto;
-      opacity: 0.5;
-      font-size: 12px;
-    }
+    .node-link-icon { font-size: 15px; flex-shrink: 0; }
+    .node-link-arrow { margin-left: auto; opacity: 0.5; font-size: 12px; }
 
     /* ── COLOR ACCENTS PER NODE ──────────────────────────── */
     .node-maura  .node-icon { background: #E8F0EC; }
     .node-aigal  .node-icon { background: #E6F4F3; }
     .node-loop   .node-icon { background: #FDF4E0; }
     .node-triad  .node-icon { background: #F0EAD8; }
+    .node-substack .node-icon { background: #F5F0F8; }
 
-    .node-maura  { border-left: 4px solid var(--petrol); }
-    .node-aigal  { border-left: 4px solid var(--teal); }
-    .node-loop   { border-left: 4px solid var(--gold); }
-    .node-triad     { border-left: 4px solid var(--forest); }
-    .node-substack  .node-icon { background: #FDF4E0; }
-    .node-substack  { border-left: 4px solid var(--gold); }
+    .node-maura    { border-left: 4px solid var(--petrol); }
+    .node-aigal    { border-left: 4px solid var(--teal); }
+    .node-loop     { border-left: 4px solid var(--gold); }
+    .node-triad    { border-left: 4px solid var(--forest); }
+    .node-substack { border-left: 4px solid #8B5CF6; }
 
     /* ── WHY DIFFERENT ───────────────────────────────────── */
     .why-section {
@@ -375,15 +530,67 @@
       line-height: 1.6;
       color: rgba(250,246,238,0.85);
     }
-    .why-card-point strong {
-      color: var(--cream);
-      font-weight: 600;
+    .why-card-point strong { color: var(--cream); font-weight: 600; }
+
+    /* ── SIMULATION STRIP ────────────────────────────────── */
+    .simulation-strip {
+      max-width: 860px;
+      margin: 48px auto;
+      padding: 0 24px;
     }
+    .simulation-card {
+      background: var(--petrol-2);
+      border-radius: 16px;
+      padding: 36px 40px;
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .simulation-card-text { flex: 1; min-width: 260px; }
+    .simulation-card-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal-lt);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .simulation-card-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 2.8vw, 24px);
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .simulation-card-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(250,246,238,0.65);
+      margin-bottom: 0;
+    }
+    .simulation-card-action { flex-shrink: 0; }
+    .simulation-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-bright);
+      color: var(--petrol);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 13px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .simulation-cta:hover { opacity: 0.88; }
 
     /* ── ORIGIN STRIP ────────────────────────────────────── */
     .origin-strip {
       max-width: 860px;
-      margin: 48px auto;
+      margin: 0 auto 48px;
       padding: 0 24px;
     }
     .origin-card {
@@ -477,9 +684,15 @@
     @media (max-width: 640px) {
       .site-header { padding: 14px 20px; }
       .site-header-links { display: none; }
-      .hero { padding: 40px 20px 24px; }
+      .hero { padding: 48px 20px 32px; }
+      .challenge-section { padding: 48px 20px; }
+      .challenge-grid { grid-template-columns: 1fr; }
+      .entry-map-section { padding: 40px 20px 16px; }
+      .entry-map-grid { grid-template-columns: 1fr 1fr; }
       .nodes-section, .diagram-section { padding: 0 16px; }
       .why-section { padding: 40px 20px; }
+      .simulation-strip { padding: 0 16px; }
+      .simulation-card { padding: 28px 24px; gap: 24px; }
       .origin-card { flex-direction: column; gap: 16px; padding: 24px 20px; }
       .origin-strip { padding: 0 16px; }
       .node-header { padding: 16px 18px; }
@@ -492,13 +705,14 @@
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .hero, .diagram-section, .nodes-section, .why-section, .origin-strip {
-      animation: fadeUp 0.5s ease both;
-    }
-    .diagram-section { animation-delay: 0.1s; }
-    .nodes-section   { animation-delay: 0.2s; }
-    .why-section     { animation-delay: 0.25s; }
-    .origin-strip    { animation-delay: 0.3s; }
+    .hero             { animation: fadeUp 0.45s ease both; }
+    .challenge-section { animation: fadeUp 0.45s 0.05s ease both; }
+    .entry-map-section { animation: fadeUp 0.45s 0.1s ease both; }
+    .diagram-section   { animation: fadeUp 0.45s 0.15s ease both; }
+    .nodes-section     { animation: fadeUp 0.45s 0.2s ease both; }
+    .why-section       { animation: fadeUp 0.45s 0.25s ease both; }
+    .simulation-strip  { animation: fadeUp 0.45s 0.28s ease both; }
+    .origin-strip      { animation: fadeUp 0.45s 0.3s ease both; }
   </style>
 </head>
 <body>
@@ -510,101 +724,323 @@
       <li><a href="https://maurakrandall.com" target="_blank">maurakrandall.com</a></li>
       <li><a href="https://aigal.io" target="_blank">AIGal.io</a></li>
       <li><a href="https://thehumanailoop.com" target="_blank">The Loop</a></li>
+      <li><a href="https://try.thehumanailoop.com" target="_blank">Try the Simulation</a></li>
       <li><a href="https://maurakrandall.github.io" target="_blank">GitHub</a></li>
     </ul>
   </header>
 
-  <!-- HERO -->
+
+  <!-- ══ HERO ══════════════════════════════════════════════════
+       Shift: from "what I built" to "what teams are facing."
+       The reader recognizes their situation before they learn anything.
+       ═══════════════════════════════════════════════════════ -->
   <section class="hero">
-    <p class="hero-eyebrow">Product Leader · Methodology Builder · Human–AI Collaboration Practitioner</p>
-    <h1 class="hero-headline">20+ years building platforms.<br><em>Two years proving</em> what's next.</h1>
+    <p class="hero-eyebrow">Human–AI Collaboration · Built from Practice</p>
+    <h1 class="hero-headline">Every team is integrating AI.<br><em>Most don't have a system for it.</em></h1>
     <p class="hero-sub">
-      A system for how humans and AI think, build, and decide together —
-      built from real work in practice, not theory.
+      AI isn't asking teams to start over. But it is asking them to change how they work —
+      while they're still doing the work. The tools are moving fast. The pressure is real.
+      And for most teams, the question isn't whether to integrate AI. It's how to do it
+      without losing what makes the work good.
     </p>
+    <div class="hero-cta-row">
+      <a href="https://try.thehumanailoop.com" target="_blank" class="hero-cta-primary">Try the simulation — 5 minutes ↗</a>
+      <a href="https://thehumanailoop.com" target="_blank" class="hero-cta-secondary">See the methodology ↗</a>
+    </div>
   </section>
 
-  <!-- ECOSYSTEM DIAGRAM -->
-  <section class="diagram-section" style="padding-top:0">
-    <p class="diagram-section-label">The Human&ndash;AI Loop</p>
+
+  <!-- ══ THREE TEAM SITUATIONS ═════════════════════════════════
+       The wider lens. Not just "here's my methodology" —
+       "here's the team you're on, and why it matters for you."
+       Covers every stage of AI adoption and maturity.
+       ═══════════════════════════════════════════════════════ -->
+  <section class="challenge-section">
+    <div class="challenge-inner">
+      <p class="challenge-eyebrow">The challenge — for every team</p>
+      <h2 class="challenge-headline">Wherever your team is in this journey, the underlying tension is the same.</h2>
+      <p class="challenge-sub">
+        This ecosystem was built for teams in motion — not greenfield projects with the luxury of starting clean.
+        Three situations. One ecosystem.
+      </p>
+
+      <div class="challenge-grid">
+
+        <!-- Card 1: Already using AI, no system -->
+        <div class="challenge-card">
+          <span class="challenge-card-tag">Deep in AI, no shared system</span>
+          <h3 class="challenge-card-headline">Everyone is using AI. Nobody is using it the same way.</h3>
+          <p class="challenge-card-body">
+            Your team has adopted AI fast — but every person has their own approach.
+            There are no shared patterns, no reusable frameworks, and the quality of output
+            varies wildly depending on who you ask. You're generating more, faster.
+            But the judgment, the coherence, the team alignment — that's getting harder, not easier.
+          </p>
+        </div>
+
+        <!-- Card 2: Watching the gap grow -->
+        <div class="challenge-card">
+          <span class="challenge-card-tag">Just starting, watching others move</span>
+          <h3 class="challenge-card-headline">You know AI is reshaping the work. You don't know where to start.</h3>
+          <p class="challenge-card-body">
+            The tools are multiplying. The demos look promising. Your organization is starting
+            to ask questions. What you don't have is a clear path into this — one that doesn't
+            require stopping everything, retraining everyone, or abandoning the practices that
+            have made your team effective. You need an entry point, not a reinvention.
+          </p>
+        </div>
+
+        <!-- Card 3: Tried and hit a wall -->
+        <div class="challenge-card">
+          <span class="challenge-card-tag">Tried AI adoption, it didn't stick</span>
+          <h3 class="challenge-card-headline">The pilot looked good. The real work didn't change.</h3>
+          <p class="challenge-card-body">
+            You've experimented with AI. The outputs were fine. But nothing fundamentally
+            changed about how decisions get made, how the team thinks, or what gets built.
+            The tool worked. The collaboration didn't. What was missing wasn't a better prompt —
+            it was a system for how humans and AI actually work together across an entire workflow.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ ANGLES SECTION ════════════════════════════════════════
+       The breadth of what this ecosystem covers.
+       Not "here's where to start" — "here's every angle
+       we've thought about this problem from."
+       Six lenses. One interconnected body of work.
+       ═══════════════════════════════════════════════════════ -->
+  <section class="entry-map-section">
+    <p class="entry-map-eyebrow">Six angles on the same problem</p>
+    <h2 class="entry-map-headline">This isn't one framework. It's a full body of work — built from every angle teams actually face.</h2>
+    <p class="entry-map-sub">
+      The question of how humans and AI work together touches system design, team dynamics,
+      individual practice, organizational change, and the principles we've spent decades earning.
+      This ecosystem addresses all of it.
+    </p>
+    <div class="entry-map-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+
+      <a href="https://thehumanailoop.com" target="_blank" class="entry-card">
+        <p class="entry-card-label">The methodology</p>
+        <p class="entry-card-title">A collaboration system for teams</p>
+        <p class="entry-card-desc">Four stages. Shared handoffs. Human decision ownership at every step. Repeatable across any team doing knowledge work.</p>
+      </a>
+
+      <a href="https://try.thehumanailoop.com" target="_blank" class="entry-card">
+        <p class="entry-card-label">The proof</p>
+        <p class="entry-card-title">Experience it before you read about it</p>
+        <p class="entry-card-desc">A 5-minute simulation — a real product moment, two AI thinking partners, three working drafts. The methodology demonstrated, not explained.</p>
+      </a>
+
+      <a href="https://aigal.io/playbooks-guides/" target="_blank" class="entry-card">
+        <p class="entry-card-label">Applied practice</p>
+        <p class="entry-card-title">Playbooks for teams already in motion</p>
+        <p class="entry-card-desc">Step-by-step workflows for the real constraints: mid-project, mixed AI fluency, no time to retrain everyone from scratch.</p>
+      </a>
+
+      <a href="https://aigal.io/ai-literacy/" target="_blank" class="entry-card">
+        <p class="entry-card-label">Shared understanding</p>
+        <p class="entry-card-title">AI literacy for every level</p>
+        <p class="entry-card-desc">Short visual panels that build a common language — for teams where AI literacy ranges from none to expert. The prerequisite for everything else.</p>
+      </a>
+
+      <a href="https://aigal.io" target="_blank" class="entry-card">
+        <p class="entry-card-label">Thought leadership</p>
+        <p class="entry-card-title">The frameworks that shift how you think</p>
+        <p class="entry-card-desc">Comparative analyses, provocation pieces, and conceptual frameworks — written from practice, not theory. The ideas behind the system.</p>
+      </a>
+
+      <a href="https://maurakrandall.substack.com" target="_blank" class="entry-card">
+        <p class="entry-card-label">Field notes</p>
+        <p class="entry-card-title">The thinking in real time</p>
+        <p class="entry-card-desc">Long-form writing on what it actually looks like to build this — the tensions, the regressions, the moments it clicks. Honest, not polished.</p>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ══ MAURA CREDIBILITY STRIP ════════════════════════════════
+       "About the author" — brief, confident.
+       Not a bio. The credentials that earn the right to make these claims.
+       ═══════════════════════════════════════════════════════ -->
+  <section style="background: var(--cream-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 48px 32px; margin: 0;">
+    <div style="max-width: 860px; margin: 0 auto; display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+
+      <div style="flex: 1; min-width: 260px;">
+        <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--forest); margin-bottom: 14px;">About the work's author</p>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: clamp(18px, 2.8vw, 24px); color: var(--petrol); letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 12px;">
+          20+ years building platforms at scale.<br>Two years building the system for what comes next.
+        </h3>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--ink-2); max-width: 52ch;">
+          The methodology in this ecosystem wasn't designed in a research lab. It was built
+          by a product leader who spent two decades scaling platforms to tens of millions of users —
+          and then spent two years figuring out, in real work, how humans and AI actually collaborate
+          on the judgment-intensive work that matters most.
+        </p>
+      </div>
+
+      <div style="flex-shrink: 0; min-width: 220px;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+
+          <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;">
+            <p style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;">Platform leadership</p>
+            <p style="font-size: 13.5px; font-weight: 600; color: var(--petrol); line-height: 1.4;">Atlassian · eBay · Yahoo! · Condé Nast</p>
+          </div>
+
+          <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;">
+            <p style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;">Scale</p>
+            <p style="font-size: 13.5px; font-weight: 600; color: var(--petrol); line-height: 1.4;">Platforms serving 14M–78M+ users</p>
+          </div>
+
+          <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;">
+            <p style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;">This work</p>
+            <p style="font-size: 13.5px; font-weight: 600; color: var(--petrol); line-height: 1.4;">2 years · Real work · Built in practice</p>
+          </div>
+
+          <a href="https://maurakrandall.com/about/" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--teal); text-decoration: none; padding: 10px 0;">
+            Full background ↗
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ ECOSYSTEM DIAGRAM ══════════════════════════════════
+       Lower on the page now — the map of how it connects.
+       The reader has context before they see the visual.
+       ═══════════════════════════════════════════════════════ -->
+  <section class="diagram-section" style="padding-top: 56px;">
+    <p class="diagram-section-label">How it all connects</p>
     <div class="diagram-wrap">
       <img src="ecosystem-diagram.png"
-           alt="The Human-AI Loop ecosystem: Maura Randall (The Builder) at top, AIGal.io (The Ideas) on the left, Tools and Application Layer on the right, Substack (The Thinking in Practice) at bottom, The Human-AI Loop and The Triad at center. Turning Insight into Impact.">
+           alt="The Maura K. Randall ecosystem: maurakrandall.com at top, AIGal.io (The Ideas) on the left, The Human-AI Loop (The System) on the right, The Triad (Maura + CP + Soph) at center. Turning Insight into Impact.">
     </div>
-    <p class="diagram-caption">Three sites. One methodology. Built and tested by a human&ndash;AI team.</p>
-  </section>
-
-  <!-- CRISP DEFINITION -->
-  <section style="max-width:760px;margin:0 auto;padding:32px 24px 0;text-align:center">
-    <p style="font-family:'Playfair Display',serif;font-size:clamp(17px,2.5vw,22px);color:#0B2A2F;line-height:1.5;margin-bottom:16px;letter-spacing:-0.01em">
-      The Human&ndash;AI Loop is a collaboration system I&rsquo;ve been developing &mdash; not a tool, not a workflow &mdash; for designing how humans and AI work together across intent, context, and decision-making.
-    </p>
-    <p style="font-size:13px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#2B7A78;margin-bottom:20px">
-      Test &nbsp;&rarr;&nbsp; Build &nbsp;&rarr;&nbsp; Codify &nbsp;&rarr;&nbsp; Share
-    </p>
-    <p style="font-size:15px;color:#6B7B69;font-style:italic;max-width:52ch;margin:0 auto;line-height:1.65;border-top:1px solid rgba(28,50,26,0.12);padding-top:20px">
-      The Loop doesn&rsquo;t end when something is produced.<br>It ends when a human decides what to do with it.
-    </p>
+    <p class="diagram-caption">Three sites. One methodology. One team. Built from practice, not theory.</p>
   </section>
 
   <hr class="section-divider">
 
-  <!-- PROOF STRIP -->
-  <section style="max-width:860px;margin:0 auto;padding:0 24px 48px">
-    <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5B7553;font-weight:600;margin-bottom:8px;text-align:center">What this looks like in practice</p>
-    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,30px);color:#0B2A2F;letter-spacing:-0.02em;margin-bottom:32px;text-align:center;line-height:1.25">The same system. Different work. Real outcomes.</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
 
-      <div style="background:#fff;border:1px solid rgba(28,50,26,0.12);border-top:3px solid #2B7A78;border-radius:14px;padding:22px 20px">
-        <p style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2B7A78;margin-bottom:14px">Publishing Content</p>
-        <div style="font-size:13.5px;line-height:1.9;color:#243c22">
-          <div><strong style="color:#0B2A2F">Maura</strong> &rarr; sets intent, defines the brief</div>
-          <div><strong style="color:#0B2A2F">CP</strong> &rarr; explores directions, diverges</div>
-          <div><strong style="color:#0B2A2F">Soph</strong> &rarr; structures, synthesizes</div>
-          <div><strong style="color:#0B2A2F">Maura</strong> &rarr; refines, shapes + decides</div>
-        </div>
-        <p style="margin-top:14px;font-size:13px;color:#6B7B69;border-top:1px solid rgba(28,50,26,0.1);padding-top:12px">
-          <strong style="color:#0B2A2F">Outcome:</strong> LinkedIn series + Substack published<br>
-          <strong style="color:#0B2A2F">Decision:</strong> refine further &rarr; or release
-        </p>
-      </div>
-
-      <div style="background:#fff;border:1px solid rgba(28,50,26,0.12);border-top:3px solid #D99E1D;border-radius:14px;padding:22px 20px">
-        <p style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#D99E1D;margin-bottom:14px">Analyzing AI Methods</p>
-        <div style="font-size:13.5px;line-height:1.9;color:#243c22">
-          <div><strong style="color:#0B2A2F">Maura</strong> &rarr; frames the comparison</div>
-          <div><strong style="color:#0B2A2F">CP</strong> &rarr; expands dimensions, generates options</div>
-          <div><strong style="color:#0B2A2F">Soph</strong> &rarr; synthesizes, structures</div>
-          <div><strong style="color:#0B2A2F">Maura</strong> &rarr; refines, shapes + decides</div>
-        </div>
-        <p style="margin-top:14px;font-size:13px;color:#6B7B69;border-top:1px solid rgba(28,50,26,0.1);padding-top:12px">
-          <strong style="color:#0B2A2F">Outcome:</strong> HITL vs Loop analysis &mdash; live on site<br>
-          <strong style="color:#0B2A2F">Decision:</strong> deepen &rarr; or publish
-        </p>
-      </div>
-
-      <div style="background:#fff;border:1px solid rgba(28,50,26,0.12);border-top:3px solid #5B7553;border-radius:14px;padding:22px 20px">
-        <p style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#5B7553;margin-bottom:14px">Building Tools</p>
-        <div style="font-size:13.5px;line-height:1.9;color:#243c22">
-          <div><strong style="color:#0B2A2F">Maura</strong> &rarr; defines the goal</div>
-          <div><strong style="color:#0B2A2F">CP</strong> &rarr; prototypes, creates options</div>
-          <div><strong style="color:#0B2A2F">Soph</strong> &rarr; operationalizes, documents</div>
-          <div><strong style="color:#0B2A2F">Maura</strong> &rarr; refines, shapes + decides</div>
-        </div>
-        <p style="margin-top:14px;font-size:13px;color:#6B7B69;border-top:1px solid rgba(28,50,26,0.1);padding-top:12px">
-          <strong style="color:#0B2A2F">Outcome:</strong> Ecosystem app + tools shipped to GitHub<br>
-          <strong style="color:#0B2A2F">Decision:</strong> iterate &rarr; or release
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- EXPANDABLE NODES -->
+  <!-- ══ EXPANDABLE NODES ════════════════════════════════════
+       Unchanged structurally — the accordion UX is excellent.
+       Node for Substack added.
+       ═══════════════════════════════════════════════════════ -->
   <section class="nodes-section">
     <p class="nodes-label">Explore the Ecosystem</p>
+
+    <!-- THE LOOP -->
+    <div class="node node-loop" id="node-loop">
+      <div class="node-header" onclick="toggleNode('node-loop')">
+        <div class="node-header-left">
+          <div class="node-icon">⚡</div>
+          <div>
+            <div class="node-title">The Human–AI Loop</div>
+            <div class="node-subtitle">thehumanailoop.com · The methodology · Tools · Simulation</div>
+          </div>
+        </div>
+        <div class="node-toggle">+</div>
+      </div>
+      <div class="node-body">
+        <div class="node-body-inner">
+          <p class="node-description">
+            The methodology, made operational. Test → Build → Codify → Share. A structured system
+            for how humans and AI collaborate on knowledge work requiring judgment, creativity, and
+            accountability. With playbooks, a testing kit, a growing library of tools, and a
+            live simulation that lets you experience the methodology before you read about it.
+          </p>
+          <div class="node-links">
+            <a class="node-link" href="https://try.thehumanailoop.com" target="_blank">
+              <span class="node-link-icon">🎮</span> Try the Simulation
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com" target="_blank">
+              <span class="node-link-icon">⚡</span> The Loop Home
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/overview/" target="_blank">
+              <span class="node-link-icon">🗺️</span> Methodology Overview
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/hitl-vs-loop/" target="_blank">
+              <span class="node-link-icon">🔍</span> HITL vs The Loop
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/testing-kit/" target="_blank">
+              <span class="node-link-icon">🧪</span> Testing Kit
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://thehumanailoop.com/measuring-success/" target="_blank">
+              <span class="node-link-icon">📊</span> Measuring Success
+              <span class="node-link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AIGAL -->
+    <div class="node node-aigal" id="node-aigal">
+      <div class="node-header" onclick="toggleNode('node-aigal')">
+        <div class="node-header-left">
+          <div class="node-icon">💡</div>
+          <div>
+            <div class="node-title">AIGal.io</div>
+            <div class="node-subtitle">The ideas · Frameworks · Thought leadership · Literacy Library</div>
+          </div>
+        </div>
+        <div class="node-toggle">+</div>
+      </div>
+      <div class="node-body">
+        <div class="node-body-inner">
+          <p class="node-description">
+            Where the thinking lives. Comparative analyses, frameworks, the Human–AI Triad model,
+            playbooks, and the AI literacy library — for teams at every stage of adoption and
+            every level of technical fluency. Written from practice, not theory.
+          </p>
+          <div class="node-links">
+            <a class="node-link" href="https://aigal.io" target="_blank">
+              <span class="node-link-icon">💡</span> AIGal.io Home
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/human-ai-triad/" target="_blank">
+              <span class="node-link-icon">🔺</span> The Human–AI Triad
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/ai-literacy/" target="_blank">
+              <span class="node-link-icon">📖</span> AI Literacy Library
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/playbooks-guides/" target="_blank">
+              <span class="node-link-icon">📚</span> Playbooks & Guides
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/prompt-vs-collaborative-engineering/" target="_blank">
+              <span class="node-link-icon">🧠</span> Prompt vs Collaboration Engineering
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/building-the-plane-vs-rebuilding-the-cockpit/" target="_blank">
+              <span class="node-link-icon">✈️</span> Building the Plane
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://aigal.io/not-all-ai-should-be-your-teammate/" target="_blank">
+              <span class="node-link-icon">🔧</span> Not All AI Should Be Your Teammate
+              <span class="node-link-arrow">↗</span>
+            </a>
+            <a class="node-link" href="https://maurakrandall.com/ai-on-our-teams-manifesto/" target="_blank">
+              <span class="node-link-icon">📋</span> The Manifesto
+              <span class="node-link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- THE TRIAD -->
     <div class="node node-triad" id="node-triad">
@@ -613,7 +1049,7 @@
           <div class="node-icon">🔺</div>
           <div>
             <div class="node-title">The Triad</div>
-            <div class="node-subtitle">Maura + CP + Soph · Human + AI partnership in practice</div>
+            <div class="node-subtitle">Maura + CP + Soph · Human–AI partnership in practice</div>
           </div>
         </div>
         <div class="node-toggle">+</div>
@@ -637,120 +1073,11 @@
               <span class="node-link-arrow">↗</span>
             </a>
             <a class="node-link" href="https://maurakrandall.github.io/triad-in-slack/" target="_blank">
-              <span class="node-link-icon">🎬</span> See the Triad in action
+              <span class="node-link-icon">🎬</span> Triad in Slack prototype
               <span class="node-link-arrow">↗</span>
             </a>
             <a class="node-link" href="https://maurakrandall.github.io/triad-in-slack-infographic/" target="_blank">
               <span class="node-link-icon">📊</span> How it works: Infographic
-              <span class="node-link-arrow">↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- THE LOOP -->
-    <div class="node node-loop" id="node-loop">
-      <div class="node-header" onclick="toggleNode('node-loop')">
-        <div class="node-header-left">
-          <div class="node-icon">⚡</div>
-          <div>
-            <div class="node-title">The Human–AI Loop</div>
-            <div class="node-subtitle">thehumanailoop.com · The system · Methodology · Tools</div>
-          </div>
-        </div>
-        <div class="node-toggle">+</div>
-      </div>
-      <div class="node-body">
-        <div class="node-body-inner">
-          <p class="node-description">
-            The methodology, made operational. Test → Build → Codify → Share. A structured system
-            for how humans and AI collaborate on knowledge work requiring judgment, creativity, and
-            accountability. With playbooks, a testing kit, and a growing library of tools built
-            and tested by the Triad.
-          </p>
-          <p class="node-description" style="margin-top:0;color:#5B7553;font-style:italic">
-            The human leads, decides, and either re-loops or moves work forward.
-          </p>
-          <div class="node-links">
-            <a class="node-link" href="https://thehumanailoop.com" target="_blank">
-              <span class="node-link-icon">⚡</span> The Loop Home
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://thehumanailoop.com/overview/" target="_blank">
-              <span class="node-link-icon">🗺️</span> Methodology Overview
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://thehumanailoop.com/hitl-vs-loop/" target="_blank">
-              <span class="node-link-icon">🔍</span> HITL vs The Loop
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://thehumanailoop.com/testing-kit/" target="_blank">
-              <span class="node-link-icon">🧪</span> Testing Kit
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://thehumanailoop.com/measuring-success/" target="_blank">
-              <span class="node-link-icon">📊</span> Measuring Success
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://maurakrandall.github.io" target="_blank">
-              <span class="node-link-icon">⚙️</span> Tools Library
-              <span class="node-link-arrow">↗</span>
-            </a>
-             <a class="node-link" href="https://maurakrandall.github.io/triad-in-slack/" target="_blank">
-              <span class="node-link-icon">🎬</span> Inside the Loop: Prototype
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://maurakrandall.github.io/triad-in-slack-infographic/" target="_blank">
-              <span class="node-link-icon">📊</span> Inside the Loop: Infographic
-              <span class="node-link-arrow">↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AIGAL -->
-    <div class="node node-aigal" id="node-aigal">
-      <div class="node-header" onclick="toggleNode('node-aigal')">
-        <div class="node-header-left">
-          <div class="node-icon">💡</div>
-          <div>
-            <div class="node-title">AIGal.io</div>
-            <div class="node-subtitle">The ideas · Frameworks · Thought leadership</div>
-          </div>
-        </div>
-        <div class="node-toggle">+</div>
-      </div>
-      <div class="node-body">
-        <div class="node-body-inner">
-          <p class="node-description">
-            Where the thinking lives. AIGal.io explores what it actually means to work with AI as a
-            collaborator — not a tool. Comparative analyses, frameworks, the Human–AI Triad model,
-            and the manifesto that started it all. Written from real work in practice, not theory.
-          </p>
-          <div class="node-links">
-            <a class="node-link" href="https://aigal.io" target="_blank">
-              <span class="node-link-icon">💡</span> AIGal.io Home
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://aigal.io/human-ai-triad/" target="_blank">
-              <span class="node-link-icon">🔺</span> The Human–AI Triad
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://maurakrandall.com/ai-on-our-teams-manifesto/" target="_blank">
-              <span class="node-link-icon">📋</span> The Manifesto
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://aigal.io/playbooks-guides/" target="_blank">
-              <span class="node-link-icon">📚</span> Playbooks & Guides
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://aigal.io/the-collaboration-loop/" target="_blank">
-              <span class="node-link-icon">🔁</span> The Collaboration Loop
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://aigal.io/building-the-plane-vs-rebuilding-the-cockpit/" target="_blank">
-              <span class="node-link-icon">✈️</span> Building the Plane
               <span class="node-link-arrow">↗</span>
             </a>
           </div>
@@ -765,7 +1092,7 @@
           <div class="node-icon">✍️</div>
           <div>
             <div class="node-title">Substack</div>
-            <div class="node-subtitle">The thinking in practice · Writing · Reflections · Experiments</div>
+            <div class="node-subtitle">The thinking in practice · Writing · Field notes</div>
           </div>
         </div>
         <div class="node-toggle">+</div>
@@ -774,16 +1101,12 @@
         <div class="node-body-inner">
           <p class="node-description">
             Where the methodology meets real life. Long-form writing on human–AI collaboration,
-            leadership, and what it actually looks like to build something new while figuring
-            it out in real time. Written from real work in practice, not theory.
+            the tension between speed and outcomes, and what it actually looks like to build
+            something new while figuring it out in real time. Written from practice, not theory.
           </p>
           <div class="node-links">
             <a class="node-link" href="https://maurakrandall.substack.com" target="_blank">
               <span class="node-link-icon">✍️</span> Substack Home
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://maurakrandall.substack.com/p/another-nontraditional-door" target="_blank">
-              <span class="node-link-icon">🚪</span> Another Nontraditional Door
               <span class="node-link-arrow">↗</span>
             </a>
             <a class="node-link" href="https://maurakrandall.substack.com/p/when-progress-is-actually-regression" target="_blank">
@@ -852,10 +1175,10 @@
         </div>
       </div>
     </div>
-
   </section>
 
-  <!-- WHY DIFFERENT -->
+
+  <!-- ══ WHY DIFFERENT ══════════════════════════════════════ -->
   <section class="why-section">
     <div class="why-inner">
       <p class="why-eyebrow">Why This Is Different</p>
@@ -895,7 +1218,30 @@
     </div>
   </section>
 
-  <!-- ORIGIN STRIP -->
+
+  <!-- ══ SIMULATION STRIP ════════════════════════════════════
+       The most direct entry point. Added above origin story.
+       ═══════════════════════════════════════════════════════ -->
+  <section class="simulation-strip">
+    <div class="simulation-card">
+      <div class="simulation-card-text">
+        <p class="simulation-card-eyebrow">The fastest way in</p>
+        <h3 class="simulation-card-headline">Don't read about the methodology. Walk through it.</h3>
+        <p class="simulation-card-body">
+          A 5-minute guided simulation — a real product moment, two AI perspectives,
+          three working draft artifacts. No signup. No framework lecture first. Just the experience.
+        </p>
+      </div>
+      <div class="simulation-card-action">
+        <a href="https://try.thehumanailoop.com" target="_blank" class="simulation-cta">
+          Try the simulation →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ ORIGIN STORY ════════════════════════════════════════ -->
   <section class="origin-strip">
     <div class="origin-card">
       <div class="origin-card-text">
@@ -915,16 +1261,6 @@
     </div>
   </section>
 
-  <!-- SOFT CTA -->
-  <section style="max-width:760px;margin:0 auto;padding:0 24px 56px;text-align:center">
-    <p style="font-size:16px;color:#6B7B69;font-style:italic;line-height:1.7">
-      If you&rsquo;re building teams or systems like this &mdash; I&rsquo;d love to compare notes.
-    </p>
-    <a href="https://www.linkedin.com/in/maurakrandall" target="_blank"
-       style="display:inline-block;margin-top:16px;font-size:14px;font-weight:700;color:#2B7A78;text-decoration:none;border-bottom:2px solid #D99E1D;padding-bottom:2px">
-      Let&rsquo;s connect ↗
-    </a>
-  </section>
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -934,6 +1270,7 @@
       <a href="https://maurakrandall.com" target="_blank">maurakrandall.com</a>
       <a href="https://aigal.io" target="_blank">AIGal.io</a>
       <a href="https://thehumanailoop.com" target="_blank">thehumanailoop.com</a>
+      <a href="https://try.thehumanailoop.com" target="_blank">Try the Simulation</a>
       <a href="https://maurakrandall.github.io" target="_blank">GitHub</a>
       <a href="https://www.linkedin.com/in/maurakrandall" target="_blank">LinkedIn</a>
       <a href="https://maurakrandall.substack.com" target="_blank">Substack</a>
@@ -947,9 +1284,7 @@
     function toggleNode(id) {
       const node = document.getElementById(id);
       const isOpen = node.classList.contains('open');
-      // Close all nodes
       document.querySelectorAll('.node').forEach(n => n.classList.remove('open'));
-      // Open clicked one if it wasn't already open
       if (!isOpen) node.classList.add('open');
     }
   </script>
