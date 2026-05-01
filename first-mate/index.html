@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The First Mate — Maura K. Randall</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+/* ========== FONTS (standalone version) ========== */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ========== RESET & VARIABLES ========== */
+:root {
+  --fm-bg: #0B0B0F;
+  --fm-panel: #131118;
+  --fm-panel-2: #1A1520;
+  --fm-ink: #F4EFE7;
+  --fm-muted: rgba(244,239,231,0.72);
+  --fm-soft: rgba(244,239,231,0.48);
+  --fm-dim: rgba(244,239,231,0.32);
+  --fm-rule: rgba(244,239,231,0.12);
+  --fm-rule-bright: rgba(244,239,231,0.22);
+  --fm-red: #A8413A;
+  --fm-red-deep: #8F141A;
+  --fm-red-glow: rgba(168,65,58,0.15);
+  --fm-gold: #C9923E;
+  --fm-gold-bright: #E6B964;
+  --fm-gold-glow: rgba(201,146,62,0.12);
+  --fm-burgundy: #2A0D12;
+  --fm-radius: 16px;
+  --fm-radius-sm: 8px;
+  --fm-display: 'Playfair Display', 'Instrument Serif', Georgia, serif;
+  --fm-body: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --fm-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --fm-max: 1200px;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+/* ========== PAGE SHELL ========== */
+.fm-page {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 5%, rgba(168,65,58,0.12), transparent),
+    radial-gradient(ellipse 60% 50% at 85% 15%, rgba(201,146,62,0.06), transparent),
+    var(--fm-bg);
+  color: var(--fm-ink);
+  font-family: var(--fm-body);
+  font-weight: 300;
+  font-size: 15.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  /* Force full viewport width — breaks out of WP theme container */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  overflow-x: hidden;
+}
+
+.fm-shell {
+  max-width: var(--fm-max);
+  margin: 0 auto;
+  padding: 80px 32px;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.fm-eyebrow {
+  font-family: var(--fm-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fm-gold);
+  margin-bottom: 20px;
+}
+
+.fm-title {
+  font-family: var(--fm-display);
+  font-size: clamp(56px, 9vw, 108px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--fm-ink);
+  margin-bottom: 24px;
+}
+
+.fm-subtitle {
+  font-family: var(--fm-body);
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--fm-muted);
+  max-width: 680px;
+}
+
+.fm-h2 {
+  font-family: var(--fm-display);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--fm-ink);
+  margin-bottom: 20px;
+}
+
+.fm-h3 {
+  font-family: var(--fm-display);
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--fm-ink);
+  margin-bottom: 20px;
+}
+
+.fm-label {
+  font-family: var(--fm-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fm-gold);
+  margin-bottom: 12px;
+}
+
+/* ========== SECTIONS ========== */
+.fm-section {
+  padding: 64px 0;
+  border-top: 1px solid var(--fm-rule);
+}
+
+.fm-section:first-of-type { border-top: none; }
+
+.fm-copy { color: var(--fm-muted); max-width: 720px; }
+.fm-copy p { margin-bottom: 16px; font-size: 16px; line-height: 1.75; }
+.fm-copy p:last-child { margin-bottom: 0; }
+.fm-copy strong { color: var(--fm-ink); font-weight: 500; }
+
+/* ========== HERO / TITLE PAGE ========== */
+.fm-hero {
+  padding-bottom: 72px;
+  border-bottom: 1px solid var(--fm-rule);
+  margin-bottom: 0;
+}
+
+.fm-hero-top {
+  padding-bottom: 48px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--fm-rule);
+}
+
+.fm-hero-top .fm-eyebrow {
+  margin-bottom: 28px;
+}
+
+.fm-thesis-block {
+  background: linear-gradient(145deg, var(--fm-panel-2) 0%, rgba(168,65,58,0.06) 50%, var(--fm-panel) 100%);
+  border: 1px solid var(--fm-rule-bright);
+  border-radius: var(--fm-radius);
+  padding: 40px 36px;
+  margin-bottom: 32px;
+}
+
+.fm-thesis-1 {
+  font-family: var(--fm-display);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--fm-ink);
+  max-width: 700px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--fm-rule);
+}
+
+.fm-thesis-2 {
+  color: var(--fm-muted);
+  max-width: 640px;
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.fm-thesis-2 strong { color: var(--fm-ink); font-weight: 500; }
+.fm-thesis-2 p { margin-bottom: 12px; }
+.fm-thesis-2 p:last-child { margin-bottom: 0; }
+
+.fm-judgment {
+  background: linear-gradient(135deg, var(--fm-burgundy) 0%, rgba(168,65,58,0.12) 50%, var(--fm-panel) 100%);
+  border: 1px solid rgba(168,65,58,0.25);
+  border-radius: var(--fm-radius);
+  padding: 40px 36px;
+  margin-bottom: 32px;
+}
+
+.fm-judgment p {
+  font-family: var(--fm-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--fm-muted);
+  margin: 0;
+}
+
+.fm-judgment strong {
+  color: var(--fm-gold-bright);
+  font-weight: 400;
+}
+
+.fm-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-family: var(--fm-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--fm-soft);
+}
+
+/* ========== BEHAVIOR CARDS ========== */
+.fm-behavior-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 32px 0;
+}
+
+.fm-behavior {
+  background: var(--fm-panel);
+  border: 1px solid var(--fm-rule);
+  border-radius: var(--fm-radius);
+  padding: 28px 24px;
+}
+
+.fm-behavior-num {
+  font-family: var(--fm-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fm-gold);
+  margin-bottom: 10px;
+}
+
+.fm-behavior h3 {
+  font-family: var(--fm-display);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--fm-ink);
+  margin-bottom: 12px;
+}
+
+.fm-behavior p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--fm-muted);
+}
+
+/* ========== ACCEPTANCE CRITERIA BOX ========== */
+.fm-accept {
+  background: linear-gradient(135deg, var(--fm-panel) 0%, var(--fm-panel-2) 100%);
+  border: 1px solid var(--fm-gold);
+  border-left: 3px solid var(--fm-gold);
+  border-radius: var(--fm-radius);
+  padding: 36px 32px;
+  margin: 40px 0;
+  text-align: center;
+}
+
+.fm-accept p {
+  font-family: var(--fm-display);
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.35;
+  color: var(--fm-ink);
+  margin-bottom: 12px;
+}
+
+.fm-accept p:last-child {
+  font-style: normal;
+  font-size: clamp(15px, 1.8vw, 19px);
+  color: var(--fm-gold-bright);
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+/* ========== INTRODUCING SECTION ========== */
+.fm-intro {
+  background: linear-gradient(145deg, var(--fm-panel-2) 0%, rgba(168,65,58,0.08) 50%, var(--fm-panel) 100%);
+  border: 1px solid rgba(201,146,62,0.20);
+  border-radius: var(--fm-radius);
+  padding: 48px 40px;
+  margin: 48px 0 0;
+}
+
+.fm-intro .fm-label { margin-bottom: 16px; }
+
+.fm-intro-title {
+  font-family: var(--fm-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--fm-ink);
+  margin-bottom: 20px;
+}
+
+.fm-intro-body {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--fm-muted);
+  max-width: 680px;
+  margin-bottom: 28px;
+}
+
+.fm-intro-punch {
+  font-family: var(--fm-display);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--fm-gold-bright);
+  padding-top: 24px;
+  border-top: 1px solid rgba(201,146,62,0.25);
+}
+
+.fm-intro-cue {
+  font-family: var(--fm-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--fm-soft);
+  margin-top: 24px;
+}
+
+/* ========== ZONE LAYOUT (main + side) ========== */
+.fm-zone {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .fm-zone { grid-template-columns: 1fr; }
+}
+
+/* ========== BIG BOX ========== */
+.fm-bigbox {
+  background: linear-gradient(135deg, var(--fm-panel) 0%, rgba(201,146,62,0.06) 100%);
+  border: 1px solid rgba(201,146,62,0.25);
+  border-radius: var(--fm-radius);
+  padding: 32px 28px;
+  margin: 28px 0;
+}
+
+.fm-bigbox p {
+  font-family: var(--fm-display);
+  font-size: clamp(26px, 3.2vw, 38px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--fm-ink);
+  margin: 0;
+}
+
+.fm-bigbox p + p { margin-top: 4px; color: var(--fm-gold-bright); }
+
+/* ========== NEVER BOX (side) ========== */
+.fm-never {
+  background: var(--fm-panel);
+  border: 1px solid var(--fm-rule);
+  border-top: 2px solid var(--fm-red);
+  border-radius: var(--fm-radius-sm);
+  padding: 22px 20px;
+  margin-top: 8px;
+}
+
+.fm-never-label {
+  font-family: var(--fm-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #D26B62;
+  margin-bottom: 10px;
+}
+
+.fm-never p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--fm-muted);
+}
+
+/* ========== CALLOUT (muted) ========== */
+.fm-callout {
+  border-left: 2px solid var(--fm-gold);
+  padding: 16px 20px;
+  margin: 24px 0;
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--fm-muted);
+  background: rgba(201,146,62,0.04);
+  border-radius: 0 var(--fm-radius-sm) var(--fm-radius-sm) 0;
+}
+
+/* ========== SCENE ========== */
+.fm-scene-wrap {
+  margin: 32px 0;
+}
+
+.fm-scene-placeholder {
+  width: 100%;
+  aspect-ratio: 16/7;
+  background: linear-gradient(135deg, #1A120E 0%, #0C0807 70%);
+  border: 1px solid rgba(201,146,62,0.18);
+  border-radius: var(--fm-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fm-dim);
+  font-family: var(--fm-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.fm-scene-note {
+  font-family: var(--fm-mono);
+  font-size: 12px;
+  color: var(--fm-dim);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fm-beats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .fm-beats { grid-template-columns: 1fr 1fr; }
+}
+
+.fm-beat {
+  padding: 24px 20px 20px;
+  background: var(--fm-panel);
+  border: 1px solid var(--fm-rule);
+  border-radius: var(--fm-radius-sm);
+}
+
+.fm-beat:last-child { border-right: none; }
+
+.fm-beat-num {
+  font-family: var(--fm-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--fm-gold);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fm-beat-num::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--fm-gold);
+  opacity: 0.6;
+}
+
+.fm-beat h4 {
+  font-family: var(--fm-display);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 400;
+  color: var(--fm-ink);
+  margin-bottom: 10px;
+}
+
+.fm-beat p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fm-muted);
+}
+
+.fm-beat-final {
+  background: linear-gradient(135deg, var(--fm-panel) 0%, rgba(201,146,62,0.06) 100%);
+  border-color: rgba(201,146,62,0.25);
+}
+
+/* ========== PYTHON TEST GRID ========== */
+.fm-test-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 28px 0;
+}
+
+@media (max-width: 720px) {
+  .fm-test-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .fm-test-grid { grid-template-columns: 1fr; }
+}
+
+.fm-test-card {
+  background: var(--fm-panel);
+  border: 1px solid var(--fm-rule);
+  border-radius: var(--fm-radius-sm);
+  padding: 24px 20px;
+}
+
+.fm-test-card h4 {
+  font-family: var(--fm-display);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--fm-gold-bright);
+  margin-bottom: 10px;
+}
+
+.fm-test-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fm-muted);
+}
+
+/* ========== SUPPLEMENTS BOX ========== */
+.fm-supplements {
+  background: linear-gradient(135deg, var(--fm-panel) 0%, rgba(201,146,62,0.06) 100%);
+  border: 1px solid rgba(201,146,62,0.20);
+  border-radius: var(--fm-radius);
+  padding: 40px 32px;
+  margin: 32px 0;
+}
+
+.fm-supplements p {
+  font-family: var(--fm-display);
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--fm-ink);
+}
+
+.fm-supplements p span { color: var(--fm-gold-bright); }
+
+/* ========== MEASUREMENT 2-COL ========== */
+.fm-measure-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 28px 0;
+}
+
+@media (max-width: 600px) {
+  .fm-measure-grid { grid-template-columns: 1fr; }
+}
+
+.fm-measure-col {
+  background: var(--fm-panel);
+  border: 1px solid var(--fm-rule);
+  border-radius: var(--fm-radius-sm);
+  padding: 24px 20px;
+}
+
+.fm-measure-col h4 {
+  font-family: var(--fm-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.fm-measure-col.fm-not h4 { color: var(--fm-red); }
+.fm-measure-col.fm-yes h4 { color: var(--fm-gold); }
+
+.fm-measure-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.fm-measure-col ul li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fm-muted);
+  padding: 4px 0 4px 16px;
+  position: relative;
+}
+
+.fm-measure-col.fm-not ul li::before {
+  content: '×';
+  position: absolute;
+  left: 0;
+  color: var(--fm-red);
+  font-weight: 500;
+}
+
+.fm-measure-col.fm-yes ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--fm-gold);
+  font-size: 12px;
+}
+
+/* ========== CLOSE ========== */
+.fm-close-copy {
+  max-width: 600px;
+  color: var(--fm-muted);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.fm-close-copy p { margin-bottom: 14px; }
+
+.fm-final-quote {
+  background: linear-gradient(135deg, var(--fm-burgundy) 0%, rgba(168,65,58,0.15) 50%, var(--fm-panel) 100%);
+  border: 1px solid rgba(168,65,58,0.30);
+  border-radius: var(--fm-radius);
+  padding: 48px 40px;
+  margin-top: 36px;
+}
+
+.fm-final-quote p {
+  font-family: var(--fm-display);
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--fm-ink);
+}
+
+.fm-final-quote p strong {
+  color: var(--fm-gold-bright);
+  font-weight: 400;
+}
+
+.fm-signature {
+  text-align: center;
+  padding: 40px 0 0;
+  border-top: 1px solid var(--fm-rule);
+  margin-top: 48px;
+}
+
+.fm-signature p {
+  font-size: 14px;
+  color: var(--fm-soft);
+  line-height: 1.7;
+}
+
+.fm-signature a {
+  color: var(--fm-gold);
+  text-decoration: none;
+}
+
+.fm-sig-name {
+  font-family: var(--fm-display);
+  font-size: 20px;
+  color: var(--fm-ink);
+  margin-bottom: 8px;
+}
+
+/* ========== PRINT ========== */
+@media print {
+  @page {
+    size: Letter portrait;
+    margin: 0.5in 0.55in;
+  }
+  .fm-page {
+    background: #0B0B0F !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .fm-section { break-inside: avoid; }
+  .fm-hero { break-after: page; }
+}
+</style>
+</head>
+<body>
+<div class="fm-page">
+<div class="fm-shell">
+
+  <!-- ==================== PAGE 1: TITLE ==================== -->
+  <section class="fm-hero">
+    <div class="fm-hero-top">
+      <div class="fm-eyebrow">Strategic Point of View · Enterprise GenAI · Netflix</div>
+      <h1 class="fm-title">The First Mate.</h1>
+      <p class="fm-subtitle">How Netflix builds an agentic enterprise on the principle it already runs on — context, not control.</p>
+    </div>
+
+    <div class="fm-thesis-block">
+      <div class="fm-thesis-1">
+        Context not control isn't just a management principle.
+        It's the design spec for Netflix's agentic future.
+      </div>
+      <div class="fm-thesis-2">
+        <p>AI that provides context makes informed captains sharper. AI that imposes control is the python of process wearing a better skin.</p>
+        <p><strong>The Enterprise GenAI team isn't building tools that just make Netflix faster.</strong> It's building systems that make every informed captain more informed — so decisions are sharper — and faster.</p>
+      </div>
+    </div>
+
+    <div class="fm-judgment">
+      <p>Speed follows.<br>But speed was never the product.<br><strong>Judgment is.</strong></p>
+    </div>
+
+    <div class="fm-meta-row">
+      <span>Register · Strategic POV</span>
+      <span>Format · Long-form editorial</span>
+      <span>Companion · Cover letter + résumé</span>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 2: SETUP + ZONE 1 ==================== -->
+  <section class="fm-section">
+    <div class="fm-label">§ 00 · The setup</div>
+    <h2 class="fm-h2">The principle that becomes acceptance criteria.</h2>
+
+    <div class="fm-copy">
+      <p>Netflix runs on a set of operating principles that many companies would call culture. Netflix calls them behaviors — what people actually do, not what a poster says they should.</p>
+      <p>Three of those behaviors matter most for the Enterprise GenAI team.</p>
+    </div>
+
+    <div class="fm-behavior-grid">
+      <div class="fm-behavior">
+        <div class="fm-behavior-num">Behavior 01</div>
+        <h3>Context not control</h3>
+        <p>Managers provide the context and clarity employees need to make good decisions. They do not make the decisions for them. The AI layer must work the same way — providing context that sharpens judgment, never imposing outputs that replace it.</p>
+      </div>
+      <div class="fm-behavior">
+        <div class="fm-behavior-num">Behavior 02</div>
+        <h3>Informed captains</h3>
+        <p>For every significant decision, Netflix identifies one accountable person — not a committee — who makes the judgment call after farming for dissent and listening at every level. The AI layer exists to make every informed captain more informed. Not faster. More informed.</p>
+      </div>
+      <div class="fm-behavior">
+        <div class="fm-behavior-num">Behavior 03</div>
+        <h3>Fighting the python</h3>
+        <p>Netflix's biggest threat is not inefficiency. It is the slow creep of rules, approvals, and process that squeeze out creativity and judgment — the very strengths that made the company what it is. Every AI tool either fights the python or feeds it. There is no neutral.</p>
+      </div>
+    </div>
+
+    <div class="fm-accept">
+      <p>Does this make the organization more intelligent without making anyone less autonomous?</p>
+      <p>That's the acceptance criteria for anything we ship.</p>
+    </div>
+
+    <div class="fm-intro">
+      <div class="fm-label">The system</div>
+      <h2 class="fm-intro-title">Introducing The First Mate.</h2>
+      <p class="fm-intro-body">The First Mate doesn't just process information. It operates in Netflix's language — farming for dissent, surfacing context, staying out of the way.</p>
+      <p class="fm-intro-punch">It doesn't just support the culture. It embodies it.</p>
+      <p class="fm-intro-cue">The four sections that follow show what that looks like in practice.</p>
+    </div>
+  </section>
+
+  <!-- ==================== ZONE 1: INFORMED CAPTAIN ==================== -->
+  <section class="fm-section">
+    <div class="fm-zone">
+      <div>
+        <div class="fm-label">§ 01 · Cross-functional decisions</div>
+        <h2 class="fm-h3">The Informed Captain's Briefing</h2>
+        <div class="fm-copy">
+          <p>The most consequential decisions at Netflix don't happen in dashboards. They happen when an informed captain walks into a room with people from content, engineering, legal, finance, data science, and marketing — each carrying their own context, constraints, and view of what matters.</p>
+          <p>The captain's job is to synthesize it and make the call. Today, that synthesis is manual.</p>
+          <p>The First Mate changes what the captain walks in with.</p>
+          <p>Before the meeting, the First Mate assembles the decision context: what each function believes, what data supports it, where alignment exists, and where tension lives.</p>
+        </div>
+        <div class="fm-bigbox">
+          <p>The First Mate does the farming.</p>
+          <p>The captain makes the judgment.</p>
+        </div>
+        <div class="fm-copy">
+          <p>It flags what's missing. If legal raised a concern weeks ago, it surfaces. If confidence in the data is low, that's visible before it's presented as certainty.</p>
+          <p>After the decision, the First Mate captures the context, the dissent, and the outcome — not as documentation, but as institutional memory.</p>
+        </div>
+      </div>
+      <div>
+        <div class="fm-never">
+          <div class="fm-never-label">Never does</div>
+          <p>The First Mate never makes the call, recommends a decision, or filters dissent. The captain is the captain.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ZONE 2: CREATIVE CALL ==================== -->
+  <section class="fm-section">
+    <div class="fm-zone">
+      <div>
+        <div class="fm-label">§ 02 · Content and production</div>
+        <h2 class="fm-h3">The Creative Call</h2>
+        <div class="fm-copy">
+          <p>The hardest decisions at Netflix are taste decisions — what to make, who to back, and where to bet.</p>
+          <p>The First Mate will never make a creative call.</p>
+          <p>What it does is eliminate the scavenger hunt around it. Before a greenlight conversation, it assembles comparable title performance, regional patterns, talent availability, rights constraints, budget benchmarks, and lessons from prior launches. The creative executive walks in with the same intuition — plus full context.</p>
+          <p><strong>The bet is still a bet. The context is sharper.</strong></p>
+        </div>
+        <div class="fm-bigbox">
+          <p>AI assembles context around the bet.</p>
+          <p>The human makes the bet.</p>
+        </div>
+        <div class="fm-copy">
+          <p>For production teams, the First Mate carries forward learnings across thousands of productions — vendor performance, location risks, timeline patterns — making institutional knowledge usable in real time.</p>
+          <p>Netflix says the best ideas can come from anywhere. The First Mate takes that literally — surfacing signal from places no one thought to look.</p>
+        </div>
+      </div>
+      <div>
+        <div class="fm-never">
+          <div class="fm-never-label">Never does</div>
+          <p>The First Mate never evaluates taste, ranks ideas, or substitutes data for judgment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ZONE 3: BUILDER'S TRADEOFF ==================== -->
+  <section class="fm-section">
+    <div class="fm-zone">
+      <div>
+        <div class="fm-label">§ 03 · Engineering, data, security, and legal</div>
+        <h2 class="fm-h3">The Builder's Tradeoff</h2>
+        <div class="fm-copy">
+          <p>Netflix's engineering culture mirrors its broader one: high autonomy, high accountability, minimal process.</p>
+          <p>The agentic future introduces new decisions: what to build, what to buy, what to govern. These decisions compound.</p>
+        </div>
+        <div class="fm-bigbox">
+          <p>Governance should feel like context.</p>
+          <p>The moment it feels like control, it's the python.</p>
+        </div>
+        <div class="fm-callout">The challenge isn't building these capabilities. It's sequencing them — where they earn trust first, and how they expand without becoming required infrastructure.</div>
+        <div class="fm-copy">
+          <p>The First Mate provides decision context: existing internal tools, third-party options, integration cost, and required governance. For guardrails, it maps proposals against policies — making governance visible before work begins.</p>
+          <p>This is where the python risk is highest. The job is to make governance feel like context — not control.</p>
+        </div>
+      </div>
+      <div>
+        <div class="fm-never">
+          <div class="fm-never-label">Never does</div>
+          <p>The First Mate never blocks a build or imposes process.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ZONE 4: NEW CREW MEMBER ==================== -->
+  <section class="fm-section">
+    <div class="fm-zone">
+      <div>
+        <div class="fm-label">§ 04 · Onboarding and ramp</div>
+        <h2 class="fm-h3">The New Crew Member</h2>
+        <div class="fm-copy">
+          <p>Netflix shares information internally with unusual breadth. Nearly every document is open for anyone to read and comment on. Highly informed employees are worth the occasional leak.</p>
+          <p>For a new employee, that breadth is both a gift and a flood.</p>
+          <p>The First Mate personalizes the ramp — not by restricting access, but by surfacing what matters most, first. It adapts as the employee ramps, becoming institutional memory without replacing human relationships.</p>
+          <p>Netflix expects new employees to shape how the company works. The First Mate accelerates that path by removing the scavenger hunt.</p>
+        </div>
+        <div class="fm-bigbox">
+          <p>The scavenger hunt goes.</p>
+          <p>The exploration stays.</p>
+        </div>
+      </div>
+      <div>
+        <div class="fm-never">
+          <div class="fm-never-label">Never does</div>
+          <p>The First Mate never curates information to shape thinking or limit exploration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 4: THE SCENE ==================== -->
+  <section class="fm-section">
+    <div class="fm-label">The scene</div>
+    <h2 class="fm-h2">The Tracking Shot</h2>
+    <div class="fm-copy" style="margin-bottom:24px;">
+      <p>A continuous movement through Netflix. Humans are the characters. The First Mate is the ambient context layer around them.</p>
+    </div>
+
+    <div class="fm-scene-note">→ Interactive scene · Click any beat to explore</div>
+
+    <div class="fm-scene-wrap">
+      <iframe src="./scene/" style="width:100%; aspect-ratio:16/9; border:none; border-radius:16px;" loading="lazy" title="The First Mate — Tracking Shot Scene"></iframe>
+    </div>
+
+    <div class="fm-beats">
+      <div class="fm-beat">
+        <div class="fm-beat-num">Beat 01</div>
+        <h4>Creative office</h4>
+        <p>A brief appears. The executive reads, pauses — lingers — then picks up the phone.</p>
+      </div>
+      <div class="fm-beat">
+        <div class="fm-beat-num">Beat 02</div>
+        <h4>Engineering floor</h4>
+        <p>A builder reviews integration context. Sketches architecture. Decision forming.</p>
+      </div>
+      <div class="fm-beat">
+        <div class="fm-beat-num">Beat 03</div>
+        <h4>New PM desk</h4>
+        <p>Key memos surfaced. Dissent visible. A point of view emerging.</p>
+      </div>
+      <div class="fm-beat fm-beat-final">
+        <div class="fm-beat-num">Beat 04</div>
+        <h4>The meeting</h4>
+        <p>Four functions. Context visible. The tension isn't resolved. It's visible. The captain leans forward. <strong>Makes the call.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 5: PYTHON TEST ==================== -->
+  <section class="fm-section">
+    <div class="fm-label">The Python Test</div>
+    <h2 class="fm-h2">How the First Mate stays out of the way.</h2>
+    <div class="fm-copy" style="margin-bottom:8px;">
+      <p>Every AI capability must answer four questions.</p>
+    </div>
+
+    <div class="fm-test-grid">
+      <div class="fm-test-card">
+        <h4>Context or control?</h4>
+        <p>If the tool becomes required, it has already crossed the line.</p>
+      </div>
+      <div class="fm-test-card">
+        <h4>Dissent or consensus?</h4>
+        <p>If it smooths disagreement away, it is undermining the culture.</p>
+      </div>
+      <div class="fm-test-card">
+        <h4>Informed or dependent?</h4>
+        <p>If captains stop reading the source, the system has become a substitute.</p>
+      </div>
+      <div class="fm-test-card">
+        <h4>Fight or feed?</h4>
+        <p>Every AI tool either fights the python or feeds it. There is no neutral position.</p>
+      </div>
+    </div>
+
+    <div class="fm-supplements">
+      <p>The First Mate supplements.<br><span>It never substitutes.</span></p>
+    </div>
+
+    <div class="fm-label" style="margin-top:40px;">Measurement</div>
+    <h2 class="fm-h3">Not adoption. Transformation.</h2>
+
+    <div class="fm-measure-grid">
+      <div class="fm-measure-col fm-not">
+        <h4>Not this</h4>
+        <ul>
+          <li>Logins</li>
+          <li>Usage counts</li>
+          <li>Number of prompts</li>
+          <li>Surface-level adoption dashboards</li>
+        </ul>
+      </div>
+      <div class="fm-measure-col fm-yes">
+        <h4>Measure this</h4>
+        <ul>
+          <li>Better decision context</li>
+          <li>Faster time-to-decision without lower quality</li>
+          <li>Faster ramp for new employees</li>
+          <li>Less governance friction</li>
+          <li>More visible dissent</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fm-callout" style="margin-top:32px;">The challenge isn't building these capabilities. It's introducing them in a way that earns trust without creating dependency.</div>
+  </section>
+
+  <!-- ==================== PAGE 6: CLOSE ==================== -->
+  <section class="fm-section">
+    <div class="fm-label">Close</div>
+    <h2 class="fm-h2">This is not a product spec.<br>It's a design philosophy.</h2>
+
+    <div class="fm-close-copy">
+      <p>The product leader who builds this must hold two things at once: technical fluency and cultural fluency.</p>
+      <p>The job is not building tools. It's building systems that make a high-judgment organization even better at making decisions.</p>
+      <p><strong>At Netflix, that's the product.</strong></p>
+    </div>
+
+    <div class="fm-final-quote">
+      <p>Speed was never the product.<br><strong>Judgment is.</strong></p>
+    </div>
+
+    <div class="fm-signature">
+      <p class="fm-sig-name">Maura K. Randall</p>
+      <p>maurakrandall@gmail.com · Austin, TX · <a href="https://linkedin.com/in/maurakrandall">linkedin.com/in/maurakrandall</a></p>
+      <p style="margin-top:12px;">
+        <a href="https://maurakrandall.com">maurakrandall.com</a> ·
+        <a href="https://thehumanailoop.com">thehumanailoop.com</a> ·
+        <a href="https://try.thehumanailoop.com">try.thehumanailoop.com</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+</div>
+</body>
+</html>
