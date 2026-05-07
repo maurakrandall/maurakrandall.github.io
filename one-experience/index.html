@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>One Experience — Maura K. Randall</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Inter Tight', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --bg: #FAFAF7;
+  --ink: #1a1a1a;
+  --ink-2: #3a3a3a;
+  --ink-soft: #5a5a5a;
+  --ink-muted: #8a8a8a;
+  --accent: #0B6E6E;
+  --accent-light: #0d8585;
+  --amber: #D4922A;
+  --coral: #C45D4D;
+  --rule: #d4d0c8;
+  --dark-bg: #1a2a2a;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  font-family: var(--sans);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.artifact {
+  max-width: 7.5in;
+  margin: 0 auto;
+  padding: 0.5in 0.55in;
+}
+
+/* MASTHEAD */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+.masthead .dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* TITLE PAGE */
+.title-page { padding-top: 0.5in; }
+.title-eyebrow {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.title-main {
+  font-family: var(--serif);
+  font-size: 38pt;
+  line-height: 1.05;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem 0;
+}
+.title-main em { font-style: italic; color: var(--accent); }
+.title-sub {
+  font-size: 13pt;
+  font-weight: 400;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-top: 1rem;
+  max-width: 5in;
+}
+
+.thesis-block {
+  background: var(--dark-bg);
+  padding: 2rem 2.25rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid var(--accent);
+}
+.thesis-eyebrow {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.thesis-text {
+  font-family: var(--serif);
+  font-size: 15pt;
+  line-height: 1.5;
+  color: #F5F0EB;
+  font-style: italic;
+  margin: 0;
+}
+.thesis-text strong { font-style: normal; color: #fff; font-weight: 600; }
+
+.title-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+.meta-label {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 0.3rem;
+  display: block;
+}
+.meta-value { font-size: 9.5pt; color: var(--ink-2); }
+.meta-value a { color: var(--accent); text-decoration: none; }
+
+/* BIG BOX */
+.big-box {
+  border-left: 4px solid var(--amber);
+  background: rgba(212,146,42,0.06);
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  font-family: var(--serif);
+  font-size: 16pt;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.big-box strong { color: var(--accent); }
+
+/* BODY PAGES */
+.page-break { page-break-before: always; padding-top: 0.25in; }
+
+.section-header {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.section-number {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 22pt;
+  color: var(--ink);
+  margin: 0;
+}
+
+.body-text {
+  font-size: 10.5pt;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin-bottom: 0.85rem;
+  max-width: 66ch;
+}
+
+.callout {
+  font-family: var(--sans);
+  font-size: 10pt;
+  font-style: italic;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1.25rem 0;
+}
+
+/* SCENE PAGE */
+.scene-container {
+  margin: 1.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(11,110,110,0.15);
+  background: #fff;
+}
+.scene-container iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+  display: block;
+}
+.scene-label {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-align: center;
+  margin-top: 0.75rem;
+}
+.scene-cta {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.scene-cta a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+/* SHIFT CARDS */
+.shift-card {
+  border: 1px solid var(--rule);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.25rem;
+  background: #fff;
+}
+.shift-label {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.shift-headline {
+  font-family: var(--serif);
+  font-size: 17pt;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.shift-headline .from { text-decoration: line-through; color: var(--coral); opacity: 0.7; }
+.shift-headline .arrow { color: var(--ink-muted); margin: 0 0.3em; }
+.shift-body {
+  font-size: 10pt;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin-bottom: 0.75rem;
+}
+
+/* METRICS TABLE */
+.metrics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5pt;
+  margin: 1rem 0;
+}
+.metrics-table th {
+  font-family: var(--mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--accent);
+}
+.metrics-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+}
+.metrics-table td:first-child { color: var(--coral); text-decoration: line-through; opacity: 0.7; }
+.metrics-table td:last-child { color: var(--accent); font-weight: 500; }
+
+/* CLOSE */
+.close-rule { border: none; border-top: 1px solid var(--ink); margin: 1.25rem 0 1.1rem; }
+.close-text {
+  font-size: 10.5pt;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 66ch;
+  margin-bottom: 0.85rem;
+}
+.close-sig {
+  margin-top: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+.close-sig-name {
+  font-family: var(--serif);
+  font-size: 18pt;
+  color: var(--ink);
+  margin: 0;
+}
+.close-sig-contact {
+  font-size: 9.5pt;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin-top: 0.3rem;
+}
+.close-sig-links { text-align: right; line-height: 1.8; }
+.link-row { display: flex; gap: 8px; align-items: baseline; justify-content: flex-end; }
+.link-label {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.link-url { font-size: 9.5pt; color: var(--accent); text-decoration: none; }
+
+/* PRINT */
+@media print {
+  @page { size: Letter portrait; margin: 0.5in 0.55in; }
+  body { background: #fff; }
+  .artifact { padding: 0; max-width: none; }
+  .page-break { page-break-before: always; }
+  .scene-container iframe { height: 400px; }
+}
+</style>
+</head>
+<body>
+<div class="artifact">
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div>
+    <span class="dot"></span>
+    Strategic Point of View &nbsp;/&nbsp; Maura&nbsp;K.&nbsp;Randall &nbsp;/&nbsp; 2026
+  </div>
+  <div style="text-align:right">
+    The Human-AI Loop<br>
+    maurakrandall.com
+  </div>
+</header>
+
+<!-- ══ PAGE 1 — TITLE ══ -->
+<section class="title-page">
+  <div>
+    <div class="title-eyebrow">Strategic Point of View</div>
+    <h1 class="title-main">One <em>Experience.</em></h1>
+    <p class="title-sub">1,500 AI agents. Seven platforms. Seventeen thousand employees. The next chapter isn't just connecting platforms — it's the intelligence that becomes possible once they're connected.</p>
+  </div>
+
+  <div class="thesis-block">
+    <div class="thesis-eyebrow">The Thesis</div>
+    <p class="thesis-text">Expedia's employees didn't wait for permission. Since January 2025, they've built over 1,500 AI agents. Two-thirds of engineering uses AI coding assistants. Six thousand sessions a month in the AI playground. That's not an adoption problem. <strong>That's a coherence problem.</strong></p>
+  </div>
+
+  <div class="body-text" style="margin-top:1rem">Workday, ServiceNow, Glean, Slack, Zoom, Atlassian, endpoint platforms — each running its own AI experiments. The employee experience isn't one experience. It's seven experiences bolted together by the employee's own patience.</div>
+
+  <div class="body-text">The integration layer is the backbone. But it's not the end state. Once the platforms connect, a new layer becomes possible — AI that reads patterns across systems, surfaces what humans don't have time to see, and shifts the employee experience from reactive to proactive.</div>
+
+  <div class="big-box">
+    The next chapter isn't just connecting platforms.<br>
+    <strong>It's the intelligence that becomes possible once they're connected.</strong>
+  </div>
+
+  <div class="title-meta">
+    <div><span class="meta-label">Register</span><span class="meta-value">Strategic point of view</span></div>
+    <div><span class="meta-label">Format</span><span class="meta-value">Long-form · visual</span></div>
+    <div><span class="meta-label">Companion</span><span class="meta-value"><a href="https://thehumanailoop.com">thehumanailoop.com</a></span></div>
+  </div>
+</section>
+
+<!-- ══ PAGE 2 — TWO CHAPTERS ══ -->
+<section class="page-break">
+  <div class="section-header">
+    <span class="section-number">§ 00</span>
+    <h2 class="section-title">Two Chapters</h2>
+  </div>
+
+  <p class="body-text"><strong>Chapter One was building.</strong> Build AI stuff. Measure what you shipped. Celebrate adoption. When AI was new, the only move was to get it into people's hands and see what stuck. Expedia ran Chapter One exceptionally well.</p>
+
+  <p class="body-text"><strong>Chapter Two is composing.</strong> The question shifts from <em>"are people using AI?"</em> to <em>"is AI making the employee experience better?"</em> — and then to the question most organizations never reach: <em>"is AI seeing things we can't?"</em></p>
+
+  <div class="big-box">
+    Chapter One: are people using AI?<br>
+    Chapter Two: is it working?<br>
+    <strong>Chapter Three: is it seeing what we can't?</strong>
+  </div>
+
+  <p class="callout">The role isn't slowing down innovation. It's aiming it — and then building the intelligence layer that makes the whole greater than the sum of 1,500 parts.</p>
+</section>
+
+<!-- ══ PAGE 3 — THE SCENE ══ -->
+<section class="page-break">
+  <div class="section-header">
+    <span class="section-number">The Journey</span>
+    <h2 class="section-title">Three Moments</h2>
+  </div>
+
+  <p class="body-text"><em>Three moments in the employee lifecycle. Each shows the same transition: from fragmented and reactive to composed and proactive.</em></p>
+
+  <div class="scene-container">
+    <iframe src="https://maurakrandall.github.io/one-experience-scene/" loading="lazy"></iframe>
+  </div>
+
+  <p class="scene-label">The scene above is animated in the live web version of this artifact.</p>
+  <p class="scene-cta">→ <a href="https://maurakrandall.github.io/one-experience-scene/">Watch the live scene</a></p>
+
+  <div class="big-box" style="margin-top:1.5rem">
+    Seven platforms. One experience.<br>
+    <strong>AI that sees what none of them can alone.</strong>
+  </div>
+</section>
+
+<!-- ══ PAGE 4 — THREE SHIFTS ══ -->
+<section class="page-break">
+  <div class="section-header">
+    <span class="section-number">Three Shifts</span>
+    <h2 class="section-title">The Next Chapter Requires</h2>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-label">Shift 01</div>
+    <div class="shift-headline">
+      <span class="from">Agent sprawl</span>
+      <span class="arrow">→</span>
+      Governed ecosystem
+    </div>
+    <p class="shift-body">1,500 agents is a sign of energy, not strategy. Some solve real problems. Some duplicate each other. Some were experiments that should have ended. The next chapter requires knowing the difference — and building the governance to retire what doesn't serve without killing the experimentation culture that produced what does.</p>
+    <div class="big-box" style="margin:0">The discipline isn't building less. <strong>It's knowing what to keep.</strong></div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-label">Shift 02</div>
+    <div class="shift-headline">
+      <span class="from">Platform silos</span>
+      <span class="arrow">→</span>
+      Intelligence layer
+    </div>
+    <p class="shift-body">Workday knows who the employee is. ServiceNow knows what they need. Glean knows what they're looking for. Slack knows who they talk to. Atlassian knows what they're building. Today, the employee carries context between systems manually. The integration layer removes that burden. The intelligence layer — the proactive agents in every beat above — is what becomes possible once the data flows.</p>
+    <div class="big-box" style="margin:0">The employee should never be the API. <strong>And the API should never be the end state.</strong></div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-label">Shift 03</div>
+    <div class="shift-headline">
+      <span class="from">Adoption metrics</span>
+      <span class="arrow">→</span>
+      Outcome metrics
+    </div>
+    <p class="shift-body">Chapter One measured: agents built, playground sessions, features shipped. Those were the right metrics for an experimentation phase. Chapter Two measures what actually changed.</p>
+    <table class="metrics-table">
+      <tr><th>Not this</th><th>Measure this</th></tr>
+      <tr><td>Agents built</td><td>Friction eliminated</td></tr>
+      <tr><td>Playground sessions</td><td>Time-to-productive for new hires</td></tr>
+      <tr><td>AI features shipped</td><td>Decision quality + speed</td></tr>
+      <tr><td>Tool logins</td><td>Employee satisfaction (ESAT)</td></tr>
+      <tr><td>Adoption dashboards</td><td>Proactive interventions that landed</td></tr>
+    </table>
+    <p class="callout">Adoption tells you what people tried. Outcomes tell you what worked. The distance between those two numbers is the coherence gap.</p>
+  </div>
+</section>
+
+<!-- ══ PAGE 5 — CLOSE ══ -->
+<section class="page-break">
+  <div class="section-header">
+    <span class="section-number">About This Artifact</span>
+  </div>
+
+  <p class="close-text">This is a point of view — not a roadmap. Built from the outside, informed by public data, designed to be pressure-tested by people who know the employee experience from the inside.</p>
+
+  <p class="close-text">The leader who builds this holds two things simultaneously: the technical fluency to architect integrations across seven enterprise platforms — and the organizational fluency to align IT, People Technology, HR, Finance, Security, and Engineering around a single experience vision.</p>
+
+  <p class="close-text">The integration layer is essential. It's the backbone that makes everything else possible. But the real prize is what emerges once the platforms connect: intelligence that sees patterns humans don't have time to see, surfaces opportunities before they're asked for, and shifts the employee experience from something people endure to something that works <em>for</em> them.</p>
+
+  <div class="big-box">
+    Expedia's employees already adopted AI.<br>
+    The platforms are ready to connect.<br>
+    <strong>Now build the intelligence layer that makes it one experience.</strong>
+  </div>
+
+  <hr class="close-rule">
+
+  <div class="close-sig">
+    <div>
+      <p class="close-sig-name">Maura K. Randall</p>
+      <p class="close-sig-contact">maurakrandall@gmail.com · Austin, TX</p>
+    </div>
+    <div class="close-sig-links">
+      <div class="link-row"><span class="link-label">Portfolio</span> <a class="link-url" href="https://maurakrandall.com">maurakrandall.com</a></div>
+      <div class="link-row"><span class="link-label">Methodology</span> <a class="link-url" href="https://thehumanailoop.com">thehumanailoop.com</a></div>
+      <div class="link-row"><span class="link-label">Simulation</span> <a class="link-url" href="https://try.thehumanailoop.com">try.thehumanailoop.com</a></div>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
