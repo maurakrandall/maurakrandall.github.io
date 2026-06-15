@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BurnoutBuddy — concept prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'DM Sans',sans-serif;background:#fff;color:#16140F}
+  .proto-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:11px 20px;border-bottom:1px solid rgba(22,20,15,.08);background:#fff;font-family:'JetBrains Mono',monospace;font-size:11.5px}
+  .proto-back{color:#5C574E;text-decoration:none;letter-spacing:.04em}
+  .proto-back:hover{color:#9A7B3F}
+  .proto-tag{color:#8A8378;letter-spacing:.1em;text-transform:uppercase;font-size:10px}
+  .proto-loading{padding:48px 24px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:#8A8378}
+</style>
+</head>
+<body>
+<div class="proto-bar">
+  <a class="proto-back" href="../">&larr; BurnoutBuddy</a>
+  <span class="proto-tag">concept prototype &middot; live demo</span>
+</div>
+<div id="root"><div class="proto-loading">Loading prototype&hellip;</div></div>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+const COLORS = {
+  cream: "#FDF6EE",
+  warmWhite: "#FAF4EB",
+  deepPlum: "#4A2040",
+  darkTeal: "#1A4A4A",
+  oxblood: "#6B1D2A",
+  forestGreen: "#2D4A3E",
+  terracotta: "#C4654A",
+  deepBlue: "#1E3352",
+  goldenrod: "#D4A853",
+  warmGray: "#8A7E74",
+  softShadow: "rgba(74, 32, 64, 0.08)",
+  cardBack: "#3D2B35",
+};
+
+const GLOW_LEVELS = [
+  { level: 1, label: "Running on empty", color: "#8A7E74", glow: "rgba(138,126,116,0.3)" },
+  { level: 2, label: "Flickering", color: "#C4654A", glow: "rgba(196,101,74,0.3)" },
+  { level: 3, label: "Steady", color: "#D4A853", glow: "rgba(212,168,83,0.3)" },
+  { level: 4, label: "Warming up", color: "#D4A853", glow: "rgba(212,168,83,0.5)" },
+  { level: 5, label: "Glowing", color: "#E8C455", glow: "rgba(232,196,85,0.6)" },
+];
+
+const CHALLENGES = [
+  { id: "C1", name: "I'm burned out", icon: "🔥" },
+  { id: "C9", name: "I'm overwhelmed", icon: "🌊" },
+  { id: "C4", name: "I'm stuck in my career", icon: "🔒" },
+  { id: "C7", name: "I'm struggling with change", icon: "🌀" },
+  { id: "C11", name: "I'm anxious about the future", icon: "☁️" },
+  { id: "C16", name: "I don't have the words for it", icon: "✦" },
+];
+
+const DEMO_JOURNEY = {
+  question: "What's draining you most right now?",
+  responses: [
+    "The workload is impossible",
+    "I'm doing the work of two people",
+    "There's no end in sight",
+    "Nobody sees how much I'm doing",
+  ],
+  insight: {
+    front: "Wait — is this me, or is this the job?",
+    reframe: "You can't self-improve your way out of a broken system.",
+    why: "Burnout is driven by workload, autonomy, recognition, and fairness — all environmental conditions. When you blame yourself for system problems, you try to fix the wrong thing.",
+    goDeeper: "What changes in how you respond if the problem is the system, not you?",
+  },
+  action: {
+    front: "One thing to try",
+    text: "Name one systemic condition — not a personal habit — that's contributing to how you feel. Write it down. That's the first step toward addressing the right thing.",
+  },
+  restore: {
+    front: "Take a breath",
+    text: "You showed up. You named it. You looked at it clearly. That takes more courage than most people realize.",
+  },
+};
+
+const GlowOrb = ({ level, selected, onClick, size = 40, showLabel = false }) => {
+  const glowData = GLOW_LEVELS[level - 1];
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+      <button
+        onClick={onClick}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: "50%",
+          border: selected ? `2px solid ${glowData.color}` : "2px solid transparent",
+          background: `radial-gradient(circle, ${glowData.color}, ${glowData.color}88)`,
+          boxShadow: selected
+            ? `0 0 ${size * 0.6}px ${glowData.glow}, 0 0 ${size * 0.3}px ${glowData.glow}`
+            : `0 0 ${size * 0.2}px ${glowData.glow}`,
+          cursor: "pointer",
+          transition: "all 0.5s ease",
+          transform: selected ? "scale(1.2)" : "scale(1)",
+          opacity: selected ? 1 : 0.6,
+          padding: 0,
+          outline: "none",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: size * 0.32,
+          fontWeight: 600,
+          color: level <= 2 ? `${COLORS.cream}cc` : `${COLORS.deepPlum}cc`,
+        }}
+      >
+        {level}
+      </button>
+      {showLabel && (
+        <span style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: 9,
+          color: selected ? glowData.color : `${COLORS.cream}50`,
+          textAlign: "center",
+          width: 56,
+          lineHeight: 1.2,
+          transition: "color 0.3s ease",
+        }}>
+          {glowData.label}
+        </span>
+      )}
+    </div>
+  );
+};
+
+const FadeIn = ({ children, delay = 0, show = true }) => {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (show) {
+      const t = setTimeout(() => setVisible(true), delay);
+      return () => clearTimeout(t);
+    }
+    setVisible(false);
+  }, [show, delay]);
+  return (
+    <div
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(12px)",
+        transition: "opacity 0.6s ease, transform 0.6s ease",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+function BurnoutBuddy() {
+  const [stage, setStage] = useState("welcome");
+  const [glowStart, setGlowStart] = useState(null);
+  const [glowEnd, setGlowEnd] = useState(null);
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
+  const [selectedResponse, setSelectedResponse] = useState(null);
+  const [cardFlipped, setCardFlipped] = useState(false);
+  const [showAI, setShowAI] = useState(false);
+  const [aiTyping, setAiTyping] = useState(false);
+  const [aiResponse, setAiResponse] = useState("");
+  const containerRef = useRef(null);
+
+  const advanceDelay = 800;
+
+  const scrollTop = () => {
+    if (containerRef.current) containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const nextStage = (next) => {
+    setTimeout(() => {
+      setCardFlipped(false);
+      setShowAI(false);
+      setAiResponse("");
+      setStage(next);
+      scrollTop();
+    }, advanceDelay);
+  };
+
+  const simulateAI = () => {
+    setShowAI(true);
+    setAiTyping(true);
+    setTimeout(() => {
+      setAiTyping(false);
+      setAiResponse(
+        "What stands out is how quickly your workload became something you were expected to absorb instead of evaluate. That distinction matters — because once something feels normal, it becomes harder to question. The system adapted to your capacity. That's not a compliment to you. It's a failure of the system to right-size the work."
+      );
+    }, 2000);
+  };
+
+  const stageColors = {
+    welcome: COLORS.deepPlum,
+    glowStart: COLORS.deepPlum,
+    challenge: COLORS.deepPlum,
+    question: COLORS.darkTeal,
+    insight: COLORS.forestGreen,
+    action: COLORS.terracotta,
+    restore: COLORS.deepBlue,
+    glowEnd: COLORS.deepBlue,
+    complete: COLORS.deepPlum,
+  };
+
+  const currentColor = stageColors[stage] || COLORS.deepPlum;
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        maxWidth: 430,
+        margin: "0 auto",
+        minHeight: "100vh",
+        background: `linear-gradient(170deg, ${currentColor} 0%, ${currentColor}ee 40%, ${COLORS.cream} 100%)`,
+        transition: "background 0.8s ease",
+        fontFamily: "'Georgia', 'Playfair Display', serif",
+        color: COLORS.cream,
+        overflowY: "auto",
+        position: "relative",
+      }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        .card-3d { perspective: 1000px; }
+        .card-inner {
+          transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-style: preserve-3d;
+          position: relative;
+        }
+        .card-inner.flipped { transform: rotateY(180deg); }
+        .card-face {
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          position: absolute;
+          top: 0; left: 0; width: 100%; height: 100%;
+          border-radius: 16px;
+        }
+        .card-back-face { transform: rotateY(180deg); }
+        .bb-btn {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          border: none;
+          cursor: pointer;
+          padding: 14px 28px;
+          border-radius: 12px;
+          transition: all 0.3s ease;
+          letter-spacing: 0.3px;
+        }
+        .bb-btn:hover { transform: translateY(-1px); }
+        .typing-dots span {
+          animation: blink 1.4s infinite both;
+          font-size: 20px;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink {
+          0%, 80%, 100% { opacity: 0.2; }
+          40% { opacity: 1; }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 1; }
+        }
+      `}</style>
+
+      <div style={{ padding: "24px 24px 48px" }}>
+
+        {/* ===== WELCOME ===== */}
+        {stage === "welcome" && (
+          <FadeIn show delay={200}>
+            <div style={{ textAlign: "center", paddingTop: "25vh" }}>
+              <div style={{ fontSize: 14, letterSpacing: 3, fontFamily: "'DM Sans', sans-serif", opacity: 0.6, marginBottom: 16 }}>
+                BURNOUT BUDDY
+              </div>
+              <h1 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 36,
+                fontWeight: 400,
+                fontStyle: "italic",
+                lineHeight: 1.3,
+                marginBottom: 12,
+              }}>
+                Hey. Let's check in.
+              </h1>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 15,
+                opacity: 0.7,
+                maxWidth: 280,
+                margin: "0 auto 48px",
+                lineHeight: 1.6,
+              }}>
+                No scores. No advice. Just a space to see things more clearly.
+              </p>
+              <button
+                className="bb-btn"
+                onClick={() => setStage("glowStart")}
+                style={{
+                  background: COLORS.goldenrod,
+                  color: COLORS.deepPlum,
+                }}
+              >
+                Begin
+              </button>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== GLOW START ===== */}
+        {stage === "glowStart" && (
+          <FadeIn show delay={200}>
+            <div style={{ textAlign: "center", paddingTop: "18vh" }}>
+              <p style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 22,
+                fontStyle: "italic",
+                marginBottom: 8,
+                lineHeight: 1.4,
+              }}>
+                Where's your glow right now?
+              </p>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                opacity: 0.5,
+                marginBottom: 48,
+              }}>
+                No wrong answers.
+              </p>
+              <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 32 }}>
+                {GLOW_LEVELS.map((g) => (
+                  <GlowOrb
+                    key={g.level}
+                    level={g.level}
+                    selected={glowStart === g.level}
+                    onClick={() => setGlowStart(g.level)}
+                    size={44}
+                    showLabel
+                  />
+                ))}
+              </div>
+              {glowStart && (
+                <FadeIn show delay={100}>
+                  <button
+                    className="bb-btn"
+                    onClick={() => nextStage("challenge")}
+                    style={{ background: `${COLORS.cream}20`, color: COLORS.cream, border: `1px solid ${COLORS.cream}30` }}
+                  >
+                    Continue
+                  </button>
+                </FadeIn>
+              )}
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== CHALLENGE SELECTION ===== */}
+        {stage === "challenge" && (
+          <FadeIn show delay={200}>
+            <div style={{ paddingTop: 48 }}>
+              <p style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 22,
+                fontStyle: "italic",
+                textAlign: "center",
+                marginBottom: 40,
+                lineHeight: 1.4,
+              }}>
+                What's weighing on you?
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {CHALLENGES.map((c) => (
+                  <button
+                    key={c.id}
+                    onClick={() => {
+                      setSelectedChallenge(c);
+                      nextStage("question");
+                    }}
+                    style={{
+                      background: selectedChallenge?.id === c.id ? `${COLORS.goldenrod}30` : `${COLORS.cream}08`,
+                      border: `1px solid ${COLORS.cream}15`,
+                      borderRadius: 14,
+                      padding: "18px 20px",
+                      textAlign: "left",
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 14,
+                    }}
+                  >
+                    <span style={{ fontSize: 20, opacity: c.id === "C16" ? 1 : 0.7 }}>{c.icon}</span>
+                    <span style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 15,
+                      color: COLORS.cream,
+                      fontWeight: c.id === "C16" ? 500 : 400,
+                      fontStyle: c.id === "C16" ? "italic" : "normal",
+                    }}>
+                      {c.name}
+                    </span>
+                    {c.id === "C16" && (
+                      <span style={{
+                        marginLeft: "auto",
+                        fontSize: 10,
+                        fontFamily: "'DM Sans', sans-serif",
+                        background: `${COLORS.goldenrod}30`,
+                        color: COLORS.goldenrod,
+                        padding: "3px 8px",
+                        borderRadius: 6,
+                        letterSpacing: 0.5,
+                      }}>
+                        AI-GUIDED
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== QUESTION / RESPONSES ===== */}
+        {stage === "question" && (
+          <FadeIn show delay={200}>
+            <div style={{ paddingTop: 48 }}>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                opacity: 0.5,
+                letterSpacing: 1,
+                marginBottom: 8,
+              }}>
+                LET'S LOOK UNDERNEATH
+              </p>
+              <p style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 24,
+                fontStyle: "italic",
+                marginBottom: 36,
+                lineHeight: 1.4,
+                color: COLORS.cream,
+              }}>
+                {DEMO_JOURNEY.question}
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {DEMO_JOURNEY.responses.map((r, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setSelectedResponse(r);
+                      nextStage("insight");
+                    }}
+                    style={{
+                      background: selectedResponse === r ? `${COLORS.goldenrod}20` : `${COLORS.cream}08`,
+                      border: `1px solid ${COLORS.cream}15`,
+                      borderRadius: 14,
+                      padding: "18px 20px",
+                      textAlign: "left",
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 15,
+                      color: COLORS.cream,
+                    }}
+                  >
+                    {r}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== INSIGHT CARD ===== */}
+        {stage === "insight" && (
+          <FadeIn show delay={200}>
+            <div style={{ paddingTop: 48 }}>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                opacity: 0.5,
+                letterSpacing: 1,
+                marginBottom: 20,
+                textAlign: "center",
+              }}>
+                WHAT'S UNDERNEATH
+              </p>
+
+              {/* Card */}
+              <div className="card-3d" style={{ height: cardFlipped ? "auto" : 320, minHeight: 320 }}>
+                <div className={`card-inner ${cardFlipped ? "flipped" : ""}`} style={{ height: cardFlipped ? "auto" : 320 }}>
+                  {/* Front */}
+                  <div
+                    className="card-face"
+                    onClick={() => setCardFlipped(true)}
+                    style={{
+                      background: `linear-gradient(135deg, ${COLORS.forestGreen}, ${COLORS.forestGreen}dd)`,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: 32,
+                      cursor: "pointer",
+                      border: `1px solid ${COLORS.cream}15`,
+                      height: 320,
+                    }}
+                  >
+                    <div style={{
+                      width: 48, height: 48, borderRadius: "50%",
+                      border: `1.5px solid ${COLORS.goldenrod}60`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      marginBottom: 28, fontSize: 22,
+                    }}>
+                      👁️
+                    </div>
+                    <p style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: 22,
+                      fontStyle: "italic",
+                      textAlign: "center",
+                      lineHeight: 1.4,
+                      color: COLORS.cream,
+                    }}>
+                      {DEMO_JOURNEY.insight.front}
+                    </p>
+                    <p style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 12,
+                      opacity: 0.4,
+                      marginTop: 28,
+                      letterSpacing: 1,
+                    }}>
+                      TAP TO REVEAL
+                    </p>
+                  </div>
+
+                  {/* Back - Three Layer Format */}
+                  <div
+                    className="card-face card-back-face"
+                    style={{
+                      background: `linear-gradient(145deg, ${COLORS.forestGreen}f5, ${COLORS.forestGreen})`,
+                      padding: 28,
+                      border: `1px solid ${COLORS.cream}15`,
+                      position: cardFlipped ? "relative" : "absolute",
+                    }}
+                  >
+                    <div style={{
+                      fontSize: 11,
+                      fontFamily: "'DM Sans', sans-serif",
+                      letterSpacing: 2,
+                      opacity: 0.5,
+                      marginBottom: 20,
+                    }}>
+                      INSIGHT
+                    </div>
+
+                    {/* Layer 1: Reframe */}
+                    <p style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: 21,
+                      fontWeight: 600,
+                      lineHeight: 1.35,
+                      color: COLORS.goldenrod,
+                      marginBottom: 20,
+                    }}>
+                      {DEMO_JOURNEY.insight.reframe}
+                    </p>
+
+                    {/* Layer 2: The Why */}
+                    <p style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 14,
+                      lineHeight: 1.65,
+                      color: `${COLORS.cream}cc`,
+                      marginBottom: 24,
+                    }}>
+                      {DEMO_JOURNEY.insight.why}
+                    </p>
+
+                    {/* Divider */}
+                    <div style={{
+                      width: 40, height: 1,
+                      background: `${COLORS.goldenrod}40`,
+                      marginBottom: 20,
+                    }} />
+
+                    {/* Go Deeper */}
+                    <p style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: 15,
+                      fontStyle: "italic",
+                      color: `${COLORS.cream}99`,
+                      marginBottom: 24,
+                      lineHeight: 1.5,
+                    }}>
+                      → {DEMO_JOURNEY.insight.goDeeper}
+                    </p>
+
+                    {/* Ask Burnout Buddy Button */}
+                    {!showAI && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                        <button
+                          className="bb-btn"
+                          onClick={simulateAI}
+                          style={{
+                            background: `${COLORS.goldenrod}20`,
+                            color: COLORS.goldenrod,
+                            border: `1px solid ${COLORS.goldenrod}40`,
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: 8,
+                          }}
+                        >
+                          <span style={{ fontSize: 16 }}>✦</span>
+                          Ask Burnout Buddy
+                        </button>
+                        {cardFlipped && (
+                          <FadeIn show delay={600}>
+                            <button
+                              className="bb-btn"
+                              onClick={() => nextStage("action")}
+                              style={{
+                                background: "transparent",
+                                color: `${COLORS.cream}70`,
+                                width: "100%",
+                                fontSize: 13,
+                                border: `1px solid ${COLORS.cream}15`,
+                              }}
+                            >
+                              Try one thing on my own →
+                            </button>
+                            <button
+                              onClick={() => {}}
+                              style={{
+                                background: "transparent",
+                                border: "none",
+                                color: `${COLORS.cream}40`,
+                                fontFamily: "'DM Sans', sans-serif",
+                                fontSize: 12,
+                                cursor: "pointer",
+                                width: "100%",
+                                marginTop: 12,
+                                padding: 4,
+                              }}
+                            >
+                              ♡ Save this card to Your Deck
+                            </button>
+                          </FadeIn>
+                        )}
+                      </div>
+                    )}
+
+                    {/* AI Response */}
+                    {showAI && (
+                      <div style={{
+                        background: `${COLORS.cream}08`,
+                        borderRadius: 12,
+                        padding: 20,
+                        border: `1px solid ${COLORS.goldenrod}20`,
+                      }}>
+                        <div style={{
+                          fontSize: 11,
+                          fontFamily: "'DM Sans', sans-serif",
+                          color: COLORS.goldenrod,
+                          letterSpacing: 1.5,
+                          marginBottom: 12,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                        }}>
+                          <span>✦</span> BURNOUT BUDDY
+                        </div>
+                        {aiTyping ? (
+                          <div className="typing-dots" style={{ padding: "8px 0" }}>
+                            <span>·</span><span>·</span><span>·</span>
+                          </div>
+                        ) : (
+                          <FadeIn show delay={100}>
+                            <p style={{
+                              fontFamily: "'DM Sans', sans-serif",
+                              fontSize: 14,
+                              lineHeight: 1.7,
+                              color: `${COLORS.cream}dd`,
+                            }}>
+                              {aiResponse}
+                            </p>
+                          </FadeIn>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Continue button */}
+                    {showAI && aiResponse ? (
+                      <FadeIn show delay={500}>
+                        <button
+                          className="bb-btn"
+                          onClick={() => nextStage("action")}
+                          style={{
+                            background: `${COLORS.goldenrod}20`,
+                            color: COLORS.goldenrod,
+                            border: `1px solid ${COLORS.goldenrod}30`,
+                            width: "100%",
+                            marginTop: 16,
+                            fontSize: 13,
+                          }}
+                        >
+                          Something to try →
+                        </button>
+                        <button
+                          onClick={() => {}}
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: `${COLORS.cream}40`,
+                            fontFamily: "'DM Sans', sans-serif",
+                            fontSize: 12,
+                            cursor: "pointer",
+                            width: "100%",
+                            marginTop: 12,
+                            padding: 4,
+                          }}
+                        >
+                          ♡ Save this card to Your Deck
+                        </button>
+                      </FadeIn>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== ACTION ===== */}
+        {stage === "action" && (
+          <FadeIn show delay={200}>
+            <div style={{ paddingTop: 48 }}>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                opacity: 0.5,
+                letterSpacing: 1,
+                marginBottom: 20,
+                textAlign: "center",
+              }}>
+                SOMETHING TO TRY
+              </p>
+
+              <div style={{
+                background: `linear-gradient(145deg, ${COLORS.terracotta}f5, ${COLORS.terracotta})`,
+                borderRadius: 16,
+                padding: 28,
+                border: `1px solid ${COLORS.cream}15`,
+              }}>
+                <div style={{
+                  width: 48, height: 48, borderRadius: "50%",
+                  border: `1.5px solid ${COLORS.goldenrod}60`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: 24, fontSize: 22, margin: "0 auto 24px",
+                }}>
+                  ✋
+                </div>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 15,
+                  lineHeight: 1.7,
+                  color: COLORS.cream,
+                  textAlign: "center",
+                  marginBottom: 28,
+                }}>
+                  {DEMO_JOURNEY.action.text}
+                </p>
+                <button
+                  className="bb-btn"
+                  onClick={() => nextStage("restore")}
+                  style={{
+                    background: `${COLORS.cream}15`,
+                    color: COLORS.cream,
+                    width: "100%",
+                    fontSize: 13,
+                    border: `1px solid ${COLORS.cream}15`,
+                  }}
+                >
+                  Move to Restore →
+                </button>
+                <button
+                  className="bb-btn"
+                  onClick={() => {}}
+                  style={{
+                    background: "transparent",
+                    color: `${COLORS.goldenrod}90`,
+                    width: "100%",
+                    fontSize: 13,
+                    marginTop: 8,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 6,
+                  }}
+                >
+                  <span style={{ fontSize: 14 }}>✦</span>
+                  Help me try this — Ask Burnout Buddy
+                </button>
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== RESTORE ===== */}
+        {stage === "restore" && (
+          <FadeIn show delay={200}>
+            <div style={{ paddingTop: 48 }}>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                opacity: 0.5,
+                letterSpacing: 1,
+                marginBottom: 20,
+                textAlign: "center",
+              }}>
+                RESTORE
+              </p>
+
+              <div style={{
+                background: `linear-gradient(145deg, ${COLORS.deepBlue}f5, ${COLORS.deepBlue})`,
+                borderRadius: 16,
+                padding: 32,
+                border: `1px solid ${COLORS.cream}15`,
+                textAlign: "center",
+              }}>
+                <div style={{
+                  width: 48, height: 48, borderRadius: "50%",
+                  border: `1.5px solid ${COLORS.goldenrod}60`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: 24, fontSize: 22, margin: "0 auto 24px",
+                }}>
+                  ☀️
+                </div>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 15,
+                  lineHeight: 1.8,
+                  color: `${COLORS.cream}dd`,
+                  marginBottom: 32,
+                }}>
+                  {DEMO_JOURNEY.restore.text}
+                </p>
+                <button
+                  className="bb-btn"
+                  onClick={() => nextStage("glowEnd")}
+                  style={{
+                    background: `${COLORS.cream}15`,
+                    color: COLORS.cream,
+                    fontSize: 13,
+                  }}
+                >
+                  Complete Journey →
+                </button>
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== GLOW END ===== */}
+        {stage === "glowEnd" && (
+          <FadeIn show delay={200}>
+            <div style={{ textAlign: "center", paddingTop: "18vh" }}>
+              <p style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 22,
+                fontStyle: "italic",
+                marginBottom: 8,
+                lineHeight: 1.4,
+              }}>
+                Where's your glow now?
+              </p>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                opacity: 0.5,
+                marginBottom: 48,
+              }}>
+                Just notice.
+              </p>
+              <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 32 }}>
+                {GLOW_LEVELS.map((g) => (
+                  <GlowOrb
+                    key={g.level}
+                    level={g.level}
+                    selected={glowEnd === g.level}
+                    onClick={() => setGlowEnd(g.level)}
+                    size={44}
+                    showLabel
+                  />
+                ))}
+              </div>
+              {glowEnd && (
+                <FadeIn show delay={100}>
+                  <p style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 14,
+                    color: `${COLORS.cream}88`,
+                    marginBottom: 36,
+                    fontStyle: "italic",
+                    maxWidth: 280,
+                    margin: "0 auto 36px",
+                    lineHeight: 1.6,
+                  }}>
+                    {glowEnd > glowStart
+                      ? "Something shifted. That's real."
+                      : glowEnd === glowStart
+                      ? "Showing up counts. Every time."
+                      : "Sometimes naming the hard thing makes it heavier before it gets lighter. That's okay."}
+                  </p>
+                  <button
+                    className="bb-btn"
+                    onClick={() => nextStage("complete")}
+                    style={{ background: COLORS.goldenrod, color: COLORS.deepPlum }}
+                  >
+                    Complete
+                  </button>
+                </FadeIn>
+              )}
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ===== JOURNEY COMPLETE ===== */}
+        {stage === "complete" && (
+          <FadeIn show delay={200}>
+            <div style={{ textAlign: "center", paddingTop: "15vh" }}>
+              <div style={{
+                width: 64, height: 64, borderRadius: "50%",
+                background: `${COLORS.goldenrod}20`,
+                border: `1.5px solid ${COLORS.goldenrod}40`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                margin: "0 auto 28px", fontSize: 28,
+                boxShadow: `0 0 40px ${COLORS.goldenrod}20`,
+              }}>
+                ✦
+              </div>
+              <p style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 24,
+                fontStyle: "italic",
+                marginBottom: 12,
+                lineHeight: 1.4,
+              }}>
+                This one's yours now.
+              </p>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                opacity: 0.6,
+                maxWidth: 280,
+                margin: "0 auto 16px",
+                lineHeight: 1.6,
+              }}>
+                Saved to Your Deck.
+              </p>
+
+              {/* Mini journey summary */}
+              <div style={{
+                background: `${COLORS.cream}08`,
+                borderRadius: 14,
+                padding: 20,
+                margin: "28px 0",
+                border: `1px solid ${COLORS.cream}10`,
+                textAlign: "left",
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                  <GlowOrb level={glowStart} selected size={20} />
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, opacity: 0.5 }}>→</span>
+                  <GlowOrb level={glowEnd || glowStart} selected size={20} />
+                </div>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 13,
+                  opacity: 0.7,
+                  marginBottom: 4,
+                }}>
+                  {selectedChallenge?.name}
+                </p>
+                <p style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: 16,
+                  color: COLORS.goldenrod,
+                  fontWeight: 600,
+                  lineHeight: 1.4,
+                }}>
+                  {DEMO_JOURNEY.insight.reframe}
+                </p>
+              </div>
+
+              <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 32 }}>
+                <button
+                  className="bb-btn"
+                  onClick={() => {
+                    setStage("welcome");
+                    setGlowStart(null);
+                    setGlowEnd(null);
+                    setSelectedChallenge(null);
+                    setSelectedResponse(null);
+                    setCardFlipped(false);
+                    setShowAI(false);
+                    setAiResponse("");
+                  }}
+                  style={{
+                    background: COLORS.goldenrod,
+                    color: COLORS.deepPlum,
+                  }}
+                >
+                  New Journey
+                </button>
+                <button
+                  className="bb-btn"
+                  style={{
+                    background: `${COLORS.cream}10`,
+                    color: `${COLORS.cream}80`,
+                    border: `1px solid ${COLORS.cream}15`,
+                  }}
+                >
+                  Your Deck
+                </button>
+              </div>
+            </div>
+          </FadeIn>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<BurnoutBuddy />);
+</script>
+</body>
+</html>
