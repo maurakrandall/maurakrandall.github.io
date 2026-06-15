@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reciprocity — Maura K. Randall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --ink:#171410;
+    --soft:#645E54;
+    --muted:#8A8378;
+    --line:rgba(23,20,16,0.12);
+    --line-soft:rgba(23,20,16,0.07);
+    --accent:#0E7C74;              /* AI-native teal — the builder/house accent */
+    --accent-soft:#E9F4F2;
+    --shadow:0 18px 45px rgba(22,20,15,0.07);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--paper);color:var(--ink);line-height:1.58;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  .serif{font-family:'Instrument Serif',serif;font-weight:400}
+  .mono,.eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+  .nav-in{max-width:1080px;margin:0 auto;padding:15px 28px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+  .brand{font-family:'Instrument Serif',serif;font-size:22px}
+  .brand em{font-style:italic}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);text-decoration:none}
+  .back:hover{color:var(--accent)}
+
+  header{
+    background:radial-gradient(circle at 84% 16%, rgba(14,124,116,.07), transparent 36%), var(--paper);
+    border-bottom:1px solid var(--line-soft);
+    padding:64px 0 56px;
+  }
+  .status-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:30px}
+  .stage-track{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px;box-shadow:0 8px 24px rgba(22,20,15,.04)}
+  .stage{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 10px;border-radius:999px}
+  .stage.active{background:var(--accent);color:#fff}
+  .status-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--soft);letter-spacing:.03em}
+
+  .hero{max-width:20ch}
+  h1{font-family:'Instrument Serif',serif;font-size:clamp(44px,7vw,82px);line-height:.98;letter-spacing:-.015em;margin-bottom:22px}
+  .dek{font-size:clamp(18px,2.1vw,22px);color:var(--soft);max-width:52ch}
+  .thesis{margin-top:30px;padding:22px 24px;border-left:3px solid var(--accent);background:rgba(255,255,255,.74);border-radius:0 12px 12px 0;max-width:52ch}
+  .thesis p{font-family:'Instrument Serif',serif;font-size:clamp(26px,3.2vw,36px);line-height:1.16}
+  .thesis cite{display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-style:normal;font-size:11px;letter-spacing:.06em;color:var(--muted)}
+
+  .summary{padding:28px 0;border-bottom:1px solid var(--line-soft);background:#fff}
+  .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .summary-item{background:#fff;padding:19px}
+  .summary-item .label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  .summary-item .value{font-size:15px;color:var(--soft)}
+
+  section{padding:58px 0;border-bottom:1px solid var(--line-soft)}
+  .section-grid{display:grid;grid-template-columns:260px minmax(0,1fr);gap:44px}
+  .sec-kicker{position:sticky;top:78px;align-self:start}
+  .sec-kicker h2{font-family:'Instrument Serif',serif;font-size:clamp(28px,3.4vw,38px);font-weight:400;line-height:1.08;margin-top:10px}
+  .content p{font-size:17px;color:var(--soft);max-width:68ch;margin-bottom:15px}
+  .content p.lead{font-size:19px;color:var(--ink)}
+  .pull{font-family:'Instrument Serif',serif;font-size:clamp(26px,3.6vw,38px);line-height:1.14;color:var(--ink);max-width:26ch;margin:4px 0 22px}
+
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:6px}
+  .stat{border:1px solid var(--line);border-left:3px solid var(--accent);background:#FCFCFB;border-radius:12px;padding:18px}
+  .stat b{font-family:'Instrument Serif',serif;font-weight:400;font-size:26px;color:var(--ink);display:block;line-height:1}
+  .stat span{font-size:14.5px;color:var(--soft);display:block;margin-top:7px}
+
+  .pts{display:grid;gap:12px;margin-top:4px}
+  .pt{display:grid;grid-template-columns:200px 1fr;gap:20px;padding:18px 20px;border:1px solid var(--line);border-radius:13px;background:#fff}
+  .pt h3{font-family:'Instrument Serif',serif;font-size:22px;font-weight:400;line-height:1.12}
+  .pt p{margin:0;font-size:15.5px}
+
+  .show-list{display:grid;gap:14px}
+  .show{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}
+  .show .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px;padding-top:4px}
+  .show p{margin:0;color:var(--ink);font-size:17px}
+  .show p b{font-weight:600}
+  .domains{margin-top:20px;font-size:14.5px;color:var(--soft)}
+  .domains code{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--accent)}
+
+  .deck-card{border:1px solid var(--line);border-radius:18px;background:var(--accent-soft);padding:30px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;box-shadow:var(--shadow)}
+  .deck-card h3{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;line-height:1.1;margin-bottom:8px}
+  .deck-card p{color:var(--soft);font-size:15.5px;max-width:48ch}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;padding:13px 22px;border-radius:10px;background:var(--ink);color:#fff;white-space:nowrap}
+  .btn:hover{background:var(--accent)}
+
+  .cta{padding:58px 0 30px;background:var(--paper)}
+  .cta-card{border:1px solid var(--line);border-radius:20px;background:#fff;padding:34px;box-shadow:var(--shadow)}
+  .cta-card h2{font-family:'Instrument Serif',serif;font-size:clamp(28px,4vw,40px);font-weight:400;line-height:1.1;margin-bottom:12px;max-width:24ch}
+  .cta-card p{color:var(--soft);font-size:16.5px;max-width:60ch;margin-bottom:14px}
+  .contact{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink);line-height:2}
+  .contact a{color:var(--accent);text-decoration:none}
+  .footer-meta{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);letter-spacing:.02em;line-height:1.9;padding:22px 0 70px}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+  @media(max-width:850px){
+    .section-grid,.deck-card{grid-template-columns:1fr}
+    .summary-grid{grid-template-columns:repeat(2,1fr)}
+    .sec-kicker{position:static}
+  }
+  @media(max-width:560px){
+    .wrap,.nav-in{padding-left:20px;padding-right:20px}
+    header{padding-top:46px}
+    .stage-track{width:100%;justify-content:space-between}
+    .stage{font-size:9.5px;padding:6px 8px}
+    .summary-grid,.grid2,.pt{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand">Maura K. <em>Randall</em></div>
+    <a class="back" href="../">&larr; Back to portfolio</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="status-row">
+      <div class="stage-track" aria-label="Project stage">
+        <span class="stage">Test</span>
+        <span class="stage">Build</span>
+        <span class="stage active">Codify</span>
+        <span class="stage">Share</span>
+      </div>
+      <span class="status-note">Concept deck &middot; strategy showcase &middot; not in active build</span>
+    </div>
+
+    <div class="hero">
+      <div class="eyebrow" style="margin-bottom:18px">Reciprocity</div>
+      <h1>The skill-based economy.</h1>
+      <p class="dek">A 20-year philosophy about technology, trust, and economic opportunity, distilled into one platform concept.</p>
+    </div>
+    <div class="thesis">
+      <p>Everyone has value. Let's exchange it.</p>
+      <cite>Reciprocity deck, 2025</cite>
+    </div>
+  </div>
+</header>
+
+<div class="summary">
+  <div class="wrap">
+    <div class="summary-grid">
+      <div class="summary-item"><div class="label">Stage</div><div class="value">Codify</div></div>
+      <div class="summary-item"><div class="label">Type</div><div class="value">Platform concept</div></div>
+      <div class="summary-item"><div class="label">Theme</div><div class="value">Trust-based skill exchange</div></div>
+      <div class="summary-item"><div class="label">Format</div><div class="value">Concept deck</div></div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">The challenge</div>
+      <h2>Skill goes under-leveraged.</h2>
+    </div>
+    <div class="content">
+      <p class="lead">Traditional economies leave skills and experience under-leveraged. Reciprocity reimagines value exchange beyond monetary systems.</p>
+      <div class="grid2">
+        <div class="stat"><b>64%</b><span>of Americans live paycheck to paycheck, including nearly half of six-figure earners.</span></div>
+        <div class="stat"><b>67%</b><span>of U.S. adults have a side hustle, yet struggle to maximize returns when buyers are cash-strapped.</span></div>
+        <div class="stat"><b>44%</b><span>of workers globally feel underutilized in their current roles.</span></div>
+        <div class="stat"><b>Millions</b><span>are excluded by cash-based marketplaces — valuable skills, no disposable income.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">Where it comes from</div>
+      <h2>Twenty years in the making.</h2>
+    </div>
+    <div class="content">
+      <p class="pull">Technology should strengthen human connection and create economic opportunity, not extract from it.</p>
+      <p>The seed took root during my time at eBay, watching people create value through peer-to-peer exchange. Over the next twenty years — building platforms at the intersection of content, community, and commerce at Yahoo!, Condé Nast, and Atlassian, and coaching female-led early-stage startups — the concept evolved as I learned more about trust dynamics, marketplace mechanics, and what makes communities thrive.</p>
+      <p>Reciprocity is the distillation of that experience: a platform where skills become currency, where economic mobility doesn't require financial capital. The specific implementation has changed dozens of times. The philosophy guiding it hasn't.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">The vision</div>
+      <h2>A new skill-based economy.</h2>
+    </div>
+    <div class="content">
+      <p class="lead">A digital platform to barter skills, build trust, and create opportunity beyond monetary systems.</p>
+      <div class="pts">
+        <div class="pt"><h3>Skills as currency</h3><p>Your carpentry can be exchanged for web development — no cash required.</p></div>
+        <div class="pt"><h3>Pooled skill, not pooled money</h3><p>Community projects happen through what people can do, not what they can pay.</p></div>
+        <div class="pt"><h3>AI keeps it fair</h3><p>Fair value exchange without forcing artificial one-to-one trades.</p></div>
+        <div class="pt"><h3>Trust as the foundation</h3><p>Reputation built through behavior, not just reviews.</p></div>
+      </div>
+      <p style="margin-top:18px">Economic mobility doesn't require financial capital.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">Why now</div>
+      <h2>What AI finally makes possible.</h2>
+    </div>
+    <div class="content">
+      <p>Earlier skill-exchange attempts failed on barriers that AI now solves.</p>
+      <div class="pts">
+        <div class="pt"><h3>Intelligent mapping</h3><p>Connects complementary skills automatically, solving the liquidity problem that stalled every prior attempt.</p></div>
+        <div class="pt"><h3>Dynamic valuation</h3><p>Adjusts skill worth to real-time supply and demand, removing pricing disputes.</p></div>
+        <div class="pt"><h3>Automated trust</h3><p>Builds reputation and safety through behavioral analysis, enabling trust at scale.</p></div>
+        <div class="pt"><h3>Smart verification</h3><p>Handles dispute resolution and exchange confirmation without manual overhead.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">What this demonstrates</div>
+      <h2>How I think about product.</h2>
+    </div>
+    <div class="content">
+      <div class="show-list">
+        <div class="show"><div class="num">01</div><p><b>Community-powered platform strategy</b> — two decades building trust-based ecosystems at scale.</p></div>
+        <div class="show"><div class="num">02</div><p><b>Trust-based ecosystem design</b> — from eBay's peer-to-peer marketplace to Atlassian's 78M-user community.</p></div>
+        <div class="show"><div class="num">03</div><p><b>Values-driven product innovation</b> — technology that strengthens human connection rather than extracting from it.</p></div>
+        <div class="show"><div class="num">04</div><p><b>Problems worth solving at scale</b> — economic mobility through skill, not cash.</p></div>
+      </div>
+      <p class="domains">Explored across a domain portfolio — <code>reciprocity.exchange</code>, <code>getreciprocity.com</code>, <code>skill-economy.com</code>, <code>exchangeskills.io</code>, <code>trustbasedeconomy.com</code> — each a different lens on the same philosophy.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="deck-card">
+      <div>
+        <div class="eyebrow" style="margin-bottom:10px">The deck</div>
+        <h3>See the full concept.</h3>
+        <p>The complete Reciprocity concept deck: the problem, the vision, the technology, and the market it addresses.</p>
+      </div>
+      <a class="btn" href="reciprocity-deck.pdf" target="_blank" rel="noopener">View the deck &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <div class="cta-card">
+      <h2>Not currently building this.</h2>
+      <p>But if you're working in this space, or hiring someone who thinks this way, let's talk. This deck shows how I approach community-powered platform strategy, trust-based ecosystem design, values-driven product innovation, and problems worth solving at scale.</p>
+      <div class="contact">
+        <a href="mailto:maurakrandall@gmail.com">maurakrandall@gmail.com</a><br>
+        <a href="https://linkedin.com/in/maurakrandall" target="_blank" rel="noopener">linkedin.com/in/maurakrandall</a><br>
+        <a href="https://maurakrandall.substack.com" target="_blank" rel="noopener">maurakrandall.substack.com</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="footer-meta">
+    Reciprocity &middot; a concept deck &middot; strategy showcase<br>
+    Built through Human + AI collaboration &middot; Test &rarr; Build &rarr; Codify &rarr; Share
+  </div>
+</div>
+
+</body>
+</html>
