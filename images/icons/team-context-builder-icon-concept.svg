@@ -1,0 +1,22 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Team Context Builder icon concept">
+  <rect width="256" height="256" rx="56" fill="#FFFFFF"/>
+  <rect x="26" y="26" width="204" height="204" rx="42" stroke="#16140F" stroke-opacity="0.10" stroke-width="2"/>
+
+  <!-- visible work layer -->
+  <rect x="72" y="48" width="112" height="34" rx="17" fill="#16140F"/>
+  <path d="M99 65H157" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- context strata -->
+  <path d="M50 112C76 96 100 96 128 112C156 128 180 128 206 112" stroke="#0E7C74" stroke-width="10" stroke-linecap="round"/>
+  <path d="M50 142C76 126 100 126 128 142C156 158 180 158 206 142" stroke="#0E7C74" stroke-opacity="0.72" stroke-width="10" stroke-linecap="round"/>
+  <path d="M50 172C76 156 100 156 128 172C156 188 180 188 206 172" stroke="#0E7C74" stroke-opacity="0.44" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- connection pins -->
+  <circle cx="80" cy="112" r="7" fill="#FFFFFF" stroke="#16140F" stroke-width="3"/>
+  <circle cx="128" cy="142" r="7" fill="#FFFFFF" stroke="#16140F" stroke-width="3"/>
+  <circle cx="176" cy="172" r="7" fill="#FFFFFF" stroke="#16140F" stroke-width="3"/>
+
+  <!-- foundation line -->
+  <path d="M62 207H194" stroke="#16140F" stroke-width="5" stroke-linecap="round"/>
+  <path d="M92 221H164" stroke="#16140F" stroke-opacity="0.45" stroke-width="4" stroke-linecap="round"/>
+</svg>
