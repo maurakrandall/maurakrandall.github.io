@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Context Builder — Maura K. Randall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --ink:#171410;
+    --soft:#645E54;
+    --muted:#8A8378;
+    --line:rgba(23,20,16,0.12);
+    --line-soft:rgba(23,20,16,0.07);
+    --accent:#34566E;              /* slate — the single signature color for this product */
+    --accent-soft:#EEF2F5;
+    --shadow:0 18px 45px rgba(22,20,15,0.07);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--paper);color:var(--ink);line-height:1.58;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  .serif{font-family:'Instrument Serif',serif;font-weight:400}
+  .mono,.eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+  .nav-in{max-width:1080px;margin:0 auto;padding:15px 28px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+  .brand{font-family:'Instrument Serif',serif;font-size:22px}
+  .brand em{font-style:italic}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);text-decoration:none}
+  .back:hover{color:var(--accent)}
+
+  header{
+    background:radial-gradient(circle at 84% 16%, rgba(52,86,110,.07), transparent 32%), var(--paper);
+    border-bottom:1px solid var(--line-soft);
+    padding:64px 0 54px;
+  }
+  .status-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:28px}
+  .stage-track{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px;box-shadow:0 8px 24px rgba(22,20,15,.04)}
+  .stage{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 10px;border-radius:999px}
+  .stage.active{background:var(--accent);color:#fff}
+  .status-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--soft);letter-spacing:.03em}
+
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) 360px;gap:46px;align-items:center}
+  h1{font-family:'Instrument Serif',serif;font-size:clamp(40px,6vw,70px);line-height:.99;letter-spacing:-.015em;max-width:15ch;margin-bottom:24px}
+  .dek{font-size:clamp(17px,2vw,21px);color:var(--soft);max-width:55ch}
+  .thesis{margin-top:28px;padding:20px 22px;border-left:3px solid var(--accent);background:rgba(255,255,255,.74);border-radius:0 12px 12px 0;max-width:58ch}
+  .thesis p{font-family:'Instrument Serif',serif;font-size:clamp(24px,3vw,34px);line-height:1.18}
+
+  /* hero signature: the context layer — the Collaboration Infrastructure family motif */
+  .strata{display:flex;flex-direction:column}
+  .strata-work{border:1px solid var(--accent);background:#fff;border-radius:12px;padding:15px 18px;text-align:center;box-shadow:var(--shadow);position:relative;z-index:2}
+  .strata-work .lab{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+  .strata-work .t{font-family:'Instrument Serif',serif;font-size:19px;color:var(--ink)}
+  .strata-surface{display:flex;justify-content:flex-end;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px dashed var(--line);padding:9px 2px 7px;margin:7px 0 9px}
+  .strata-layers{display:flex;flex-direction:column;gap:5px}
+  .layer{height:42px;border-radius:6px;display:flex;align-items:center;padding:0 16px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em}
+  .layer.l1{background:#5E7689}
+  .layer.l2{background:#4E6779}
+  .layer.l3{background:#41586B}
+  .layer.l4{background:#34566E}
+  .strata-cap{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--soft);text-align:center;margin-top:18px;letter-spacing:.02em;line-height:1.6}
+
+  /* artifact card — now the "output" visual in Current build */
+  .artifact-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow);max-width:430px}
+  .artifact-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+  .artifact-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .dots{display:flex;gap:4px}
+  .dots span{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.35}
+  .dots span:nth-child(2){opacity:.65}
+  .dots span:nth-child(3){opacity:1}
+  .context-box{border:1px solid var(--line-soft);background:#FAFBFC;border-radius:14px;padding:18px}
+  .context-line{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft)}
+  .context-line:last-child{border-bottom:none}
+  .context-line b{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .context-line span{font-size:14.5px;color:var(--soft)}
+  .artifact-foot{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:var(--muted);margin-top:16px}
+  .output{margin-top:26px}
+  .output-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:13px}
+
+  .summary{padding:28px 0;border-bottom:1px solid var(--line-soft);background:#fff}
+  .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .summary-item{background:#fff;padding:19px}
+  .summary-item .label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  .summary-item .value{font-size:15px;color:var(--soft)}
+
+  section{padding:58px 0;border-bottom:1px solid var(--line-soft)}
+  .section-grid{display:grid;grid-template-columns:260px minmax(0,1fr);gap:44px}
+  .sec-kicker{position:sticky;top:78px;align-self:start}
+  .sec-kicker h2{font-family:'Instrument Serif',serif;font-size:clamp(28px,3.4vw,38px);font-weight:400;line-height:1.08;margin-top:10px}
+  .content p{font-size:17px;color:var(--soft);max-width:68ch;margin-bottom:15px}
+  .content p.lead{font-size:19px;color:var(--ink)}
+  .pull{font-family:'Instrument Serif',serif;font-size:clamp(26px,3.6vw,38px);line-height:1.12;color:var(--ink);max-width:24ch;margin:4px 0 22px}
+
+  .question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
+  .question{border:1px solid var(--line);border-left:3px solid var(--accent);background:#FCFCFB;border-radius:12px;padding:18px 18px 17px;font-size:16px;color:var(--ink)}
+
+  .build-list{display:grid;gap:12px}
+  .build-item{display:grid;grid-template-columns:190px 1fr;gap:22px;padding:20px 22px;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .build-item h3{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;line-height:1.1}
+  .build-item p{margin:0;font-size:15.5px}
+
+  .learn-list{display:grid;gap:14px}
+  .learn{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}
+  .learn .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px;padding-top:4px}
+  .learn p{margin:0;color:var(--ink);font-size:17px}
+
+  .next-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:9px 13px;color:var(--ink);background:var(--accent-soft)}
+
+  .cta{padding:58px 0 72px;background:var(--paper)}
+  .cta-card{border:1px solid var(--line);border-radius:20px;background:#fff;padding:34px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;box-shadow:var(--shadow)}
+  .cta-card h2{font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,42px);font-weight:400;line-height:1.08;margin-bottom:10px}
+  .cta-card p{color:var(--soft);font-size:16.5px;max-width:58ch}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;padding:13px 20px;border-radius:10px;background:var(--ink);color:#fff;white-space:nowrap}
+  .btn:hover{background:var(--accent)}
+  .footer-meta{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);letter-spacing:.02em;line-height:1.9;margin-top:30px}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+  @media(max-width:850px){
+    .hero-grid,.section-grid,.cta-card{grid-template-columns:1fr}
+    .strata,.artifact-card{max-width:560px}
+    .summary-grid{grid-template-columns:repeat(2,1fr)}
+    .sec-kicker{position:static}
+  }
+  @media(max-width:560px){
+    .wrap,.nav-in{padding-left:20px;padding-right:20px}
+    header{padding-top:46px}
+    .stage-track{width:100%;justify-content:space-between}
+    .stage{font-size:9.5px;padding:6px 8px}
+    .summary-grid,.question-grid,.build-item{grid-template-columns:1fr}
+    .context-line{grid-template-columns:1fr;gap:3px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand">Maura K. <em>Randall</em></div>
+    <a class="back" href="../">&larr; Back to portfolio</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="status-row">
+      <div class="stage-track" aria-label="Project status">
+        <span class="stage">Test</span>
+        <span class="stage active">Build</span>
+        <span class="stage">Codify</span>
+        <span class="stage">Share</span>
+      </div>
+      <span class="status-note">Shipped prototype &middot; active development</span>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow" style="margin-bottom:18px">Collaboration Engineering Suite &middot; 01</div>
+        <h1>Context is collaboration infrastructure.</h1>
+        <p class="dek">Team Context Builder helps humans and AI agree on how they'll work together before the first task begins.</p>
+        <div class="thesis">
+          <p>Collaboration doesn't fail from a lack of prompts. It fails from a lack of shared context.</p>
+        </div>
+      </div>
+
+      <div class="strata" aria-label="The work rests on a context layer">
+        <div class="strata-work">
+          <div class="lab">The work</div>
+          <div class="t">What the team and AI do together</div>
+        </div>
+        <div class="strata-surface">the surface</div>
+        <div class="strata-layers">
+          <div class="layer l1">Team</div>
+          <div class="layer l2">Work</div>
+          <div class="layer l3">Judgment</div>
+          <div class="layer l4">Voice</div>
+        </div>
+        <div class="strata-cap">The work rests on a context layer most teams never surface.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="summary">
+  <div class="wrap">
+    <div class="summary-grid">
+      <div class="summary-item"><div class="label">Status</div><div class="value">Build</div></div>
+      <div class="summary-item"><div class="label">Type</div><div class="value">Live product prototype</div></div>
+      <div class="summary-item"><div class="label">Role</div><div class="value">Collaboration infrastructure</div></div>
+      <div class="summary-item"><div class="label">Output</div><div class="value">Reusable Team Context Card</div></div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">Why it exists</div>
+      <h2>The blank box starts too late.</h2>
+    </div>
+    <div class="content">
+      <p class="lead">Most AI work starts with a blank input field. The human has the context. The AI has none.</p>
+      <p>So people spend their time repeating themselves, correcting assumptions, rebuilding context, and re-explaining what they're actually trying to do.</p>
+      <p>That friction can look like productivity because it fills the time. What it really is, is a collaboration failure.</p>
+      <p>Team Context Builder makes the invisible parts of collaboration explicit before the work begins.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">The insight</div>
+      <h2>Context runs deeper than the brief.</h2>
+    </div>
+    <div class="content">
+      <p class="pull">The brief is the surface. The shared judgment underneath is what carries the work.</p>
+      <p>Most teams capture context as a document or a brief. That's the visible half, and it's useful.</p>
+      <p>The half that decides whether collaboration actually works sits underneath it: who's involved, how the work moves from rough to usable, where the human call is required, and how the team sounds together.</p>
+      <p>Without that shared layer, every interaction restarts from zero. With it, collaboration compounds.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">What we're testing</div>
+      <h2>Can setup become collaboration?</h2>
+    </div>
+    <div class="content">
+      <div class="question-grid">
+        <div class="question">Can context be built through interaction instead of forms?</div>
+        <div class="question">Can a tool help people put words to how they actually work?</div>
+        <div class="question">Can productive pushback create better context than simple collection?</div>
+        <div class="question">Can a team stand up reusable collaboration infrastructure in minutes?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">Current build</div>
+      <h2>What exists today.</h2>
+    </div>
+    <div class="content">
+      <div class="build-list">
+        <div class="build-item">
+          <h3>Team setup</h3>
+          <p>Users start from guided selections instead of a blank field. The experience captures who's involved, how work happens, and where AI takes part.</p>
+        </div>
+        <div class="build-item">
+          <h3>Live context building</h3>
+          <p>Selections build into an evolving narrative that the system keeps synthesizing as you work, reflecting back what it understands.</p>
+        </div>
+        <div class="build-item">
+          <h3>Collaborative pushback</h3>
+          <p>The builder challenges assumptions instead of just collecting them. The aim is clarity.</p>
+        </div>
+        <div class="build-item">
+          <h3>Decision capture</h3>
+          <p>You respond to a challenge and shape the direction of the final context model. The context deepens as the understanding does.</p>
+        </div>
+      </div>
+
+      <div class="output">
+        <div class="output-label">What you get</div>
+        <aside class="artifact-card" aria-label="Team Context Card preview">
+          <div class="artifact-top">
+            <div class="artifact-title">Team Context Card</div>
+            <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          </div>
+          <div class="context-box">
+            <div class="context-line"><b>Team</b><span>Who is involved, human and AI</span></div>
+            <div class="context-line"><b>Work</b><span>How ideas move from rough to usable</span></div>
+            <div class="context-line"><b>Judgment</b><span>Where the human call is required</span></div>
+            <div class="context-line"><b>Voice</b><span>How the team should sound together</span></div>
+          </div>
+          <div class="artifact-foot">Reusable context for future sessions, tools, and handoffs.</div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">What we've learned</div>
+      <h2>The setup is the work.</h2>
+    </div>
+    <div class="content">
+      <div class="learn-list">
+        <div class="learn"><div class="num">01</div><p>Reflection feels more collaborative than data collection. People engage with guided language; they stall on empty forms.</p></div>
+        <div class="learn"><div class="num">02</div><p>A shared narrative feels smarter than disconnected answers. The tool earns trust once it synthesizes across selections.</p></div>
+        <div class="learn"><div class="num">03</div><p>Pushback creates more engagement than agreement. A good challenge makes people think more clearly.</p></div>
+        <div class="learn"><div class="num">04</div><p>The most useful context tends to surface late. People rarely name the thing that matters most up front.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap section-grid">
+    <div class="sec-kicker">
+      <div class="eyebrow">What's next</div>
+      <h2>From prototype to reusable infrastructure.</h2>
+    </div>
+    <div class="content">
+      <div class="next-grid">
+        <span class="chip">Adaptive pushback</span>
+        <span class="chip">AI-generated reflections</span>
+        <span class="chip">Reusable Team Context Cards</span>
+        <span class="chip">Markdown export</span>
+        <span class="chip">JSON export</span>
+        <span class="chip">Suite integration</span>
+      </div>
+      <p>Team Context Builder is the first tool in the Collaboration Engineering Suite. Every tool that follows works better when collaboration begins with shared context.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <div class="cta-card">
+      <div>
+        <h2>Context is not setup. It is collaboration.</h2>
+        <p>This page documents an active build: a working tool that produces a reusable Team Context Card, and a live demonstration of the Human–AI Loop.</p>
+      </div>
+      <a class="btn" href="#" aria-label="Try Team Context Builder">Try the prototype &rarr;</a>
+    </div>
+    <div class="footer-meta">
+      Team Context Builder &middot; Collaboration Engineering Suite<br>
+      Built through Human + AI collaboration &middot; Test &rarr; Build &rarr; Codify &rarr; Share
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
