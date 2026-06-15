@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opportunes — A personal operating system for opportunity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --ink:#16140F;
+    --soft:#5C574E;
+    --line:rgba(22,20,15,0.12);
+    --line-soft:rgba(22,20,15,0.07);
+    --accent:#0E7C74;            /* portfolio teal — builder asset */
+    --accent-wash:rgba(14,124,116,0.06);
+    /* Opportunes' four channels — functional accents, from the prototype */
+    --content:#C45832;
+    --roles:#2A5CAA;
+    --connect:#2C7A5C;
+    --engage:#7A4A8F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter Tight',sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 28px}
+  a{color:inherit}
+  .serif{font-family:'Instrument Serif',serif;font-weight:400}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+
+  /* top bar — portfolio frame */
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:15px 28px;max-width:1000px;margin:0 auto;gap:18px}
+  .brand{font-family:'Instrument Serif',serif;font-size:21px;letter-spacing:.01em}
+  .brand b{font-style:italic;font-weight:400}
+  .back{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:var(--soft);text-decoration:none;transition:color .2s}
+  .back:hover{color:var(--accent)}
+
+  /* hero */
+  header{padding:70px 0 18px}
+  .stage{display:inline-flex;align-items:center;gap:10px;margin-bottom:24px}
+  .stage .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  h1{font-family:'Instrument Serif',serif;font-size:clamp(36px,5.6vw,60px);line-height:1.04;letter-spacing:-.01em;max-width:17ch;margin-bottom:20px}
+  .sub{font-size:clamp(16px,2vw,19px);color:var(--soft);max-width:50ch}
+  .tagline{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin-top:26px}
+  .tagline b{color:var(--accent);font-weight:500}
+
+  /* signature: the mixing board */
+  .board-sec{padding:46px 0 56px}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;border:1px solid var(--line);border-radius:14px;padding:26px 22px;background:#FCFBFA}
+  .strip{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+  .strip .icon{font-size:17px;line-height:1}
+  .strip .name{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .fader{position:relative;width:6px;height:130px;border-radius:6px;background:var(--line);overflow:visible;margin:4px 0}
+  .fader .fill{position:absolute;left:0;right:0;bottom:0;border-radius:6px}
+  .fader .knob{position:absolute;left:50%;width:26px;height:13px;border-radius:4px;transform:translate(-50%,50%);box-shadow:0 1px 4px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.6)}
+  .strip .gain{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--soft)}
+  .board-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--soft);text-align:center;margin-top:20px}
+
+  /* generic section */
+  section{padding:52px 0;border-top:1px solid var(--line-soft)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+  .sec-head h2{font-family:'Instrument Serif',serif;font-size:clamp(23px,3.2vw,32px);font-weight:400;letter-spacing:-.01em}
+
+  /* flow */
+  .flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+  .flow .step{font-family:'JetBrains Mono',monospace;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:10px 15px;background:var(--accent-wash)}
+  .flow .arrow{color:var(--soft)}
+  .flow-note{font-size:15px;color:var(--soft);margin-top:18px;max-width:58ch}
+
+  /* human-decides panel */
+  .decide{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:26px 28px;background:#FCFBFA}
+  .decide h3{font-family:'Instrument Serif',serif;font-size:26px;font-weight:400;margin-bottom:12px}
+  .decide p{font-size:16px;color:var(--soft);max-width:60ch}
+  .decide .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;padding:7px 13px;border-radius:20px;border:1px solid var(--line);color:var(--ink)}
+  .chip.first{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* cta */
+  footer{padding:54px 0 70px;border-top:1px solid var(--line-soft)}
+  .cta-line{font-family:'Instrument Serif',serif;font-size:clamp(24px,3.6vw,36px);line-height:1.1;max-width:20ch;margin-bottom:26px}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:30px}
+  .btn{font-family:'Inter Tight';font-weight:600;font-size:15px;text-decoration:none;padding:13px 22px;border-radius:10px;transition:all .18s;display:inline-block}
+  .btn.primary{background:var(--ink);color:#fff}
+  .btn.primary:hover{background:var(--accent)}
+  .btn.ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .meta{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);letter-spacing:.02em;line-height:1.9}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+  @media(max-width:560px){
+    .board{grid-template-columns:repeat(2,1fr);gap:22px 14px}
+    .fader{height:104px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand">Maura K. <b>Randall</b></div>
+    <a class="back" href="../">&larr; Back to portfolio</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="stage"><span class="dot"></span><span class="eyebrow">Test &middot; concept prototype</span></div>
+    <h1>Everything worth acting on, ranked in one place.</h1>
+    <p class="sub">Opportunes watches four channels for the moves that matter to you, ranks them against each other, and stays out of the way. You decide which ones are yours.</p>
+    <div class="tagline">Human decides. <b>AI ranks.</b></div>
+  </div>
+</header>
+
+<div class="board-sec">
+  <div class="wrap">
+    <div class="board">
+      <div class="strip">
+        <span class="icon" style="color:var(--content)">&#10022;</span>
+        <span class="name" style="color:var(--content)">Content</span>
+        <div class="fader"><div class="fill" style="height:74%;background:var(--content)"></div><div class="knob" style="bottom:74%;background:var(--content)"></div></div>
+        <span class="gain">74</span>
+      </div>
+      <div class="strip">
+        <span class="icon" style="color:var(--roles)">&#9672;</span>
+        <span class="name" style="color:var(--roles)">Roles</span>
+        <div class="fader"><div class="fill" style="height:92%;background:var(--roles)"></div><div class="knob" style="bottom:92%;background:var(--roles)"></div></div>
+        <span class="gain">92</span>
+      </div>
+      <div class="strip">
+        <span class="icon" style="color:var(--connect)">&#9678;</span>
+        <span class="name" style="color:var(--connect)">Connect</span>
+        <div class="fader"><div class="fill" style="height:58%;background:var(--connect)"></div><div class="knob" style="bottom:58%;background:var(--connect)"></div></div>
+        <span class="gain">58</span>
+      </div>
+      <div class="strip">
+        <span class="icon" style="color:var(--engage)">&#9671;</span>
+        <span class="name" style="color:var(--engage)">Engage</span>
+        <div class="fader"><div class="fill" style="height:40%;background:var(--engage)"></div><div class="knob" style="bottom:40%;background:var(--engage)"></div></div>
+        <span class="gain">40</span>
+      </div>
+    </div>
+    <div class="board-cap">Tune the channels. Dial up what matters this week, pull down what doesn't.</div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">The loop, per opportune</span><h2>Surface, then decide</h2></div>
+    <div class="flow">
+      <span class="step">Surface</span><span class="arrow">&rarr;</span>
+      <span class="step">Rank</span><span class="arrow">&rarr;</span>
+      <span class="step">Expand</span><span class="arrow">&rarr;</span>
+      <span class="step">Tune</span><span class="arrow">&rarr;</span>
+      <span class="step">Draft</span>
+    </div>
+    <p class="flow-note">Each card is an opportune. AI ranks all four channels against each other into your Top Opportunes, then explains why each one matters and drafts a first move. Every step stays editable. Nothing ships without you.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="decide">
+      <h3>The human is the decider, by design</h3>
+      <p>Opportunes ranks; it never acts on your behalf. Pass is a first-class action, not a hidden one. "Not Me Yet" sits more prominently than Publish, because most of what AI surfaces is worth declining, and declining well is the skill.</p>
+      <div class="row">
+        <span class="chip first">Not Me Yet</span>
+        <span class="chip">Pass</span>
+        <span class="chip">Publish</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="cta-line">A working concept. I'd like your read on it.</p>
+    <div class="actions">
+      <a class="btn primary" href="#" target="_blank" rel="noopener">Try the prototype &rarr;</a>
+      <a class="btn ghost" href="mailto:hello@maurakrandall.com?subject=Opportunes%20concept%20feedback">Share concept feedback</a>
+    </div>
+    <div class="meta">
+      Opportunes &middot; concept prototype v0.1 &middot; built on a multi-agent workflow<br>
+      Part of the Human-AI Loop practice &middot; Maura K. Randall
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
