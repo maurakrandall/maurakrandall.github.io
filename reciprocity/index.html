@@ -113,6 +113,20 @@
     .stage{font-size:9.5px;padding:6px 8px}
     .summary-grid,.grid2,.pt{grid-template-columns:1fr}
   }
+
+  /* Breadth-of-exchange strip (under the hero) */
+  .breadth{padding:42px 0 10px;background:#fff;border-bottom:1px solid var(--line-soft)}
+  .breadth .eyebrow{margin-bottom:16px}
+  .exchange-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .exchange{margin:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(22,20,15,.05)}
+  .exchange img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+  .breadth-note{margin-top:18px;font-size:15.5px;color:var(--soft);max-width:60ch}
+  @media(max-width:850px){.exchange-strip{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:560px){.exchange-strip{grid-template-columns:repeat(2,1fr)}}
+
+  /* Lead visual inside a section's content column */
+  .section-figure{margin:0 0 26px;max-width:520px;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+  .section-figure img{display:block;width:100%;height:auto}
 </style>
 </head>
 <body>
@@ -147,6 +161,20 @@
     </div>
   </div>
 </header>
+
+<div class="breadth">
+  <div class="wrap">
+    <div class="eyebrow">The breadth of exchange</div>
+    <div class="exchange-strip">
+      <figure class="exchange"><img src="images/reciprocity-overview-page-1.webp" alt="A businessperson and a gardener shake hands over a shared coin, trading professional skills" loading="lazy"></figure>
+      <figure class="exchange"><img src="images/reciprocity-overview-page-2.webp" alt="A professional and a farmer shake hands, exchanging skills for skills" loading="lazy"></figure>
+      <figure class="exchange"><img src="images/reciprocity-overview-page-3.webp" alt="An educator and a tradesperson shake hands, trading teaching for repair work" loading="lazy"></figure>
+      <figure class="exchange"><img src="images/reciprocity-overview-page-4.webp" alt="A software developer and a mechanic exchange skills, code for auto repair" loading="lazy"></figure>
+      <figure class="exchange"><img src="images/reciprocity-overview-page-5.webp" alt="A digital worker and a photographer exchange skills" loading="lazy"></figure>
+    </div>
+    <p class="breadth-note">Skills become the currency. Each pairing is a different trade.</p>
+  </div>
+</div>
 
 <div class="summary">
   <div class="wrap">
@@ -235,6 +263,7 @@
       <h2>How I think about product.</h2>
     </div>
     <div class="content">
+      <figure class="section-figure"><img src="images/reciprocity-exchange-asprational.webp" alt="Many people exchanging skills, ideas, and work around a shared center of value" loading="lazy"></figure>
       <div class="show-list">
         <div class="show"><div class="num">01</div><p><b>Community-powered platform strategy</b> — two decades building trust-based ecosystems at scale.</p></div>
         <div class="show"><div class="num">02</div><p><b>Trust-based ecosystem design</b> — from eBay's peer-to-peer marketplace to Atlassian's 78M-user community.</p></div>
