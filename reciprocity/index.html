@@ -53,6 +53,16 @@
   .thesis p{font-family:'Instrument Serif',serif;font-size:clamp(26px,3.2vw,36px);line-height:1.16}
   .thesis cite{display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-style:normal;font-size:11px;letter-spacing:.06em;color:var(--muted)}
 
+  /* Two-column header: hero text left, scene image right */
+  .hero-grid{display:grid;grid-template-columns:1fr minmax(0,440px);gap:50px;align-items:center;margin-top:6px}
+  .hero-grid .hero{max-width:none}
+  .hero-figure{margin:0}
+  .hero-figure img{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow)}
+  @media(max-width:850px){
+    .hero-grid{grid-template-columns:1fr;gap:32px}
+    .hero-figure{max-width:460px}
+  }
+
   .summary{padding:28px 0;border-bottom:1px solid var(--line-soft);background:#fff}
   .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
   .summary-item{background:#fff;padding:19px}
@@ -150,14 +160,21 @@
       <span class="status-note">Concept deck &middot; strategy showcase &middot; not in active build</span>
     </div>
 
-    <div class="hero">
-      <div class="eyebrow" style="margin-bottom:18px">Reciprocity</div>
-      <h1>The skill-based economy.</h1>
-      <p class="dek">A 20-year philosophy about technology, trust, and economic opportunity, distilled into one platform concept.</p>
-    </div>
-    <div class="thesis">
-      <p>Everyone has value. Let's exchange it.</p>
-      <cite>Reciprocity deck, 2025</cite>
+    <div class="hero-grid">
+      <div class="hero-col">
+        <div class="hero">
+          <div class="eyebrow" style="margin-bottom:18px">Reciprocity</div>
+          <h1>The skill-based economy.</h1>
+          <p class="dek">A 20-year philosophy about technology, trust, and economic opportunity, distilled into one platform concept.</p>
+        </div>
+        <div class="thesis">
+          <p>Everyone has value. Let's exchange it.</p>
+          <cite>Reciprocity deck, 2025</cite>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <img src="images/reciprocity-overview-page-header.png" alt="An isometric community marketplace where people trade skills, value flowing between them as shared currency">
+      </figure>
     </div>
   </div>
 </header>
