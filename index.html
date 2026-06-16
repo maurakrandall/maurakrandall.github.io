@@ -18,8 +18,9 @@
     --teal:#0E7C74;
     --accent:var(--teal);
     --accent-wash:rgba(14,124,116,0.06);
+    --accent-wash-strong:rgba(14,124,116,0.12);
   }
-  body[data-track="enterprise"]{--accent:var(--navy);--accent-wash:rgba(27,58,107,0.06)}
+  body[data-track="enterprise"]{--accent:var(--navy);--accent-wash:rgba(27,58,107,0.06);--accent-wash-strong:rgba(27,58,107,0.12)}
 
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -100,25 +101,29 @@
   .stage-label{display:flex;align-items:baseline;gap:12px;margin:34px 0 14px}
   .stage-label .s{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);transition:color .4s}
   .stage-label .d{font-size:14px;color:var(--soft)}
+  .codify-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:24px 0 10px;transition:color .4s}
 
   /* product cards */
   .builds{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .build{border:1px solid var(--line);border-radius:12px;padding:20px;text-decoration:none;display:block;transition:border-color .2s,transform .15s}
-  .build:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .build{border:1px solid var(--line);border-radius:12px;padding:20px;text-decoration:none;display:block;transition:border-color .2s,transform .15s,background .2s,box-shadow .2s}
+  .build:hover{border-color:var(--accent);background:var(--accent-wash-strong);box-shadow:0 10px 28px -16px var(--accent);transform:translateY(-2px)}
+  .build:hover h3{color:var(--accent)}
   .build.soon{opacity:.62;cursor:default}
   .build.soon:hover{border-color:var(--line);transform:none}
   .build .st{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:20px;background:var(--accent-wash);color:var(--accent);display:inline-block;margin-bottom:11px;transition:all .4s}
-  .build h3{font-family:'Instrument Serif',serif;font-size:23px;font-weight:400;margin-bottom:6px}
+  .build h3{font-family:'Instrument Serif',serif;font-size:23px;font-weight:400;margin-bottom:6px;transition:color .2s}
   .build p{font-size:14.5px;color:var(--soft)}
   .bicon{margin-bottom:13px;line-height:0}
   .bicon img{width:34px;height:34px;object-fit:contain;display:block}
 
   /* compact link rows */
   .links-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .links-row a{background:var(--paper);padding:18px 20px;display:block;text-decoration:none;transition:background .18s}
-  .links-row a:hover{background:var(--accent-wash)}
-  .links-row .t{font-family:'Instrument Serif',serif;font-size:18px}
+  .links-row a{background:var(--paper);padding:18px 20px;display:block;text-decoration:none;transition:background .18s,box-shadow .18s}
+  .links-row a:hover{background:var(--accent-wash-strong);box-shadow:inset 3px 0 0 var(--accent)}
+  .links-row a:hover .t{color:var(--accent)}
+  .links-row .t{font-family:'Instrument Serif',serif;font-size:18px;transition:color .18s}
   .links-row .desc{font-size:13px;color:var(--soft);margin-top:3px}
+  .links-row .src{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
 
   footer{padding:60px 0 70px}
   .cta-line{font-family:'Instrument Serif',serif;font-size:clamp(26px,4vw,40px);line-height:1.08;max-width:18ch;margin-bottom:30px}
@@ -217,12 +222,18 @@
       <a class="build" href="burnout-buddy/"><span class="bicon"><img src="images/icons/burnoutbuddy-icon.svg" alt=""></span><span class="st">Prototype</span><h3>BurnoutBuddy</h3><p>A reflective companion for navigating burnout. Orientation, not optimization.</p></a>
     </div>
 
-    <div class="stage-label"><span class="s">Codify</span><span class="d">The methodology, made canonical and demonstrated</span></div>
+    <div class="stage-label"><span class="s">Codify</span><span class="d">The methodology made canonical — and the vision it points to</span></div>
+    <div class="codify-sub">Collaboration, by design</div>
     <div class="links-row">
       <a href="https://thehumanailoop.com" target="_blank" rel="noopener"><div class="t">The Human-AI Loop</div><div class="desc">The published methodology</div></a>
-      <a href="https://try.thehumanailoop.com" target="_blank" rel="noopener"><div class="t">The Loop Simulator</div><div class="desc">The method in motion</div></a>
-      <a href="triad-in-slack/"><div class="t">Triad in Slack</div><div class="desc">AI teammates in a shared workspace</div></a>
-      <a href="delivery-loop-scene/"><div class="t">Strategist as Conductor</div><div class="desc">One human conducting AI</div></a>
+      <a href="https://try.thehumanailoop.com" target="_blank" rel="noopener"><div class="t">The Loop Simulator</div><div class="desc">Designed collaboration you can feel in five minutes</div></a>
+      <a href="triad-in-slack/"><div class="t">Triad in Slack</div><div class="desc">AI teammates in a shared workspace — by design, not default</div></a>
+      <a href="delivery-loop-scene/"><div class="t">Strategist as Conductor</div><div class="desc">One human directing AI in real time</div></a>
+    </div>
+    <div class="codify-sub">Vision &amp; strategy</div>
+    <div class="links-row">
+      <a href="knowlings/"><div class="t">Knowlings</div><div class="desc">Community-powered learning, built on the Loop</div></a>
+      <a href="reciprocity/"><div class="t">Reciprocity</div><div class="desc">A skill-exchange platform vision, twenty years in the making</div></a>
     </div>
 
     <div class="stage-label"><span class="s">Share</span><span class="d">Teaching the practice in public</span></div>
@@ -247,6 +258,22 @@
       <div class="row"><div class="co">Yahoo!</div><div class="met"><span><b>50M+</b>MAU</span><span><b>14M</b>users</span><span><b>$40M</b>revenue, year one</span></div></div>
       <div class="row"><div class="co">Condé Nast</div><div class="met"><span><b>2M+</b>monthly uniques</span><span><b>4×</b>social growth</span><span><b>’13–’14</b>Best Community</span></div></div>
       <div class="row"><div class="co">Consulting</div><div class="met"><span><b>100%</b>of clients secured funding</span><span><b>50%</b>into accelerators</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTERPRISE: published thinking -->
+<section class="only-enterprise">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Published thinking</span>
+      <h2>The frameworks behind the practice</h2>
+    </div>
+    <div class="links-row">
+      <a href="https://aigal.io/not-all-ai-should-be-your-teammate/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Not All AI Should Be Your Teammate</div><div class="desc">When to give AI a seat — and when the call has to stay human.</div></a>
+      <a href="https://aigal.io/building-the-plane-vs-rebuilding-the-cockpit/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Building the Plane vs. Rebuilding the Cockpit</div><div class="desc">Adoption means redesigning how the work happens, not bolting AI on.</div></a>
+      <a href="https://aigal.io/prompt-vs-context-vs-collaboration-engineering/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Prompt vs. Context vs. Collaboration Engineering</div><div class="desc">The discipline beyond prompting: directing AI as a collaborator.</div></a>
+      <a href="https://maurakrandall.substack.com/p/when-the-human-isnt-the-last-click" target="_blank" rel="noopener"><div class="src">Substack</div><div class="t">When the Human Isn’t the Last Click</div><div class="desc">Accountability when AI acts before a person makes the call.</div></a>
     </div>
   </div>
 </section>
