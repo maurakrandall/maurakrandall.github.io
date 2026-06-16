@@ -52,6 +52,26 @@
   .fit{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--soft);letter-spacing:.02em;margin-top:22px;line-height:1.7}
   .fit b{color:var(--accent);font-weight:500;transition:color .4s}
 
+  /* hero grid: lead text left, thesis aside right */
+  .hero-grid{display:grid;grid-template-columns:1fr minmax(0,420px);gap:54px;align-items:center;margin-top:10px}
+  .thesis-aside{padding-left:30px;border-left:1px solid var(--line)}
+  .thesis-aside .eyebrow{margin-bottom:14px}
+  .thesis-stmt{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(25px,2.5vw,32px);line-height:1.16;letter-spacing:-.005em;color:var(--ink)}
+  .thesis-stmt .up{color:var(--accent);transition:color .4s}
+  .thesis-stmt .down{color:#9A958C}
+  .diverge{display:block;width:100%;max-width:330px;height:auto;margin:18px 0 15px}
+  .diverge .origin{fill:var(--ink)}
+  .diverge .up-path{stroke:var(--accent);stroke-width:2;fill:none;stroke-linecap:round;transition:stroke .4s}
+  .diverge .down-path{stroke:#CBC6BD;stroke-width:2;fill:none;stroke-linecap:round}
+  .diverge text{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.8px}
+  .diverge .lbl-up{fill:var(--accent);transition:fill .4s}
+  .diverge .lbl-down{fill:#9A958C}
+  .thesis-kick{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--soft);line-height:1.7;max-width:36ch}
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;gap:34px}
+    .thesis-aside{padding-left:0;border-left:none;border-top:1px solid var(--line);padding-top:28px;max-width:560px}
+  }
+
   section{padding:56px 0;border-bottom:1px solid var(--line-soft)}
   .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;flex-wrap:wrap}
   .sec-head h2{font-family:'Instrument Serif',serif;font-size:clamp(24px,3.4vw,34px);font-weight:400;letter-spacing:-.01em}
@@ -137,18 +157,35 @@
       </div>
     </div>
 
-    <div class="only-builder swap">
-      <div class="eyebrow" style="margin-bottom:18px">A working AI practice, built in public</div>
-      <h1>I built a working practice for how humans and AI actually collaborate.</h1>
-      <p class="sub">The Human-AI Loop methodology, the Triad operating model, and a portfolio of live, shipped AI products. Practitioner, not commentator.</p>
-      <p class="fit"><b>Built for</b> &nbsp;AI-native product leadership · human-AI collaboration systems · Head of Product who owns AI strategy</p>
-    </div>
+    <div class="hero-grid">
+      <div class="hero-lead">
+        <div class="only-builder swap">
+          <div class="eyebrow" style="margin-bottom:18px">A working AI practice, built in public</div>
+          <h1>I built a working practice for how humans and AI actually collaborate.</h1>
+          <p class="sub">The Human-AI Loop methodology, the Triad operating model, and a portfolio of live, shipped AI products. Practitioner, not commentator.</p>
+          <p class="fit"><b>Built for</b> &nbsp;AI-native product leadership · human-AI collaboration systems · Head of Product who owns AI strategy</p>
+        </div>
 
-    <div class="only-enterprise swap">
-      <div class="eyebrow" style="margin-bottom:18px">Twenty years · platforms at scale</div>
-      <h1>I build and scale the platforms millions of people rely on.</h1>
-      <p class="sub">Product and platform leadership across Atlassian, eBay, Yahoo!, and Condé Nast, from hyper-growth to billion-dollar marketplaces.</p>
-      <p class="fit"><b>Built for</b> &nbsp;Head of Product · platform &amp; product strategy · community-driven growth at scale</p>
+        <div class="only-enterprise swap">
+          <div class="eyebrow" style="margin-bottom:18px">Twenty years · platforms at scale</div>
+          <h1>I build and scale the platforms millions of people rely on.</h1>
+          <p class="sub">Product and platform leadership across Atlassian, eBay, Yahoo!, and Condé Nast, from hyper-growth to billion-dollar marketplaces.</p>
+          <p class="fit"><b>Built for</b> &nbsp;Head of Product · platform &amp; product strategy · community-driven growth at scale</p>
+        </div>
+      </div>
+
+      <aside class="thesis-aside">
+        <div class="eyebrow">My thesis</div>
+        <p class="thesis-stmt">Human capability <span class="up">compounds</span> or <span class="down">degrades</span> based on how human–AI collaboration is designed.</p>
+        <svg class="diverge" viewBox="0 0 330 156" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle class="origin" cx="15" cy="78" r="3.5"/>
+          <path class="up-path" d="M18 78 C 110 78, 195 46, 308 22"/>
+          <path class="down-path" d="M18 78 C 110 78, 195 110, 308 134"/>
+          <text class="lbl-up" x="308" y="13" text-anchor="end">↗ COMPOUNDS</text>
+          <text class="lbl-down" x="308" y="151" text-anchor="end">↘ DEGRADES</text>
+        </svg>
+        <p class="thesis-kick">Collaboration isn't neutral. Design sets the trajectory.</p>
+      </aside>
     </div>
   </div>
 </header>
@@ -177,7 +214,7 @@
     <div class="builds">
       <a class="build" href="team-context-builder/"><span class="bicon"><img src="images/icons/team-context-builder-icon-concept.svg" alt=""></span><span class="st">Flagship</span><h3>Team Context Builder</h3><p>Methodology becoming product. Context is collaboration infrastructure.</p></a>
       <a class="build" href="https://dailyfuel.onrender.com" target="_blank" rel="noopener"><span class="bicon"><img src="images/icons/daily-fuel-icon.svg" alt=""></span><span class="st">Live</span><h3>Daily Fuel</h3><p>An AI-native nutrition companion for life on GLP-1. Deployed and running.</p></a>
-      <div class="build soon"><span class="bicon"><img src="images/icons/burnoutbuddy-icon.svg" alt=""></span><span class="st">In build</span><h3>BurnoutBuddy</h3><p>A reflective companion for navigating burnout. Orientation, not optimization.</p></div>
+      <a class="build" href="burnout-buddy/"><span class="bicon"><img src="images/icons/burnoutbuddy-icon.svg" alt=""></span><span class="st">Prototype</span><h3>BurnoutBuddy</h3><p>A reflective companion for navigating burnout. Orientation, not optimization.</p></a>
     </div>
 
     <div class="stage-label"><span class="s">Codify</span><span class="d">The methodology, made canonical and demonstrated</span></div>
