@@ -3,330 +3,252 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maura K. Randall — Product & Platform Leadership</title>
+<title>Daily Fuel — Maura K. Randall</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FFFFFF;
-    --ink:#16140F;
-    --soft:#5C574E;
-    --line:rgba(22,20,15,0.12);
-    --line-soft:rgba(22,20,15,0.07);
-    --navy:#1B3A6B;
-    --teal:#0E7C74;
-    --accent:var(--teal);
-    --accent-wash:rgba(14,124,116,0.06);
-    --accent-wash-strong:rgba(14,124,116,0.12);
+    --bg:#FFFFFF;
+    --ink:#16233A;
+    --soft:#5B6472;
+    --gold:#B57F22;
+    --gold-deep:#8C611A;
+    --gold-soft:#F3D98F;
+    --gold-glow:#FCEFC4;
+    --line:rgba(22,35,58,0.11);
+    --wash:rgba(243,217,143,0.16);
+    --serif:'Instrument Serif',Georgia,serif;
+    --sans:'Inter Tight',-apple-system,sans-serif;
+    --mono:'JetBrains Mono',monospace;
   }
-  body[data-track="enterprise"]{--accent:var(--navy);--accent-wash:rgba(27,58,107,0.06);--accent-wash-strong:rgba(27,58,107,0.12)}
-
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:'Inter Tight',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
   a{color:inherit}
-  .serif{font-family:'Instrument Serif',serif;font-weight:400}
-  .mono{font-family:'JetBrains Mono',monospace}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);transition:color .4s}
 
-  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1080px;margin:0 auto;gap:18px}
-  .brand{font-family:'Instrument Serif',serif;font-size:22px;letter-spacing:.01em}
-  .brand b{font-style:italic;font-weight:400}
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  nav .back{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--soft);text-decoration:none}
+  nav .back:hover{color:var(--gold-deep)}
+  nav .here{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+  nav .alpha-tag{display:inline-block;font-size:9px;letter-spacing:.12em;color:var(--gold-deep);background:var(--gold-glow);border:1px solid var(--gold-soft);border-radius:999px;padding:2px 7px;margin-left:7px}
 
-  .toggle{display:inline-flex;background:#F4F2EE;border:1px solid var(--line);border-radius:999px;padding:4px;position:relative}
-  .toggle button{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.04em;border:none;background:transparent;color:var(--soft);padding:9px 16px;border-radius:999px;cursor:pointer;transition:color .3s;white-space:nowrap;z-index:1}
-  .toggle button.on{color:#fff}
-  .toggle .pill{position:absolute;top:4px;bottom:4px;border-radius:999px;background:var(--accent);transition:transform .42s cubic-bezier(.6,.05,.2,1),background .42s,width .42s,left .42s;z-index:0}
+  /* shared */
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:14px}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,6.4vw,68px);line-height:1.04;letter-spacing:-.01em}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,4vw,40px);line-height:1.12;letter-spacing:-.01em}
+  .lede{font-size:18.5px;line-height:1.6;color:var(--soft);max-width:54ch}
+  em{font-style:italic;color:var(--gold-deep)}
+  section{padding:62px 0;border-top:1px solid var(--line)}
+  section.plain{border-top:none}
 
-  header{padding:60px 0 52px;border-bottom:1px solid var(--line-soft)}
-  .hero-top{display:flex;align-items:center;gap:18px;margin-bottom:30px;flex-wrap:wrap}
-  /* Headshot trust marker. Swap the monogram div for: <img class="avatar" src="headshot.jpg" alt="Maura K. Randall"> */
-  .avatar{width:84px;height:84px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--line);background:var(--accent-wash);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:30px;color:var(--accent);transition:border-color .4s,color .4s,background .4s}
-  .credit{display:flex;flex-direction:column;gap:4px}
-  .credit .q{font-family:'Instrument Serif',serif;font-size:21px;font-style:italic;color:var(--ink);line-height:1.2}
-  .credit .src{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--soft);letter-spacing:.03em}
-  h1{font-family:'Instrument Serif',serif;font-size:clamp(38px,6.2vw,68px);line-height:1.02;letter-spacing:-.01em;max-width:16ch;margin-bottom:20px}
-  .sub{font-size:clamp(16px,2vw,19px);color:var(--soft);max-width:52ch}
-  .fit{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--soft);letter-spacing:.02em;margin-top:22px;line-height:1.7}
-  .fit b{color:var(--accent);font-weight:500;transition:color .4s}
+  /* hero */
+  .hero{padding:54px 0 60px;border-top:none}
+  .hero .row{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .sun{width:74px;height:74px;border-radius:50%;margin-bottom:24px;
+    background:radial-gradient(circle at 38% 34%,var(--gold-glow),var(--gold-soft) 47%,var(--gold) 100%);
+    box-shadow:0 0 0 11px rgba(252,239,196,.45),0 0 56px 18px rgba(212,175,55,.22);
+    animation:breathe 5.2s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1);opacity:.94}50%{transform:scale(1.045);opacity:1}}
+  .hero h1{margin-bottom:20px}
+  .hero .lede{margin-bottom:26px}
+  .cta{display:inline-block;background:var(--ink);color:#fff;font-weight:500;font-size:15.5px;text-decoration:none;padding:13px 26px;border-radius:999px;transition:transform .15s,background .2s}
+  .cta:hover{transform:translateY(-2px);background:#0f1a2c}
+  .cta.ghost{background:transparent;color:var(--gold-deep);border:1.5px solid var(--gold);margin-left:10px}
+  .cta.ghost:hover{background:var(--wash);transform:none}
+  .built{font-family:var(--mono);font-size:12px;color:var(--soft);margin-top:22px;letter-spacing:.02em}
+  .built b{color:var(--gold-deep);font-weight:500}
 
-  /* hero grid: lead text left, thesis aside right */
-  .hero-grid{display:grid;grid-template-columns:1fr minmax(0,420px);gap:54px;align-items:center;margin-top:10px}
-  .thesis-aside{padding-left:30px;border-left:1px solid var(--line)}
-  .thesis-aside .eyebrow{margin-bottom:14px}
-  .thesis-stmt{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(25px,2.5vw,32px);line-height:1.16;letter-spacing:-.005em;color:var(--ink)}
-  .thesis-stmt .up{color:var(--accent);transition:color .4s}
-  .thesis-stmt .down{color:#9A958C}
-  .diverge{display:block;width:100%;max-width:330px;height:auto;margin:18px 0 15px}
-  .diverge .origin{fill:var(--ink)}
-  .diverge .up-path{stroke:var(--accent);stroke-width:2;fill:none;stroke-linecap:round;transition:stroke .4s}
-  .diverge .down-path{stroke:#CBC6BD;stroke-width:2;fill:none;stroke-linecap:round}
-  .diverge text{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.8px}
-  .diverge .lbl-up{fill:var(--accent);transition:fill .4s}
-  .diverge .lbl-down{fill:#9A958C}
-  .thesis-kick{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--soft);line-height:1.7;max-width:36ch}
-  @media(max-width:880px){
-    .hero-grid{grid-template-columns:1fr;gap:34px}
-    .thesis-aside{padding-left:0;border-left:none;border-top:1px solid var(--line);padding-top:28px;max-width:560px}
+  /* screens */
+  .shot img{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 34px rgba(22,35,58,.20))}
+  .hero .shot img{max-width:330px;margin:0 auto}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:38px}
+  .trio .cap{margin-top:16px;font-size:14.5px;color:var(--soft);line-height:1.5}
+  .trio .cap b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px}
+  .flow{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px;align-items:start}
+  .flow .step .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
+  @media(max-width:760px){
+    .hero .row{grid-template-columns:1fr;gap:34px}
+    .hero .shot img{max-width:300px}
+    .trio,.flow{grid-template-columns:1fr;gap:34px;max-width:340px}
   }
 
-  section{padding:56px 0;border-bottom:1px solid var(--line-soft)}
-  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;flex-wrap:wrap}
-  .sec-head h2{font-family:'Instrument Serif',serif;font-size:clamp(24px,3.4vw,34px);font-weight:400;letter-spacing:-.01em}
+  /* quote */
+  .quote{font-family:var(--serif);font-style:italic;font-size:clamp(23px,3.4vw,30px);line-height:1.32;color:var(--ink);margin-top:28px;padding-left:22px;border-left:3px solid var(--gold)}
 
-  .only-enterprise,.only-builder{display:none}
-  body[data-track="enterprise"] .only-enterprise{display:block}
-  body[data-track="builder"] .only-builder{display:block}
-  .swap{animation:fade .5s ease both}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  /* cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:36px}
+  .card{border:1px solid var(--line);border-radius:14px;padding:22px 20px;background:linear-gradient(180deg,var(--wash),rgba(255,255,255,0))}
+  .card .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block;margin-bottom:12px}
+  .card .t{display:block;font-weight:600;font-size:15.5px;margin-bottom:6px}
+  .card .x{display:block;font-size:14px;color:var(--soft);line-height:1.55}
 
-  /* enterprise ledger */
-  .ledger{border-top:1px solid var(--line)}
-  .row{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:22px 4px;border-bottom:1px solid var(--line);align-items:baseline}
-  .row .co{font-family:'Instrument Serif',serif;font-size:25px}
-  .row .met{display:flex;flex-wrap:wrap;gap:8px 26px}
-  .row .met span{font-size:15.5px}
-  .row .met b{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--accent);font-size:15px;margin-right:7px;transition:color .4s}
-  @media(max-width:620px){.row{grid-template-columns:1fr;gap:8px}}
+  /* steps */
+  ol.steps{list-style:none;counter-reset:s;margin-top:34px;max-width:62ch}
+  ol.steps li{counter-increment:s;position:relative;padding:0 0 22px 54px}
+  ol.steps li:last-child{padding-bottom:0}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:-3px;width:34px;height:34px;border-radius:50%;background:var(--wash);color:var(--gold-deep);font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center}
+  ol.steps .t{display:block;font-weight:600;font-size:16.5px;margin-bottom:4px}
+  ol.steps .x{display:block;font-size:15px;color:var(--soft);line-height:1.55}
 
-  /* loop bar */
-  .loop{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
-  .loop .step{font-family:'JetBrains Mono',monospace;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:var(--accent-wash);transition:background .4s}
-  .loop .arrow{align-self:center;color:var(--soft)}
+  .horizon{height:3px;max-width:520px;margin:40px auto 0;border-radius:999px;background:linear-gradient(90deg,rgba(212,175,55,0),var(--gold) 50%,rgba(212,175,55,0))}
 
-  /* stage label */
-  .stage-label{display:flex;align-items:baseline;gap:12px;margin:34px 0 14px}
-  .stage-label .s{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);transition:color .4s}
-  .stage-label .d{font-size:14px;color:var(--soft)}
-  .codify-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:24px 0 10px;transition:color .4s}
-
-  /* product cards */
-  .builds{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .build{border:1px solid var(--line);border-radius:12px;padding:20px;text-decoration:none;display:block;transition:border-color .2s,transform .15s,background .2s,box-shadow .2s}
-  .build:hover{border-color:var(--accent);background:var(--accent-wash-strong);box-shadow:0 10px 28px -16px var(--accent);transform:translateY(-2px)}
-  .build:hover h3{color:var(--accent)}
-  .build.soon{opacity:.62;cursor:default}
-  .build.soon:hover{border-color:var(--line);transform:none}
-  .build .st{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:20px;background:var(--accent-wash);color:var(--accent);display:inline-block;margin-bottom:11px;transition:all .4s}
-  .build h3{font-family:'Instrument Serif',serif;font-size:23px;font-weight:400;margin-bottom:6px;transition:color .2s}
-  .build p{font-size:14.5px;color:var(--soft)}
-  .bicon{margin-bottom:13px;line-height:0}
-  .bicon img{width:34px;height:34px;object-fit:contain;display:block}
-
-  /* compact link rows */
-  .links-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .links-row a{background:var(--paper);padding:18px 20px;display:block;text-decoration:none;transition:background .18s,box-shadow .18s}
-  .links-row a:hover{background:var(--accent-wash-strong);box-shadow:inset 3px 0 0 var(--accent)}
-  .links-row a:hover .t{color:var(--accent)}
-  .links-row .t{font-family:'Instrument Serif',serif;font-size:18px;transition:color .18s}
-  .links-row .desc{font-size:13px;color:var(--soft);margin-top:3px}
-  .links-row .src{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
-
-  footer{padding:60px 0 70px}
-  .cta-line{font-family:'Instrument Serif',serif;font-size:clamp(26px,4vw,40px);line-height:1.08;max-width:18ch;margin-bottom:30px}
-  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
-  .btn{font-family:'Inter Tight';font-weight:600;font-size:15px;text-decoration:none;padding:13px 24px;border-radius:10px;transition:all .18s;display:inline-block}
-  .btn.primary{background:var(--ink);color:#fff}
-  .btn.primary:hover{background:var(--accent)}
-  .btn.ghost{border:1px solid var(--line);color:var(--ink)}
-  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
-  .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--soft);letter-spacing:.02em;line-height:2}
-
-  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:58px 0 72px;text-align:center}
+  footer h2{margin-bottom:8px}
+  footer .road{font-size:14.5px;color:var(--soft);margin:14px auto 26px;max-width:46ch}
+  .credit{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--soft);margin-top:30px}
+  .alpha{padding:62px 0;border-top:1px solid var(--line)}
+  .alpha .alpha-card{position:relative;overflow:hidden;max-width:700px;margin:0 auto;text-align:center;border:1px solid var(--line);border-radius:20px;padding:50px 44px;background:linear-gradient(180deg,var(--wash),rgba(255,255,255,0))}
+  .alpha .alpha-card::before{content:"";position:absolute;top:-60px;right:-60px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle at 42% 42%,var(--gold-glow),rgba(252,239,196,0));opacity:.75}
+  .alpha .eyebrow{margin-bottom:12px}
+  .alpha h2{margin-bottom:14px}
+  .alpha p{font-size:17px;line-height:1.6;color:var(--soft);max-width:54ch;margin:0 auto 12px;position:relative;z-index:1}
+  .alpha-deadline{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--gold-deep);margin:20px 0 24px;position:relative;z-index:1}
+  .alpha .cta{position:relative;z-index:1}
+  @media(prefers-reduced-motion:reduce){.sun{animation:none}}
 </style>
 </head>
-<body data-track="builder">
+<body>
 
-<nav>
-  <div class="nav-in">
-    <div class="brand">Maura K. <b>Randall</b></div>
-    <div class="toggle" role="tablist" aria-label="Choose a lens">
-      <span class="pill" id="pill"></span>
-      <button id="t-ent" role="tab" aria-selected="false" onclick="setTrack('enterprise')">Enterprise Executive</button>
-      <button id="t-bld" class="on" role="tab" aria-selected="true" onclick="setTrack('builder')">AI-Native Builder</button>
-    </div>
-  </div>
-</nav>
+<nav><div class="wrap">
+  <a class="back" href="../">← Maura K. Randall</a>
+  <span class="here">Daily Fuel <span class="alpha-tag">Alpha</span></span>
+</div></nav>
 
-<header>
-  <div class="wrap">
-    <div class="hero-top">
-      <img class="avatar" src="images/headshot.jpeg" alt="Maura K. Randall">
-      <div class="credit">
-        <span class="q">“An AI-native product leader.”</span>
-        <span class="src">— a former eBay &amp; Atlassian executive · unprompted, 2026</span>
+<!-- HERO -->
+<header class="hero"><div class="wrap">
+  <div class="row">
+    <div>
+      <div class="sun"></div>
+      <div class="eyebrow">Daily Fuel · a companion for life on GLP-1</div>
+      <h1>Make the most of how food <em>feels today.</em></h1>
+      <p class="lede">Daily Fuel helps you close the protein and fiber gap — gently, with foods that already work for you.</p>
+      <div>
+        <a class="cta" href="https://dailyfuel.io" target="_blank" rel="noopener">See it live →</a>
       </div>
+      <p class="built">A <b>Triad</b> build · human-led, multi-AI · deployed and running</p>
     </div>
+    <div class="shot"><img src="images/daily-fuel-today-feeling-good.png" alt="Daily Fuel — Today's Plan on a good day"></div>
+  </div>
+</div></header>
 
-    <div class="hero-grid">
-      <div class="hero-lead">
-        <div class="only-builder swap">
-          <div class="eyebrow" style="margin-bottom:18px">A working AI practice, built in public</div>
-          <h1>I built a working practice for how humans and AI actually collaborate.</h1>
-          <p class="sub">The Human-AI Loop methodology, the Triad operating model, and a portfolio of live, shipped AI products. Practitioner, not commentator.</p>
-          <p class="fit"><b>Built for</b> &nbsp;AI-native product leadership · human-AI collaboration systems · Head of Product who owns AI strategy</p>
-        </div>
+<!-- WHAT IT IS -->
+<section><div class="wrap">
+  <div class="eyebrow">What it is</div>
+  <h2>A companion, <em>not</em> a tracker.</h2>
+  <p class="lede" style="margin-top:16px">It asks how eating feels today, then offers small, doable ways to close the protein and fiber gap with foods that already fit your life. No calorie counting. No logging chore. No streak to break.</p>
+</div></section>
 
-        <div class="only-enterprise swap">
-          <div class="eyebrow" style="margin-bottom:18px">Twenty years · platforms at scale</div>
-          <h1>I build and scale the platforms millions of people rely on.</h1>
-          <p class="sub">Product and platform leadership across Atlassian, eBay, Yahoo!, and Condé Nast, from hyper-growth to billion-dollar marketplaces.</p>
-          <p class="fit"><b>Built for</b> &nbsp;Head of Product · platform &amp; product strategy · community-driven growth at scale</p>
-        </div>
-      </div>
+<!-- WHY IT MATTERS -->
+<section><div class="wrap">
+  <div class="eyebrow">Why it matters</div>
+  <h2>When appetite changes, nourishment has to <em>change with it.</em></h2>
+  <p class="lede" style="margin-top:16px">GLP-1 medications can quiet appetite dramatically. That can be powerful — and it can also make protein and fiber harder to get consistently. Most apps answer that by asking you to track more. Daily Fuel does the opposite.</p>
+  <blockquote class="quote">It meets you where food is today — and shows what you’re gaining, never what you’re missing.</blockquote>
+</div></section>
 
-      <aside class="thesis-aside">
-        <div class="eyebrow">My thesis</div>
-        <p class="thesis-stmt">Human capability <span class="up">compounds</span> or <span class="down">degrades</span> based on how human–AI collaboration is designed.</p>
-        <svg class="diverge" viewBox="0 0 330 156" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle class="origin" cx="15" cy="78" r="3.5"/>
-          <path class="up-path" d="M18 78 C 110 78, 195 46, 308 22"/>
-          <path class="down-path" d="M18 78 C 110 78, 195 110, 308 134"/>
-          <text class="lbl-up" x="308" y="13" text-anchor="end">↗ COMPOUNDS</text>
-          <text class="lbl-down" x="308" y="151" text-anchor="end">↘ DEGRADES</text>
-        </svg>
-        <p class="thesis-kick">Collaboration isn't neutral. Design sets the trajectory.</p>
-      </aside>
+<!-- THE INSIGHT -->
+<section><div class="wrap">
+  <div class="eyebrow">The insight</div>
+  <h2>It reads the day you’re <em>actually having.</em></h2>
+  <p class="lede" style="margin-top:16px">Same engine, three registers. The plan — and its tone — shift with how you feel, not just what you ate.</p>
+  <div class="trio">
+    <div class="shot">
+      <img src="images/daily-fuel-today-feeling-good.png" alt="Daily Fuel on a good day">
+      <p class="cap"><b>A good day</b>“The yogurt bowl would land really well today.” Suggestions lean into momentum.</p>
+    </div>
+    <div class="shot">
+      <img src="images/daily-fuel-today-not-hungry.png" alt="Daily Fuel when not hungry">
+      <p class="cap"><b>Not hungry</b>It asks for less, and protein-forward — small wins that still count.</p>
+    </div>
+    <div class="shot">
+      <img src="images/daily-fuel-today-rough-day.png" alt="Daily Fuel on a rough day">
+      <p class="cap"><b>A rough day</b>“Soup that does a lot without asking much of you.” Warm and easy, no pressure.</p>
     </div>
   </div>
-</header>
+</div></section>
 
-<!-- BUILDER TRACK: the practice, organized by the loop -->
-<section class="only-builder">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">The practice</span>
-      <h2>A methodology, and the products that prove it</h2>
-    </div>
+<!-- LIVING PLAN -->
+<section><div class="wrap">
+  <div class="eyebrow">A living plan</div>
+  <h2>The day comes together <em>as you go.</em></h2>
+  <p class="lede" style="margin-top:16px">No save button, no draft to lose. You build today with it, one doable choice at a time — and the horizon warms as protein and fiber fill in.</p>
+  <div class="flow">
+    <div class="step"><div class="lab">Start</div><div class="shot"><img src="images/daily-fuel-live-plan-start.png" alt="Live plan — start"></div></div>
+    <div class="step"><div class="lab">Building</div><div class="shot"><img src="images/daily-fuel-live-plan-building.png" alt="Live plan — building"></div></div>
+    <div class="step"><div class="lab">Accepted</div><div class="shot"><img src="images/daily-fuel-live-plan-accepted.png" alt="Live plan — accepted"></div></div>
+  </div>
+</div></section>
 
-    <div class="loop">
-      <span class="step">Test</span><span class="arrow">→</span>
-      <span class="step">Build</span><span class="arrow">→</span>
-      <span class="step">Codify</span><span class="arrow">→</span>
-      <span class="step">Share</span>
+<!-- THE DEPTH -->
+<section><div class="wrap">
+  <div class="eyebrow">The depth underneath</div>
+  <h2>It knows your foods — and <em>respects</em> them.</h2>
+  <p class="lede" style="margin-top:16px">Your go-tos, your double wins, the things you’ll never eat. Search surfaces what’s yours first, and the foods you won’t touch are quietly kept out of every prompt.</p>
+  <div class="trio">
+    <div class="shot">
+      <img src="images/daily-fuel-myfoods.png" alt="My Foods — the full categorized list">
+      <p class="cap"><b>My Foods</b>Go-tos, double wins, gentle helpers — and a “won’t-eat” shelf kept out of prompts.</p>
     </div>
-
-    <div class="stage-label"><span class="s">Test</span><span class="d">Probing an idea with a real prototype</span></div>
-    <div class="builds">
-      <a class="build" href="opportunes/"><span class="bicon"><img src="images/icons/opportunes-icon.svg" alt=""></span><span class="st">Concept prototype</span><h3>Opportunes</h3><p>A personal opportunity OS on a multi-agent workflow. Human decides, AI ranks.</p></a>
+    <div class="shot">
+      <img src="images/daily-fuel-myfoods-nudge.png" alt="A gentle in-context nudge">
+      <p class="cap"><b>A gentle nudge</b>In-context, never nagging — and easy to wave off.</p>
     </div>
-
-    <div class="stage-label"><span class="s">Build</span><span class="d">Real products people can use</span></div>
-    <div class="builds">
-      <a class="build" href="team-context-builder/"><span class="bicon"><img src="images/icons/team-context-builder-icon-concept.svg" alt=""></span><span class="st">Flagship</span><h3>Team Context Builder</h3><p>Methodology becoming product. Context is collaboration infrastructure.</p></a>
-      <a class="build" href="daily-fuel/"><span class="bicon"><img src="images/icons/daily-fuel-icon.svg" alt=""></span><span class="st">Live · Alpha</span><h3>Daily Fuel</h3><p>An AI-native nutrition companion for life on GLP-1. Deployed and running.</p></a>
-      <a class="build" href="burnout-buddy/"><span class="bicon"><img src="images/icons/burnoutbuddy-icon.svg" alt=""></span><span class="st">Prototype</span><h3>BurnoutBuddy</h3><p>A reflective companion for navigating burnout. Orientation, not optimization.</p></a>
-    </div>
-
-    <div class="stage-label"><span class="s">Codify</span><span class="d">The methodology made canonical — and the vision it points to</span></div>
-    <div class="codify-sub">Collaboration, by design</div>
-    <div class="links-row">
-      <a href="https://thehumanailoop.com" target="_blank" rel="noopener"><div class="t">The Human-AI Loop</div><div class="desc">The published methodology</div></a>
-      <a href="https://try.thehumanailoop.com" target="_blank" rel="noopener"><div class="t">The Loop Simulator</div><div class="desc">Designed collaboration you can feel in five minutes</div></a>
-      <a href="triad-in-slack/"><div class="t">Triad in Slack</div><div class="desc">AI teammates in a shared workspace — by design, not default</div></a>
-      <a href="delivery-loop-scene/"><div class="t">Strategist as Conductor</div><div class="desc">One human directing AI in real time</div></a>
-    </div>
-    <div class="codify-sub">Vision &amp; strategy</div>
-    <div class="links-row">
-      <a href="knowlings/"><div class="t">Knowlings</div><div class="desc">Community-powered learning, built on the Loop</div></a>
-      <a href="reciprocity/"><div class="t">Reciprocity</div><div class="desc">A skill-exchange platform vision, twenty years in the making</div></a>
-    </div>
-
-    <div class="stage-label"><span class="s">Share</span><span class="d">Teaching the practice in public</span></div>
-    <div class="links-row">
-      <a href="https://aigal.io/ai-literacy/" target="_blank" rel="noopener"><div class="t">AI Literacy Library</div><div class="desc">Frameworks and coined terms</div></a>
-      <a href="triad-in-slack-infographic/"><div class="t">Triad in Slack — Infographic</div><div class="desc">The methodology at a glance</div></a>
-      <a href="https://maurakrandall.substack.com" target="_blank" rel="noopener"><div class="t">Writing &amp; Reflections</div><div class="desc">The philosophy series on Substack</div></a>
+    <div class="shot">
+      <img src="images/daily-fuel-search-relevance.png" alt="Search that surfaces your foods first">
+      <p class="cap"><b>Relevant search</b>Your foods first, then a wider library when you want a change.</p>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- ENTERPRISE TRACK: the record -->
-<section class="only-enterprise">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">The record</span>
-      <h2>Scale, shipped</h2>
-    </div>
-    <div class="ledger">
-      <div class="row"><div class="co">Atlassian</div><div class="met"><span><b>78M</b>monthly active users</span><span><b>7×</b>retention lift via community</span></div></div>
-      <div class="row"><div class="co">eBay</div><div class="met"><span><b>$1B+</b>transactions, year one (Best Offer)</span></div></div>
-      <div class="row"><div class="co">Yahoo!</div><div class="met"><span><b>50M+</b>MAU</span><span><b>14M</b>users</span><span><b>$40M</b>revenue, year one</span></div></div>
-      <div class="row"><div class="co">Condé Nast</div><div class="met"><span><b>2M+</b>monthly uniques</span><span><b>4×</b>social growth</span><span><b>’13–’14</b>Best Community</span></div></div>
-      <div class="row"><div class="co">Consulting</div><div class="met"><span><b>100%</b>of clients secured funding</span><span><b>50%</b>into accelerators</span></div></div>
-    </div>
+<!-- WHAT IT DOES TODAY -->
+<section><div class="wrap">
+  <div class="eyebrow">What it does today</div>
+  <h2>A working build you can use <em>right now.</em></h2>
+  <div class="cards">
+    <div class="card"><span class="dot"></span><span class="t">Two gaps, equal weight</span><span class="x">Protein and fiber are tracked as equal priorities — never flattened into one score.</span></div>
+    <div class="card"><span class="dot"></span><span class="t">Suggestions from your own foods</span><span class="x">A next bite from the foods you already eat, with a reason it makes sense right now.</span></div>
+    <div class="card"><span class="dot"></span><span class="t">Shot-day aware</span><span class="x">It works with the rhythm of your dose cycle and meets you where your appetite actually is.</span></div>
+    <div class="card"><span class="dot"></span><span class="t">The sun rises as you close the gap</span><span class="x">No bars, no percentages — just a warm horizon that fills as your day comes together.</span></div>
   </div>
-</section>
+  <div class="horizon"></div>
+</div></section>
 
-<!-- ENTERPRISE: published thinking -->
-<section class="only-enterprise">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Published thinking</span>
-      <h2>The frameworks behind the practice</h2>
-    </div>
-    <div class="links-row">
-      <a href="https://aigal.io/not-all-ai-should-be-your-teammate/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Not All AI Should Be Your Teammate</div><div class="desc">When to give AI a seat — and when the call has to stay human.</div></a>
-      <a href="https://aigal.io/building-the-plane-vs-rebuilding-the-cockpit/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Building the Plane vs. Rebuilding the Cockpit</div><div class="desc">Adoption means redesigning how the work happens, not bolting AI on.</div></a>
-      <a href="https://aigal.io/prompt-vs-context-vs-collaboration-engineering/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Prompt vs. Context vs. Collaboration Engineering</div><div class="desc">The discipline beyond prompting: directing AI as a collaborator.</div></a>
-      <a href="https://maurakrandall.substack.com/p/when-the-human-isnt-the-last-click" target="_blank" rel="noopener"><div class="src">Substack</div><div class="t">When the Human Isn’t the Last Click</div><div class="desc">Accountability when AI acts before a person makes the call.</div></a>
-    </div>
+<!-- WHERE IT'S HEADED -->
+<section><div class="wrap">
+  <div class="eyebrow">Where it’s headed</div>
+  <h2>The next build, <em>in progress now.</em></h2>
+  <div class="cards">
+    <div class="card"><span class="t">A companion that thinks with you</span><span class="x">It checks your foods first, then gently reaches wider when you need something new.</span></div>
+    <div class="card"><span class="t">A library that gets smarter together</span><span class="x">Foods people add can help make the shared library more inclusive — without sharing who added them or what they ate.</span></div>
+    <div class="card"><span class="t">Your foods, curated — never cluttered</span><span class="x">Go-tos, will-eats, and the rest — organized for you, instead of by you.</span></div>
   </div>
-</section>
+</div></section>
 
-<!-- ENTERPRISE: a peek at the live AI work -->
-<section class="only-enterprise">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">And now</span>
-      <h2>Operating in the AI-native world</h2>
-    </div>
-    <div class="links-row">
-      <a href="https://thehumanailoop.com" target="_blank" rel="noopener"><div class="t">The Human-AI Loop</div><div class="desc">A published methodology for human-AI collaboration</div></a>
-      <a href="team-context-builder/"><div class="t">Team Context Builder</div><div class="desc">Methodology becoming shipped product</div></a>
-      <a href="daily-fuel/"><div class="t">Daily Fuel</div><div class="desc">A live AI-native product, in alpha</div></a>
-    </div>
+<!-- JOIN THE ALPHA -->
+<section class="alpha"><div class="wrap">
+  <div class="alpha-card">
+    <div class="eyebrow">Now in alpha</div>
+    <h2>Join the <em>alpha.</em></h2>
+    <p>Daily Fuel is now in active alpha testing. We’re looking for people using GLP-1 medications who are willing to try the product, share honest feedback, and help shape what comes next.</p>
+    <p>This isn’t a polished launch. It’s an early opportunity to influence the product while it’s still evolving.</p>
+    <div class="alpha-deadline">First alpha feedback round closes Sunday, June 21</div>
+    <a class="cta" href="https://tally.so/r/81E08k" target="_blank" rel="noopener">Join the Alpha →</a>
   </div>
-</section>
+</div></section>
 
-<footer>
-  <div class="wrap">
-    <p class="cta-line">I’m looking for a Head of Product role where owning AI strategy is the job.</p>
-    <div class="actions">
-      <a class="btn primary" href="resume/" target="_blank" rel="noopener">Résumé</a>
-      <a class="btn ghost" href="https://www.linkedin.com/in/maurakrandall/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn ghost" href="mailto:hello@maurakrandall.com">Email</a>
-    </div>
-    <div class="meta">
-      Austin, TX · open to remote, Bay Area hybrid, or relocation<br>
-      Raised across five countries before thirteen. Cross-cultural leadership is native, not learned.
-    </div>
+<!-- FOOTER -->
+<footer><div class="wrap">
+  <h2>Try Daily Fuel.</h2>
+  <p class="road">Deployed and running — now live at its own home, <b style="color:var(--gold-deep);font-weight:500">dailyfuel.io</b>.</p>
+  <div>
+    <a class="cta" href="https://dailyfuel.io" target="_blank" rel="noopener">Open the live app →</a>
   </div>
-</footer>
+  <p class="credit">A Triad build — human-led, multi-AI, by Maura K. Randall.</p>
+</div></footer>
 
-<script>
-  function setTrack(t){
-    document.body.setAttribute('data-track',t);
-    const ent=t==='enterprise';
-    document.getElementById('t-ent').classList.toggle('on',ent);
-    document.getElementById('t-bld').classList.toggle('on',!ent);
-    document.getElementById('t-ent').setAttribute('aria-selected',ent);
-    document.getElementById('t-bld').setAttribute('aria-selected',!ent);
-    movePill();
-  }
-  function movePill(){
-    const ent=document.body.getAttribute('data-track')==='enterprise';
-    const btn=document.getElementById(ent?'t-ent':'t-bld');
-    const pill=document.getElementById('pill');
-    pill.style.width=btn.offsetWidth+'px';
-    pill.style.left=btn.offsetLeft+'px';
-  }
-  window.addEventListener('load',movePill);
-  window.addEventListener('resize',movePill);
-</script>
 </body>
 </html>
