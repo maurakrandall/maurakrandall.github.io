@@ -91,6 +91,10 @@
   .row .met span{font-size:15.5px}
   .row .met b{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--accent);font-size:15px;margin-right:7px;transition:color .4s}
   @media(max-width:620px){.row{grid-template-columns:1fr;gap:8px}}
+  .row .q-line{grid-column:2;margin-top:11px;max-width:64ch}
+  .row .q-line .qt{font-family:'Instrument Serif',serif;font-style:italic;font-size:16.5px;line-height:1.42;color:var(--ink)}
+  .row .q-line .at{display:block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:var(--soft)}
+  @media(max-width:620px){.row .q-line{grid-column:1}}
 
   /* loop bar */
   .loop{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
@@ -158,7 +162,7 @@
       <img class="avatar" src="images/headshot.jpeg" alt="Maura K. Randall">
       <div class="credit">
         <span class="q">“An AI-native product leader.”</span>
-        <span class="src">— a former eBay &amp; Atlassian executive · unprompted, 2026</span>
+        <span class="src">— Tom Tsao · former eBay &amp; Atlassian exec, now GVP at DocuSign · 2026</span>
       </div>
     </div>
 
@@ -253,10 +257,10 @@
       <h2>Scale, shipped</h2>
     </div>
     <div class="ledger">
-      <div class="row"><div class="co">Atlassian</div><div class="met"><span><b>78M</b>monthly active users</span><span><b>7×</b>retention lift via community</span></div></div>
-      <div class="row"><div class="co">eBay</div><div class="met"><span><b>$1B+</b>transactions, year one (Best Offer)</span></div></div>
-      <div class="row"><div class="co">Yahoo!</div><div class="met"><span><b>50M+</b>MAU</span><span><b>14M</b>users</span><span><b>$40M</b>revenue, year one</span></div></div>
-      <div class="row"><div class="co">Condé Nast</div><div class="met"><span><b>2M+</b>monthly uniques</span><span><b>4×</b>social growth</span><span><b>’13–’14</b>Best Community</span></div></div>
+      <div class="row"><div class="co">Atlassian</div><div class="met"><span><b>78M</b>monthly active users</span><span><b>7×</b>retention lift via community</span></div><div class="q-line"><span class="qt">“A strong grasp of the AI/ML landscape — how ranking algorithms work, and how to apply them to real user problems. A true thought partner to engineering and ML teams.”</span><span class="at">Fan Jiang · Head of Engineering, Core Machine Learning, Atlassian</span></div></div>
+      <div class="row"><div class="co">eBay</div><div class="met"><span><b>$1B+</b>transactions, year one (Best Offer)</span></div><div class="q-line"><span class="qt">“An outstanding product management talent with a keen eye for customer needs — widely respected as a collaborative teammate who delivers results.”</span><span class="at">Tom Tsao · managed Maura at eBay &amp; Yahoo! · GVP, DocuSign</span></div></div>
+      <div class="row"><div class="co">Yahoo!</div><div class="met"><span><b>50M+</b>MAU</span><span><b>14M</b>users</span><span><b>$40M</b>revenue, year one</span></div><div class="q-line"><span class="qt">“Shine ended up being very profitable for Yahoo — and owed much of that to Maura’s leadership.”</span><span class="at">James Long · Staff Engineer, Yahoo! &amp; Condé Nast</span></div></div>
+      <div class="row"><div class="co">Condé Nast</div><div class="met"><span><b>2M+</b>monthly uniques</span><span><b>4×</b>social growth</span><span><b>’13–’14</b>Best Community</span></div><div class="q-line"><span class="qt">“Under her leadership, Lucky’s redesign launched in record-breaking time — and garnered the industry’s top awards.”</span><span class="at">Jun Lee · Product Designer, Condé Nast</span></div></div>
       <div class="row"><div class="co">Consulting</div><div class="met"><span><b>100%</b>of clients secured funding</span><span><b>50%</b>into accelerators</span></div></div>
     </div>
   </div>
