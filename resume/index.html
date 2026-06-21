@@ -6,165 +6,461 @@
 <title>Maura K. Randall — Résumé</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  @page{ size:letter; margin:0.55in 0.62in; }
   :root{
     --ink:#16223A; --ink-2:#33405A; --ink-muted:#5B6472;
-    --accent:#0E7C74; --bg:#FFFFFF; --divider:#9AA3AE; --divider-light:#D4D9DF;
+    --accent:#0E7C74; --accent-wash:rgba(14,124,116,.07); --accent-wash-2:rgba(14,124,116,.12);
+    --bg:#FFFFFF; --divider:#9AA3AE; --divider-light:#E2E6EA;
     --serif:'Instrument Serif',Georgia,serif;
     --sans:'Inter Tight',-apple-system,sans-serif;
     --mono:'JetBrains Mono',monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:10.5px;line-height:1.5;-webkit-font-smoothing:antialiased;max-width:8.5in;margin:0 auto;padding:0.55in 0.62in}
-  .header{margin-bottom:18px;padding-bottom:13px;border-bottom:2px solid var(--ink)}
-  .name{font-family:var(--serif);font-size:30px;font-weight:400;letter-spacing:.01em;margin-bottom:3px}
-  .tagline{font-size:11px;font-weight:500;color:var(--accent);letter-spacing:.04em;margin-bottom:7px}
-  .contact{font-size:9.5px;color:var(--ink-2);line-height:1.65}
-  .contact a{color:var(--ink-2);text-decoration:none}
-  .section{margin-bottom:15px}
-  .section-header{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);padding-bottom:4px;border-bottom:1px solid var(--divider);margin-bottom:9px}
-  .summary{font-size:10.5px;color:var(--ink-2);line-height:1.62}
-  .summary em{font-style:normal;color:var(--accent);font-weight:500}
-  .expertise-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 26px}
-  .expertise-item .l{font-weight:600;font-size:10px;color:var(--ink)}
-  .expertise-item .d{font-size:9.5px;color:var(--ink-muted);line-height:1.5}
-  .role{margin-bottom:13px;page-break-inside:avoid}
-  .role-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1px}
-  .role-company{font-family:var(--serif);font-size:14px;font-weight:400}
-  .role-dates{font-family:var(--mono);font-size:9px;color:var(--ink-muted);white-space:nowrap}
-  .role-title{font-size:10px;font-weight:500;color:var(--accent);margin-bottom:1px}
-  .role-context{font-size:9px;color:var(--ink-muted);margin-bottom:5px;font-style:italic}
-  .role ul{list-style:none}
-  .role li{font-size:10px;color:var(--ink-2);line-height:1.5;margin-bottom:3px;padding-left:11px;position:relative}
-  .role li::before{content:"—";position:absolute;left:0;color:var(--divider-light)}
-  .role li strong{font-weight:600;color:var(--ink)}
-  .edu{font-size:10px;color:var(--ink-2);line-height:1.6}
-  .edu strong{font-weight:600;color:var(--ink)}
-  .dl{position:fixed;top:16px;right:16px;font-family:var(--mono);font-size:11px;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:999px;padding:7px 15px;background:#fff;transition:background .15s,color .15s;z-index:10}
-  .dl:hover{background:var(--accent);color:#fff}
-  @media print{.dl{display:none}}
-  @media print{ body{padding:0} .role{page-break-inside:avoid} }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:780px;margin:0 auto;padding:0 30px}
+
+  /* top bar */
+  .bar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--divider-light)}
+  .bar-in{max-width:780px;margin:0 auto;padding:11px 30px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .bar-name{font-family:var(--serif);font-size:17px}
+  .bar-nav{display:flex;align-items:center;gap:18px;font-size:12px}
+  .bar-nav a{color:var(--ink-muted);text-decoration:none;transition:color .15s}
+  .bar-nav a:hover{color:var(--accent)}
+  .bar-pdf{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--accent);text-decoration:none;
+    border:1px solid var(--accent-wash-2);border-radius:999px;padding:6px 12px;transition:background .15s}
+  .bar-pdf:hover{background:var(--accent-wash)}
+  @media(max-width:600px){ .bar-nav{display:none} }
+
+  /* header */
+  header{padding:48px 0 38px;border-bottom:1px solid var(--divider-light)}
+  h1{font-family:var(--serif);font-size:42px;font-weight:400;line-height:1.04;letter-spacing:-.01em}
+  .role-line{font-size:14px;font-weight:500;color:var(--accent);margin-top:8px}
+  .summary{font-size:16px;color:var(--ink-2);max-width:62ch;margin-top:16px;line-height:1.55}
+  .attrib{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink);margin-top:18px;padding-left:15px;border-left:2px solid var(--accent)}
+  .attrib span{display:block;font-family:var(--mono);font-style:normal;font-size:10.5px;letter-spacing:.03em;color:var(--ink-muted);margin-top:6px}
+  .contact{font-family:var(--mono);font-size:11px;color:var(--ink-muted);margin-top:22px;line-height:1.8}
+  .contact a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--divider-light)}
+  .contact a:hover{color:var(--accent);border-color:var(--accent-wash-2)}
+
+  /* section */
+  section{padding:40px 0}
+  .sec-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:22px}
+
+  /* roles */
+  .role{padding:22px 0;border-top:1px solid var(--divider-light)}
+  .role:first-of-type{border-top:0;padding-top:4px}
+  .role-head{display:flex;justify-content:space-between;align-items:baseline;gap:18px}
+  .company{font-family:var(--serif);font-size:24px;font-weight:400;line-height:1.1}
+  .title{font-size:13px;font-weight:500;color:var(--accent);margin-top:3px}
+  .context{font-size:11px;color:var(--ink-muted);margin-top:2px;font-style:italic}
+  .dates{font-family:var(--mono);font-size:11px;color:var(--ink-muted);white-space:nowrap;flex-shrink:0}
+  .bullets{list-style:none;margin-top:13px}
+  .bullets li{font-size:13.5px;color:var(--ink-2);line-height:1.55;margin-bottom:6px;padding-left:15px;position:relative}
+  .bullets li::before{content:"—";position:absolute;left:0;color:var(--divider)}
+  .m{color:var(--accent);font-weight:500;font-variant-numeric:tabular-nums}
+
+  /* proof rail (shared) */
+  .proof{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+  .proof-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-right:1px}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;line-height:1;padding:7px 11px;border-radius:999px;
+    font-family:var(--sans);white-space:nowrap;border:1px solid var(--divider-light);background:#fff}
+  .chip-quote{color:var(--ink-2);cursor:pointer;transition:background .18s,border-color .18s}
+  .chip-quote:hover,.chip-quote[aria-expanded="true"]{background:var(--accent-wash);border-color:var(--accent-wash-2)}
+  .chip-quote .qmark{font-family:var(--serif);font-size:14px;color:var(--accent);line-height:0;position:relative;top:1px}
+  .chip-quote .ct{font-family:var(--mono);font-size:10px;color:var(--accent);font-weight:500}
+  .chip-quote .caret{font-size:9px;color:var(--ink-muted);transition:transform .22s}
+  .chip-quote[aria-expanded="true"] .caret{transform:rotate(180deg)}
+  .chip-quote:focus-visible,.skill-head:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+  .chip-link{color:var(--ink-2);text-decoration:none;transition:background .18s,border-color .18s}
+  .chip-link:hover{background:var(--accent-wash);border-color:var(--accent-wash-2)}
+  .chip-link .arr{color:var(--accent);font-size:11.5px;font-weight:600}
+  .chip-built{color:var(--ink);text-decoration:none;transition:background .18s,border-color .18s}
+  .chip-built:hover{background:var(--accent-wash);border-color:var(--accent-wash-2)}
+  .chip-built .dot{color:var(--accent);font-size:8px;position:relative;top:-1px}
+  .chip-built .arr{color:var(--accent);font-size:11px;font-weight:600;margin-left:1px}
+  .chip-award{background:var(--accent-wash);color:var(--accent);font-weight:500;border-color:transparent}
+  a.chip-award{text-decoration:none;cursor:pointer;transition:background .18s}
+  a.chip-award:hover{background:var(--accent-wash-2)}
+  .chip-award .arr{color:var(--accent);font-size:11px;font-weight:600;margin-left:1px}
+  .chip-stat{background:var(--accent-wash);color:var(--accent);font-weight:500;border-color:transparent;font-variant-numeric:tabular-nums}
+
+  /* quote panels (shared) */
+  .panel{max-height:0;overflow:hidden;transition:max-height .36s ease}
+  .panel.open{max-height:760px}
+  .q{padding:2px 0 2px 16px;border-left:2px solid var(--accent)}
+  .q + .q{margin-top:16px}
+  .panel-inner{padding-top:14px}
+  .q blockquote{font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.44;color:var(--ink)}
+  .q cite{display:block;margin-top:7px;font-family:var(--mono);font-style:normal;font-size:10.5px;letter-spacing:.03em;color:var(--ink-muted)}
+
+  /* skills */
+  .skill{border-top:1px solid var(--divider-light)}
+  .skill:last-of-type{border-bottom:1px solid var(--divider-light)}
+  .skill-head{width:100%;background:none;border:0;cursor:pointer;text-align:left;font-family:var(--sans);
+    display:flex;align-items:baseline;gap:16px;padding:17px 2px;transition:padding-left .18s}
+  .skill-head:hover{padding-left:6px}
+  .sk-name{font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.15;flex-shrink:0}
+  .sk-desc{font-size:12.5px;color:var(--ink-muted);flex:1}
+  .sk-meta{display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .sk-count{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--accent)}
+  .sk-caret{font-size:11px;color:var(--ink-muted);transition:transform .22s}
+  .skill-head[aria-expanded="true"] .sk-caret{transform:rotate(180deg)}
+  .skill .panel-inner{padding-bottom:22px}
+  @media(max-width:600px){ .skill-head{flex-wrap:wrap;gap:4px 12px} .sk-desc{flex-basis:100%;order:3} }
+
+  .chips-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-right:2px}
+
+  /* about */
+  .about p{font-size:15px;color:var(--ink-2);line-height:1.6;max-width:64ch;margin-bottom:15px}
+  .about p .lead{color:var(--ink);font-family:var(--serif);font-style:italic;font-size:17px}
+  .about-quotes{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px;margin-top:12px}
+  .about-quotes .q{border-left-color:var(--accent)}
+  .about-quotes blockquote{font-size:14.5px;line-height:1.4}
+  .about-quotes cite{font-size:10px}
+  @media(max-width:600px){ .about-quotes{grid-template-columns:1fr} }
+
+  footer{padding:34px 0 60px;border-top:1px solid var(--divider-light);font-family:var(--mono);font-size:11px;color:var(--ink-muted);line-height:1.9}
+  footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--divider-light)}
+  footer a:hover{color:var(--accent)}
+
+  @media (prefers-reduced-motion: reduce){ .panel,.chip-quote,.caret,.chip-link,.skill-head,.sk-caret,.chip-award{transition:none} html{scroll-behavior:auto} }
+  @media (max-width:560px){ .wrap,.bar-in{padding-left:20px;padding-right:20px} h1{font-size:34px} .role-head{flex-direction:column;gap:4px} }
 </style>
 </head>
 <body>
 
-<a class="dl" href="Maura-K-Randall-Resume.pdf">Download PDF ↓</a>
+<div class="bar"><div class="bar-in">
+  <span class="bar-name">Maura K. Randall</span>
+  <nav class="bar-nav">
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#about">About</a>
+    <a class="bar-pdf" href="Maura-K-Randall-Resume.pdf">Download PDF ↓</a>
+  </nav>
+</div></div>
 
-<header class="header">
-  <div class="name">Maura K. Randall</div>
-  <div class="tagline">Product &amp; Platform Leadership · AI Product Strategy · Enterprise AI Transformation</div>
-  <div class="contact">
-    347-497-0493 · maurakrandall@gmail.com · Austin, TX (open to remote / relocation)<br>
-    <a href="https://linkedin.com/in/maurakrandall">linkedin.com/in/maurakrandall</a> · <a href="https://maurakrandall.com">maurakrandall.com</a> · <a href="https://thehumanailoop.com">thehumanailoop.com</a> · <a href="https://maurakrandall.github.io">maurakrandall.github.io</a>
-  </div>
-</header>
+<div class="wrap">
 
-<section class="section">
-  <div class="section-header">Executive Summary</div>
-  <p class="summary">Product and platform leader with 20+ years building coherent experiences across complex, fragmented enterprise ecosystems — at Atlassian (78M+ MAU), eBay ($1B+ marketplace), Yahoo! (50M+ MAU), and Condé Nast. Two years of daily practice building and deploying <em>The Human-AI Loop</em>, a complete human-AI collaboration methodology (thehumanailoop.com) with a live working simulation. A consistent record of leading through ambiguity, earning trust across functions, and translating between domain experts and engineering to ship complex, high-stakes products. Recognized externally as an “AI-native product leader” by a former VP at eBay and Atlassian — unprompted, based on published output and observed practice. Player-coach who leads teams while staying hands-on.</p>
-</section>
+  <header>
+    <h1>Maura K. Randall</h1>
+    <div class="role-line">Head of Product · AI Product Strategy</div>
+    <p class="summary">Twenty years building products used by tens of millions — at Atlassian, eBay, Yahoo!, and Condé Nast. The last few, hands-on in the code, shipping live AI products and the methodology behind them.</p>
+    <p class="attrib">"An AI-native product leader."<span>— Tom Tsao · GVP at DocuSign</span></p>
+    <p class="contact">
+      Austin, TX — open to remote, Bay Area hybrid, or relocation<br>
+      <a href="mailto:maurakrandall@gmail.com">maurakrandall@gmail.com</a> &nbsp;·&nbsp; <a href="https://maurakrandall.com" target="_blank" rel="noopener">maurakrandall.com</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/maurakrandall/" target="_blank" rel="noopener">LinkedIn</a>
+    </p>
+  </header>
 
-<section class="section">
-  <div class="section-header">Core Expertise</div>
-  <div class="expertise-grid">
-    <div class="expertise-item"><span class="l">AI Strategy &amp; Transformation:</span> <span class="d">Human-AI Loop methodology, enterprise AI adoption, agentic system design, AI governance &amp; guardrails, responsible-AI frameworks</span></div>
-    <div class="expertise-item"><span class="l">Product &amp; Platform Leadership:</span> <span class="d">0→1 product development, platform architecture, enterprise rollout &amp; GTM, experimentation culture, build-vs-buy evaluation</span></div>
-    <div class="expertise-item"><span class="l">Domain-Expert &amp; Stakeholder Translation:</span> <span class="d">turning ambiguous expert input (incl. legal &amp; compliance) into requirements and acceptance criteria; C-suite partnership; translating complex AI/LLM concepts for non-technical audiences</span></div>
-    <div class="expertise-item"><span class="l">People &amp; Culture Leadership:</span> <span class="d">15 direct reports across 3 countries, cross-functional alignment, leading through ambiguity, empathy-first management</span></div>
-  </div>
-</section>
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="sec-label">Experience</div>
 
-<section class="section">
-  <div class="section-header">Professional Experience</div>
+    <!-- Founder -->
+    <article class="role">
+      <div class="role-head">
+        <div>
+          <h2 class="company">The Human-AI Loop · AIGal.io</h2>
+          <div class="title">Founder &amp; Principal</div>
+          <div class="context">Austin, TX · Remote</div>
+        </div>
+        <div class="dates">2024 – Present</div>
+      </div>
+      <ul class="bullets">
+        <li>Build systems for how humans and AI work together — shipped at real URLs, with real users: a complete transformation methodology (Test → Build → Codify → Share), a live five-minute simulation, and applied AI products.</li>
+        <li>Publish field-tested frameworks and playbooks for product and platform leaders integrating AI into teams already in motion.</li>
+      </ul>
+      <div class="proof">
+        <span class="proof-label">Human-AI collaboration prototypes</span>
+        <a class="chip chip-built" href="https://try.thehumanailoop.com" target="_blank" rel="noopener"><span class="dot">◆</span> The Simulation <span class="arr">↗</span></a>
+        <a class="chip chip-built" href="https://maurakrandall.github.io/triad-in-slack/" target="_blank" rel="noopener"><span class="dot">◆</span> Triad in Slack <span class="arr">↗</span></a>
+      </div>
+      <div class="proof">
+        <span class="proof-label">Products</span>
+        <a class="chip chip-built" href="https://dailyfuel.io" target="_blank" rel="noopener"><span class="dot">◆</span> Daily Fuel <span class="arr">↗</span></a>
+      </div>
+      <div class="proof">
+        <span class="proof-label">Frameworks &amp; writing</span>
+        <a class="chip chip-link" href="https://thehumanailoop.com" target="_blank" rel="noopener"><span class="arr">↗</span> The Human-AI Loop</a>
+        <a class="chip chip-link" href="https://aigal.io" target="_blank" rel="noopener"><span class="arr">↗</span> AIGal.io</a>
+      </div>
+    </article>
 
-  <div class="role">
-    <div class="role-header"><span class="role-company">The Human-AI Loop</span><span class="role-dates">2024 – Present</span></div>
-    <div class="role-title">Founder · AI Methodology &amp; Product Development</div>
-    <div class="role-context">Austin, TX</div>
-    <ul>
-      <li>Built and deployed a complete AI collaboration methodology — Test → Build → Codify → Share — with playbooks, prompt architectures, evaluation routines, and governance models publicly available at thehumanailoop.com</li>
-      <li>Built try.thehumanailoop.com — a live 5-minute simulation; users experience the contrast between default and collaborative AI use and receive three working artifacts, no signup required</li>
-      <li>Published thought leadership adopted by practitioners: “Rebuilding the Cockpit vs. Flying the Plane,” “Collaborative Engineering vs. Prompt Engineering,” “Not All AI Should Be Your Teammate” — frameworks for integrating AI without losing human judgment</li>
-      <li>Building AI-powered products — Daily Fuel (mobile-first personalized nutrition, deployed and in usability testing) and a growing suite of collaboration and team-dynamics prototypes</li>
-      <li>Operates a documented human-AI Triad (Claude + ChatGPT as teammates with distinct, complementary roles) — a replicable model for team AI adoption</li>
-      <li>Recognized externally as an “AI-native product leader” by a former VP at eBay and Atlassian — unprompted, based on published output and observed practice</li>
-    </ul>
-  </div>
+    <!-- Atlassian -->
+    <article class="role">
+      <div class="role-head">
+        <div>
+          <h2 class="company">Atlassian</h2>
+          <div class="title">Head of Product (Sr. Group PM) · Community &amp; Self-Help</div>
+          <div class="context">Austin, TX · Hybrid, remote from 2020</div>
+        </div>
+        <div class="dates">2018 – 2023</div>
+      </div>
+      <ul class="bullets">
+        <li>Led product for community and self-help platforms serving <span class="m">78M+ MAU</span> — driving a <span class="m">7× retention lift</span> across teams.</li>
+        <li>Designed the AI/ML integration strategy and partnered with ML engineering to build the community-feed recommendation system — sentiment analysis, proactive recommendations, personalized guidance.</li>
+        <li>Scaled the product org and mentored PMs into senior leadership; embedded an experimentation culture across teams.</li>
+      </ul>
+      <div class="proof">
+        <span class="proof-label">Proof</span>
+        <button class="chip chip-quote" aria-expanded="false" aria-controls="q-atl" onclick="toggle(this)"><span class="qmark">❝</span> Endorsements <span class="ct">· 2</span> <span class="caret">▾</span></button>
+        <a class="chip chip-award" href="https://www.cmxhub.com/blog/community-industry-award-winners" target="_blank" rel="noopener">★ CMX Community of the Year · '19 &amp; '20 <span class="arr">↗</span></a>
+        <a class="chip chip-award" href="https://www.feverbee.com/wp-content/uploads/2020/10/Feverbee_Best-Communities_2020.pdf" target="_blank" rel="noopener">★ FeverBee Best Communities · 2020 <span class="arr">↗</span></a>
+        <a class="chip chip-link" href="https://maurakrandall.substack.com/p/team-impossible" target="_blank" rel="noopener"><span class="arr">↗</span> Team Impossible</a>
+        <a class="chip chip-link" href="https://maurakrandall.substack.com/p/i-experienced-great-leadership-during" target="_blank" rel="noopener"><span class="arr">↗</span> Great Leadership in Crisis</a>
+        <a class="chip chip-link" href="https://maurakrandall.substack.com/p/community-is-everyones-job-especially" target="_blank" rel="noopener"><span class="arr">↗</span> Community Is Everyone's Job</a>
+      </div>
+      <div class="panel" id="q-atl"><div class="panel-inner">
+        <div class="q"><blockquote>A strong grasp of the AI/ML landscape — how ranking algorithms work, and how to apply them to real user problems. A true thought partner to engineering and ML teams.</blockquote><cite>Fan Jiang · Head of Engineering, Core Machine Learning, Atlassian</cite></div>
+        <div class="q"><blockquote>Maura had a strong grasp of her space, quickly picked up new tech and ideas, and connected the dots for opportunities. An impactful and thoughtful leader.</blockquote><cite>Patty Cifra · Senior Engineering Manager, Technology Innovation, Atlassian</cite></div>
+      </div></div>
+    </article>
 
-  <div class="role">
-    <div class="role-header"><span class="role-company">Atlassian</span><span class="role-dates">2018 – 2023</span></div>
-    <div class="role-title">Head of Product (Sr. Group PM) · Community &amp; Self-Help</div>
-    <div class="role-context">Austin, TX (Hybrid; Remote from 2020)</div>
-    <ul>
-      <li>Led product for community engagement and self-help platforms serving 78M+ MAU — onboarding flows, self-service tooling, and experimentation frameworks that drove a <strong>7x retention lift</strong> through cross-team standards and shared-system thinking</li>
-      <li>Partnered with ML engineering to build the recommendation system for the community feed; designed AI/ML integration strategy — sentiment analysis, proactive recommendations, personalized guidance — with evaluation routines and governance frameworks</li>
-      <li>Established experimentation culture (A/B, multivariate, funnel testing) embedded across teams; scaled the product org from 1 → 2 scrum teams; mentored PMs who advanced into senior leadership roles</li>
-      <li>Led cross-functional teams across engineering, design, data science, and SEO delivering platform-level solutions globally</li>
-      <li>Described by engineering partners as having “a rare ability to distill complex stakeholder needs into clear, high-impact product ideas” through active listening and cross-functional alliance building</li>
-    </ul>
-  </div>
+    <!-- MKR Consulting -->
+    <article class="role">
+      <div class="role-head">
+        <div>
+          <h2 class="company">MKR Consulting</h2>
+          <div class="title">Founder &amp; Principal</div>
+          <div class="context">New York, NY</div>
+        </div>
+        <div class="dates">2015 – 2018</div>
+      </div>
+      <ul class="bullets">
+        <li>Product and operations leadership for female-founded startups moving from concept to traction — strategy, MVP, and the operational scaffolding to ship.</li>
+      </ul>
+      <div class="proof">
+        <span class="proof-label">Outcomes</span>
+        <span class="chip chip-stat">100% of clients secured initial funding</span>
+        <span class="chip chip-stat">50% into competitive accelerators</span>
+        <span class="chip chip-stat">One multimillion-dollar seed round</span>
+      </div>
+    </article>
 
-  <div class="role">
-    <div class="role-header"><span class="role-company">MKR Consulting</span><span class="role-dates">2015 – 2018</span></div>
-    <div class="role-title">Founder &amp; Principal · Product Consulting</div>
-    <div class="role-context">New York, NY</div>
-    <ul>
-      <li>Owned the full client engagement lifecycle for female-founded startups, discovery through launch and sustained adoption — <strong>100% of clients secured initial funding, 50% accepted into competitive accelerators</strong>, one closed a multi-million-dollar seed round</li>
-      <li>Translated complex product challenges into clear executive-level recommendations; specialized in enabling clients to operate independently after engagement — built for transfer, not dependency</li>
-    </ul>
-  </div>
+    <!-- Condé Nast -->
+    <article class="role">
+      <div class="role-head">
+        <div>
+          <h2 class="company">Condé Nast</h2>
+          <div class="title">Digital Managing Director (GM) · Lucky</div>
+          <div class="context">New York, NY</div>
+        </div>
+        <div class="dates">2010 – 2015</div>
+      </div>
+      <ul class="bullets">
+        <li>General Manager transforming Lucky into a commerce-and-community hub — <span class="m">2M+ monthly uniques</span>, <span class="m">4× social growth</span>.</li>
+        <li>Launched Lucky Contributors, Condé Nast's first community platform; integrated content-to-commerce affiliate strategy; grew the digital team <span class="m">3 → 15</span>.</li>
+      </ul>
+      <div class="proof">
+        <span class="proof-label">Proof</span>
+        <button class="chip chip-quote" aria-expanded="false" aria-controls="q-cn" onclick="toggle(this)"><span class="qmark">❝</span> Endorsements <span class="ct">· 2</span> <span class="caret">▾</span></button>
+        <span class="chip chip-award">★ MIN Best Community · '13 &amp; '14</span>
+      </div>
+      <div class="panel" id="q-cn"><div class="panel-inner">
+        <div class="q"><blockquote>One of the best product executives I've worked with. Under her leadership, Lucky's 2013 redesign launched in record-breaking time, and garnered the industry's top awards.</blockquote><cite>Jun Lee · Product Designer, Condé Nast</cite></div>
+        <div class="q"><blockquote>An incredible leader and an inspiring manager — she balances data-driven decisions with thoughtful, real-world implementation. A patient and nurturing mentor.</blockquote><cite>Verena von Pfetten · Co-founder, Gossamer (reported to Maura)</cite></div>
+      </div></div>
+    </article>
 
-  <div class="role">
-    <div class="role-header"><span class="role-company">Condé Nast</span><span class="role-dates">2010 – 2015</span></div>
-    <div class="role-title">Digital Managing Director (GM) · Lucky Magazine</div>
-    <div class="role-context">New York, NY</div>
-    <ul>
-      <li>Recruited to lead digital transformation for a legacy print brand; drove innovation autonomously — secured corporate budget for the local team, hired dedicated developers, and launched pilot programs while leadership deliberated</li>
-      <li>Piloted Condé Nast’s first affiliate commerce program, first community platform, and an interactive iPad app — each ahead of the broader organization’s readiness; corporate later validated these instincts by creating central teams for affiliate, community, and interactive experiences</li>
-      <li>Launched Lucky Contributors, winning MIN’s Best Community awards (2013, 2014); grew digital presence to 2M+ monthly uniques with 4x social growth</li>
-      <li>Navigated complex stakeholder alignment across editorial, tech, merchandising, and ad sales to deliver integrated content, commerce, and community experiences</li>
-    </ul>
-  </div>
+    <!-- Yahoo -->
+    <article class="role">
+      <div class="role-head">
+        <div>
+          <h2 class="company">Yahoo!</h2>
+          <div class="title">Director, Product Management · Lifestyles &amp; Social Network Services</div>
+          <div class="context">Sunnyvale, CA</div>
+        </div>
+        <div class="dates">2005 – 2009</div>
+      </div>
+      <ul class="bullets">
+        <li>Built Yahoo's first community-led UGC platform (Shine) from concept to launch — <span class="m">50M+ MAU</span>, <span class="m">$40M revenue</span> within 18 months.</li>
+        <li>Directed a global PM team of <span class="m">15</span> across Taiwan, Hong Kong, and the US, delivering engagement features across Yahoo's verticals.</li>
+      </ul>
+      <div class="proof">
+        <span class="proof-label">Proof</span>
+        <button class="chip chip-quote" aria-expanded="false" aria-controls="q-yh" onclick="toggle(this)"><span class="qmark">❝</span> Endorsements <span class="ct">· 2</span> <span class="caret">▾</span></button>
+      </div>
+      <div class="panel" id="q-yh"><div class="panel-inner">
+        <div class="q"><blockquote>She stood up for the blogger and worked things out with the advertiser. The site held its integrity as a result. I admired the moral high ground she took.</blockquote><cite>James Long · Software Engineer, Yahoo! Shine → Condé Nast (reported to Maura)</cite></div>
+        <div class="q"><blockquote>Maura cared a great deal about the product, and an equal measure for the people building it — great at reaching across the table and building the relationships that make the product better.</blockquote><cite>Patricia Lawless · Director of Engineering (Maura's eng lead, Yahoo! Shine)</cite></div>
+      </div></div>
+    </article>
 
-  <div class="role">
-    <div class="role-header"><span class="role-company">Yahoo!</span><span class="role-dates">2005 – 2010</span></div>
-    <div class="role-title">Director of Product Management · Lifestyles &amp; Social Network</div>
-    <div class="role-context">Media Business Unit / Entertainment · Sunnyvale &amp; Santa Monica, CA</div>
-    <ul>
-      <li>Pioneered Yahoo!’s shift from aggregation to original editorial content for a high-value audience (women 25–45), with revenue performance validating the model</li>
-      <li>Built Yahoo!’s first community-led UGC platform from concept to launch (0→1) — scaled to <strong>14M users, $40M revenue year one, and 50M+ MAU</strong> across lifestyle communities</li>
-      <li>Led a global PM team of 15 direct reports across Taiwan, Hong Kong, and the US — building trust across three cultures where teams disagree differently, build consensus differently, and need different kinds of context</li>
-      <li>Partnered with Condé Nast and Hearst to launch multimillion-dollar native advertising programs balancing content quality with partner requirements</li>
-      <li>Protected editorial integrity under commercial pressure — advocated for creators and preserved platform trust when leadership sought to suppress content</li>
-    </ul>
-  </div>
+    <!-- eBay -->
+    <article class="role">
+      <div class="role-head">
+        <div>
+          <h2 class="company">eBay</h2>
+          <div class="title">Senior Global Product Manager</div>
+          <div class="context">San Jose, CA</div>
+        </div>
+        <div class="dates">2004 – 2005</div>
+      </div>
+      <ul class="bullets">
+        <li>Launched Best Offer, eBay's first price-negotiation platform — <span class="m">$1B+</span> in transactions in its first year.</li>
+        <li>Designed pricing and recommendation algorithms that lifted seller conversion <span class="m">4.7%</span>.</li>
+      </ul>
+      <div class="proof">
+        <span class="proof-label">Proof</span>
+        <button class="chip chip-quote" aria-expanded="false" aria-controls="q-eb" onclick="toggle(this)"><span class="qmark">❝</span> Endorsements <span class="ct">· 2</span> <span class="caret">▾</span></button>
+        <span class="chip chip-award">★ Global Product Management Awards · Q1 &amp; Q3 2005</span>
+      </div>
+      <div class="panel" id="q-eb"><div class="panel-inner">
+        <div class="q"><blockquote>An outstanding product management talent with a keen eye for customer needs — widely respected as a collaborative teammate who delivers results.</blockquote><cite>Tom Tsao · GVP at DocuSign (managed Maura at eBay &amp; Yahoo)</cite></div>
+        <div class="q"><blockquote>A true product leader — a knack for tackling particularly challenging problems, bringing the best out of a team and over-delivering.</blockquote><cite>Gene Cook · VP Global Collectibles, eBay</cite></div>
+      </div></div>
+    </article>
 
-  <div class="role">
-    <div class="role-header"><span class="role-company">eBay</span><span class="role-dates">2004 – 2005</span></div>
-    <div class="role-title">Sr. Global Product Manager</div>
-    <div class="role-context">San Jose, CA</div>
-    <ul>
-      <li>Led the cross-functional team launching Best Offer, eBay’s first price-negotiation platform (0→1) — powered <strong>$1B+ in transactions year one</strong>; designed recommendation and pricing algorithms improving seller conversions by 4.7%</li>
-      <li>Designed for behavior change — studied how buyers and sellers feel about negotiation to build a product that changed marketplace dynamics</li>
-      <li>Recognized with multiple Global Product Management Awards (2005) for innovation and cross-functional leadership</li>
-    </ul>
-  </div>
+    <!-- BrassRing -->
+    <article class="role">
+      <div class="role-head">
+        <div>
+          <h2 class="company">BrassRing (Kenexa / IBM)</h2>
+          <div class="title">Sr. Global Product Manager</div>
+        </div>
+        <div class="dates">2000 – 2004</div>
+      </div>
+      <ul class="bullets">
+        <li>Led product for an enterprise recruiting SaaS platform; managed an 8-person product, traffic, and support team.</li>
+      </ul>
+      <div class="proof">
+        <span class="proof-label">Proof</span>
+        <span class="chip chip-award">★ WEDDLE's User's Choice — "Most Job-Seeker Friendly Site" · '01 &amp; '02</span>
+      </div>
+    </article>
 
-  <div class="role">
-    <div class="role-header"><span class="role-company">BrassRing (Kenexa / IBM)</span><span class="role-dates">2000 – 2004</span></div>
-    <div class="role-title">Sr. Global Product Manager</div>
-    <div class="role-context">Santa Clara, CA</div>
-    <ul>
-      <li>Built an award-winning job-seeker platform earning WEDDLE’s Users’ Choice Awards (2001, 2002); delivered scalable SaaS recruiting with operational workflows for candidate management and ATS integration</li>
-    </ul>
-  </div>
-</section>
+  </section>
 
-<section class="section">
-  <div class="section-header">Education &amp; AI Coursework</div>
-  <p class="edu"><strong>George Mason University</strong> — Communications, TV / Video Production<br>
-  Recent AI Coursework: Generative AI for Leaders · AI &amp; the Future of Work · Trustworthy Generative AI · Advanced Data Analytics</p>
-</section>
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="sec-label">Signature skills — proof on tap</div>
 
+    <div class="skill">
+      <button class="skill-head" aria-expanded="false" aria-controls="s-lead" onclick="toggle(this)">
+        <span class="sk-name">People-First Leadership</span>
+        <span class="sk-desc">Teams that feel heard, and deliver their best work.</span>
+        <span class="sk-meta"><span class="sk-count">4 proofs</span><span class="sk-caret">▾</span></span>
+      </button>
+      <div class="panel" id="s-lead"><div class="panel-inner">
+        <div class="q"><blockquote>What truly sets Maura apart is her people-first leadership style. She creates an environment where her team, partners, and users feel heard, supported, and empowered.</blockquote><cite>Paul Olenick · Group PM, Atlassian (reported to Maura)</cite></div>
+        <div class="q"><blockquote>She crafted a compelling vision and strategy, diplomatically built alliances with difficult people, and inspired engineering to deliver world-class experiences.</blockquote><cite>Alice Merlino · Program Management, Atlassian</cite></div>
+        <div class="proof">
+          <span class="chips-label">Writing</span>
+          <a class="chip chip-link" href="https://maurakrandall.substack.com/p/team-impossible" target="_blank" rel="noopener"><span class="arr">↗</span> Team Impossible</a>
+          <a class="chip chip-link" href="https://maurakrandall.substack.com/p/i-experienced-great-leadership-during" target="_blank" rel="noopener"><span class="arr">↗</span> Great Leadership in Crisis</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="skill">
+      <button class="skill-head" aria-expanded="false" aria-controls="s-ai" onclick="toggle(this)">
+        <span class="sk-name">Applied AI</span>
+        <span class="sk-desc">Integrating AI into real products and teams — and building it hands-on.</span>
+        <span class="sk-meta"><span class="sk-count">5 proofs</span><span class="sk-caret">▾</span></span>
+      </button>
+      <div class="panel" id="s-ai"><div class="panel-inner">
+        <div class="q"><blockquote>A strong grasp of the AI/ML landscape — how ranking algorithms work, and how to apply them to real user problems. A true thought partner to engineering and ML teams.</blockquote><cite>Fan Jiang · Head of Engineering, Core Machine Learning, Atlassian</cite></div>
+        <div class="q"><blockquote>A truly outstanding product leader. Her strategic thinking is top-notch, with tremendous user empathy — a natural leader who inspires and motivates her team.</blockquote><cite>Denis Yevseyev · Technical SEO Manager, Atlassian</cite></div>
+        <div class="proof">
+          <span class="chips-label">Built &amp; published</span>
+          <a class="chip chip-link" href="https://aigal.io/not-all-ai-should-be-your-teammate/" target="_blank" rel="noopener"><span class="arr">↗</span> Not All AI Should Be Your Teammate</a>
+          <a class="chip chip-link" href="https://aigal.io/prompt-vs-context-vs-collaboration-engineering/" target="_blank" rel="noopener"><span class="arr">↗</span> Prompt vs. Context vs. Collaboration</a>
+          <a class="chip chip-link" href="https://thehumanailoop.com" target="_blank" rel="noopener"><span class="arr">↗</span> The Human-AI Loop</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="skill">
+      <button class="skill-head" aria-expanded="false" aria-controls="s-xfn" onclick="toggle(this)">
+        <span class="sk-name">Cross-Functional Trust &amp; Translation</span>
+        <span class="sk-desc">Translating between domain experts and engineering to ship hard things.</span>
+        <span class="sk-meta"><span class="sk-count">5 proofs</span><span class="sk-caret">▾</span></span>
+      </button>
+      <div class="panel" id="s-xfn"><div class="panel-inner">
+        <div class="q"><blockquote>Engineering and Product Management don't always see eye to eye — it's a stereotype for a reason. Working with Maura was different.</blockquote><cite>Patricia Lawless · Director of Engineering (Maura's eng lead, Yahoo! Shine)</cite></div>
+        <div class="q"><blockquote>One of her true superpowers is active listening — a rare ability to distill complex stakeholder needs into clear, high-impact product ideas.</blockquote><cite>Jeff Marshall · Engineering Leader, Atlassian</cite></div>
+        <div class="q"><blockquote>She draws from extensive knowledge across disciplines — editorial, sales, marketing — to develop holistic strategy, with the operational skill to ship it.</blockquote><cite>Scher Foord · Digital Design Manager, Condé Nast</cite></div>
+        <div class="q"><blockquote>Adept at working across teams — editorial, tech, product, merchandising, ad sales, corporate development — and deliberate in setting the right processes for an ever-evolving digital business.</blockquote><cite>Verena von Pfetten · reported to Maura, Condé Nast</cite></div>
+        <div class="q"><blockquote>We were tasked with transforming a team struggling to align with internal partners. Maura's gift for building alliances and crafting clear strategy is what turned it around.</blockquote><cite>Alice Merlino · Program Management, Atlassian</cite></div>
+      </div></div>
+    </div>
+
+    <div class="skill">
+      <button class="skill-head" aria-expanded="false" aria-controls="s-01" onclick="toggle(this)">
+        <span class="sk-name">0-to-1 &amp; Scaling</span>
+        <span class="sk-desc">From concept to millions of users.</span>
+        <span class="sk-meta"><span class="sk-count">5 proofs</span><span class="sk-caret">▾</span></span>
+      </button>
+      <div class="panel" id="s-01"><div class="panel-inner">
+        <div class="q"><blockquote>A knack for tackling particularly challenging problems, bringing the best out of a team and over-delivering.</blockquote><cite>Gene Cook · VP Global Collectibles, eBay (ex-Meta)</cite></div>
+        <div class="proof">
+          <span class="chips-label">Shipped</span>
+          <span class="chip chip-stat">eBay Best Offer · $1B+ year one</span>
+          <span class="chip chip-stat">Yahoo Shine · 50M+ MAU, $40M yr-one</span>
+          <span class="chip chip-stat">Atlassian · 78M+ MAU</span>
+          <span class="chip chip-stat">Condé Nast Lucky · 2M+ uniques</span>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="skill">
+      <button class="skill-head" aria-expanded="false" aria-controls="s-comm" onclick="toggle(this)">
+        <span class="sk-name">Community Strategy</span>
+        <span class="sk-desc">Community as product — recognized across two decades.</span>
+        <span class="sk-meta"><span class="sk-count">7 proofs</span><span class="sk-caret">▾</span></span>
+      </button>
+      <div class="panel" id="s-comm"><div class="panel-inner">
+        <div class="q"><blockquote>Through her, I really got to know ideas about community and group building that I still use today.</blockquote><cite>Annette Cardwell · Marketing, Yahoo! Shine</cite></div>
+        <div class="q"><blockquote>Great passion and creativity in service of customer impact — clear to see in Maura's work to revamp and significantly improve the Community.</blockquote><cite>Kevin Kohli · Sr. Director of Product, Atlassian</cite></div>
+        <div class="proof">
+          <span class="chips-label">Recognition</span>
+          <a class="chip chip-award" href="https://www.cmxhub.com/blog/community-industry-award-winners" target="_blank" rel="noopener">★ CMX Community of the Year · '19 &amp; '20 <span class="arr">↗</span></a>
+          <a class="chip chip-award" href="https://www.feverbee.com/wp-content/uploads/2020/10/Feverbee_Best-Communities_2020.pdf" target="_blank" rel="noopener">★ FeverBee Best Communities · 2020 <span class="arr">↗</span></a>
+          <span class="chip chip-award">★ MIN Best Community · '13 &amp; '14</span>
+          <span class="chip chip-award">★ WEDDLE's User's Choice · '01 &amp; '02</span>
+        </div>
+        <div class="proof">
+          <span class="chips-label">Writing</span>
+          <a class="chip chip-link" href="https://maurakrandall.substack.com/p/community-is-everyones-job-especially" target="_blank" rel="noopener"><span class="arr">↗</span> Community Is Everyone's Job</a>
+        </div>
+      </div></div>
+    </div>
+
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="about">
+    <div class="sec-label">About</div>
+    <p><span class="lead">I grew up as a foreign-service kid — five countries before I was thirteen.</span> You learn to read a room you've never been in before, and to find the thread that connects people who don't yet speak the same language. That's been the job ever since: translating between engineers, editors, executives, and users, and getting them to build something together.</p>
+    <p>The people who've seen me work tend to stick around. Patricia Lawless led engineering on Yahoo! Shine while I led product; James Long was an engineer on her team. Years later I hired James at Condé Nast — and years after that, both of them wrote me recommendations. When I had to choose between a vocal advertiser and an independent blogger's editorial integrity, I chose the blogger, and worked the relationship until it held. That's the version of leadership I keep showing up with.</p>
+    <div class="about-quotes">
+      <div class="q"><blockquote>A true product leader — and just a very good person, with great motivations.</blockquote><cite>Gene Cook · VP, eBay</cite></div>
+      <div class="q"><blockquote>Maura poured into her team — genuine care, and a commitment to their growth and development.</blockquote><cite>Jeff Marshall · Engineering Leader, Atlassian</cite></div>
+      <div class="q"><blockquote>She was my trusted confidant and always had my back.</blockquote><cite>Alice Merlino · Program Management, Atlassian</cite></div>
+      <div class="q"><blockquote>Driven, tenacious, and above all positive — always level-headed in a crisis.</blockquote><cite>Jesse Newhouse · Director, Revenue Ops, Condé Nast</cite></div>
+      <div class="q"><blockquote>Her empathy makes her warm and friendly — she can often "feel" when something is "off" about a product.</blockquote><cite>Mike Lee · Yahoo!</cite></div>
+      <div class="q"><blockquote>Productive, creative, tireless, and always cheerful. A valued and greatly missed team-player.</blockquote><cite>Robert Tomkinson · eBay</cite></div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="mailto:maurakrandall@gmail.com">maurakrandall@gmail.com</a> &nbsp;·&nbsp;
+    <a href="https://maurakrandall.com" target="_blank" rel="noopener">maurakrandall.com</a> &nbsp;·&nbsp;
+    <a href="https://www.linkedin.com/in/maurakrandall/" target="_blank" rel="noopener">LinkedIn</a> &nbsp;·&nbsp;
+    <a href="Maura-K-Randall-Resume.pdf">Download PDF résumé ↓</a><br>
+    Austin, TX — open to remote, Bay Area hybrid, or relocation.
+  </footer>
+
+</div>
+
+<script>
+  function toggle(btn){
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    panel.classList.toggle('open', !open);
+  }
+</script>
 </body>
 </html>
