@@ -27,7 +27,8 @@
   .bar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
     border-bottom:1px solid var(--divider-light)}
   .bar-in{max-width:780px;margin:0 auto;padding:11px 30px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-  .bar-name{font-family:var(--serif);font-size:17px}
+  .bar-name{font-family:var(--serif);font-size:17px;color:var(--ink);text-decoration:none;transition:color .15s}
+  .bar-name:hover{color:var(--accent)}
   .bar-nav{display:flex;align-items:center;gap:18px;font-size:12px}
   .bar-nav a{color:var(--ink-muted);text-decoration:none;transition:color .15s}
   .bar-nav a:hover{color:var(--accent)}
@@ -135,7 +136,7 @@
 <body>
 
 <div class="bar"><div class="bar-in">
-  <span class="bar-name">Maura K. Randall</span>
+  <a class="bar-name" href="/">Maura K. Randall</a>
   <nav class="bar-nav">
     <a href="#experience">Experience</a>
     <a href="#skills">Skills</a>
