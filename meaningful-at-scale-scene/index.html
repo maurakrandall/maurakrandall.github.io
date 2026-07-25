@@ -109,6 +109,7 @@
   .carried ul { list-style:none; margin:0 0 12px; padding:0; display:flex; flex-direction:column; gap:5px; }
   .carried li { display:flex; align-items:flex-start; gap:9px; font-size:12px; line-height:1.35; color:#3a4148; opacity:0; transform:translateX(-4px); transition:opacity 220ms ease, transform 220ms ease; }
   .carried li.tick { opacity:1; transform:translateX(0); }
+  .carried li > span:not(.chk) { white-space:nowrap; }
   .carried li .chk { flex-shrink:0; width:15px; height:15px; border-radius:4px; background:rgba(14,124,116,0.1); display:flex; align-items:center; justify-content:center; }
   .carried li .chk svg { width:10px; height:10px; }
   .carried li .chk path { stroke:var(--teal); stroke-width:2.4; fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:16; stroke-dashoffset:16; }
@@ -159,9 +160,9 @@
 
   .sigcard { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 12%; }
   .sigcard .quote { font-family:var(--serif); font-size:31px; line-height:1.3; color:var(--ink); max-width:26ch; margin:0 0 20px; }
-  .sigcard .attr { font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--orange); margin-bottom:26px; }
-  .sigcard .more { font-size:12.5px; color:var(--slate-t); margin-bottom:8px; }
-  .sigcard .links { font-family:var(--mono); font-size:9.5px; letter-spacing:0.14em; color:var(--teal); text-transform:uppercase; }
+  .sigcard .attr { font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--orange); margin-bottom:26px; white-space:nowrap; }
+  .sigcard .more { font-size:12.5px; line-height:1.5; color:var(--slate-t); margin-bottom:12px; white-space:nowrap; }
+  .sigcard .links { font-family:var(--mono); font-size:9.5px; line-height:1.8; letter-spacing:0.14em; color:var(--teal); text-transform:uppercase; }
 
   @media (max-width:760px) {
     .page { margin:12px auto; padding:0 10px 24px; }
