@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meaningful, at Scale — Maura K. Randall</title>
+<meta name="description" content="A product vision artifact for Amazon Alexa Connections by Maura K. Randall. Two paths for the AI communication layer — and a recommendation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1A1A; --teal:#0E7C74; --orange:#B85C00; --amber:#D4922A;
+    --slate:#5D6570; --slate-lt:#AEB4BC; --border:#E5E5E0; --bg:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter Tight',sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .page{max-width:980px;margin:0 auto;padding:72px 32px}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);font-weight:500}
+  .eyebrow .num{color:var(--orange);font-weight:700}
+  .serif{font-family:'Instrument Serif',serif;font-weight:400}
+  .rule{border:none;border-top:1px solid var(--border);margin:0}
+
+  /* ---------- HERO ---------- */
+  .hero{padding-top:110px;padding-bottom:90px;text-align:center}
+  .hero .eyebrow{display:block;margin-bottom:36px}
+  .hero h1{font-family:'Instrument Serif',serif;font-size:clamp(52px,8vw,88px);line-height:1.02;margin-bottom:34px}
+  .statrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--slate);text-transform:uppercase;margin-bottom:52px}
+  .statrow b{color:var(--orange);font-weight:700}
+  .thesis{font-family:'Instrument Serif',serif;font-size:clamp(24px,3.4vw,34px);line-height:1.25;max-width:760px;margin:0 auto 28px;color:var(--ink)}
+  .thesis-bar{width:56px;height:3px;background:var(--orange);margin:0 auto 28px}
+  .hero .sub{max-width:640px;margin:0 auto;color:var(--slate);font-size:17px}
+  .hero .sig{margin-top:56px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-lt)}
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:84px 0;border-top:1px solid var(--border)}
+  .sec-head{margin-bottom:44px}
+  .sec-head .eyebrow{display:block;margin-bottom:14px}
+  .sec-head h2{font-family:'Instrument Serif',serif;font-size:clamp(30px,4.4vw,44px);line-height:1.1}
+  .lede{font-size:18px;max-width:820px;color:var(--ink);margin-bottom:18px}
+  .lede em{font-style:italic}
+
+  /* ---------- THE FORK ---------- */
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin:46px 0}
+  @media(max-width:760px){.paths{grid-template-columns:1fr}}
+  .path{border:1px solid var(--border);border-radius:14px;padding:30px 28px}
+  .path.one{background:#F7F8F9;border-color:var(--slate-lt)}
+  .path.two{background:#FFFDF9;border-color:#E8D9C4}
+  .path .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:16px}
+  .path.one .tag{color:var(--slate)}
+  .path.two .tag{color:var(--teal)}
+  .path h3{font-family:'Instrument Serif',serif;font-size:26px;margin-bottom:14px}
+  .path p{font-size:15.5px;margin-bottom:14px}
+  .path .cost{font-size:14.5px;padding-top:14px;border-top:1px dashed var(--border)}
+  .path.one .cost{color:var(--slate)}
+  .path.two .cost{color:#7A5A1E}
+  .path .signoff{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-top:18px}
+  .path.one .signoff{color:var(--slate-lt)}
+  .path.two .signoff{color:var(--orange)}
+  .rec{background:var(--bg);border-left:4px solid var(--orange);padding:30px 34px;margin-top:20px}
+  .rec p{font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,26px);line-height:1.35}
+  .rec b{font-weight:400;color:var(--orange)}
+
+  /* ---------- THE SCENE ---------- */
+  .scene-wrap{position:relative;width:100%;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 10px 40px rgba(26,26,26,.07);margin:40px 0 30px;aspect-ratio:16/9.6;background:#FFFDF9}
+  .scene-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .beats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:34px}
+  @media(max-width:760px){.beats{grid-template-columns:1fr}}
+  .beat h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:10px}
+  .beat p{font-size:14.5px;color:var(--slate);margin-bottom:8px}
+  .beat .cap{font-size:14.5px;color:var(--ink);font-style:italic}
+  .scene-note{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--slate-lt);text-transform:uppercase;text-align:center;margin-top:14px}
+
+  /* ---------- PRIMITIVES ---------- */
+  .prims{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:40px 0 56px}
+  .prim{border:1px solid var(--border);border-radius:14px;padding:24px 22px;background:#fff}
+  .prim .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;font-weight:700;color:var(--teal);display:block;margin-bottom:10px}
+  .prim p{font-size:14.5px;color:var(--ink)}
+  .prim .ref{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--slate-lt);margin-top:10px;display:block}
+  .shifts h3{font-family:'Instrument Serif',serif;font-size:30px;margin-bottom:26px}
+  .shift{border-top:1px solid var(--border);padding:22px 0}
+  .shift .from-to{font-size:17px;font-weight:600;margin-bottom:6px}
+  .shift .from-to .arrow{color:var(--orange)}
+  .shift .accept{font-size:14.5px;color:var(--slate)}
+  .shift .accept b{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:700}
+
+  /* ---------- CLOSE ---------- */
+  .pov p{font-size:17.5px;max-width:820px;margin-bottom:20px}
+  .pov .keyline{font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,28px);line-height:1.3;margin:30px 0;color:var(--ink)}
+  .close-thesis{text-align:center;padding:70px 20px 30px}
+  .close-thesis .q{font-family:'Instrument Serif',serif;font-size:clamp(26px,3.8vw,38px);line-height:1.25;max-width:740px;margin:0 auto 22px}
+  .close-thesis .attr{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--orange);font-weight:700;text-transform:uppercase}
+  .links{display:flex;flex-wrap:wrap;gap:14px 30px;justify-content:center;margin-top:44px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em}
+  .links a{color:var(--teal);text-decoration:none;border-bottom:1px solid transparent}
+  .links a:hover{border-bottom-color:var(--teal)}
+  footer{border-top:1px solid var(--border);padding:26px 32px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-lt)}
+
+  /* ---------- PRINT (the PDF layout) ---------- */
+  .print-only{display:none}
+  @page{size:Letter portrait;margin:.5in .55in}
+  @media print{
+    body{font-size:12px}
+    .page{max-width:none;padding:0}
+    .no-print,.scene-wrap,.scene-note{display:none !important}
+    .print-only{display:block}
+    section{border-top:none;padding:0;page-break-before:always}
+    .hero{padding:1.6in 0 0;page-break-before:avoid}
+    .hero h1{font-size:54pt}
+    .thesis{font-size:20pt}
+    .paths{gap:14px;margin:22px 0}
+    .path{padding:16px;border-radius:10px}
+    .path p,.path .cost{font-size:9.5pt}
+    .rec p{font-size:13pt}
+    .frame-pair{display:grid;grid-template-columns:38fr 62fr;gap:10px;align-items:start;margin:10px 0 16px}
+    .frame-pair img{width:100%;border:1px solid var(--border);border-radius:8px}
+    .frame-solo img{width:82%;margin:12px auto;display:block;border:1px solid var(--border);border-radius:8px}
+    .beats{display:none}
+    .prims{gap:10px;margin:18px 0 24px}
+    .prim{padding:12px}
+    .prim p{font-size:9pt}
+    .pov p{font-size:10.5pt}
+    a{color:inherit;text-decoration:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 · TITLE ============ -->
+<div class="page hero">
+  <span class="eyebrow">Product Vision Artifact · Prepared for Amazon Alexa Connections</span>
+  <h1>Meaningful,<br>at Scale</h1>
+  <div class="statrow">600M+ Alexa-enabled devices &nbsp;·&nbsp; 3 experience pillars &nbsp;·&nbsp; <b>2 paths</b> &nbsp;·&nbsp; 1 recommendation</div>
+  <div class="thesis-bar"></div>
+  <p class="thesis">Human connection compounds or degrades based on how the communication layer is designed.</p>
+  <p class="sub">The Alexa Connections mission sets two goals at once: effortless, and meaningful at scale. This artifact maps the two strategic paths available to the team that builds it, and makes a recommendation.</p>
+  <div class="sig">Maura K. Randall · Product Vision Artifact · July 2026</div>
+</div>
+
+<!-- ============ PAGE 2 · THE FORK ============ -->
+<div class="page">
+<section>
+  <div class="sec-head">
+    <span class="eyebrow"><span class="num">01</span> · Two Paths</span>
+    <h2>The Fork</h2>
+  </div>
+  <p class="lede">The role description opens with an invitation: <em>"Come define what it means for AI to communicate on behalf of humans."</em> That definition is the fork in the road. Both paths are real strategies. Only one delivers the whole mission.</p>
+
+  <div class="paths">
+    <div class="path one">
+      <span class="tag">Path One · The Automation</span>
+      <h3>It acts <em>for</em> you.</h3>
+      <p>The layer communicates on behalf of humans. It optimizes for speed, volume, containment. It ships fast, demos brilliantly, and wins the first year of metrics: messages handled, minutes saved, tasks closed. It never asks, because asking is friction.</p>
+      <p class="cost">What it costs: every rigid, efficient, impersonal interaction spends down the spirit of the collaboration. Words per moment trend toward zero. Connection thins. Trust plateaus. And it compounds a quieter risk: acting on the metric instead of the meaning, it gets things confidently wrong — at scale.</p>
+      <span class="signoff">● No action needed</span>
+    </div>
+    <div class="path two">
+      <span class="tag">Path Two · The Collaborator</span>
+      <h3>It acts <em>with</em> you.</h3>
+      <p>The same automation horsepower, pointed at a different target: the moment, not the message. The layer absorbs every gram of logistics — timing, memory, continuity, coordination — and hands the human effortless direction and decision-making exactly where the moment matters. Its signature phrase is a question.</p>
+      <p class="cost">What it earns: moments compound into connection. Connection compounds into trust. And because every decision handed back is a signal, the layer learns what matters to this household, this team, this friendship — the collaboration itself compounds.</p>
+      <span class="signoff">● Your call</span>
+    </div>
+  </div>
+
+  <div class="rec">
+    <p>My recommendation is Path Two. Not because Path One is wrong, but because it is incomplete: <b>it delivers effortless and quietly forfeits meaningful.</b> When the design removes the human, the human degrades — and the collaboration degrades with them. Build the layer that carries everything, and saves its questions for the decisions only a human should make.</p>
+  </div>
+</section>
+
+<!-- ============ PAGE 3 · THE SCENE ============ -->
+<section>
+  <div class="sec-head">
+    <span class="eyebrow"><span class="num">02</span> · Three Moments · Two Paths</span>
+    <h2>The Same Moment, on Each Path</h2>
+  </div>
+  <p class="lede">Three moments — at work, at home when the weather turns, and in your closest friendship. Each plays out twice, once per path: the automation acts <em>for</em> you; the collaborator acts <em>with</em> you. None of this is what Alexa does today. All of it is buildable from the same primitives. And when the three moments are done, the difference gets drawn.</p>
+
+  <div class="scene-wrap no-print">
+    <iframe src="https://maurakrandall.github.io/meaningful-at-scale-scene/" title="The Same Moment, On Each Path — animated scene" loading="lazy" allow="autoplay"></iframe>
+  </div>
+  <p class="scene-note no-print">▲ The scene runs ~110 seconds and loops. Also live at maurakrandall.github.io/meaningful-at-scale-scene/</p>
+
+  <!-- Print fallback: beats 1 & 2 -->
+  <div class="print-only">
+    <div class="frame-pair">
+      <img src="frames/beat01automationcard.png" alt="Beat 1, Path One card">
+      <img src="frames/beat01collaboratorcard.png" alt="Beat 1, Path Two card">
+    </div>
+    <div class="frame-pair">
+      <img src="frames/beat02automationcard.png" alt="Beat 2, Path One card">
+      <img src="frames/beat02collaboratorcard.png" alt="Beat 2, Path Two card">
+    </div>
+  </div>
+
+  <div class="beats no-print">
+    <div class="beat">
+      <h4>Beat 01 · The Briefing</h4>
+      <p>Back from a week off-site, a 1:1 with a struggling teammate at 9:30. The automation has already sent a check-in on your behalf and booked a performance review — for a problem that wasn't Jordan's. The collaborator traced the cause, noticed what no dashboard shows, and asks whether the 1:1 should be a walk.</p>
+      <p class="cap">The collaborator did the reading. We did the leading.</p>
+    </div>
+    <div class="beat">
+      <h4>Beat 02 · The Storm</h4>
+      <p>A storm cell, three hours out. The automation notifies everyone and reschedules everything. The collaborator has the household handled — kids tasked, dog in the basement, lanterns staged, Ring confirming the patio — and brings you the calls that are human.</p>
+      <p class="cap">The collaborator ran the house. We took care of the people.</p>
+    </div>
+    <div class="beat">
+      <h4>Beat 03 · The Pick-Me-Up</h4>
+      <p>Your closest friend is in the hospital. The automation drafts condolences and orders a bouquet. The collaborator helps you find your own words — and builds the visit around them: the bakery that delivers, the playlist, the fourteen best photos of the two of you.</p>
+      <p class="cap">The hard thing got easier. The words stayed ours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 4 (print) · BEAT 3 + THE CHART ============ -->
+<section class="print-only">
+  <div class="sec-head">
+    <span class="eyebrow"><span class="num">02</span> · Continued</span>
+  </div>
+  <div class="frame-pair">
+    <img src="frames/beat03automationcard.png" alt="Beat 3, Path One card">
+    <img src="frames/beat03collaboratorcard.png" alt="Beat 3, Path Two card">
+  </div>
+  <div class="frame-solo">
+    <img src="frames/closechartfull.png" alt="Connection over time — Path One flattens, Path Two compounds. The gap is the forfeit. Recommendation: Path Two.">
+  </div>
+</section>
+
+<!-- ============ PAGE 5 · THE PRIMITIVES ============ -->
+<section>
+  <div class="sec-head">
+    <span class="eyebrow"><span class="num">03</span> · What Path Two Is Made Of</span>
+    <h2>The Primitives</h2>
+  </div>
+  <p class="lede"><em>"Generative AI is not a feature here — it is foundational."</em> Agreed. Path Two isn't a feature list; it's five primitives, composed. Built once, they power experiences across Alexa, Fire TV, Ring, Echo Show, Fire tablets, and surfaces that don't exist yet.</p>
+
+  <div class="prims">
+    <div class="prim"><span class="tag">Compression</span><p>A week of context distilled to the minute that matters, so humans arrive present.</p><span class="ref">BEAT 01</span></div>
+    <div class="prim"><span class="tag">Standing Context</span><p>The layer doesn't wait to be prompted; it holds ambient awareness — weather, calendars, presence — and acts within agreed bounds.</p><span class="ref">BEAT 02</span></div>
+    <div class="prim"><span class="tag">Orchestration</span><p>Multi-person, multi-device coordination resolved invisibly, consent built in.</p><span class="ref">BEAT 02</span></div>
+    <div class="prim"><span class="tag">Memory</span><p>Commitments, shared history, the good times. Not transcripts; meaning.</p><span class="ref">BEAT 03</span></div>
+    <div class="prim"><span class="tag">Restraint</span><p>The trust primitive. The collaborator knows which words must stay human, then clears the path to them.</p><span class="ref">BEAT 03</span></div>
+  </div>
+
+  <div class="shifts">
+    <h3>Three Shifts</h3>
+    <div class="shift">
+      <p class="from-to">From features shipped <span class="arrow">→</span> primitives composed</p>
+      <p class="accept"><b>Accepted when:</b> a capability built once powers experiences across three device families without re-integration.</p>
+    </div>
+    <div class="shift">
+      <p class="from-to">From sessions counted <span class="arrow">→</span> relationships sustained</p>
+      <p class="accept"><b>Accepted when:</b> engagement is measured between people, not only between a person and an assistant.</p>
+    </div>
+    <div class="shift">
+      <p class="from-to">From messages delivered <span class="arrow">→</span> moments protected</p>
+      <p class="accept"><b>Accepted when:</b> the layer can hand every decision that matters back to a human and still make everything around it effortless.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 6 · CLOSE ============ -->
+<section>
+  <div class="sec-head">
+    <span class="eyebrow"><span class="num">04</span> · Point of View</span>
+    <h2>The Path Decides</h2>
+  </div>
+  <div class="pov">
+    <p>I've worked through enough platform inflections to know how this one will be scored.</p>
+    <p class="keyline">Speed decides who leads the first year. The path decides who owns the decade.</p>
+    <p>Path One and Path Two ship the same quarter's roadmap — only one of them is still compounding in year five.</p>
+    <p>I've built connection systems at the scale this role demands: platform primitives serving 78M+ monthly active users at Atlassian, where engagement designed around human connection produced a 7x retention lift. A marketplace mechanism at eBay that did $1B+ in year one because both sides trusted the exchange. And a daily, published practice of designing human-AI collaboration — the exact discipline the fork requires.</p>
+    <p>The teams that win this era won't be the ones that make AI sound the most human. They'll be the ones that make humans more present to each other.</p>
+  </div>
+
+  <div class="close-thesis">
+    <p class="q serif">"Human capability compounds or degrades based on how the collaboration is designed."</p>
+    <p class="attr">Maura K. Randall</p>
+    <div class="links">
+      <a href="https://maurakrandall.github.io">maurakrandall.github.io</a>
+      <a href="https://aigal.io">aigal.io</a>
+      <a href="https://thehumanailoop.com">thehumanailoop.com</a>
+      <a href="https://try.thehumanailoop.com">try.thehumanailoop.com</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>Meaningful, at Scale · A product vision artifact · Maura K. Randall · 2026</footer>
+
+</body>
+</html>
