@@ -98,6 +98,7 @@
 
   /* ---------- PRINT (the PDF layout) ---------- */
   .print-only{display:none}
+  .live-callout{display:none}
   @page{size:Letter portrait;margin:.5in .55in}
   @media print{
     body{font-size:12px}
@@ -112,14 +113,27 @@
     .path{padding:16px;border-radius:10px}
     .path p,.path .cost{font-size:9.5pt}
     .rec p{font-size:13pt}
+    .live-callout{display:block;border:2.5px solid var(--orange);border-radius:10px;padding:9px 16px;margin:4px 0 14px;text-align:center;page-break-inside:avoid}
+    .live-callout .lc-head{font-family:'JetBrains Mono',monospace;font-size:8.5pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:2px}
+    .live-callout .lc-body{font-size:9pt;color:var(--ink)}
+    .live-callout .lc-body b{font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--teal);font-weight:700}
     .frame-pair{display:grid;grid-template-columns:38fr 62fr;gap:10px;align-items:start;margin:10px 0 16px}
     .frame-pair img{width:100%;border:1px solid var(--border);border-radius:8px}
     .frame-solo img{width:82%;margin:12px auto;display:block;border:1px solid var(--border);border-radius:8px}
     .beats{display:none}
-    .prims{gap:10px;margin:18px 0 24px}
-    .prim{padding:12px}
-    .prim p{font-size:9pt}
+    .sec-head{margin-bottom:20px}
+    .sec-head h2{font-size:22pt}
+    .lede{font-size:10pt}
+    .prims{gap:8px;margin:14px 0 18px}
+    .prim{padding:10px 12px}
+    .prim p{font-size:8.5pt}
+    .prim .ref{margin-top:5px}
+    .shifts h3{font-size:15pt;margin-bottom:10px}
+    .shift{padding:9px 0}
+    .shift .from-to{font-size:11pt;margin-bottom:3px}
+    .shift .accept{font-size:9pt}
     .pov p{font-size:10.5pt}
+    .close-thesis{padding:40px 20px 16px}
     a{color:inherit;text-decoration:none}
   }
 </style>
@@ -183,6 +197,10 @@
 
   <!-- Print fallback: beats 1 & 2 -->
   <div class="print-only">
+    <div class="live-callout">
+      <span class="lc-head">▶ These pages are stills — the scene is alive</span>
+      <span class="lc-body">Watch the full ~110-second animated artifact, with every beat in motion, at <b>maurakrandall.github.io/meaningful-at-scale/</b></span>
+    </div>
     <div class="frame-pair">
       <img src="frames/beat01automationcard.png" alt="Beat 1, Path One card">
       <img src="frames/beat01collaboratorcard.png" alt="Beat 1, Path Two card">
@@ -223,6 +241,10 @@
   </div>
   <div class="frame-solo">
     <img src="frames/closechartfull.png" alt="Connection over time — Path One flattens, Path Two compounds. The gap is the forfeit. Recommendation: Path Two.">
+  </div>
+  <div class="live-callout">
+    <span class="lc-head">▶ See it in motion</span>
+    <span class="lc-body">The live artifact plays all three moments, the divergence, and the recommendation — <b>maurakrandall.github.io/meaningful-at-scale/</b></span>
   </div>
 </section>
 
