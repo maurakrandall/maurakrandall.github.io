@@ -111,7 +111,7 @@
     .see-live{border:2px solid var(--blue);border-radius:12px;background:var(--card);padding:14px 18px;text-align:center;margin:0 0 18px}
     .see-live .big{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue)}
     .see-live .url{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--amberink);margin-top:6px}
-    .print-frames{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .print-frames{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:82%;margin:0 auto}
     .print-frames figure{margin:0}
     .print-frames img{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;display:block}
     .print-frames figcaption{font-family:var(--mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);margin-top:5px;text-align:center}
@@ -120,10 +120,14 @@
     section:last-of-type,.pov{page-break-after:auto}
     .alt,.beat,.prim,.shift,.bigbox,.neverbox,.conv-row,.see-live,.print-frames figure{page-break-inside:avoid;break-inside:avoid}
     .scene-intro{max-width:none}
-    .beats{grid-template-columns:repeat(3,1fr);gap:10px}
-    .beat{padding:12px 14px}
-    .beat p{font-size:10.5px}
-    .beat em{font-size:11.5px}
+    .beats{grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+    .beat{padding:10px 12px}
+    .beat h3{font-size:9.5px}
+    .beat p{font-size:9px;line-height:1.45}
+    .beat em{font-size:10px}
+    .scene-intro{font-size:12.5px}
+    .print-scene{margin:16px 0 14px}
+    .see-live{padding:10px 14px;margin-bottom:12px}
     footer{display:none}
     a{color:inherit;text-decoration:none}
   }
