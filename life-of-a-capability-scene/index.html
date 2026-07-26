@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scene — The Life of a Capability</title>
+<template id="__bundler_thumbnail" data-bg-color="#FAF6EE">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FAF6EE"/>
+    <circle cx="600" cy="400" r="220" fill="none" stroke="#E8DFCE" stroke-width="18"/>
+    <path d="M 600 180 A 220 220 0 0 1 790 510" fill="none" stroke="#1E5AA8" stroke-width="18" stroke-linecap="round"/>
+    <path d="M 790 510 A 220 220 0 0 1 410 510" fill="none" stroke="#0E7C74" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="600" cy="400" r="120" fill="none" stroke="#D99E1D" stroke-width="8" stroke-dasharray="24 18"/>
+  </svg>
+</template>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{--ink:#2A2620;--paper:#FAF6EE;--surface:#FFFDF7;--teal:#0E7C74;--blue:#1E5AA8;--amber:#D99E1D;--amber-ink:#8F5F09;--line:rgba(42,38,32,0.14);--slate:#6E6659;--mute:#7D7466;
+  --sans:'Inter Tight',system-ui,sans-serif;--serif:'Instrument Serif',Georgia,serif;--mono:'JetBrains Mono',ui-monospace,monospace;}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#E8E1D5;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:var(--blue);text-decoration:none}a:hover{color:var(--teal)}
+  .page{max-width:1060px;margin:40px auto;padding:0 24px 56px}
+  .scene-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--paper);border:1px solid rgba(30,90,168,0.15);box-shadow:0 1px 0 rgba(42,38,32,.05),0 14px 30px -18px rgba(42,38,32,.2)}
+  .phase{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 550ms ease}
+  .phase.on{opacity:1;pointer-events:auto}
+  .wash{position:absolute;inset:0;transition:background 1100ms ease;background:transparent}
+  .wash.night{background:rgba(10,46,46,.07)}
+  .wash.morning{background:rgba(217,158,29,.055)}
+  .wash.blue{background:rgba(30,90,168,.035)}
+
+  /* context strip + centered context */
+  .ctx{position:absolute;top:20px;left:26px;right:26px;font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);display:flex;gap:8px;z-index:7;opacity:0;transition:opacity 400ms ease}
+  .ctx.on{opacity:1}.ctx span{white-space:nowrap}
+  .ctx .beatnum{color:var(--blue);font-weight:600}.ctx .btitle{color:var(--ink);font-weight:600}
+  .ctx .mv{color:var(--blue);font-weight:600;opacity:.9}
+  .ctx-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:8;opacity:0;transition:opacity 450ms ease;text-align:center;padding:0 12%}
+  .ctx-center.on{opacity:1}
+  .ctx-center .num{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--blue);font-weight:600}
+  .ctx-center .btitle{font-family:var(--serif);font-size:34px}
+  .ctx-center .strip{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);white-space:nowrap}
+
+  .inter{position:absolute;inset:0;background:var(--paper);display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14%;z-index:9;opacity:0;pointer-events:none;transition:opacity 450ms ease}
+  .inter.on{opacity:1}
+  .inter .line{font-family:var(--serif);font-size:30px;line-height:1.3;max-width:28ch;text-wrap:pretty}
+  .inter .line .accent{color:var(--blue)}
+
+  /* beat stage */
+  .stage{position:absolute;left:0;right:0;top:48px;bottom:22px;z-index:5;transition:opacity 450ms ease}
+  .stage.hid{opacity:0}
+  .setcol{position:absolute;right:0;top:0;bottom:26%;width:31%;opacity:0;transition:opacity 700ms ease}
+  .setcol.on{opacity:1}
+  .setcol svg{position:absolute;inset:0;width:100%;height:100%}
+  .set-a,.set-b{transition:opacity 800ms ease}
+  .set-a.hide{opacity:0}.set-b{opacity:0}.set-b.showb{opacity:1}
+  .mainmount{position:absolute;left:30px;right:31%;top:0;bottom:0;display:flex;align-items:center;justify-content:center}
+  .mainmount.wide{right:30px}
+
+  /* cards */
+  .card{width:100%;max-width:540px;background:var(--surface);border-radius:12px;padding:16px 18px 12px;position:relative;border:1px solid var(--line);box-shadow:0 2px 4px rgba(42,38,32,.04),0 18px 40px -24px rgba(42,38,32,.17);transition:border-color 400ms ease,opacity 500ms ease}
+  .card.human{border:2px solid var(--blue);box-shadow:0 2px 4px rgba(30,90,168,.05),0 18px 40px -24px rgba(30,90,168,.28)}
+  .card.amber{border-color:var(--amber)}
+  .card-head{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line);color:var(--teal);white-space:nowrap}
+  .card.human .card-head{color:var(--blue);border-bottom-color:rgba(30,90,168,.25)}
+  .card-head .bdot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+  .card-head .tag{margin-left:auto;font-size:8px;letter-spacing:.14em;padding:2px 7px;border-radius:3px;background:rgba(30,90,168,.07);color:var(--blue);opacity:0;transition:opacity 450ms ease;white-space:nowrap}
+  .card-head .tag.on{opacity:1}
+  .card-head .tag.pulse{animation:npPulse 2.4s ease-in-out infinite}
+  @keyframes npPulse{0%,100%{opacity:1}50%{opacity:.5}}
+  .npword{display:inline-block;max-width:6.4em;overflow:hidden;vertical-align:bottom;transition:max-width 800ms ease,opacity 800ms ease,color 350ms ease}
+  .npword.hot{color:var(--amber-ink)}
+  .npword.out{max-width:0;opacity:0}
+  @keyframes cardIn{0%{opacity:0;transform:translateY(10px) scale(.985)}62%{opacity:1;transform:translateY(-2px) scale(1.004)}100%{opacity:1;transform:none}}
+  .card.pop{animation:cardIn 560ms cubic-bezier(.34,1.3,.6,1) both}
+  .card.qcard{max-width:640px;padding:20px 24px 14px}
+  .qcard .hquote{font-family:var(--serif);font-size:24px;line-height:1.34;margin:4px 0 14px;text-wrap:pretty}
+  .qcard .hattr{font-family:var(--mono);font-size:8.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin-bottom:14px}
+  .body{font-size:13px;line-height:1.55;margin:0}
+  .card.human .body{font-size:13.5px}
+  .zlabel{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin:0 0 6px}
+  ul.ticks{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:5px}
+  ul.ticks li{display:flex;align-items:flex-start;gap:9px;font-size:11.5px;line-height:1.35;color:#4A443A;opacity:0;transform:translateX(-4px);transition:opacity 220ms ease,transform 220ms ease}
+  ul.ticks li.tick{opacity:1;transform:none}
+  ul.ticks li>span:not(.chk){white-space:nowrap}
+  .chk{flex-shrink:0;width:15px;height:15px;border-radius:4px;background:rgba(14,124,116,.1);display:flex;align-items:center;justify-content:center}
+  .chk svg{width:10px;height:10px}
+  .chk path{stroke:var(--teal);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:16;stroke-dashoffset:16}
+  li.tick .chk path{animation:drawCheck 260ms ease forwards}
+  @keyframes drawCheck{to{stroke-dashoffset:0}}
+  .caret{display:inline-block;width:1.5px;height:1em;background:var(--teal);margin-left:1px;vertical-align:-2px;animation:blink 900ms steps(2) infinite}
+  .caret.blue{background:var(--blue)}.caret.gone{display:none}
+  @keyframes blink{50%{opacity:0}}
+  .chip{display:inline-block;width:max-content;white-space:nowrap;font-size:11.5px;font-weight:500;line-height:1.45;color:var(--blue);border:1.5px solid var(--blue);border-radius:16px;padding:5px 13px;background:rgba(30,90,168,.04);opacity:0}
+  .chip.show{animation:chipIn 320ms cubic-bezier(.34,1.4,.6,1) forwards}
+  @keyframes chipIn{0%{opacity:0;transform:translateY(4px) scale(.9)}60%{transform:translateY(0) scale(1.05)}100%{opacity:1;transform:none}}
+  .chip.stamp{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+  .lines{display:flex;flex-direction:column;gap:8px}
+  .footer-row{margin-top:11px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .ftag{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .ftag .fdot{width:5px;height:5px;border-radius:50%;background:currentColor}
+  .ftag.yourcall{color:var(--blue)}.ftag.prod,.ftag.codified{color:var(--teal)}.ftag.declared{color:var(--blue)}
+  .prims{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase;text-align:right;white-space:nowrap}
+
+  /* log card */
+  .log{font-family:var(--mono);font-size:10px;line-height:1.75;color:var(--slate);display:flex;flex-direction:column;gap:1px}
+  .log div{opacity:0;transition:opacity 300ms ease;white-space:nowrap}
+  .log div.on{opacity:1}
+  .log div.flare{color:var(--amber-ink);font-weight:600}
+  /* scoreboard */
+  .score{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+  .score .cell{opacity:0;transform:translateY(3px);transition:opacity 300ms ease,transform 300ms ease}
+  .score .cell.on{opacity:1;transform:none}
+  .score .k{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+  .score .v{font-family:var(--serif);font-size:22px;line-height:1.15;color:var(--ink);white-space:nowrap}
+  .score .v em{font-style:normal;color:var(--blue)}
+
+  /* constellation (beat 01) */
+  .constel{position:absolute;left:30px;right:31%;top:0;bottom:0;opacity:0;transition:opacity 600ms ease}
+  .constel.on{opacity:1}.constel.ghost{opacity:.16}
+  .constel svg.wires{position:absolute;inset:0;width:100%;height:100%}
+  .wire{fill:none;stroke:var(--blue);stroke-width:1;opacity:.45}
+  .mini{position:absolute;transform:translate(-50%,-50%);width:138px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 9px;box-shadow:0 8px 18px -12px rgba(42,38,32,.26);opacity:0;transition:opacity 320ms ease,transform 320ms cubic-bezier(.34,1.4,.6,1)}
+  .mini.pop{opacity:1}
+  .mini .mlabel{font-family:var(--mono);font-size:7.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:5px;margin-bottom:4px;white-space:nowrap}
+  .mini .mlabel .chk{width:12px;height:12px;border-radius:3px}
+  .mini .mlabel .chk svg{width:8px;height:8px}
+  .mini .mline{font-size:9px;line-height:1.35;color:#4A443A}
+
+  /* dual (beat 03) */
+  .dual{position:absolute;left:30px;right:31%;top:0;bottom:0;opacity:0;transition:opacity 500ms ease}
+  .dual.on{opacity:1}
+  .dual .slot{position:absolute;top:50%;transform:translateY(-50%);width:45%}
+  .dual .slot.left{left:0}
+  .dual .slot.right{left:55%;opacity:0;transition:opacity 600ms ease,transform 700ms cubic-bezier(.4,0,.2,1);transform:translateY(-50%) translateX(-26px)}
+  .dual .slot.right.in{opacity:1;transform:translateY(-50%)}
+  .dual .card{max-width:none;padding:11px 12px 9px}
+  .dual .card-head{font-size:8px;letter-spacing:.12em;padding-bottom:8px;margin-bottom:8px}
+  .dual .card-head .tag{font-size:7px;padding:2px 5px}
+  .dual .body{font-size:10.5px;line-height:1.5}
+  .dual ul.ticks li{font-size:9.5px}
+  .dual ul.ticks li>span:not(.chk){white-space:nowrap}
+  .dual .ftag{font-size:8px;letter-spacing:.14em}
+  .dual .prims{font-size:7px}
+  .dual .arrow{position:absolute;top:50%;left:46%;width:8%;transform:translateY(-50%);opacity:0;transition:opacity 500ms ease}
+  .dual .arrow.in{opacity:1}
+
+  /* anchor: dots + lifecycle ring */
+  .anchor{position:absolute;right:5.5%;bottom:7%;z-index:6;display:flex;flex-direction:column;align-items:center;gap:9px}
+  .dots{display:flex;gap:10px}
+  .dots button{width:7px;height:7px;border-radius:50%;border:none;padding:0;background:#DED5C4;cursor:pointer;transition:background 300ms,transform 300ms}
+  .dots button.active{background:var(--blue);transform:scale(1.35)}
+  .dots button.done{background:rgba(30,90,168,.45)}
+  .ringwrap{width:86px;height:86px}
+  .ringwrap svg{width:100%;height:100%;overflow:visible}
+  .arcbase{fill:none;stroke:#E8DFCE;stroke-width:4;stroke-linecap:round}
+  .arc{fill:none;stroke-width:4;stroke-linecap:round;stroke-dasharray:200;stroke-dashoffset:200;transition:stroke-dashoffset 2.6s cubic-bezier(.4,0,.2,1)}
+  .arc.a1{stroke:var(--blue)}.arc.a2{stroke:var(--teal)}.arc.a3{stroke:var(--teal)}
+  .arc.fill{stroke-dashoffset:0}
+  .arc.fast{transition-duration:.9s}
+  #ringgrp{transform-origin:48px 48px}
+  #ringgrp.beat{animation:heart 2.4s ease-in-out infinite}
+  @keyframes heart{0%,100%{transform:scale(1);opacity:1}45%{transform:scale(1.045);opacity:.82}}
+  .rlabels{display:flex;gap:6px;font-family:var(--mono);font-size:7px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#BFB4A0}
+  .rlabels span{transition:color 500ms ease}
+  .rlabels span.lit{color:var(--blue)}
+  .rlabels span.done{color:var(--teal)}
+
+  .caption{position:absolute;left:30px;bottom:22px;width:56%;text-align:center;font-size:12.5px;line-height:1.4;color:var(--slate);font-style:italic;z-index:6;opacity:0;transition:opacity 450ms ease}
+  .caption.on{opacity:1}
+
+  /* title / close / signature */
+  .titlecard,.sigcard,.closecard{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 11%}
+  .titlecard .eyebrow,.sigcard .attr{font-family:var(--mono);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+  .titlecard .eyebrow{font-size:10px;margin-bottom:22px}
+  .titlecard .lead{font-family:var(--serif);font-size:31px;line-height:1.28;max-width:26ch;margin:0;text-wrap:pretty}
+  .closecard .bigring{width:150px;height:150px;position:relative;margin-bottom:24px}
+  .closecard .bigring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  #flywheel{transform-origin:100px 100px;transition:transform 4.2s cubic-bezier(.5,0,.5,1)}
+  #flywheel.turn{transform:rotate(360deg)}
+  .ghostarc{fill:none;stroke:var(--amber);stroke-width:3.5;stroke-linecap:round;opacity:.5;stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 3.4s ease}
+  .ghostarc.draw{stroke-dashoffset:105}
+  .closecard .lead{font-family:var(--serif);font-size:29px;line-height:1.3;max-width:26ch;margin:0 0 14px;text-wrap:pretty}
+  .closecard .earned{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--slate);margin:0 0 20px}
+  .closecard .tag{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);white-space:nowrap}
+  .sigcard .quote{font-family:var(--serif);font-size:30px;line-height:1.3;max-width:27ch;margin:0 0 20px;text-wrap:pretty}
+  .sigcard .attr{font-size:10.5px;margin-bottom:26px;white-space:nowrap}
+  .sigcard .more{font-size:12.5px;color:var(--slate);margin-bottom:12px;white-space:nowrap}
+  .sigcard .links{font-family:var(--mono);font-size:9.5px;line-height:1.8;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
+
+  @media (max-width:760px){
+    .page{margin:12px auto;padding:0 10px 24px}
+    .inter .line,.titlecard .lead,.sigcard .quote{font-size:23px}
+    .mini{width:100px}.mini .mline{font-size:7.5px}
+    .ringwrap{width:60px;height:60px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  @media print{html,body{background:var(--paper)}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="scene-frame" id="frame">
+  <div class="wash" id="wash"></div>
+
+  <div class="phase titlecard on" id="p-title">
+    <div class="eyebrow">One Capability · Three Seasons</div>
+    <p class="lead">The world judges Google's AI by its products. Googlers judge it by their Tuesday.</p>
+  </div>
+
+  <div class="phase" id="p-beat">
+    <div class="ctx" id="ctx"></div>
+    <div class="ctx-center" id="ctx-center"></div>
+    <div class="stage" id="stage">
+      <div class="setcol" id="setcol">
+        <svg id="set-0" viewBox="0 0 340 480" preserveAspectRatio="xMidYMid meet" style="display:none">
+          <g class="set-a">
+            <line x1="14" y1="330" x2="326" y2="330" stroke="#C9C4BB" stroke-width="2.5"/>
+            <rect x="70" y="252" width="200" height="5" rx="2" fill="#E7E4DD" stroke="#C9C4BB" stroke-width="1.5"/>
+            <line x1="96" y1="257" x2="96" y2="330" stroke="#C9C4BB" stroke-width="2"/>
+            <line x1="244" y1="257" x2="244" y2="330" stroke="#C9C4BB" stroke-width="2"/>
+            <rect x="118" y="234" width="34" height="18" rx="2" fill="none" stroke="#A8A399" stroke-width="1.5"/>
+            <rect x="186" y="240" width="26" height="12" rx="2" fill="none" stroke="#A8A399" stroke-width="1.5"/>
+            <circle cx="86" cy="196" r="14" fill="#2A2018"/>
+            <path d="M 64 252 Q 64 222 86 220 Q 108 222 108 252 Z" fill="#3A342C"/>
+            <rect x="77" y="226" width="18" height="6" rx="3" fill="#1E5AA8"/>
+            <circle cx="252" cy="200" r="13" fill="#4A3A28"/>
+            <path d="M 232 252 Q 232 224 252 222 Q 272 224 272 252 Z" fill="#575046"/>
+            <rect x="80" y="80" width="180" height="112" rx="4" fill="#FFFDF7" stroke="#D8D5CF" stroke-width="1.5"/>
+            <line x1="100" y1="106" x2="176" y2="106" stroke="#1E5AA8" stroke-width="3"/>
+            <line x1="100" y1="126" x2="240" y2="126" stroke="#DCD9D2" stroke-width="3"/>
+            <line x1="100" y1="144" x2="220" y2="144" stroke="#DCD9D2" stroke-width="3"/>
+            <line x1="100" y1="162" x2="238" y2="162" stroke="#DCD9D2" stroke-width="3"/>
+          </g>
+        </svg>
+        <svg id="set-1" viewBox="0 0 340 480" preserveAspectRatio="xMidYMid meet" style="display:none">
+          <g class="set-a">
+            <line x1="14" y1="340" x2="326" y2="340" stroke="#C9C4BB" stroke-width="2.5"/>
+            <path d="M 90 340 L 90 236 L 170 184 L 250 236 L 250 340 Z" fill="none" stroke="#8A8275" stroke-width="2.5"/>
+            <rect x="122" y="262" width="42" height="34" fill="#EDEAE3" stroke="#A8A399" stroke-width="1.5"/>
+            <rect x="192" y="262" width="34" height="34" fill="#F2E6CC" stroke="#A8A399" stroke-width="1.5"/>
+            <rect x="150" y="304" width="34" height="36" fill="none" stroke="#A8A399" stroke-width="1.5"/>
+            <g id="zzz" opacity="0" style="transition:opacity 900ms ease">
+              <text x="238" y="248" font-family="'JetBrains Mono',monospace" font-size="12" fill="#8A8275">z</text>
+              <text x="252" y="234" font-family="'JetBrains Mono',monospace" font-size="9" fill="#A8A399">z</text>
+              <text x="263" y="223" font-family="'JetBrains Mono',monospace" font-size="7" fill="#C0BBB1">z</text>
+            </g>
+            <g id="sun" opacity="0" style="transition:opacity 900ms ease">
+              <circle cx="268" cy="120" r="18" fill="none" stroke="#D4922A" stroke-width="2"/>
+              <g stroke="#D4922A" stroke-width="2" stroke-linecap="round"><line x1="268" y1="90" x2="268" y2="80"/><line x1="296" y1="120" x2="306" y2="120"/><line x1="289" y1="99" x2="296" y2="92"/><line x1="289" y1="141" x2="296" y2="148"/></g>
+            </g>
+          </g>
+        </svg>
+        <svg id="set-2" viewBox="0 0 340 480" preserveAspectRatio="xMidYMid meet" style="display:none">
+          <g class="set-a">
+            <line x1="14" y1="330" x2="326" y2="330" stroke="#C9C4BB" stroke-width="2.5"/>
+            <rect x="86" y="90" width="168" height="104" rx="4" fill="#FFFDF7" stroke="#D8D5CF" stroke-width="1.5"/>
+            <line x1="104" y1="118" x2="170" y2="118" stroke="#0E7C74" stroke-width="3"/>
+            <line x1="104" y1="138" x2="232" y2="138" stroke="#DCD9D2" stroke-width="3"/>
+            <line x1="104" y1="156" x2="212" y2="156" stroke="#DCD9D2" stroke-width="3"/>
+            <rect x="60" y="248" width="220" height="5" rx="2" fill="#E7E4DD" stroke="#C9C4BB" stroke-width="1.5"/>
+            <line x1="88" y1="253" x2="88" y2="330" stroke="#C9C4BB" stroke-width="2"/>
+            <line x1="252" y1="253" x2="252" y2="330" stroke="#C9C4BB" stroke-width="2"/>
+            <circle cx="112" cy="194" r="13" fill="#2A2018"/>
+            <path d="M 92 248 Q 92 220 112 218 Q 132 220 132 248 Z" fill="#3A342C"/>
+            <rect x="104" y="224" width="17" height="6" rx="3" fill="#1E5AA8"/>
+            <circle cx="176" cy="198" r="13" fill="#4A3A28"/>
+            <path d="M 156 248 Q 156 222 176 220 Q 196 222 196 248 Z" fill="#575046"/>
+            <circle cx="240" cy="196" r="13" fill="#3B2E22"/>
+            <path d="M 220 248 Q 220 220 240 218 Q 260 220 260 248 Z" fill="#4B443A"/>
+            <rect x="232" y="224" width="17" height="6" rx="3" fill="#0E7C74"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="constel" id="constel">
+        <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+      </div>
+
+      <div class="dual" id="dual">
+        <div class="slot left" id="slot-l"></div>
+        <svg class="arrow" id="dual-arrow" viewBox="0 0 40 20" preserveAspectRatio="xMidYMid meet"><line x1="2" y1="10" x2="30" y2="10" stroke="#0E7C74" stroke-width="1.6" stroke-dasharray="4 3"/><path d="M 28 5 L 37 10 L 28 15" fill="none" stroke="#0E7C74" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <div class="slot right" id="slot-r"></div>
+      </div>
+
+      <div class="mainmount" id="mainmount"></div>
+
+      <div class="anchor">
+        <div class="dots" id="dots">
+          <button data-b="0" aria-label="Beat 1 · Born"></button>
+          <button data-b="1" aria-label="Beat 2 · Run"></button>
+          <button data-b="2" aria-label="Beat 3 · Multiply"></button>
+        </div>
+        <div class="ringwrap">
+          <svg viewBox="0 0 96 96">
+            <g id="ringgrp">
+              <path class="arcbase" d="M 50.4 14.1 A 34 34 0 0 1 78.6 62.9"/>
+              <path class="arcbase" d="M 76.2 67 A 34 34 0 0 1 19.8 67"/>
+              <path class="arcbase" d="M 17.4 62.9 A 34 34 0 0 1 45.6 14.1"/>
+              <path class="arc a1" id="arc1" d="M 50.4 14.1 A 34 34 0 0 1 78.6 62.9"/>
+              <path class="arc a2" id="arc2" d="M 76.2 67 A 34 34 0 0 1 19.8 67"/>
+              <path class="arc a3" id="arc3" d="M 17.4 62.9 A 34 34 0 0 1 45.6 14.1"/>
+            </g>
+          </svg>
+        </div>
+        <div class="rlabels" id="rlabels"><span>Born</span><span>Run</span><span>Multiply</span></div>
+      </div>
+    </div>
+    <div class="caption" id="caption"></div>
+  </div>
+
+  <div class="inter" id="inter"><div class="line" id="inter-line"></div></div>
+
+  <div class="phase closecard" id="p-close">
+    <div class="bigring">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="44" fill="none" stroke="#E8DFCE" stroke-width="1"/>
+        <path class="ghostarc" id="ghostarc" d="M 100 44 A 56 56 0 1 1 51.5 128"/>
+        <g id="flywheel">
+          <path d="M 105.6 22.3 A 78 78 0 0 1 170.3 134.3" fill="none" stroke="#1E5AA8" stroke-width="5" stroke-linecap="round"/>
+          <path d="M 165.1 143.8 A 78 78 0 0 1 34.9 143.8" fill="none" stroke="#0E7C74" stroke-width="5" stroke-linecap="round"/>
+          <path d="M 29.7 134.3 A 78 78 0 0 1 94.4 22.3" fill="none" stroke="#0E7C74" stroke-width="5" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <p class="lead">One capability's life. Now multiply by every process at Google.</p>
+    <p class="earned">Your users invented the transformer. Ship accordingly.</p>
+    <div class="tag">The lifecycle is the strategy</div>
+  </div>
+
+  <div class="phase sigcard" id="p-sig">
+    <p class="quote">“Human capability compounds or degrades based on how the collaboration is designed.”</p>
+    <div class="attr">Maura K. Randall</div>
+    <div class="more">See more of the practice:</div>
+    <div class="links">maurakrandall.github.io · aigal.io · linkedin.com/in/maurakrandall</div>
+  </div>
+</div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const CHK = '<span class="chk"><svg viewBox="0 0 12 12"><path d="M2.5 6.2 L5 8.6 L9.5 3.4"/></svg></span>';
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+const META = [
+  {title:'Born', ctx:'Week 0 · CorpEng · An Idea', ctxB:'Week 5 · The MVP · First Pilot Team', inter:'A capability starts close to the work \u2014 with the people who feel the friction.', closing:'The team declared the outcome. The ecosystem assembled around it.'},
+  {title:'Run', ctx:'Week 9 · In Production · 2:04 AM', inter:'Nobody demos 2 AM. <span class="accent">That’s where trust is earned.</span>', closing:'Uptime is table stakes. This layer also listens.'},
+  {title:'Multiply', ctx:'Week 20 · A Different Org · The Same Friction', inter:'Codified once. <span class="accent">Adopted in days.</span>', closing:'Built once. Owned for life. Compounding everywhere.'}
+];
+
+const HYPO = "Kicking off a project here costs the first three weeks in tickets. We think it should cost one sentence. Let’s prove it. — Welcome to Project Monday.";
+const INTENT = "New project starts next sprint. Six people, two time zones, a fresh codebase, EU data rules apply.";
+const AGENTS = [
+  {x:15, y:13, label:'Staffing', line:'STAFFING ↔ CONTEXT: six roles matched to the real stack'},
+  {x:50, y:11, label:'Access', line:'ACCESS ↔ CONTEXT: repo permissions scoped to the team'},
+  {x:85, y:13, label:'Hardware', line:'HARDWARE ↔ BUDGET: dev boxes staged in both zones'},
+  {x:74, y:87, label:'Budget', line:'BUDGET ↔ STAFFING: quarter modelled, no week-six surprise'},
+  {x:26, y:87, label:'Context', line:'CONTEXT ↔ POLICY: EU rules read once, applied everywhere'}
+];
+
+let timers = [], runId = 0;
+const later = (ms, fn) => { const id = runId; const t = setTimeout(() => { if (id === runId) fn(); }, ms); timers.push(t); return t; };
+const clearAll = () => { runId++; timers.forEach(clearTimeout); timers = []; };
+
+function showOnly(id){ ['p-title','p-beat','p-close','p-sig'].forEach(p => $('#'+p).classList.toggle('on', p===id)); $('#inter').classList.remove('on'); }
+const inter = html => { $('#inter-line').innerHTML = html; $('#inter').classList.add('on'); };
+const interOff = () => $('#inter').classList.remove('on');
+function setWash(m){ const w=$('#wash'); w.classList.remove('night','morning','blue'); if(m) w.classList.add(m); }
+function setSet(idx){ [0,1,2].forEach(i => $('#set-'+i).style.display = (i===idx?'':'none')); $('#setcol').classList.toggle('on', idx>=0); }
+function setCaption(t,on){ const c=$('#caption'); c.textContent=t||''; c.classList.toggle('on',!!on); }
+
+let currentBeat = -1;
+function updateDots(){ $('#dots').querySelectorAll('button').forEach((b,i)=>{ b.classList.toggle('active', i===currentBeat); b.classList.toggle('done', i<currentBeat); }); }
+$('#dots').querySelectorAll('button').forEach((b,i)=>b.addEventListener('click',()=>runBeat(i)));
+
+// lifecycle ring
+function ring(filled, opts){
+  opts = opts||{};
+  [1,2,3].forEach(n=>{
+    const a = $('#arc'+n);
+    a.classList.toggle('fast', !!opts.fast);
+    a.classList.toggle('fill', n <= filled);
+  });
+  $('#ringgrp').classList.toggle('beat', !!opts.pulse);
+  const sp = $('#rlabels').children;
+  for (let i=0;i<3;i++){ sp[i].classList.toggle('done', i < filled); sp[i].classList.toggle('lit', i === filled); }
+}
+function ringReset(){ [1,2,3].forEach(n=>{ const a=$('#arc'+n); a.classList.remove('fill','fast'); }); $('#ringgrp').classList.remove('beat'); [...$('#rlabels').children].forEach(s=>s.classList.remove('lit','done')); }
+
+function type(el, text, cps, blue, done){
+  el.textContent = '';
+  const c = document.createElement('span'); c.className = 'caret' + (blue?' blue':''); el.appendChild(c);
+  let i = 0;
+  (function step(){ if(i>=text.length){ c.classList.add('gone'); done&&done(); return; } c.insertAdjacentText('beforebegin', text[i++]); later(cps, step); })();
+}
+const dur = (s, cps) => s.length * (cps||28);
+
+// ── card builders ──
+let NPHTML = 'Project Monday · Hypothesis', NPPULSE = false;
+function setNP(html){ NPHTML = html; document.querySelectorAll('.card-head .tag.np').forEach(n=>n.innerHTML = html); }
+const npTag = () => `<span class="tag np${NPPULSE?' pulse':''} on">${NPHTML}</span>`;
+function renameArc(){
+  const w = document.querySelector('.card-head .tag.np .npword');
+  if (!w){ setNP('Monday · MVP · In Production'); return; }
+  w.classList.add('hot');
+  later(850, ()=> w.classList.add('out'));
+  later(1750, ()=> setNP('Monday · MVP · In Production'));
+}
+function setCtx(idx, strip, movement){
+  $('#ctx').innerHTML = `<span class="beatnum">0${idx+1}</span><span class="btitle">${META[idx].title}</span>`
+    + (movement?`<span class="mv">${movement}</span>`:'')
+    + `<span style="opacity:.45">—</span><span>${strip || META[idx].ctx}</span>`;
+  $('#ctx').classList.add('on');
+}
+function cardQuote(){
+  const el = document.createElement('div'); el.className = 'card human qcard';
+  el.innerHTML = `<div class="card-head"><span class="bdot"></span>CorpEng · The Bet<span class="tag np on">${NPHTML}</span></div>
+  <p class="hquote">“${HYPO}”</p>
+  <div class="hattr">— A Product Manager, CorpEng</div>
+  <div class="lines" id="lines"></div>
+  <div class="footer-row"><span class="ftag declared"><span class="fdot"></span>Hypothesis</span><span class="prims">Week 0 · The Bet</span></div>`;
+  return el;
+}
+function cardHuman(){
+  const el = document.createElement('div'); el.className = 'card human';
+  el.innerHTML = `<div class="card-head"><span class="bdot"></span>Pilot Team · Declared${npTag()}</div>
+  <p class="body" id="hbody"></p>
+  <div class="footer-row"><span class="ftag declared"><span class="fdot"></span>Declared Outcome</span><span class="prims">Week 5 · Intent</span></div>`;
+  return el;
+}
+function cardAgent(o){
+  const el = document.createElement('div'); el.className = 'card';
+  const tag = o.np ? `<span class="tag on">${o.np}</span>` : npTag();
+  el.innerHTML = `<div class="card-head"><span class="bdot"></span>EAIC · ${o.agent}${tag}</div>
+  <div class="lines" id="lines"></div>
+  <div class="footer-row"><span class="ftag ${o.fclass}"><span class="fdot"></span>${o.footer}</span><span class="prims">${o.prim||''}</span></div>`;
+  return el;
+}
+function mini(a){
+  const el = document.createElement('div'); el.className='mini';
+  el.style.left = a.x+'%'; el.style.top = a.y+'%';
+  el.innerHTML = `<div class="mlabel">${CHK}${a.label}</div><div class="mline">${a.line}</div>`;
+  return el;
+}
+
+// ══ BEAT ENGINE ══
+function runBeat(idx){
+  clearAll(); currentBeat = idx; updateDots();
+  const m = META[idx];
+  showOnly('p-beat'); setWash(null); setSet(-1); setCaption('', false);
+  $('#mainmount').innerHTML=''; $('#constel').classList.remove('on','ghost'); $('#dual').classList.remove('on');
+  $('#slot-l').innerHTML=''; $('#slot-r').innerHTML=''; $('#slot-r').classList.remove('in'); $('#dual-arrow').classList.remove('in');
+  $('#ctx').classList.remove('on'); $('#stage').classList.add('hid');
+  if (idx === 0) { ringReset(); NPPULSE = false; NPHTML = 'Project Monday · Hypothesis'; }
+  else { ring(idx, {fast:true}); NPPULSE = (idx === 1); NPHTML = idx === 1 ? 'Monday · In Production' : 'Monday · Codified'; }
+
+  const cc = $('#ctx-center');
+  cc.innerHTML = `<div class="num">0${idx+1}</div><div class="btitle">${m.title}</div><div class="strip">${m.ctx}</div>`;
+  cc.classList.add('on');
+  let t = 2600;
+  later(t, ()=>{ cc.classList.remove('on'); inter(m.inter); });
+  t += 3000;
+  later(t, ()=>{
+    interOff();
+    $('#stage').classList.remove('hid');
+    [movementA, run, multiply][idx]();
+  });
+}
+
+function endBeat(idx, extra){
+  const m = META[idx];
+  let t = extra || 0;
+  later(t, ()=>{ ring(idx+1); });
+  t += 1100;
+  later(t, ()=>{ setCaption(m.closing, true); });
+  t += 2900;
+  later(t, ()=>{ setCaption('', false); $('#p-beat').classList.remove('on'); });
+  later(t+700, ()=>{ if (idx < 2) runBeat(idx+1); else runClose(); });
+}
+
+// ── BEAT 01 · BORN — Movement A · The Hypothesis (cold open) ──
+function movementA(){
+  setCtx(0, META[0].ctx, 'Movement A · The Hypothesis');
+  setWash('blue'); setSet(-1); ring(0);
+  const mm = $('#mainmount'); mm.classList.add('wide'); mm.innerHTML = '';
+  const c = cardQuote(); mm.appendChild(c); later(40, ()=>c.classList.add('pop'));
+  later(8700, ()=>{
+    const chip = document.createElement('span'); chip.className = 'chip stamp';
+    chip.textContent = 'Project Monday · Stage: Hypothesis';
+    c.querySelector('#lines').appendChild(chip); chip.classList.add('show');
+  });
+  later(11200, movementBIntro);
+}
+function movementBIntro(){
+  const cc = $('#ctx-center');
+  $('#stage').classList.add('hid'); $('#ctx').classList.remove('on');
+  cc.innerHTML = `<div class="num">01</div><div class="btitle">Born</div><div class="strip">${META[0].ctxB}</div>`;
+  cc.classList.add('on');
+  later(2400, ()=>{ cc.classList.remove('on'); $('#stage').classList.remove('hid'); movementB(); });
+}
+
+// ── BEAT 01 · BORN — Movement B · The Test ──
+function movementB(){
+  setCtx(0, META[0].ctxB, 'Movement B · The Test');
+  setWash('blue'); setSet(0); ring(0);
+  NPHTML = '<span class="npword">Project&nbsp;</span>Monday · MVP';
+  const mm = $('#mainmount'); mm.classList.remove('wide'); mm.innerHTML = '';
+  const card = cardHuman(); card.style.maxWidth = '450px'; mm.appendChild(card); later(40, ()=>card.classList.add('pop'));
+  let t = 300;
+  later(t, ()=> type(card.querySelector('#hbody'), INTENT, 26, true));
+  t += dur(INTENT,26) + 700;
+
+  // assembly: wires + satellites
+  later(t, ()=>{
+    const constel = $('#constel'), svg = constel.querySelector('svg.wires');
+    svg.innerHTML = AGENTS.map(a=>`<line class="wire" x1="50" y1="50" x2="${a.x}" y2="${a.y}" vector-effect="non-scaling-stroke"/>`).join('');
+    constel.querySelectorAll('.mini').forEach(n=>n.remove());
+    AGENTS.forEach(a=>constel.appendChild(mini(a)));
+    constel.classList.add('on');
+    constel.querySelectorAll('.wire').forEach(w=>{ w.style.opacity='0'; w.style.transition='opacity 300ms ease'; });
+    AGENTS.forEach((a,i)=>later(i*430, ()=>{
+      constel.querySelectorAll('.wire')[i].style.opacity='.45';
+      constel.querySelectorAll('.mini')[i].classList.add('pop');
+    }));
+  });
+  t += AGENTS.length*430 + 1900;
+
+  // human decision, constellation ghosts behind
+  later(t, ()=>{
+    $('#constel').classList.add('ghost');
+    mm.innerHTML='';
+    const c = cardAgent({agent:'Staffing', footer:'Your Call', fclass:'yourcall', prim:'Escalation · Judgment'});
+    mm.appendChild(c); later(40, ()=>c.classList.add('pop'));
+    const lines = c.querySelector('#lines');
+    const p = document.createElement('p'); p.className='body'; lines.appendChild(p);
+    const txt = "Two staffing options close the skills gap: a transfer with ramp-up time, or a contractor with budget impact. Your call, not mine.";
+    c.classList.add('amber'); later(2100, ()=>c.classList.remove('amber'));
+    type(p, txt, 28, false, ()=>{
+      later(600, ()=>{
+        const chip = document.createElement('span'); chip.className='chip';
+        chip.textContent = '“Take the transfer — we\u2019re playing the long game.”';
+        lines.appendChild(chip); chip.classList.add('show');
+      });
+    });
+  });
+  t += dur("Two staffing options close the skills gap: a transfer with ramp-up time, or a contractor with budget impact. Your call, not mine.") + 2100;
+  later(t, renameArc);
+  t += 2600;
+  endBeat(0, t);
+}
+
+// ── BEAT 02 · RUN ──
+const LOGS = ['00:14:30  MONDAY · policy v4 · 1,412 calls · confidence 0.94','01:02:55  context graph sync · ok','01:48:07  guardrail sweep · 0 violations','02:03:58  access-scoping confidence 0.71 · below band'];
+const FLARE = ['2:04 AM · MONDAY · access-scoping drifted wide on one repo pattern','rolled back to last good policy · guardrail held'];
+const BRIEF = "Overnight: MONDAY caught its own access-scoping drifting wide on one repo pattern — rolled back inside guardrails. One thing needs your judgment: the corrected scope narrows an edge case for the Dublin team. Approve, or widen the guardrail?";
+const LISTEN = "Satisfaction signal dipped 4 points this week for one workflow — no complaint filed yet. Likely cause traced. Proposed fix attached.";
+function run(){
+  setCtx(1); setWash('night'); setSet(1); ring(1, {pulse:true});
+  NPPULSE = true; NPHTML = 'Monday · In Production';
+  later(500, ()=> $('#zzz').setAttribute('opacity','1'));
+  const mm = $('#mainmount'); mm.classList.remove('wide'); mm.innerHTML='';
+  const c = cardAgent({agent:'Observability', footer:'In Production', fclass:'prod', prim:'Self-Repair · Guardrails'});
+  const lines = c.querySelector('#lines');
+  const logWrap = document.createElement('div'); logWrap.className='log';
+  LOGS.forEach(l=>{ const d=document.createElement('div'); d.textContent=l; logWrap.appendChild(d); });
+  FLARE.forEach(l=>{ const d=document.createElement('div'); d.className='flare'; d.textContent=l; logWrap.appendChild(d); });
+  lines.appendChild(logWrap);
+  mm.appendChild(c); later(40, ()=>c.classList.add('pop'));
+  let t = 700;
+  LOGS.forEach((l,i)=>later(t + i*420, ()=> logWrap.children[i].classList.add('on')));
+  t += LOGS.length*420 + 700;
+  later(t, ()=>{
+    logWrap.children[LOGS.length].classList.add('on');
+    later(260, ()=> logWrap.children[LOGS.length+1].classList.add('on'));
+    c.classList.add('amber'); later(2400,()=>c.classList.remove('amber'));
+  });
+  t += 4200;
+  later(t, ()=>{
+    const n = document.createElement('div'); n.className='log'; n.style.marginTop='2px';
+    const d = document.createElement('div'); d.textContent='02:04:06  self-repaired · no human woken'; d.style.color='#0E7C74';
+    n.appendChild(d); lines.appendChild(n); later(60,()=>d.classList.add('on'));
+  });
+  t += 3000;
+
+  // morning
+  later(t, ()=>{
+    setWash('morning'); $('#zzz').setAttribute('opacity','0'); $('#sun').setAttribute('opacity','1');
+    mm.innerHTML='';
+    const b = cardAgent({agent:'Morning Brief', footer:'Your Call', fclass:'yourcall', prim:'Week 9 · Judgment'});
+    mm.appendChild(b); later(40, ()=>b.classList.add('pop'));
+    const L = b.querySelector('#lines');
+    const p = document.createElement('p'); p.className='body'; L.appendChild(p);
+    later(420, ()=> type(p, BRIEF, 26, false, ()=> later(700, ()=>{
+      const chip=document.createElement('span'); chip.className='chip';
+      chip.textContent='“Approve — and flag it for the retro.”'; L.appendChild(chip); chip.classList.add('show');
+    })));
+  });
+  t += dur(BRIEF,26) + 3400;
+
+  // listening moment
+  later(t, ()=>{
+    mm.innerHTML='';
+    const l = cardAgent({agent:'Signals', footer:'In Production', fclass:'prod', prim:'Unasked · Human Signal'});
+    mm.appendChild(l); later(40, ()=>l.classList.add('pop'));
+    l.classList.add('amber'); later(2400, ()=>l.classList.remove('amber'));
+    const L = l.querySelector('#lines');
+    const p = document.createElement('p'); p.className='body'; L.appendChild(p);
+    later(420, ()=> type(p, LISTEN, 28));
+  });
+  t += dur(LISTEN) + 2400;
+  endBeat(1, t);
+}
+
+// ── BEAT 03 · MULTIPLY ──
+const ADAPT = ['Context graph read: new org, same friction','Shared protocol · same card anatomy','EU rules swapped for APAC residency','Live for team two · day 3'];
+const SCORE = [['Kickoff, end to end','16 days → <em>2</em>'],['Builder-hours returned','1,900'],['Satisfaction since launch','+11'],['Teams live · in queue','2 <em>· 14</em>']];
+const SCALE = "The queue is real. Recommend org-wide rollout next quarter — the evidence is attached, the call is yours.";
+function multiply(){
+  setCtx(2); setWash(null); setSet(2); ring(2);
+  NPPULSE = false; NPHTML = 'Monday · Codified';
+  const mm = $('#mainmount'); mm.innerHTML=''; mm.classList.remove('wide');
+  $('#dual').classList.add('on');
+  const l = cardAgent({agent:'Monday', np:'Monday · Codified', footer:'Codified', fclass:'codified', prim:'Team One · Week 9'});
+  l.querySelector('#lines').innerHTML = `<p class="body">Staffing, access, hardware, budget and context — negotiated once, packaged as one capability the org can call.</p>`;
+  $('#slot-l').appendChild(l); later(40, ()=>l.classList.add('pop'));
+  let t = 2600;
+  later(t, ()=>{
+    const r = cardAgent({agent:'Monday', np:'Monday · Team Two', footer:'In Production', fclass:'prod', prim:'Team Two · Day 3'});
+    r.querySelector('#lines').innerHTML = `<div class="zlabel">Adapting to context</div><ul class="ticks" id="ad"></ul>`;
+    $('#slot-r').appendChild(r);
+    $('#slot-r').classList.add('in'); $('#dual-arrow').classList.add('in');
+    later(300, ()=>r.classList.add('pop'));
+    const ul = r.querySelector('#ad');
+    ADAPT.forEach((txt,i)=>later(1100 + i*350, ()=>{
+      const li=document.createElement('li'); li.innerHTML = CHK+'<span>'+txt+'</span>'; ul.appendChild(li); later(30,()=>li.classList.add('tick'));
+    }));
+  });
+  t += 1100 + ADAPT.length*350 + 3400;
+
+  // scoreboard
+  later(t, ()=>{
+    $('#dual').classList.remove('on'); setSet(-1);
+    mm.classList.add('wide');
+    const s = cardAgent({agent:'Season Review', footer:'Codified', fclass:'codified', prim:'Week 20 · Evidence'});
+    s.style.maxWidth='620px';
+    s.querySelector('#lines').innerHTML = `<div class="score" id="sc">${SCORE.map(([k,v])=>`<div class="cell"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`;
+    mm.appendChild(s); later(40, ()=>s.classList.add('pop'));
+    s.querySelectorAll('.cell').forEach((c,i)=>later(700 + i*400, ()=>c.classList.add('on')));
+  });
+  t += 700 + SCORE.length*400 + 4200;
+
+  // scale decision
+  later(t, ()=>{
+    mm.innerHTML=''; mm.classList.remove('wide'); setSet(2);
+    const d = cardAgent({agent:'Program', footer:'Your Call', fclass:'yourcall', prim:'Scale · On Evidence'});
+    mm.appendChild(d); later(40, ()=>d.classList.add('pop'));
+    d.classList.add('amber'); later(2400, ()=>d.classList.remove('amber'));
+    const L = d.querySelector('#lines');
+    const p = document.createElement('p'); p.className='body'; L.appendChild(p);
+    later(420, ()=> type(p, SCALE, 28, false, ()=> later(700, ()=>{
+      const chip=document.createElement('span'); chip.className='chip';
+      chip.textContent='“Scale it. And retire the pilot flags.”'; L.appendChild(chip); chip.classList.add('show');
+      later(500, ()=> setNP('Monday · Scaled · Org-Wide'));
+    })));
+  });
+  t += dur(SCALE) + 4200;
+  endBeat(2, t);
+}
+
+// ── CLOSE ──
+function runClose(){
+  clearAll(); currentBeat=-1; updateDots(); setWash(null);
+  const fw = $('#flywheel'), gh = $('#ghostarc');
+  fw.classList.remove('turn'); gh.classList.remove('draw');
+  void fw.getBoundingClientRect();
+  showOnly('p-close');
+  later(500, ()=>{ fw.classList.add('turn'); });
+  later(2200, ()=> gh.classList.add('draw'));
+  later(7200, runSig);
+}
+function runSig(){ clearAll(); showOnly('p-sig'); later(5400, runTitle); }
+function runTitle(){ clearAll(); currentBeat=-1; updateDots(); setWash(null); ringReset(); showOnly('p-title'); later(5000, ()=>runBeat(0)); }
+
+// ── static frame export hook ──
+// export captures must be instantaneous: kill phase crossfades and sync every indicator
+function showSnap(id){
+  document.querySelectorAll('.phase').forEach(p=>p.style.transition='none');
+  document.querySelectorAll('.arc').forEach(a=>a.style.transition='none');
+  $('#inter').style.transition='none'; $('#wash').style.transition='none';
+  showOnly(id);
+}
+// capture safety: rasterizer re-flows HTML text — pin wrap-sensitive chips as SVG
+// export determinism: bake every class-driven opacity/color into inline styles
+function pinState(){
+  const kill = el => { el.style.transition = 'none'; el.style.animation = 'none'; };
+  const nodes = document.querySelectorAll('#ctx,#stage,#caption,#dots button,#rlabels span,.arc,.setcol,.constel,.wire,.dual,.dual .slot,.dual .arrow,.mini,ul.ticks li,.log div,.score .cell,.card-head .tag,.card,.chip');
+  nodes.forEach(kill);
+  $('#ctx').style.opacity = $('#ctx').classList.contains('on') ? '1' : '0';
+  $('#stage').style.opacity = $('#stage').classList.contains('hid') ? '0' : '1';
+  document.querySelectorAll('#dots button').forEach(b=>{
+    b.style.background = b.classList.contains('active') ? '#1E5AA8' : (b.classList.contains('done') ? 'rgba(30,90,168,.45)' : '#DED5C4');
+    b.style.transform = b.classList.contains('active') ? 'scale(1.35)' : 'none';
+  });
+  [...$('#rlabels').children].forEach(s=>{ s.style.color = s.classList.contains('done') ? '#0E7C74' : (s.classList.contains('lit') ? '#1E5AA8' : '#BFB4A0'); });
+  document.querySelectorAll('.arc').forEach(a=>{ a.style.strokeDashoffset = a.classList.contains('fill') ? '0' : '200'; });
+  const cap = $('#caption'); cap.style.opacity = cap.classList.contains('on') ? '1' : '0';
+  document.querySelectorAll('.setcol').forEach(s=>s.style.opacity = s.classList.contains('on') ? '1' : '0');
+  document.querySelectorAll('.constel').forEach(c=>c.style.opacity = c.classList.contains('on') ? (c.classList.contains('ghost') ? '.16' : '1') : '0');
+  document.querySelectorAll('.wire').forEach(w=>w.style.opacity='.45');
+  document.querySelectorAll('.dual').forEach(d=>d.style.opacity = d.classList.contains('on') ? '1' : '0');
+  document.querySelectorAll('.dual .slot.right').forEach(s=>{ if(s.classList.contains('in')){ s.style.opacity='1'; s.style.transform='translateY(-50%)'; } });
+  document.querySelectorAll('.dual .arrow').forEach(a=>{ if(a.classList.contains('in')) a.style.opacity='1'; });
+  document.querySelectorAll('.mini').forEach(m=>{ if(m.classList.contains('pop')){ m.style.opacity='1'; m.style.transform='translate(-50%,-50%)'; } });
+  document.querySelectorAll('ul.ticks li').forEach(l=>{ if(l.classList.contains('tick')){ l.style.opacity='1'; l.style.transform='none'; } });
+  document.querySelectorAll('.log div').forEach(d=>{ if(d.classList.contains('on')) d.style.opacity='1'; });
+  document.querySelectorAll('.score .cell').forEach(c=>{ if(c.classList.contains('on')){ c.style.opacity='1'; c.style.transform='none'; } });
+  document.querySelectorAll('.card-head .tag').forEach(t=>t.style.opacity='1');
+  document.querySelectorAll('.card').forEach(c=>{ c.style.opacity='1'; c.style.transform='none'; });
+  document.querySelectorAll('.chip').forEach(c=>{ c.style.opacity='1'; c.style.transform='none'; });
+  document.querySelectorAll('.chk path').forEach(p=>{ p.style.animation='none'; p.style.strokeDashoffset='0'; });
+  document.querySelectorAll('.phase').forEach(p=>{ p.style.transition='none'; });
+  $('#wash').style.transition='none';
+  $('#flywheel').style.transition='none';
+  $('#ghostarc').style.transition='none';
+  $('#ringgrp').style.animation='none';
+}
+function pinChips(){
+  document.querySelectorAll('#mainmount .chip, #slot-l .chip, #slot-r .chip').forEach(ch=>{
+    const mono = ch.classList.contains('stamp');
+    const r = ch.getBoundingClientRect(); const w = Math.ceil(r.width)+14, h = Math.ceil(r.height), fs = mono ? 9 : 11.5;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('width', w); svg.setAttribute('height', h); svg.style.display='block';
+    svg.innerHTML = `<rect x="1" y="1" width="${w-2}" height="${h-2}" rx="${(h-2)/2}" fill="rgba(30,90,168,0.04)" stroke="#1E5AA8" stroke-width="1.5"/><text x="${w/2}" y="${h/2+fs*.36}" text-anchor="middle" font-family="${mono?"'JetBrains Mono',monospace":"'Inter Tight',sans-serif"}" font-size="${fs}" font-weight="${mono?600:500}" letter-spacing="${mono?1.2:0}" fill="#1E5AA8">${esc(mono?ch.textContent.toUpperCase():ch.textContent)}</text>`;
+    ch.replaceWith(svg);
+  });
+}
+function fillFinal(idx){
+  // renders the final visual state of a beat with no animation pending
+  clearAll(); showSnap('p-beat'); $('#stage').classList.remove('hid'); $('#ctx-center').classList.remove('on');
+  currentBeat = idx; updateDots();
+  const m = META[idx];
+  const strip = idx === 0 ? m.ctxB : m.ctx;
+  const mvlabel = idx === 0 ? 'Movement B · The Test' : '';
+  NPPULSE = false;
+  NPHTML = idx === 0 ? 'Monday · MVP · In Production' : (idx === 1 ? 'Monday · In Production' : 'Monday · Scaled · Org-Wide');
+  setCtx(idx, strip, mvlabel);
+  $('#constel').classList.remove('on','ghost'); $('#dual').classList.remove('on');
+  $('#slot-l').innerHTML=''; $('#slot-r').innerHTML=''; $('#mainmount').innerHTML='';
+  ring(idx+1, {fast:true});
+  const mm = $('#mainmount'); mm.classList.remove('wide');
+  if (idx === 0){
+    setWash('blue'); setSet(0);
+    const constel = $('#constel'); constel.querySelector('svg.wires').innerHTML = AGENTS.map(a=>`<line class="wire" x1="50" y1="50" x2="${a.x}" y2="${a.y}" vector-effect="non-scaling-stroke"/>`).join('');
+    constel.querySelectorAll('.mini').forEach(n=>n.remove());
+    AGENTS.forEach(a=>{ const n = mini(a); n.classList.add('pop'); constel.appendChild(n); });
+    constel.classList.add('on','ghost');
+    const c = cardAgent({agent:'Staffing', footer:'Your Call', fclass:'yourcall', prim:'Escalation · Judgment'});
+    mm.appendChild(c);
+    const L = c.querySelector('#lines');
+    L.innerHTML = `<p class="body">Two staffing options close the skills gap: a transfer with ramp-up time, or a contractor with budget impact. Your call, not mine.</p>`;
+    const chip=document.createElement('span'); chip.className='chip'; chip.style.opacity='1';
+    chip.textContent='“Take the transfer — we\u2019re playing the long game.”'; L.appendChild(chip);
+  } else if (idx === 1){
+    setWash('morning'); setSet(1); $('#zzz').setAttribute('opacity','0'); $('#sun').setAttribute('opacity','1');
+    const b = cardAgent({agent:'Signals', footer:'In Production', fclass:'prod', prim:'Unasked · Human Signal'});
+    mm.appendChild(b);
+    b.querySelector('#lines').innerHTML = `<p class="body">Satisfaction signal dipped 4 points this week for one workflow — no complaint filed yet. Likely cause traced. Proposed fix attached.</p>`;
+    b.classList.add('amber');
+  } else {
+    setWash(null); setSet(2);
+    const d = cardAgent({agent:'Program', footer:'Your Call', fclass:'yourcall', prim:'Scale · On Evidence'});
+    mm.appendChild(d);
+    const L = d.querySelector('#lines');
+    L.innerHTML = `<p class="body">The queue is real. Recommend org-wide rollout next quarter — the evidence is attached, the call is yours.</p>`;
+    const chip=document.createElement('span'); chip.className='chip'; chip.style.opacity='1';
+    chip.textContent='“Scale it. And retire the pilot flags.”'; L.appendChild(chip);
+  }
+  document.querySelectorAll('.chk path').forEach(p=>{ p.style.animation='none'; p.style.strokeDashoffset='0'; });
+  setCaption(m.closing, true);
+  // capture safety: rasterizer re-flows HTML text — pin wrap-sensitive elements as SVG
+  pinChips(); pinState();
+  pinCtx(idx, strip, mvlabel);
+}
+// SVG-pinned context strip: SVG text cannot re-wrap or fade in a raster capture
+function pinCtx(idx, strip, mvlabel){
+  const ctx = $('#ctx'); const cw = ctx.getBoundingClientRect().width;
+  ctx.style.opacity = '1'; ctx.style.transition = 'none';
+  ctx.innerHTML = `<svg width="${Math.ceil(cw)}" height="15" style="display:block;overflow:visible"><text x="0" y="11" font-family="'JetBrains Mono',monospace" font-size="9.5" font-weight="500" letter-spacing="1.5"><tspan fill="#1E5AA8" font-weight="600">0${idx+1}</tspan><tspan fill="#2A2620" font-weight="600" dx="8">${esc(META[idx].title.toUpperCase())}</tspan>${mvlabel?`<tspan fill="#1E5AA8" font-weight="600" dx="8">${esc(mvlabel.toUpperCase())}</tspan>`:''}<tspan fill="#6E6659" dx="8">— ${esc(strip.toUpperCase())}</tspan></text></svg>`;
+}
+window.__frame = {
+  beat: fillFinal,
+  hypothesis(){
+    clearAll(); showSnap('p-beat'); $('#stage').classList.remove('hid'); $('#ctx-center').classList.remove('on');
+    currentBeat = 0; updateDots();
+    $('#constel').classList.remove('on','ghost'); $('#dual').classList.remove('on'); $('#slot-l').innerHTML=''; $('#slot-r').innerHTML='';
+    NPPULSE = false; NPHTML = 'Project Monday · Hypothesis';
+    setCtx(0, META[0].ctx, 'Movement A · The Hypothesis');
+    setWash('blue'); setSet(-1); ringReset(); ring(0);
+    const mm = $('#mainmount'); mm.classList.add('wide'); mm.innerHTML='';
+    const c = cardQuote(); mm.appendChild(c);
+    const chip = document.createElement('span'); chip.className='chip stamp'; chip.style.opacity='1';
+    chip.textContent = 'Project Monday · Stage: Hypothesis';
+    c.querySelector('#lines').appendChild(chip);
+    pinChips();
+    setCaption('', false); pinState(); pinCtx(0, META[0].ctx, 'Movement A · The Hypothesis');
+  },
+  born(){ // assembly moment, constellation at full strength
+    fillFinal(0); $('#constel').classList.remove('ghost'); $('#mainmount').innerHTML='';
+    NPHTML = '<span class="npword">Project&nbsp;</span>Monday · MVP';
+    const c = cardHuman(); c.style.maxWidth='450px';
+    $('#mainmount').appendChild(c);
+    c.querySelector('#hbody').textContent = INTENT;
+    ring(1, {fast:true}); setCaption(META[0].closing, true);
+  },
+  night(){
+    fillFinal(1); setWash('night'); $('#zzz').setAttribute('opacity','1'); $('#sun').setAttribute('opacity','0');
+    const mm = $('#mainmount'); mm.innerHTML='';
+    const c = cardAgent({agent:'Observability', footer:'In Production', fclass:'prod', prim:'Self-Repair · Guardrails'});
+    const w = document.createElement('div'); w.className='log';
+    LOGS.concat(FLARE).concat(['02:04:06  self-repaired · no human woken']).forEach((l,i)=>{
+      const d=document.createElement('div'); d.textContent=l; d.classList.add('on');
+      if (i===LOGS.length || i===LOGS.length+1) d.classList.add('flare');
+      if (i===LOGS.length+2) d.style.color='#0E7C74';
+      w.appendChild(d);
+    });
+    c.querySelector('#lines').appendChild(w); c.classList.add('amber'); mm.appendChild(c);
+    setCaption('No human was woken.', true);
+  },
+  morning(){
+    fillFinal(1); setWash('morning'); $('#zzz').setAttribute('opacity','0'); $('#sun').setAttribute('opacity','1');
+    NPPULSE = false; NPHTML = 'Monday · In Production';
+    const mm = $('#mainmount'); mm.innerHTML='';
+    const b = cardAgent({agent:'Morning Brief', footer:'Your Call', fclass:'yourcall', prim:'Week 9 · Judgment'});
+    mm.appendChild(b);
+    const L = b.querySelector('#lines');
+    const p = document.createElement('p'); p.className='body'; p.textContent = BRIEF; L.appendChild(p);
+    const chip = document.createElement('span'); chip.className='chip'; chip.style.opacity='1';
+    chip.textContent = '“Approve — and flag it for the retro.”'; L.appendChild(chip);
+    pinChips(); setCaption('', false); pinState();
+  },
+  duplication(){
+    fillFinal(2); setSet(2); setWash(null);
+    NPPULSE = false; NPHTML = 'Monday · Codified';
+    const mm = $('#mainmount'); mm.innerHTML=''; mm.classList.remove('wide');
+    $('#slot-l').innerHTML=''; $('#slot-r').innerHTML='';
+    $('#dual').classList.add('on');
+    const l = cardAgent({agent:'Monday', np:'Monday · Codified', footer:'Codified', fclass:'codified', prim:'Team One · Week 9'});
+    l.querySelector('#lines').innerHTML = `<p class="body">Staffing, access, hardware, budget and context — negotiated once, packaged as one capability the org can call.</p>`;
+    $('#slot-l').appendChild(l);
+    const r = cardAgent({agent:'Monday', np:'Monday · Team Two', footer:'In Production', fclass:'prod', prim:'Team Two · Day 3'});
+    r.querySelector('#lines').innerHTML = `<div class="zlabel">Adapting to context</div><ul class="ticks">${ADAPT.map(t=>`<li class="tick">${CHK}<span>${t}</span></li>`).join('')}</ul>`;
+    $('#slot-r').appendChild(r);
+    $('#slot-r').classList.add('in'); $('#dual-arrow').classList.add('in');
+    setCaption('', false); pinState();
+  },
+  scoreboard(){
+    fillFinal(2); const mm=$('#mainmount'); mm.innerHTML=''; mm.classList.add('wide'); setSet(-1);
+    const s = cardAgent({agent:'Season Review', footer:'Codified', fclass:'codified', prim:'Week 20 · Evidence'});
+    s.style.maxWidth='620px';
+    s.querySelector('#lines').innerHTML = `<div class="score">${SCORE.map(([k,v])=>`<div class="cell on"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`;
+    mm.appendChild(s);
+    setNP('Monday · Codified'); pinState();
+  },
+  close(){ clearAll(); currentBeat = -1; updateDots(); showSnap('p-close'); setWash(null); $('#flywheel').classList.remove('turn'); $('#ghostarc').classList.remove('draw'); $('#ghostarc').style.transition='none'; $('#ghostarc').style.strokeDashoffset='105'; pinState(); },
+  sig(){ clearAll(); currentBeat = -1; updateDots(); showSnap('p-sig'); setWash(null); pinState(); }
+};
+
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  ring(3);
+}
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(()=> later(5000, ()=>runBeat(0)));
+})();
+</script>
+</body>
+</html>
