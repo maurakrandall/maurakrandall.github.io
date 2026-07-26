@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Life of a Capability — Maura K. Randall · Product Vision Artifact</title>
+<meta name="description" content="A product vision artifact prepared for Google Corporate Engineering · Enterprise AI Capabilities. One capability, three seasons: Born, Run, Multiply.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --cream:#FAF6EE; --card:#FFFDF7; --ink:#2A2620; --muted:#6E6659; --soft:#7D7466;
+    --line:rgba(42,38,32,0.14); --blue:#1E5AA8; --teal:#0E7C74; --amber:#D99E1D; --amberink:#8F5F09;
+    --petrol:#0A2E2E;
+    --sans:'Inter Tight',system-ui,sans-serif; --serif:'Instrument Serif',Georgia,serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.55}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue)}
+  .section-eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin:0 0 18px}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  p{font-size:15.5px;color:var(--ink)}
+
+  /* HERO */
+  .hero{padding:84px 0 64px;text-align:center}
+  .hero .eyebrow{display:block;margin-bottom:26px}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,7vw,64px);line-height:1.05;margin:0 0 10px}
+  .hero .sub{font-family:var(--mono);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
+  .statrow{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--soft);margin-bottom:40px}
+  .statrow b{color:var(--blue);font-weight:600}
+  .hook{font-family:var(--serif);font-size:clamp(20px,3vw,26px);font-style:italic;color:var(--ink);max-width:34ch;margin:0 auto 34px;line-height:1.35}
+  .thesis{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:30px 12px;max-width:720px;margin:0 auto 30px}
+  .thesis p{font-family:var(--serif);font-size:clamp(23px,3.4vw,30px);line-height:1.3;margin:0}
+  .hero .lede{max-width:66ch;margin:0 auto;color:var(--muted);font-size:15px}
+  .sig-line{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-top:34px}
+
+  /* ALTITUDES */
+  .alt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0 22px}
+  .alt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 20px 16px}
+  .alt.win{border-color:var(--blue)}
+  .alt h3{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;margin:0 0 10px;color:var(--muted)}
+  .alt.win h3{color:var(--blue)}
+  .alt p{font-size:13.5px;margin:0;color:var(--ink)}
+  .alt .tag{display:block;font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);margin-top:12px}
+  .punch{font-family:var(--serif);font-size:22px;text-align:center;margin:26px 0 30px}
+  .boxes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .bigbox,.neverbox{border-radius:12px;padding:20px 22px}
+  .bigbox{background:var(--card);border:1px solid var(--teal)}
+  .neverbox{background:var(--petrol);color:#DCF0F0}
+  .bigbox h4,.neverbox h4{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;margin:0 0 10px}
+  .bigbox h4{color:var(--teal)} .neverbox h4{color:#F5A847}
+  .bigbox p,.neverbox p{font-size:13.5px;margin:0}
+  .neverbox p{color:#DCF0F0}
+
+  /* SCENE */
+  .scene-intro{max-width:70ch}
+  .scene-shell{position:relative;width:100%;aspect-ratio:1080/608;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 1px 0 rgba(42,38,32,0.05),0 20px 44px -22px rgba(42,38,32,0.28);background:var(--card);margin:28px 0 14px}
+  .scene-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .scene-note{font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);text-align:center;margin-bottom:34px}
+  .beats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .beat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .beat h3{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin:0 0 4px}
+  .beat .when{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--soft);margin-bottom:10px}
+  .beat p{font-size:13px;margin:0 0 10px}
+  .beat em{display:block;font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--muted)}
+
+  /* CONVERGENCE */
+  .conv{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:24px}
+  .conv-row{display:grid;grid-template-columns:1fr 1fr;background:var(--card)}
+  .conv-row + .conv-row{border-top:1px solid var(--line)}
+  .conv-row .jd,.conv-row .loop{padding:16px 20px;font-size:13.5px}
+  .conv-row .jd{color:var(--muted);border-right:1px dashed var(--line)}
+  .conv-row .jd:before{content:"THE ROLE";display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:0.16em;color:var(--soft);margin-bottom:5px}
+  .conv-row .loop:before{content:"THE PUBLISHED LOOP";display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:0.16em;color:var(--teal);margin-bottom:5px}
+  .conv-row .loop b{color:var(--blue)}
+  .conv-close{font-family:var(--serif);font-size:clamp(20px,3vw,26px);text-align:center;margin:30px 0 0}
+
+  /* PRIMITIVES + SHIFTS */
+  .prim-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
+  .prim{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .prim h3{font-family:var(--mono);font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin:0 0 8px}
+  .prim p{font-size:13px;margin:0;color:var(--ink)}
+  .shifts{margin-top:34px;display:grid;gap:12px}
+  .shift{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:10px;padding:14px 18px}
+  .shift .n{font-family:var(--mono);font-size:11px;color:var(--amberink);font-weight:600}
+  .shift p{margin:0;font-size:13.5px}
+  .shift .acc{display:block;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--soft);margin-top:4px}
+
+  /* CLOSE */
+  .pov p{max-width:72ch}
+  .closing{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:34px 12px;max-width:720px;margin:38px auto 34px;text-align:center}
+  .closing p{font-family:var(--serif);font-size:clamp(24px,3.6vw,32px);line-height:1.3;margin:0}
+  .sigblock{text-align:center;padding-bottom:12px}
+  .sigblock .name{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+  .sigblock .links{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase}
+  .sigblock .links a{color:var(--teal);text-decoration:none}
+  .sigblock .links a:hover{text-decoration:underline}
+  footer{border-top:1px solid var(--line);padding:26px 0 44px;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft)}
+
+  /* PRINT-ONLY SCENE FALLBACK (hidden on screen) */
+  .print-scene{display:none}
+
+  @media print{
+    html,body{background:var(--cream) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    @page{size:Letter;margin:0.45in}
+    .scene-shell,.scene-note{display:none !important}
+    .print-scene{display:block;margin:24px 0 30px}
+    .see-live{border:2px solid var(--blue);border-radius:12px;background:var(--card);padding:14px 18px;text-align:center;margin:0 0 18px}
+    .see-live .big{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue)}
+    .see-live .url{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--amberink);margin-top:6px}
+    .print-frames{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .print-frames figure{margin:0}
+    .print-frames img{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;display:block}
+    .print-frames figcaption{font-family:var(--mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);margin-top:5px;text-align:center}
+    .hero{page-break-after:always;padding:40px 0 20px}
+    section{page-break-after:always;padding:28px 0;border-top:0}
+    section:last-of-type,.pov{page-break-after:auto}
+    .alt,.beat,.prim,.shift,.bigbox,.neverbox,.conv-row,.see-live,.print-frames figure{page-break-inside:avoid;break-inside:avoid}
+    .scene-intro{max-width:none}
+    .beats{grid-template-columns:repeat(3,1fr);gap:10px}
+    .beat{padding:12px 14px}
+    .beat p{font-size:10.5px}
+    .beat em{font-size:11.5px}
+    footer{display:none}
+    a{color:inherit;text-decoration:none}
+  }
+
+  @media (max-width:760px){
+    .alt-grid,.beats{grid-template-columns:1fr}
+    .boxes,.prim-grid,.conv-row{grid-template-columns:1fr}
+    .conv-row .jd{border-right:0;border-bottom:1px dashed var(--line)}
+    section{padding:48px 0}
+    .hero{padding:56px 0 44px}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO / PAGE 1 -->
+<div class="wrap hero">
+  <span class="eyebrow">Product Vision Artifact · Prepared for Google Corporate Engineering · EAIC</span>
+  <h1>The Life of a&nbsp;Capability</h1>
+  <div class="sub">Google for Googlers, ground up.</div>
+  <div class="statrow"><span><b>~180,000</b> Googlers</span><span>every team a <b>builder</b></span><span><b>1</b> lifecycle</span></div>
+  <p class="hook">&ldquo;The world judges Google&rsquo;s AI by its products. Googlers judge it by their Tuesday.&rdquo;</p>
+  <div class="thesis"><p>An enterprise compounds or degrades based on how its human-AI collaboration is designed.</p></div>
+  <p class="lede">CorpEng is Google for Googlers. This artifact is a point of view on how an internal AI organization moves a company from bolt-ons to outcomes — and keeps it moving, for the life of every capability it ships.</p>
+  <div class="sig-line">Maura K. Randall · Product Vision Artifact · July 2026</div>
+</div>
+
+<!-- 01 · ALTITUDES / PAGE 2 -->
+<section>
+  <div class="wrap">
+    <h2 class="section-eyebrow">01 · Three Altitudes</h2>
+    <p style="max-width:72ch">The role description has already chosen its direction: away from AI as &ldquo;bolt-ons for isolated tasks,&rdquo; toward &ldquo;agentic AI that drives comprehensive outcomes&rdquo; and processes &ldquo;fundamentally redesigned from the ground up.&rdquo; This page takes that choice seriously enough to sharpen it. Enterprise AI operates at one of three altitudes — and only one of them compounds.</p>
+    <div class="alt-grid">
+      <div class="alt">
+        <h3>Task — the bolt-on</h3>
+        <p>A smarter search bar. A summarize button. An assistant per tool. Tasks get faster; processes go untouched. And the human is still the glue: the integration layer between a dozen interfaces, spending judgment on coordination instead of decisions.</p>
+      </div>
+      <div class="alt">
+        <h3>Workflow — the assist</h3>
+        <p>AI moves inside the process. Fewer clicks, smoother handoffs. The process survives, and its costs compound quietly underneath the convenience.</p>
+      </div>
+      <div class="alt win">
+        <h3>Outcome — the redesign</h3>
+        <p>The process is rebuilt around the outcome it exists to produce. Agents own the coordination. Humans own the calls that matter. And the half that vision decks skip: an outcome capability is owned for life — monitored, maintained, measured, and retired on purpose.</p>
+        <span class="tag">The only altitude that compounds</span>
+      </div>
+    </div>
+    <p class="punch"><strong>Bolt-ons get demos. Platforms get operated.</strong></p>
+    <div class="boxes">
+      <div class="bigbox">
+        <h4>What the agent ecosystem owns</h4>
+        <p>Coordination. Context. Execution within guardrails. The watching — performance, drift, satisfaction — around the clock.</p>
+      </div>
+      <div class="neverbox">
+        <h4>What never leaves human hands</h4>
+        <p>Priorities. Tradeoffs. Exceptions. Go/no-go. The calls that make it Google.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · THE SCENE / PAGE 3 -->
+<section>
+  <div class="wrap">
+    <h2 class="section-eyebrow">02 · One Capability · Three Seasons</h2>
+    <p class="scene-intro">What follows is the life of one internal capability — MONDAY, an agent that stands up a new project from a single declared outcome — from stated hypothesis to company-wide compounding. The workflow it serves is deliberately interchangeable — because at this altitude, the workflow is never the point. The lifecycle is.</p>
+    <div class="scene-shell">
+      <iframe src="https://maurakrandall.github.io/life-of-a-capability-scene/" title="The Life of a Capability — animated scene" loading="eager" allowfullscreen></iframe>
+    </div>
+    <div class="scene-note">The scene plays on a loop · Born → Run → Multiply · ~110 seconds</div>
+
+    <!-- PRINT FALLBACK: static frames + see-it-live callout (hidden on screen) -->
+    <div class="print-scene">
+      <div class="see-live">
+        <div class="big">This page is alive — the scene above is animated</div>
+        <div class="url">Watch it live: maurakrandall.github.io/life-of-a-capability/</div>
+      </div>
+      <div class="print-frames">
+        <figure><img src="frames/beat01hypothesisfull.png" alt="Beat 01, Movement A: the hypothesis quote card"><figcaption>Born · Movement A · The Hypothesis</figcaption></figure>
+        <figure><img src="frames/beat01testfull.png" alt="Beat 01, Movement B: the pilot team's declared outcome and the assembling constellation"><figcaption>Born · Movement B · The Test</figcaption></figure>
+        <figure><img src="frames/beat02runfull.png" alt="Beat 02: the 2:04 AM observability log, drift caught and self-repaired"><figcaption>Run · 2:04 AM · Self-Repair Inside Guardrails</figcaption></figure>
+        <figure><img src="frames/beat03scoreboardcard.png" alt="Beat 03: the season review scoreboard, kickoff 16 days to 2"><figcaption>Multiply · The Season Review · The Bet, Paid</figcaption></figure>
+      </div>
+    </div>
+    <div class="beats">
+      <div class="beat">
+        <h3>Beat 01 · Born</h3>
+        <div class="when">Week 0 → Week 5 · an idea, then an MVP</div>
+        <p>Two movements. <strong>The Hypothesis:</strong> a CorpEng PM states the bet. Kicking off a project costs the first three weeks in tickets; it should cost one sentence. Project Monday is born. <strong>The Test:</strong> the leverage is found by sitting with the people who do the work, the process is redesigned ground-up, and the 0→1 agent ships as an MVP. A first pilot team declares an outcome once. Staffing, access, budget, and context assemble around it, agents negotiating with agents, while the humans plan the actual work and make the calls that are theirs. The badge quietly drops the word &ldquo;Project&rdquo;: a project has graduated into a capability.</p>
+        <em>The team declared the outcome. The ecosystem assembled around it.</em>
+      </div>
+      <div class="beat">
+        <h3>Beat 02 · Run</h3>
+        <div class="when">Week 9 · the capability in production</div>
+        <p>The beat most vision artifacts skip, and the one an IT organization checks for. Observability on every agent action. MONDAY&rsquo;s access-scoping drift caught at 2:04 AM and repaired inside guardrails; the one change that needs judgment waits for a human morning, not a human emergency. And the layer listens: a satisfaction dip surfaces in the signal before the first complaint is ever filed.</p>
+        <em>Uptime is table stakes. This layer also listens.</em>
+      </div>
+      <div class="beat">
+        <h3>Beat 03 · Multiply</h3>
+        <div class="when">Week 20 · a different org, the same friction</div>
+        <p>MONDAY is codified and adopted by a second team in days, not months, with a consistent experience. Then measurement earns its keep: what compounded, what got retired, what returned hours to builders. Kickoff time itself fell from 16 days to 2, the bet from the cold open, paid in full. The scale-or-stop decision that follows is made by a human, on evidence the ecosystem assembled.</p>
+        <em>Built once. Owned for life. Compounding everywhere.</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · CONVERGENCE / PAGE 4 -->
+<section>
+  <div class="wrap">
+    <h2 class="section-eyebrow">03 · The Operating Model, Already Published</h2>
+    <p style="max-width:70ch">This role&rsquo;s responsibilities describe an operating loop. It happens to be one that already exists — published, live at real URLs, and in daily production for two and a half years.</p>
+    <div class="conv">
+      <div class="conv-row">
+        <div class="jd">&ldquo;Help develop MVP product proposals, proof-of-concept&rdquo;</div>
+        <div class="loop"><b>TEST / BUILD</b> — find the leverage with the team, ship the 0→1</div>
+      </div>
+      <div class="conv-row">
+        <div class="jd">&ldquo;Reusable capabilities to empower delivery of AI-driven products&rdquo;</div>
+        <div class="loop"><b>CODIFY</b> — one good loop becomes durable, composable practice</div>
+      </div>
+      <div class="conv-row">
+        <div class="jd">&ldquo;Scale deployments… a scalable ecosystem with consistent user experience&rdquo;</div>
+        <div class="loop"><b>SHARE</b> — the capability propagates; the standard keeps it coherent</div>
+      </div>
+      <div class="conv-row">
+        <div class="jd">&ldquo;Monitoring product performance, adoption, and satisfaction&rdquo;</div>
+        <div class="loop"><b>THE LOOP&rsquo;S MEASUREMENT LAYER</b> — listening in Run, deciding in Multiply</div>
+      </div>
+    </div>
+    <p class="conv-close">The mandate and the methodology are the same diagram.</p>
+  </div>
+</section>
+
+<!-- 04 · PRIMITIVES + SHIFTS / PAGE 5 -->
+<section>
+  <div class="wrap">
+    <h2 class="section-eyebrow">04 · What Makes It Scale</h2>
+    <div class="prim-grid">
+      <div class="prim"><h3>Continuous Context Graph</h3><p>Ambient awareness of project, team, and permissions across every internal surface; agents arrive already knowing.</p></div>
+      <div class="prim"><h3>Bounded Autonomy</h3><p>Verified agents act within pre-agreed guardrails; humans own the exceptions and the calls that matter. Autonomy is a permission, not a default.</p></div>
+      <div class="prim"><h3>Inter-Agent Protocol, Internal-First</h3><p>Google gave the world A2A, the open standard for agent-to-agent communication. The move here is not invention but adoption: make Google&rsquo;s own protocol the internal default, and the &ldquo;scalable ecosystem with consistent user experience&rdquo; falls out of the standard. Google for Googlers, applied to Google&rsquo;s own standards.</p></div>
+      <div class="prim"><h3>The Listening Layer</h3><p>Performance, adoption, and satisfaction monitored as production signals. Sentiment is telemetry too.</p></div>
+      <div class="prim" style="grid-column:1/-1"><h3>Guardrail Trust Layer</h3><p>Privacy, security, and ethics as structural constraints, not review gates.</p></div>
+    </div>
+    <div class="shifts">
+      <div class="shift"><span class="n">SHIFT 1</span><p><strong>From tools deployed → processes redesigned.</strong><span class="acc">Accepted when: a legacy process is retired, not wrapped.</span></p></div>
+      <div class="shift"><span class="n">SHIFT 2</span><p><strong>From usage tracked → outcomes measured.</strong><span class="acc">Accepted when: adoption metrics can answer &ldquo;what no longer has to happen?&rdquo;</span></p></div>
+      <div class="shift"><span class="n">SHIFT 3</span><p><strong>From pilots launched → capabilities operated.</strong><span class="acc">Accepted when: every shipped agent has an owner, an SLO, and a satisfaction signal — for life.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · POV / PAGE 6 -->
+<section class="pov">
+  <div class="wrap">
+    <h2 class="section-eyebrow">05 · Point of View</h2>
+    <p>Enterprise AI transformation fails two ways: too timid (bolt-ons that flatter the org chart) or too reckless (autonomy without guardrails that spends trust faster than it earns capability). The path between them isn&rsquo;t a compromise. It&rsquo;s a discipline — a lifecycle, operated.</p>
+    <p>I&rsquo;ve led exactly the team this role describes: a global PM team of 15 across three countries and time zones, rallied behind a shared mission. I&rsquo;ve built reusable platform primitives inside an enterprise serving 78M+ monthly active users, where engagement design produced a 7x retention lift and sentiment became telemetry. And for the last two and a half years I&rsquo;ve run a public, daily practice of human-AI collaboration — the operating loop above isn&rsquo;t a proposal, it&rsquo;s a publication record.</p>
+    <p>The most consequential enterprise AI transformation in the world is the one Google runs on itself. The companies that get this right won&rsquo;t be the ones that deploy the most agents. They&rsquo;ll be the ones whose people can feel their own capability compounding.</p>
+    <div class="closing"><p>&ldquo;Human capability compounds or degrades based on how the collaboration is designed.&rdquo;</p></div>
+    <div class="sigblock">
+      <div class="name">Maura K. Randall</div>
+      <div class="links">
+        <a href="https://maurakrandall.github.io" target="_blank" rel="noopener">maurakrandall.github.io</a> ·
+        <a href="https://aigal.io" target="_blank" rel="noopener">aigal.io</a> ·
+        <a href="https://thehumanailoop.com" target="_blank" rel="noopener">thehumanailoop.com</a> ·
+        <a href="https://try.thehumanailoop.com" target="_blank" rel="noopener">try.thehumanailoop.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Prepared for Google Corporate Engineering · Enterprise AI Capabilities · July 2026
+</footer>
+
+</body>
+</html>
