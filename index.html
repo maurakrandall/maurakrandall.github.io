@@ -25,7 +25,6 @@
     --accent-wash-strong:rgba(14,124,116,0.12);
   }
   body[data-track="enterprise"]{--accent:var(--navy);--accent-wash:rgba(27,58,107,0.06);--accent-wash-strong:rgba(27,58,107,0.12)}
-
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{font-family:'Inter Tight',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -34,17 +33,14 @@
   .serif{font-family:'Instrument Serif',serif;font-weight:400}
   .mono{font-family:'JetBrains Mono',monospace}
   .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);transition:color .4s}
-
   nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
   .nav-in{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1080px;margin:0 auto;gap:18px}
   .brand{font-family:'Instrument Serif',serif;font-size:22px;letter-spacing:.01em}
   .brand b{font-style:italic;font-weight:400}
-
   .toggle{display:inline-flex;background:#F4F2EE;border:1px solid var(--line);border-radius:999px;padding:4px;position:relative}
   .toggle button{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.04em;border:none;background:transparent;color:var(--soft);padding:9px 16px;border-radius:999px;cursor:pointer;transition:color .3s;white-space:nowrap;z-index:1}
   .toggle button.on{color:#fff}
   .toggle .pill{position:absolute;top:4px;bottom:4px;border-radius:999px;background:var(--accent);transition:transform .42s cubic-bezier(.6,.05,.2,1),background .42s,width .42s,left .42s;z-index:0}
-
   header{padding:60px 0 52px;border-bottom:1px solid var(--line-soft)}
   .hero-top{display:flex;align-items:center;gap:18px;margin-bottom:30px;flex-wrap:wrap}
   /* Headshot trust marker. Swap the monogram div for: <img class="avatar" src="headshot.jpg" alt="Maura K. Randall"> */
@@ -56,7 +52,6 @@
   .sub{font-size:clamp(16px,2vw,19px);color:var(--soft);max-width:52ch}
   .fit{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--soft);letter-spacing:.02em;margin-top:22px;line-height:1.7}
   .fit b{color:var(--accent);font-weight:500;transition:color .4s}
-
   /* hero grid: lead text left, thesis aside right */
   .hero-grid{display:grid;grid-template-columns:1fr minmax(0,420px);gap:54px;align-items:center;margin-top:10px}
   .thesis-aside{padding-left:30px;border-left:1px solid var(--line)}
@@ -76,17 +71,16 @@
     .hero-grid{grid-template-columns:1fr;gap:34px}
     .thesis-aside{padding-left:0;border-left:none;border-top:1px solid var(--line);padding-top:28px;max-width:560px}
   }
-
   section{padding:56px 0;border-bottom:1px solid var(--line-soft)}
   .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;flex-wrap:wrap}
   .sec-head h2{font-family:'Instrument Serif',serif;font-size:clamp(24px,3.4vw,34px);font-weight:400;letter-spacing:-.01em}
-
+  .sec-note{font-size:16.5px;color:var(--soft);max-width:60ch;margin:-18px 0 28px}
+  .sec-note b{color:var(--ink);font-weight:500}
   .only-enterprise,.only-builder{display:none}
   body[data-track="enterprise"] .only-enterprise{display:block}
   body[data-track="builder"] .only-builder{display:block}
   .swap{animation:fade .5s ease both}
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
   /* enterprise ledger */
   .ledger{border-top:1px solid var(--line)}
   .row{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:22px 4px;border-bottom:1px solid var(--line);align-items:baseline}
@@ -94,23 +88,24 @@
   .row .met{display:flex;flex-wrap:wrap;gap:8px 26px}
   .row .met span{font-size:15.5px}
   .row .met b{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--accent);font-size:15px;margin-right:7px;transition:color .4s}
+  .row.patents .met{flex-direction:column;gap:11px}
+  .row.patents .met span{font-size:15px;line-height:1.45}
+  .row.patents .met b{font-size:13.5px;letter-spacing:.02em}
+  .row.patents .met i{font-style:normal;color:var(--soft);font-size:13.5px}
   @media(max-width:620px){.row{grid-template-columns:1fr;gap:8px}}
   .row .q-line{grid-column:2;margin-top:11px;max-width:64ch}
   .row .q-line .qt{font-family:'Instrument Serif',serif;font-style:italic;font-size:16.5px;line-height:1.42;color:var(--ink)}
   .row .q-line .at{display:block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:var(--soft)}
   @media(max-width:620px){.row .q-line{grid-column:1}}
-
   /* loop bar */
   .loop{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
   .loop .step{font-family:'JetBrains Mono',monospace;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:var(--accent-wash);transition:background .4s}
   .loop .arrow{align-self:center;color:var(--soft)}
-
   /* stage label */
   .stage-label{display:flex;align-items:baseline;gap:12px;margin:34px 0 14px}
   .stage-label .s{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);transition:color .4s}
   .stage-label .d{font-size:14px;color:var(--soft)}
   .codify-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:24px 0 10px;transition:color .4s}
-
   /* product cards */
   .builds{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
   .build{border:1px solid var(--line);border-radius:12px;padding:20px;text-decoration:none;display:block;transition:border-color .2s,transform .15s,background .2s,box-shadow .2s}
@@ -123,7 +118,6 @@
   .build p{font-size:14.5px;color:var(--soft)}
   .bicon{margin-bottom:13px;line-height:0}
   .bicon img{width:34px;height:34px;object-fit:contain;display:block}
-
   /* compact link rows */
   .links-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
   .links-row a{background:var(--paper);padding:18px 20px;display:block;text-decoration:none;transition:background .18s,box-shadow .18s}
@@ -132,7 +126,6 @@
   .links-row .t{font-family:'Instrument Serif',serif;font-size:18px;transition:color .18s}
   .links-row .desc{font-size:13px;color:var(--soft);margin-top:3px}
   .links-row .src{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
-
   footer{padding:60px 0 70px}
   .cta-line{font-family:'Instrument Serif',serif;font-size:clamp(26px,4vw,40px);line-height:1.08;max-width:18ch;margin-bottom:30px}
   .actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
@@ -142,13 +135,11 @@
   .btn.ghost{border:1px solid var(--line);color:var(--ink)}
   .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
   .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--soft);letter-spacing:.02em;line-height:2}
-
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body data-track="builder">
-
 <nav>
   <div class="nav-in">
     <div class="brand">Maura K. <b>Randall</b></div>
@@ -159,7 +150,6 @@
     </div>
   </div>
 </nav>
-
 <header>
   <div class="wrap">
     <div class="hero-top">
@@ -169,7 +159,6 @@
         <span class="src">— Tom Tsao · former eBay &amp; Atlassian exec, now GVP at DocuSign · 2026</span>
       </div>
     </div>
-
     <div class="hero-grid">
       <div class="hero-lead">
         <div class="only-builder swap">
@@ -178,15 +167,13 @@
           <p class="sub">The Human-AI Loop methodology, the Triad operating model, and a portfolio of live, shipped AI products. Practitioner, not commentator.</p>
           <p class="fit"><b>Built for</b> &nbsp;AI-native product leadership · human-AI collaboration systems · Head of Product who owns AI strategy</p>
         </div>
-
         <div class="only-enterprise swap">
           <div class="eyebrow" style="margin-bottom:18px">Twenty years · platforms at scale</div>
           <h1>I build and scale the platforms millions of people rely on.</h1>
-          <p class="sub">Product and platform leadership across Atlassian, eBay, Yahoo!, and Condé Nast, from hyper-growth to billion-dollar marketplaces.</p>
+          <p class="sub">Product and platform leadership across Atlassian, eBay, Yahoo!, and Condé Nast, from 0→1 launches to hyper-growth platforms and billion-dollar marketplaces.</p>
           <p class="fit"><b>Built for</b> &nbsp;Head of Product · platform &amp; product strategy · community-driven growth at scale</p>
         </div>
       </div>
-
       <aside class="thesis-aside">
         <div class="eyebrow">My thesis</div>
         <p class="thesis-stmt">Human capability <span class="up">compounds</span> or <span class="down">degrades</span> based on how human–AI collaboration is designed.</p>
@@ -202,7 +189,6 @@
     </div>
   </div>
 </header>
-
 <!-- BUILDER TRACK: the practice, organized by the loop -->
 <section class="only-builder">
   <div class="wrap">
@@ -210,26 +196,22 @@
       <span class="eyebrow">The practice</span>
       <h2>A methodology, and the products that prove it</h2>
     </div>
-
     <div class="loop">
       <span class="step">Test</span><span class="arrow">→</span>
       <span class="step">Build</span><span class="arrow">→</span>
       <span class="step">Codify</span><span class="arrow">→</span>
       <span class="step">Share</span>
     </div>
-
     <div class="stage-label"><span class="s">Test</span><span class="d">Probing an idea with a real prototype</span></div>
     <div class="builds">
       <a class="build" href="opportunes/"><span class="bicon"><img src="images/icons/opportunes-icon.svg" alt=""></span><span class="st">Concept prototype</span><h3>Opportunes</h3><p>A personal opportunity OS on a multi-agent workflow. Human decides, AI ranks.</p></a>
     </div>
-
     <div class="stage-label"><span class="s">Build</span><span class="d">Real products people can use</span></div>
     <div class="builds">
       <a class="build" href="team-context-builder/"><span class="bicon"><img src="images/icons/team-context-builder-icon-concept.svg" alt=""></span><span class="st">Flagship</span><h3>Team Context Builder</h3><p>Methodology becoming product. Context is collaboration infrastructure.</p></a>
       <a class="build" href="daily-fuel/"><span class="bicon"><img src="images/icons/daily-fuel-icon.svg" alt=""></span><span class="st">Live · Alpha</span><h3>Daily Fuel</h3><p>An AI-native nutrition companion for life on GLP-1. Deployed and running.</p></a>
       <a class="build" href="burnout-buddy/"><span class="bicon"><img src="images/icons/burnoutbuddy-icon.svg" alt=""></span><span class="st">Prototype</span><h3>BurnoutBuddy</h3><p>A reflective companion for navigating burnout. Orientation, not optimization.</p></a>
     </div>
-
     <div class="stage-label"><span class="s">Codify</span><span class="d">The methodology made canonical — and the vision it points to</span></div>
     <div class="codify-sub">Collaboration, by design</div>
     <div class="links-row">
@@ -243,7 +225,6 @@
       <a href="knowlings/"><div class="t">Knowlings</div><div class="desc">Community-powered learning, built on the Loop</div></a>
       <a href="reciprocity/"><div class="t">Reciprocity</div><div class="desc">A skill-exchange platform vision, twenty years in the making</div></a>
     </div>
-
     <div class="stage-label"><span class="s">Share</span><span class="d">Teaching the practice in public</span></div>
     <div class="links-row">
       <a href="https://aigal.io/ai-literacy/" target="_blank" rel="noopener"><div class="t">AI Literacy Library</div><div class="desc">Frameworks and coined terms</div></a>
@@ -252,7 +233,6 @@
     </div>
   </div>
 </section>
-
 <!-- ENTERPRISE TRACK: the record -->
 <section class="only-enterprise">
   <div class="wrap">
@@ -260,16 +240,17 @@
       <span class="eyebrow">The record</span>
       <h2>Scale, shipped</h2>
     </div>
+    <p class="sec-note">A record of <b>0→1 launches that scaled</b>, at eBay, Yahoo!, and Condé Nast. Two of those launches are patented.</p>
     <div class="ledger">
-      <div class="row"><div class="co">Atlassian</div><div class="met"><span><b>78M</b>monthly active users</span><span><b>7×</b>retention lift via community</span></div><div class="q-line"><span class="qt">“A strong grasp of the AI/ML landscape — how ranking algorithms work, and how to apply them to real user problems. A true thought partner to engineering and ML teams.”</span><span class="at">Fan Jiang · Head of Engineering, Core Machine Learning, Atlassian</span></div></div>
-      <div class="row"><div class="co">eBay</div><div class="met"><span><b>$1B+</b>transactions, year one (Best Offer)</span></div><div class="q-line"><span class="qt">“An outstanding product management talent with a keen eye for customer needs — widely respected as a collaborative teammate who delivers results.”</span><span class="at">Tom Tsao · managed Maura at eBay &amp; Yahoo! · GVP, DocuSign</span></div></div>
-      <div class="row"><div class="co">Yahoo!</div><div class="met"><span><b>50M+</b>MAU</span><span><b>14M</b>users</span><span><b>$40M</b>revenue, year one</span></div><div class="q-line"><span class="qt">“Shine ended up being very profitable for Yahoo — and owed much of that to Maura’s leadership.”</span><span class="at">James Long · Staff Engineer, Yahoo! &amp; Condé Nast</span></div></div>
+      <div class="row"><div class="co">Atlassian</div><div class="met"><span><b>78M</b>monthly active users</span><span><b>7×</b>more likely to repurchase, community-engaged users</span></div><div class="q-line"><span class="qt">“A strong grasp of the AI/ML landscape — how ranking algorithms work, and how to apply them to real user problems. A true thought partner to engineering and ML teams.”</span><span class="at">Fan Jiang · Head of Engineering, Core Machine Learning, Atlassian</span></div></div>
+      <div class="row"><div class="co">eBay</div><div class="met"><span><b>0→1</b>launched Best Offer from zero</span><span><b>$1B+</b>transactions, year one</span><span><b>Patented</b>US 8,160,928</span></div><div class="q-line"><span class="qt">“An outstanding product management talent with a keen eye for customer needs — widely respected as a collaborative teammate who delivers results.”</span><span class="at">Tom Tsao · managed Maura at eBay &amp; Yahoo! · GVP, DocuSign</span></div></div>
+      <div class="row"><div class="co">Yahoo!</div><div class="met"><span><b>0→1</b>first community UGC platform, from zero</span><span><b>14M</b>users</span><span><b>$40M</b>revenue, year one</span><span><b>50M+</b>MAU</span><span><b>Patented</b>US D611,490</span></div><div class="q-line"><span class="qt">“Shine ended up being very profitable for Yahoo — and owed much of that to Maura’s leadership.”</span><span class="at">James Long · Staff Engineer, Yahoo! &amp; Condé Nast</span></div></div>
       <div class="row"><div class="co">Condé Nast</div><div class="met"><span><b>2M+</b>monthly uniques</span><span><b>4×</b>social growth</span><span><b>’13–’14</b>Best Community</span></div><div class="q-line"><span class="qt">“Under her leadership, Lucky’s redesign launched in record-breaking time — and garnered the industry’s top awards.”</span><span class="at">Jun Lee · Product Designer, Condé Nast</span></div></div>
       <div class="row"><div class="co">Consulting</div><div class="met"><span><b>100%</b>of clients secured funding</span><span><b>50%</b>into accelerators</span></div></div>
+      <div class="row patents"><div class="co">Patents</div><div class="met"><span><b>US 8,160,928</b>Network-based commerce facility offer management methods and systems <i>· eBay, Best Offer</i></span><span><b>US D611,490</b>Computer user interface for a display screen <i>· Yahoo! · issued March 9, 2010</i></span></div></div>
     </div>
   </div>
 </section>
-
 <!-- ENTERPRISE: published thinking -->
 <section class="only-enterprise">
   <div class="wrap">
@@ -278,14 +259,13 @@
       <h2>The frameworks behind the practice</h2>
     </div>
     <div class="links-row">
-      <a href="https://aigal.io/not-all-ai-should-be-your-teammate/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Not All AI Should Be Your Teammate</div><div class="desc">When to give AI a seat — and when the call has to stay human.</div></a>
+      <a href="https://aigal.io/not-all-ai-should-be-your-teammate/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Not All AI Should Be Our Teammate</div><div class="desc">When to give AI a seat — and when the call has to stay human.</div></a>
       <a href="https://aigal.io/building-the-plane-vs-rebuilding-the-cockpit/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Building the Plane vs. Rebuilding the Cockpit</div><div class="desc">Adoption means redesigning how the work happens, not bolting AI on.</div></a>
       <a href="https://aigal.io/prompt-vs-context-vs-collaboration-engineering/" target="_blank" rel="noopener"><div class="src">AIGal.io</div><div class="t">Prompt vs. Context vs. Collaboration Engineering</div><div class="desc">The discipline beyond prompting: directing AI as a collaborator.</div></a>
       <a href="https://maurakrandall.substack.com/p/when-the-human-isnt-the-last-click" target="_blank" rel="noopener"><div class="src">Substack</div><div class="t">When the Human Isn’t the Last Click</div><div class="desc">Accountability when AI acts before a person makes the call.</div></a>
     </div>
   </div>
 </section>
-
 <!-- ENTERPRISE: a peek at the live AI work -->
 <section class="only-enterprise">
   <div class="wrap">
@@ -300,7 +280,6 @@
     </div>
   </div>
 </section>
-
 <footer>
   <div class="wrap">
     <p class="cta-line">I’m looking for a Head of Product role where owning AI strategy is the job.</p>
@@ -315,7 +294,6 @@
     </div>
   </div>
 </footer>
-
 <script>
   function setTrack(t){
     document.body.setAttribute('data-track',t);
