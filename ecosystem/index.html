@@ -651,6 +651,64 @@
       color: rgba(250,246,238,0.4);
       text-decoration: none;
     }
+    .evidence-section {
+      background: var(--cream-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 32px;
+    }
+    .evidence-inner { max-width: 900px; margin: 0 auto; }
+    .evidence-eyebrow {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--forest); font-weight: 600; margin-bottom: 14px;
+    }
+    .evidence-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 36px); color: var(--petrol);
+      letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px;
+    }
+    .evidence-sub {
+      font-size: 16px; line-height: 1.65; color: var(--ink-2);
+      max-width: 56ch; margin-bottom: 36px; font-style: italic;
+    }
+    .evidence-cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; }
+    .evidence-col-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; margin-bottom: 18px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    .evidence-col.breakdown .evidence-col-label { color: #A85A1B; }
+    .evidence-col.works .evidence-col-label { color: var(--teal); }
+    .stat-row { display: flex; gap: 16px; align-items: baseline; margin-bottom: 18px; }
+    .stat-fig {
+      font-family: 'Playfair Display', serif; font-weight: 800;
+      font-size: 34px; line-height: 1; letter-spacing: -0.02em;
+      flex-shrink: 0; min-width: 78px;
+    }
+    .evidence-col.breakdown .stat-fig { color: #A85A1B; }
+    .evidence-col.works .stat-fig { color: var(--teal); }
+    .stat-body { font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+    .stat-src {
+      display: block; font-size: 11px; color: var(--muted);
+      margin-top: 4px; letter-spacing: 0.02em;
+    }
+    .evidence-close {
+      margin-top: 34px; background: var(--petrol); border-radius: 14px;
+      padding: 26px 30px; display: flex; gap: 22px; align-items: center;
+    }
+    .evidence-close-mark { font-size: 26px; flex-shrink: 0; opacity: .9; }
+    .evidence-close-text {
+      font-family: 'Playfair Display', serif; font-size: clamp(17px, 2.4vw, 22px);
+      line-height: 1.35; color: var(--cream); letter-spacing: -0.01em;
+    }
+    .evidence-close-text em { color: var(--gold); font-style: italic; }
+    .evidence-sources {
+      font-size: 11px; color: var(--muted); margin-top: 18px; line-height: 1.7;
+    }
+    @media (max-width: 760px) {
+      .evidence-cols { grid-template-columns: 1fr; gap: 32px; }
+      .evidence-close { flex-direction: column; align-items: flex-start; gap: 14px; }
+    }
     @media (max-width: 640px) {
       .site-header { padding: 14px 20px; }
       .site-header-links { display: none; }
@@ -661,6 +719,7 @@
       .entry-map-grid { grid-template-columns: 1fr 1fr; }
       .nodes-section, .diagram-section { padding: 0 16px; }
       .why-section { padding: 40px 20px; }
+      .evidence-section { padding: 44px 20px; }
       .simulation-strip { padding: 0 16px; }
       .simulation-card { padding: 28px 24px; gap: 24px; }
       .origin-card { flex-direction: column; gap: 16px; padding: 24px 20px; }
@@ -674,7 +733,8 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     .hero             { animation: fadeUp 0.45s ease both; }
-    .challenge-section { animation: fadeUp 0.45s 0.05s ease both; }
+    .evidence-section  { animation: fadeUp 0.45s 0.05s ease both; }
+    .challenge-section { animation: fadeUp 0.45s 0.08s ease both; }
     .entry-map-section { animation: fadeUp 0.45s 0.1s ease both; }
     .diagram-section   { animation: fadeUp 0.45s 0.15s ease both; }
     .nodes-section     { animation: fadeUp 0.45s 0.2s ease both; }
@@ -688,11 +748,11 @@
   <header class="site-header">
     <div class="site-header-name">Maura K. <span>Randall</span></div>
     <ul class="site-header-links">
-      <li><a href="https://maurakrandall.com" target="_blank">maurakrandall.com</a></li>
+      <li><a href="https://maurakrandall.github.io">Portfolio</a></li>
       <li><a href="https://aigal.io" target="_blank">AIGal.io</a></li>
-      <li><a href="https://thehumanailoop.com" target="_blank">The Loop</a></li>
+      <li><a href="https://thehumanailoop.com" target="_blank">The Human-AI Loop</a></li>
+      <li><a href="https://aigal.io/ai-literacy/" target="_blank">AI Literacy Library</a></li>
       <li><a href="https://try.thehumanailoop.com" target="_blank">Try the Simulation</a></li>
-      <li><a href="https://maurakrandall.github.io" target="_blank">GitHub</a></li>
     </ul>
   </header>
 
@@ -708,6 +768,55 @@
     <div class="hero-cta-row">
       <a href="https://try.thehumanailoop.com" target="_blank" class="hero-cta-primary">Try the simulation — 5 minutes ↗</a>
       <a href="https://thehumanailoop.com" target="_blank" class="hero-cta-secondary">See the methodology ↗</a>
+    </div>
+  </section>
+
+
+  <!-- ⚑ VERIFY BEFORE PUBLISHING: the "workslop" source read as "MonthBetterUp / Stanford" on the
+       source slide, which appears to be a rendering artifact of BetterUp Labs / Stanford Social Media
+       Lab (the research published in HBR). Confirm the exact attribution and year before this goes live. -->
+  <section class="evidence-section">
+    <div class="evidence-inner">
+      <p class="evidence-eyebrow">Why it matters</p>
+      <h2 class="evidence-headline">Faster ≠ Better</h2>
+      <p class="evidence-sub">We optimized for speed before designing for judgment. The results are measurable.</p>
+      <div class="evidence-cols">
+        <div class="evidence-col breakdown">
+          <p class="evidence-col-label">The breakdown signals</p>
+          <div class="stat-row">
+            <span class="stat-fig">95%</span>
+            <span class="stat-body">of GenAI initiatives fail to deliver measurable ROI<span class="stat-src">MIT NANDA / Boston Consulting Group</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-fig">66%</span>
+            <span class="stat-body">rely on AI output without evaluating accuracy<span class="stat-src">KPMG / Melbourne Business School</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-fig">41%</span>
+            <span class="stat-body">received &ldquo;workslop&rdquo; in the past month<span class="stat-src">BetterUp Labs / Stanford</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-fig">33%</span>
+            <span class="stat-body">of individual contributors report more negative than positive emotions about AI<span class="stat-src">Microsoft Work Trend Index</span></span>
+          </div>
+        </div>
+        <div class="evidence-col works">
+          <p class="evidence-col-label">What actually works</p>
+          <div class="stat-row">
+            <span class="stat-fig">7×</span>
+            <span class="stat-body">Employee-centric organizations are more likely to achieve AI maturity<span class="stat-src">Deloitte</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-fig">2×</span>
+            <span class="stat-body">Teams that co-designed the AI rollout were twice as likely to adopt the tools successfully<span class="stat-src">McKinsey</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="evidence-close">
+        <span class="evidence-close-mark">✳</span>
+        <p class="evidence-close-text">The organizations succeeding with AI <em>aren&rsquo;t just deploying the technology.</em> They&rsquo;re designing the collaboration.</p>
+      </div>
+      <p class="evidence-sources">Sources: MIT NANDA / BCG (2024) · KPMG / Melbourne Business School (2023) · BetterUp Labs / Stanford (2024) · Microsoft Work Trend Index (2024) · Deloitte (2024) · McKinsey (2023)</p>
     </div>
   </section>
 
@@ -826,7 +935,7 @@
             <p style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;">This work</p>
             <p style="font-size: 13.5px; font-weight: 600; color: var(--petrol); line-height: 1.4;">2 years · Real work · Built in practice</p>
           </div>
-          <a href="https://maurakrandall.com/about/" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--teal); text-decoration: none; padding: 10px 0;">
+          <a href="https://maurakrandall.github.io" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--teal); text-decoration: none; padding: 10px 0;">
             Full background ↗
           </a>
         </div>
@@ -838,7 +947,7 @@
     <p class="diagram-section-label">How it all connects</p>
     <div class="diagram-wrap">
       <img src="ecosystem-diagram.png"
-           alt="The Maura K. Randall ecosystem: maurakrandall.com at top, AIGal.io (The Ideas) on the left, The Human-AI Loop (The System) on the right, The Triad (Maura + CP + Soph) at center. Turning Insight into Impact.">
+           alt="How the ecosystem connects: the portfolio, AIGal.io as the practice and publication, The Human-AI Loop as the methodology within it, and The Triad — Maura, CP, and Soph — as the team that builds it.">
     </div>
     <p class="diagram-caption">Three sites. One methodology. One team. Built from practice, not theory.</p>
   </section>
@@ -946,10 +1055,10 @@
               <span class="node-link-arrow">↗</span>
             </a>
             <a class="node-link" href="https://aigal.io/not-all-ai-should-be-your-teammate/" target="_blank">
-              <span class="node-link-icon">🔧</span> Not All AI Should Be Your Teammate
+              <span class="node-link-icon">🔧</span> Not All AI Should Be Our Teammate
               <span class="node-link-arrow">↗</span>
             </a>
-            <a class="node-link" href="https://maurakrandall.com/ai-on-our-teams-manifesto/" target="_blank">
+            <a class="node-link" href="https://aigal.io/manifesto/" target="_blank">
               <span class="node-link-icon">📋</span> The Manifesto
               <span class="node-link-arrow">↗</span>
             </a>
@@ -983,7 +1092,7 @@
               <span class="node-link-icon">🔺</span> Meet the Triad
               <span class="node-link-arrow">↗</span>
             </a>
-            <a class="node-link" href="https://maurakrandall.com/why-a-manifesto/" target="_blank">
+            <a class="node-link" href="https://aigal.io/why-a-manifesto/" target="_blank">
               <span class="node-link-icon">✍️</span> How it started
               <span class="node-link-arrow">↗</span>
             </a>
@@ -1046,7 +1155,7 @@
           <div class="node-icon">🏠</div>
           <div>
             <div class="node-title">Maura K. Randall</div>
-            <div class="node-subtitle">maurakrandall.com · The person, the story, the portfolio</div>
+            <div class="node-subtitle">maurakrandall.github.io · The person, the record, the prototypes</div>
           </div>
         </div>
         <div class="node-toggle">+</div>
@@ -1060,28 +1169,20 @@
             on real teams doing real work.
           </p>
           <div class="node-links">
-            <a class="node-link" href="https://maurakrandall.com" target="_blank">
-              <span class="node-link-icon">🏠</span> Home
+            <a class="node-link" href="https://maurakrandall.github.io">
+              <span class="node-link-icon">🏠</span> Portfolio Hub
               <span class="node-link-arrow">↗</span>
             </a>
-            <a class="node-link" href="https://maurakrandall.com/about/" target="_blank">
-              <span class="node-link-icon">👤</span> About Maura
+            <a class="node-link" href="https://maurakrandall.github.io/strategist-as-conductor/">
+              <span class="node-link-icon">🎼</span> Strategist as Conductor
               <span class="node-link-arrow">↗</span>
             </a>
-            <a class="node-link" href="https://maurakrandall.com/published-work/" target="_blank">
-              <span class="node-link-icon">📄</span> Published Work
+            <a class="node-link" href="https://maurakrandall.github.io/life-of-a-capability/">
+              <span class="node-link-icon">🌱</span> The Life of a Capability
               <span class="node-link-arrow">↗</span>
             </a>
-            <a class="node-link" href="https://maurakrandall.com/why-a-manifesto/" target="_blank">
+            <a class="node-link" href="https://aigal.io/why-a-manifesto/" target="_blank">
               <span class="node-link-icon">✍️</span> Why a Manifesto?
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://maurakrandall.com/comparative-analysis/" target="_blank">
-              <span class="node-link-icon">🔎</span> Comparative Analyses
-              <span class="node-link-arrow">↗</span>
-            </a>
-            <a class="node-link" href="https://maurakrandall.github.io" target="_blank">
-              <span class="node-link-icon">⚙️</span> Tools on GitHub
               <span class="node-link-arrow">↗</span>
             </a>
           </div>
@@ -1159,7 +1260,7 @@
           strengths, set real expectations, push back when the work isn't good enough. I'd been doing it
           with humans for 20 years. I just hadn't seen anyone write it down.
         </p>
-        <a class="origin-link" href="https://maurakrandall.com/why-a-manifesto/" target="_blank">
+        <a class="origin-link" href="https://aigal.io/why-a-manifesto/" target="_blank">
           Read the full origin story ↗
         </a>
       </div>
@@ -1170,7 +1271,7 @@
     <div class="footer-name">Maura K. Randall</div>
     <div class="footer-tagline">Product leader · Methodology builder · Human–AI collaboration practitioner</div>
     <div class="footer-links">
-      <a href="https://maurakrandall.com" target="_blank">maurakrandall.com</a>
+      <a href="https://maurakrandall.github.io">Portfolio</a>
       <a href="https://aigal.io" target="_blank">AIGal.io</a>
       <a href="https://thehumanailoop.com" target="_blank">thehumanailoop.com</a>
       <a href="https://try.thehumanailoop.com" target="_blank">Try the Simulation</a>
