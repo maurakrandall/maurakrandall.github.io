@@ -119,6 +119,20 @@ p b{color:var(--ink);font-weight:600}
 .sc-curve path{stroke:var(--amber);stroke-width:3;fill:none;stroke-dasharray:900;stroke-dashoffset:900;transition:stroke-dashoffset 1.4s ease}
 .sc-curve.draw path{stroke-dashoffset:0}
 .sc-clabel{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--amberink);font-weight:700}
+.tr-label{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;color:var(--muted);font-weight:700;margin-bottom:8px}
+.tr-chip{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--slate);border:1px solid var(--line2);background:rgba(42,38,32,0.025);padding:4px 8px;margin-bottom:5px}
+.tr-note{font-family:var(--sans);font-size:10.5px;font-style:italic;color:var(--muted);margin-top:8px;line-height:1.4}
+.tr-arrow{width:22px;height:1px;background:repeating-linear-gradient(90deg,var(--muted) 0 3px,transparent 3px 6px);margin-bottom:16px;position:relative}
+.tr-arrow:after{content:"";position:absolute;right:0;top:-2.5px;border-left:5px solid var(--muted);border-top:3px solid transparent;border-bottom:3px solid transparent}
+.fl-line{position:absolute;left:0;top:8px;width:440px;height:1px;background:var(--line)}
+.fl-node{position:absolute;top:3px;width:11px;height:11px;border:1.5px solid var(--slate);border-radius:50%;background:var(--card)}
+.fl-cap{position:absolute;top:22px;white-space:nowrap;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--muted)}
+.ag-ring{width:27px;height:27px;border:2.5px solid var(--teal);border-radius:50%}
+.ag-lab{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--teal);font-weight:700;margin-top:5px;margin-left:-38px;white-space:nowrap}
+.sc-chip.obs{border-left:3px solid var(--muted);color:var(--slate)}
+.sc-el.dim{opacity:.28}
+.sc-clabel{line-height:1.55;display:block}
+
 .sc-dlabel{font-family:var(--sans);font-style:italic;font-size:13px;color:var(--ink2);white-space:nowrap}
 .sc-frame{position:absolute;inset:6px;border:1.5px solid transparent;transition:border-color .6s;pointer-events:none}
 .sc-frame.on{border-color:var(--zoom)}
@@ -137,10 +151,10 @@ p b{color:var(--ink);font-weight:600}
   .scene-web{display:none}
   .scene-print{display:block;margin:2px 0 10px}
   .tript{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
-  .tp{background:var(--card);border:1px solid var(--line);padding:9px 11px 7px;position:relative}
+  .tp{background:var(--card);border:1px solid var(--line);padding:8px 9px 6px;position:relative}
   .tp .tpn{font-family:var(--mono);font-size:8px;letter-spacing:.18em;color:var(--amberink);font-weight:700;margin-bottom:6px}
-  .tp .art{height:100px;position:relative}
-  .tp .cap{font-size:10.2px;line-height:1.45;color:var(--ink2);margin-top:6px}
+  .tp .art{height:72px;position:relative}
+  .tp .cap{font-size:9.6px;line-height:1.4;color:var(--ink2);margin-top:5px}
   .tp .cap b{color:var(--ink)}
   .tp .chip{font-family:var(--mono);font-size:7.6px;letter-spacing:.05em;background:var(--cream);border:1px solid var(--line);padding:3px 6px;color:var(--ink2);position:absolute;white-space:nowrap}
   .tp .gate{background:var(--petrol);color:#DCF0F0;padding:7px 9px;position:absolute;left:0;right:0;bottom:0}
@@ -148,7 +162,7 @@ p b{color:var(--ink);font-weight:600}
   .tp .gate .gb{font-family:var(--disp);font-size:11px;color:#FFFDF7;margin-bottom:2px}
   .tp .gate .gs{font-family:var(--mono);font-size:7px;color:#7AABAB;letter-spacing:.04em}
   .tp svg{position:absolute;inset:0;width:100%;height:100%}
-  .scene-print .pcap{font-size:10.5px;color:var(--ink2);margin-top:5px}
+  .scene-print .pcap{font-size:10px;color:var(--ink2);margin-top:4px}
 }
 
 @media(max-width:640px){
@@ -169,14 +183,19 @@ p b{color:var(--ink);font-weight:600}
   h2{font-size:23px}
   h1{font-size:38px}
   .stand{font-size:15px}
-  p{margin-bottom:10px}
+  p{margin-bottom:8px}
+  .sect{margin-top:22px}
   body{background:var(--cream)!important}
   .wrap{max-width:100%;padding:0.55in 0.62in}
   a{border-bottom:none;color:var(--teal)}
   .sect{margin-top:26px}
   h2{margin-bottom:10px}
   .pgbreak{page-break-before:always;break-before:page;padding-top:0.1in}
-  .close{margin-top:18px;padding:22px 30px}
+  .close{margin-top:14px;padding:17px 26px}
+  .close .big{font-size:20px;margin-bottom:10px}
+  .close p{font-size:13px}
+  .sig{margin-top:15px;padding-top:12px}
+  .sig .name{font-size:17px}
 }
 </style>
 </head>
@@ -273,37 +292,61 @@ p b{color:var(--ink);font-weight:600}
       <!-- web stepper -->
       <div class="scene-web">
         <div class="sc-box">
-          <div class="sc-head" id="scHead">You hand it one small thing.</div>
+          <div class="sc-head" id="scHead">Onboarding is what we build when the product cannot see the work.</div>
           <div class="sc-stage">
-            <!-- big cycle -->
-            <div class="sc-el" id="elCyc" style="left:150px;top:55px">
-              <div class="sc-cyc">
-                <span class="cnum">CYCLE 01</span>
-                <span class="sc-word" id="w1" style="top:-20px;left:50%;transform:translateX(-50%)">DO THE TASK</span>
-                <span class="sc-word" id="w2" style="top:50%;right:-118px;transform:translateY(-50%)">SHOW THE WORK</span>
-                <span class="sc-word" id="w3" style="bottom:-20px;left:50%;transform:translateX(-50%)">TEACH THE NEXT HANDOFF</span>
-                <span class="sc-word" id="w4" style="top:50%;left:-122px;transform:translateY(-50%)">GET HANDED MORE</span>
-              </div>
+
+            <!-- the enablement track, outside -->
+            <div class="sc-el" id="elTrack" style="left:0;top:34px;width:150px">
+              <div class="tr-label">THE ENABLEMENT TRACK</div>
+              <div class="tr-chip">curriculum</div>
+              <div class="tr-chip">webinars</div>
+              <div class="tr-chip">office hours</div>
+              <div class="tr-chip">tip emails</div>
+              <div class="tr-note">scheduled &middot; generic &middot; blind to the work</div>
             </div>
-            <div class="sc-el" id="elChip1" style="left:440px;top:50px"><span class="sc-chip">a follow-up</span></div>
-            <div class="sc-el sc-hide" id="elGate" style="left:410px;top:120px">
+            <div class="sc-el" id="elArrows" style="left:150px;top:96px">
+              <div class="tr-arrow"></div><div class="tr-arrow"></div><div class="tr-arrow"></div>
+            </div>
+
+            <!-- the product frame, always on -->
+            <div class="sc-frame on" id="elFrame" style="left:180px;top:6px;width:530px;height:306px">
+              <span class="sc-flabel">INSIDE THE PRODUCT</span>
+            </div>
+
+            <!-- the work, inside -->
+            <div class="sc-el" id="elFlow" style="left:206px;top:74px">
+              <div class="fl-line"></div>
+              <div class="fl-node" style="left:0"></div>
+              <div class="fl-node" style="left:210px"></div>
+              <div class="fl-node" style="left:420px"></div>
+              <div class="fl-cap" style="left:-16px">the work</div>
+            </div>
+            <div class="sc-el sc-hide" id="elAgent" style="left:412px;top:66px">
+              <div class="ag-ring"></div><div class="ag-lab">the agent, in the room</div>
+            </div>
+            <div class="sc-el sc-hide" id="elObs" style="left:206px;top:132px">
+              <span class="sc-chip obs">observed: the same manual stitch, six Mondays running</span>
+            </div>
+            <div class="sc-el sc-hide" id="elOffer" style="left:206px;top:174px">
+              <span class="sc-chip say">"I can take that one. Here is what I would have done last Monday."</span>
+            </div>
+            <div class="sc-el sc-hide" id="elGate" style="left:330px;top:220px">
               <div class="sc-gate">
                 <div class="gt">The trust gate</div>
                 <div class="gb">AI surfaces. Humans conclude.</div>
                 <div class="gs">actions previewed &middot; sources visible &middot; outcomes measured</div>
               </div>
             </div>
-            <div class="sc-el sc-hide" id="elAsk" style="left:410px;top:252px"><span class="sc-chip say">"Want me to draft the meeting's actions next?"</span></div>
-            <!-- beat 4: curve + cycles 2,3 -->
-            <svg class="sc-curve" id="elCurve" viewBox="0 0 710 330" preserveAspectRatio="none"><path d="M 55 298 C 240 272, 420 185, 685 62"/></svg>
-            <div class="sc-el sc-hide" id="elC1" style="left:36px;top:238px"><div class="sc-mini" style="width:68px;height:68px"></div></div>
-            <div class="sc-el sc-hide" id="elC2" style="left:288px;top:158px"><div class="sc-mini" style="width:95px;height:95px"></div></div>
-            <div class="sc-el sc-hide" id="elC3" style="left:528px;top:62px"><div class="sc-mini" style="width:120px;height:120px"></div></div>
-            <div class="sc-el sc-hide" id="elD1" style="left:28px;top:300px"><span class="sc-dlabel">a follow-up</span></div>
-            <div class="sc-el sc-hide" id="elD2" style="left:272px;top:128px"><span class="sc-dlabel">the meeting's actions</span></div>
-            <div class="sc-el sc-hide" id="elD3" style="left:500px;top:32px"><span class="sc-dlabel">the whole coordination</span></div>
-            <div class="sc-el sc-hide" id="elCL" style="left:0px;top:22px"><span class="sc-clabel">THE HANDOFF CURVE &middot; THE REAL EXPANSION SIGNAL</span></div>
-            <div class="sc-frame" id="elFrame"><span class="sc-flabel">INSIDE THE PRODUCT</span></div>
+
+            <!-- beat 5: the curve -->
+            <svg class="sc-curve" id="elCurve" viewBox="0 0 710 330" preserveAspectRatio="none"><path d="M 215 272 C 340 256, 480 198, 688 62"/></svg>
+            <div class="sc-el sc-hide" id="elC1" style="left:191px;top:251px"><div class="sc-mini" style="width:48px;height:48px"></div></div>
+            <div class="sc-el sc-hide" id="elC2" style="left:418px;top:145px"><div class="sc-mini" style="width:66px;height:66px"></div></div>
+            <div class="sc-el sc-hide" id="elC3" style="left:602px;top:30px"><div class="sc-mini" style="width:88px;height:88px"></div></div>
+            <div class="sc-el sc-hide" id="elD1" style="left:196px;top:294px"><span class="sc-dlabel">a follow-up</span></div>
+            <div class="sc-el sc-hide" id="elD2" style="left:394px;top:120px"><span class="sc-dlabel">the meeting's actions</span></div>
+            <div class="sc-el sc-hide" id="elD3" style="left:536px;top:4px"><span class="sc-dlabel">the whole coordination</span></div>
+            <div class="sc-el sc-hide" id="elCL" style="left:424px;top:284px"><span class="sc-clabel">THE HANDOFF CURVE<br>THE ADOPTION PROGRAM ITSELF</span></div>
           </div>
           <div class="sc-nav">
             <button class="sc-dot on" data-b="0" aria-label="Beat 1"></button>
@@ -316,54 +359,64 @@ p b{color:var(--ink);font-weight:600}
         </div>
         <div class="sc-cap" id="elOutside">&nbsp;</div>
       </div>
+
       <!-- print triptych -->
       <div class="scene-print">
         <div class="tript">
           <div class="tp">
-            <div class="tpn">BEAT 1</div>
+            <div class="tpn">THE OLD SHAPE</div>
             <div class="art">
-              <svg viewBox="0 0 220 118"><circle cx="72" cy="62" r="40" fill="none" stroke="#0E7C74" stroke-width="2.2"/>
-                <text x="72" y="14" text-anchor="middle" font-family="MKR Mono,monospace" font-size="7.5" letter-spacing="1" fill="#0E7C74" font-weight="bold">DO THE TASK</text>
-                <text x="72" y="114" text-anchor="middle" font-family="MKR Mono,monospace" font-size="7.5" letter-spacing="1" fill="#6E6659">TEACH &middot; HAND MORE</text>
+              <svg viewBox="0 0 220 104">
+                <rect x="86" y="4" width="130" height="96" fill="none" stroke="#0B5CFF" stroke-width="1" opacity="0.6"/>
+                <text x="92" y="14" font-family="MKR Mono,monospace" font-size="6" letter-spacing="0.8" fill="#0B5CFF">INSIDE THE PRODUCT</text>
+                <line x1="96" y1="58" x2="206" y2="58" stroke="#2A2620" stroke-width="0.8" opacity="0.35"/>
+                <circle cx="112" cy="58" r="4" fill="none" stroke="#6E6659" stroke-width="1"/>
+                <circle cx="151" cy="58" r="4" fill="none" stroke="#6E6659" stroke-width="1"/>
+                <circle cx="190" cy="58" r="4" fill="none" stroke="#6E6659" stroke-width="1"/>
+                <text x="96" y="76" font-family="MKR Mono,monospace" font-size="5.6" letter-spacing="0.6" fill="#6E6659">the work</text>
+                <text x="2" y="20" font-family="MKR Mono,monospace" font-size="5.6" letter-spacing="0.6" fill="#A39887">CURRICULUM</text>
+                <text x="2" y="34" font-family="MKR Mono,monospace" font-size="5.6" letter-spacing="0.6" fill="#A39887">WEBINARS</text>
+                <text x="2" y="48" font-family="MKR Mono,monospace" font-size="5.6" letter-spacing="0.6" fill="#A39887">OFFICE HOURS</text>
+                <text x="2" y="62" font-family="MKR Mono,monospace" font-size="5.6" letter-spacing="0.6" fill="#A39887">TIP EMAILS</text>
+                <line x1="58" y1="72" x2="82" y2="72" stroke="#A39887" stroke-width="0.8" stroke-dasharray="2 2"/>
+                <path d="M 78 69 L 84 72 L 78 75" fill="none" stroke="#A39887" stroke-width="0.8"/>
               </svg>
-              <span class="chip" style="right:2px;top:44px">a follow-up</span>
             </div>
-            <div class="cap"><b>You hand it one small thing.</b> The agent does the task.</div>
+            <div class="cap"><b>A track running beside the product.</b> Scheduled, generic, and blind to what any one person actually does.</div>
           </div>
           <div class="tp">
-            <div class="tpn">BEAT 2</div>
+            <div class="tpn">THE ASYMMETRY</div>
             <div class="art">
-              <span class="chip" style="left:0;top:6px;border-left:3px solid #0E7C74">"Want me to draft the meeting's actions next?"</span>
+              <span class="chip" style="left:0;right:0;top:2px">observed: the same manual stitch, six Mondays running</span>
+              <span class="chip" style="left:0;right:0;top:30px;border-left:3px solid #0E7C74">"I can take that one."</span>
               <div class="gate">
                 <div class="gt">The trust gate</div>
                 <div class="gb">AI surfaces. Humans conclude.</div>
                 <div class="gs">actions previewed &middot; sources visible &middot; outcomes measured</div>
               </div>
             </div>
-            <div class="cap"><b>It shows its work, then asks for the next one.</b> The second job.</div>
+            <div class="cap"><b>It teaches from evidence, not curriculum.</b> Then shows its work so the handoff can be verified.</div>
           </div>
           <div class="tp">
-            <div class="tpn">BEAT 3</div>
+            <div class="tpn">THE RESULT</div>
             <div class="art">
-              <svg viewBox="0 0 220 118">
-                <path d="M 18 104 C 70 96, 140 60, 208 18" stroke="#D99E1D" stroke-width="2.4" fill="none"/>
-                <circle cx="36" cy="96" r="14" fill="none" stroke="#0E7C74" stroke-width="1.8"/>
-                <circle cx="110" cy="70" r="19" fill="none" stroke="#0E7C74" stroke-width="1.8"/>
-                <circle cx="182" cy="36" r="24" fill="none" stroke="#0E7C74" stroke-width="1.8"/>
-                <rect x="4" y="4" width="212" height="110" fill="none" stroke="#0B5CFF" stroke-width="1" opacity="0.55"/>
-                <text x="12" y="14" font-family="MKR Mono,monospace" font-size="6.5" letter-spacing="1" fill="#0B5CFF">INSIDE THE PRODUCT</text>
+              <svg viewBox="0 0 220 104">
+                <path d="M 16 92 C 70 84, 138 54, 208 16" stroke="#D99E1D" stroke-width="2.4" fill="none"/>
+                <circle cx="30" cy="86" r="12" fill="none" stroke="#0E7C74" stroke-width="1.8"/>
+                <circle cx="108" cy="62" r="17" fill="none" stroke="#0E7C74" stroke-width="1.8"/>
+                <circle cx="180" cy="32" r="22" fill="none" stroke="#0E7C74" stroke-width="1.8"/>
+                <rect x="2" y="2" width="216" height="100" fill="none" stroke="#0B5CFF" stroke-width="1" opacity="0.5"/>
               </svg>
             </div>
-            <div class="cap"><b>Each handoff is bigger than the last.</b> That curve is the growth strategy, inside the product.</div>
+            <div class="cap"><b>Verified once, handed more.</b> That curve is the adoption program, and it ships with the product.</div>
           </div>
         </div>
-        <div class="pcap">The agent's second job: every completed task teaches the next handoff. The rising line is the handoff curve, the real expansion signal.</div>
+        <div class="pcap">The system that teaches and the system that measures are the same system.</div>
       </div>
     </div>
 
-    <p>An AI agent is the first product that can run its own activation loop. It sits inside the workflow, sees the coordination it was never invited into, and can demonstrate the delegation right there, in flow, at the moment of hesitation. Concretely: <b>the agent's second job, on every task, is teaching the user what to hand it next.</b> I published this pattern as <a href="https://thehumanailoop.com/always-on-operator/">the always-on operator</a>: AI that measures, contextualizes, and surfaces the next opportunity while humans decide. Growth for an agent is not a campaign around the product. It is a capability inside it.</p>
-    <p>Trust is the activation gate. People do not delegate to what they cannot verify, so the first-time experience has to show its work: actions previewed, sources visible, outcomes measured. My published rule for this is <b><a href="https://thehumanailoop.com/human-insight-loop/">AI surfaces. Humans conclude.</a></b> An agent that earns verification early gets handed bigger work later, and that handoff curve is the real expansion signal.</p>
-    <p>And from <a href="https://thehumanailoop.com/from-feature-rich-to-focused/">my published work on products past their feature-race phase</a>: the next chapter is not shipping more, it is aiming. Adoption and retention metrics over feature counts, the highest-leverage segments first, and expansion following visible proof of recovered time rather than preceding it.</p>
+    <p>An enablement track is the correct design for software that cannot watch and cannot act. An agent does both. It sits inside the workflow, sees the coordination it was never invited into, and knows its own capability surface, so it can measure the gap between what a person does by hand and what it could have taken. <b>It teaches from evidence rather than from a curriculum</b>, one person at a time, at the moment that gap costs them something. No training program does that at n=1, and none can tell you afterward whether it worked.</p>
+    <p>Trust is the activation gate, which is why the offer has to arrive with its work shown, and why my published rule is <b>AI surfaces. Humans conclude.</b> Verified once, the agent gets handed something bigger, and the system that teaches is the system that measures. So the adoption program stops being a headcount line that grows with seats and becomes a product surface that ships with the release. I published the operating pattern as <a href="https://maurakrandall.github.io/always-on-operator/">the always-on operator</a>, and from my work on products past their feature-race phase: the next chapter is not shipping more, it is aiming.</p>
   </div>
 
   <div class="close">
@@ -388,34 +441,32 @@ p b{color:var(--ink);font-weight:600}
 <script>
 (function(){
   var beats = [
-    {h:'You hand it one small thing.', out:'\u00a0'},
-    {h:'It does the work, and shows the work.', out:'\u00a0'},
-    {h:'Then it does its second job: it asks for the next one.', out:'\u00a0'},
-    {h:'Each handoff is bigger than the last.', out:'\u00a0'},
-    {h:'That curve is the growth strategy. <span class="amb">Inside the product, not around it.</span>', out:'Outside the frame: nudge, banner, campaign. The old playbook points at the product. This loop runs inside it.'}
+    {h:'Onboarding is what we build when the product cannot see the work.', out:'\u00a0'},
+    {h:'An agent can see the work.', out:'\u00a0'},
+    {h:'So it teaches from evidence, not from a curriculum.', out:'\u00a0'},
+    {h:'It shows its work, so the handoff can be verified.', out:'\u00a0'},
+    {h:'Trusted once, handed more. <span class="amb">That curve is the adoption program.</span>', out:'The enablement track grows by hiring. This loop ships with the release.'}
   ];
-  var els = {gate:'elGate', ask:'elAsk', c2:'elC2', c3:'elC3', d1:'elD1', d2:'elD2', d3:'elD3', cl:'elCL'};
   function $(id){return document.getElementById(id);}
   var cur=0, timer=null;
   function show(id,on){ $(id).classList.toggle('sc-hide', !on); }
-  function setWords(n){ for(var i=1;i<=4;i++){ $('w'+i).classList.toggle('on', i===n); } }
   function go(b){
     cur=b;
     $('scHead').innerHTML = beats[b].h;
     $('elOutside').textContent = beats[b].out;
     document.querySelectorAll('.sc-dot').forEach(function(d,i){ d.classList.toggle('on', i===b); });
     $('scCount').textContent = 'BEAT ' + (b+1) + ' / 5';
-    // beat logic
-    setWords(b===0?1: b===1?2 : b===2?3 : 0);
-    var wide = b>=3;
-    show('elGate', b>=1 && !wide);
-    show('elAsk', b===2);
-    $('elCyc').classList.toggle('sc-hide', wide);
-    $('elChip1').classList.toggle('sc-hide', wide);
+    var wide = b>=4;
+    $('elTrack').classList.toggle('dim', b>=1);
+    $('elArrows').classList.toggle('dim', b>=1);
+    show('elFlow', !wide);
+    show('elAgent', b>=1 && !wide);
+    show('elObs', b>=2 && !wide);
+    show('elOffer', b>=2 && !wide);
+    show('elGate', b>=3 && !wide);
     show('elC1', wide); show('elC2', wide); show('elC3', wide);
     show('elD1', wide); show('elD2', wide); show('elD3', wide); show('elCL', wide);
     $('elCurve').classList.toggle('draw', wide);
-    $('elFrame').classList.toggle('on', b===4);
   }
   document.querySelectorAll('.sc-dot').forEach(function(d){
     d.addEventListener('click', function(){ clearInterval(timer); go(parseInt(d.dataset.b,10)); });
@@ -423,7 +474,7 @@ p b{color:var(--ink);font-weight:600}
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce){ go(4); } else {
     go(0);
-    timer = setInterval(function(){ go((cur+1)%5); }, 4600);
+    timer = setInterval(function(){ go((cur+1)%5); }, 4800);
     document.querySelector('.sc-box').addEventListener('mouseenter', function(){ clearInterval(timer); });
   }
 })();
