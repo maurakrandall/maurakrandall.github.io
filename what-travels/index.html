@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Travels</title>
+<style>
+@font-face{font-family:'MKR Display';src:url('fonts/MKR-Display.woff') format('woff');font-weight:700;font-display:swap}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Light.woff') format('woff');font-weight:300;font-display:swap}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans.woff') format('woff');font-weight:400;font-display:swap}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Italic.woff') format('woff');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Medium.woff') format('woff');font-weight:500;font-display:swap}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Bold.woff') format('woff');font-weight:700;font-display:swap}
+@font-face{font-family:'MKR Mono';src:url('fonts/MKR-Mono.woff') format('woff');font-weight:400;font-display:swap}
+:root{--ground:#F7EFE2;--card:#FCF6EA;--desk:#E4D9C6;--ink:#241F19;--ink2:#4A4038;--slate:#6E6255;--line:rgba(36,31,25,0.16);
+--amber:#C98A1E;--amberink:#8F5F09;--terra:#B4552F;--teal:#2C6E68;--chg:#B23A2B;--petrol:#1E2C28;
+--disp:'MKR Display','Bookman Old Style',Bookman,Georgia,serif;--sans:'MKR Sans','Century Gothic',Futura,'Trebuchet MS',system-ui,sans-serif;--mono:'MKR Mono','Latin Modern Mono','Courier New',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--desk);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+a{color:var(--amberink);text-decoration:none;border-bottom:1px solid rgba(143,95,9,.4)}a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 20px}
+#frame{position:relative;width:100%;max-width:1060px;aspect-ratio:16/9;background:var(--ground);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 18px 44px rgba(70,48,20,.13);font-size:clamp(10px,1.31vw,14px)}
+#grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:7;opacity:.55;mix-blend-mode:multiply}
+.phase{position:absolute;inset:0;padding:2.9em 3.4em 3.2em;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .85s ease}
+.phase.on{opacity:1;visibility:visible}
+.phase.dark{background:var(--petrol);color:#F2E8D8}
+.txt{max-width:54em;flex:0 0 auto}
+h2{font-family:var(--disp);font-weight:700;font-size:2.4em;line-height:1.11;letter-spacing:-.004em;text-wrap:pretty}
+h2 em{font-style:normal;color:var(--terra)}h2 em.t{color:var(--teal)}h2 em.r{color:var(--chg)}
+.sub{font-size:1.02em;line-height:1.55;color:var(--ink2);max-width:43em;margin-top:.8em;text-wrap:pretty}
+.gfx{flex:1;min-height:0;margin-top:1.2em;position:relative}
+.gfx>svg{width:100%;height:100%;display:block;overflow:visible}
+.mono{font-family:var(--mono);font-size:.74em;letter-spacing:.15em;text-transform:uppercase;color:var(--slate)}
+text{font-family:var(--sans)}
+.tm{font-family:var(--mono);font-size:11.5px;letter-spacing:.17em;fill:var(--slate)}
+.ti{font-family:var(--sans);font-style:italic;font-size:14px;fill:var(--slate)}
+#anchor{position:absolute;right:1.8em;bottom:1.35em;display:flex;align-items:center;gap:1.05em;z-index:9}
+#acts{display:flex;gap:.42em}
+.dot{width:.6em;height:.6em;border-radius:50%;border:1px solid rgba(36,31,25,.32);background:transparent;cursor:pointer;padding:0;transition:background .3s,border-color .3s,transform .3s}
+.dot.done{background:rgba(36,31,25,.3);border-color:transparent}
+.dot.now{background:var(--terra);border-color:var(--terra);transform:scale(1.35)}
+.dot.sep{margin-left:.7em}
+#actlab{font-family:var(--mono);font-size:.7em;letter-spacing:.16em;color:var(--slate);white-space:nowrap}
+#frame.dark .dot{border-color:rgba(242,232,216,.45)}#frame.dark .dot.done{background:rgba(242,232,216,.42);border-color:transparent}#frame.dark .dot.now{background:var(--amber);border-color:var(--amber)}#frame.dark #actlab{color:rgba(242,232,216,.62)}
+#bar{position:absolute;left:0;bottom:0;height:2px;background:var(--amber);width:0;z-index:9;opacity:.6}
+.hint{position:absolute;left:1.8em;bottom:1.35em;font-family:var(--mono);font-size:.68em;letter-spacing:.14em;color:var(--slate);z-index:9;opacity:.8;white-space:nowrap}
+#frame.dark .hint{color:rgba(242,232,216,.5)}
+/* motion */
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;translate:0 9px}to{opacity:1;translate:0 0}}
+.r0{opacity:0}.phase.on .r0{animation:rise .85s ease both}
+.f0{opacity:0}.phase.on .f0{animation:fade .95s ease both}
+.d1{animation-delay:.5s!important}.d2{animation-delay:1.3s!important}.d3{animation-delay:2.3s!important}.d4{animation-delay:3.5s!important}.d5{animation-delay:4.8s!important}.d6{animation-delay:6.2s!important}.d7{animation-delay:7.6s!important}
+.nm{opacity:0}.phase.on .nm{animation:fade .9s ease both}
+.n1{animation-delay:1.2s!important}.n2{animation-delay:3.2s!important}.n3{animation-delay:5.2s!important}.n4{animation-delay:7.2s!important}.n5{animation-delay:9.2s!important}
+@keyframes crossw{from{transform:translate(96px,296px) scale(.5)}to{transform:translate(880px,300px) scale(1.1)}}
+.phase.on .walker{animation:crossw 13.5s linear both}
+@keyframes drawl{from{stroke-dashoffset:1100}to{stroke-dashoffset:0}}
+.phase.on .ghz{stroke-dasharray:1100;animation:drawl 12.5s ease-out both}
+@keyframes tmpl{0%{stroke-dashoffset:330;opacity:0}14%{opacity:.95}70%{stroke-dashoffset:88;opacity:.95}88%{stroke-dashoffset:88;opacity:0}100%{stroke-dashoffset:330;opacity:0}}
+.tmpl{stroke-dasharray:330;stroke-dashoffset:330;opacity:0}
+.phase.on .tmpl{animation:tmpl 2.7s ease-in-out infinite both}
+@keyframes sway{0%,100%{transform:rotate(-.5deg)}50%{transform:rotate(.5deg)}}
+.phase.on .sway{animation:sway 3.4s ease-in-out infinite both;transform-origin:50% 100%}
+/* hinge */
+.qrow{font-family:var(--sans);font-style:italic;font-size:1.02em;color:var(--slate)}
+.ans{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5em;margin-top:.4em;flex:1;align-content:start}
+.a{display:flex;flex-direction:column;justify-content:flex-start;gap:.7em}
+.a p{font-size:1.06em;line-height:1.42;color:var(--ink);text-wrap:pretty}
+.a svg{width:112%;margin-left:-4%;height:auto;display:block}
+.a:nth-child(1){rotate:-.5deg}.a:nth-child(2){rotate:.4deg}.a:nth-child(3){rotate:-.3deg}.a:nth-child(4){rotate:.5deg}
+/* floor */
+.travels{font-family:var(--disp);font-size:2.55em;line-height:1.1;color:var(--terra);rotate:-.4deg}
+.floorline{font-size:1.12em;line-height:1.5;max-width:52em;margin-top:.75em;color:var(--ink2)}
+.floorline b{font-weight:500;color:var(--chg)}
+/* stations */
+.sts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.9em;margin-top:.3em}
+.st{position:relative}
+.st:nth-child(1){rotate:-.4deg}.st:nth-child(2){rotate:.35deg}.st:nth-child(3){rotate:-.25deg}
+.st .lab{font-family:var(--mono);font-size:.68em;letter-spacing:.19em;text-transform:uppercase;color:var(--slate);display:block;margin-bottom:.4em}
+.st .inn{font-size:1.06em;line-height:1.42;color:var(--ink)}
+.st .out{font-size:1.06em;line-height:1.42;color:var(--teal)}
+.st .ar{margin:.55em 0 .5em;display:block;width:78%;height:auto}
+/* panels */
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:2.4em;margin-top:.6em}
+.pn{position:relative;padding-left:1.1em}
+.pn:before{content:"";position:absolute;left:0;top:.25em;bottom:.25em;width:3px;border-radius:2px}
+.pn.civ:before{background:var(--terra)}.pn.prd:before{background:var(--teal)}
+.pn.civ{rotate:-.3deg}.pn.prd{rotate:.3deg}
+.pn h3{font-family:var(--mono);font-size:.7em;letter-spacing:.19em;font-weight:400;margin-bottom:.65em}
+.pn.civ h3{color:var(--terra)}.pn.prd h3{color:var(--teal)}
+.pn p{font-size:1.06em;line-height:1.5;color:var(--ink2);text-wrap:pretty}
+.pn p b{font-weight:500;color:var(--ink)}
+.same{font-family:var(--disp);font-size:1.5em;color:var(--amberink);margin-top:1.1em;rotate:-.35deg}
+/* tension */
+.tenrow{display:grid;grid-template-columns:1fr 12em 1fr;gap:1.6em;align-items:center;margin-top:.4em}
+.claim{font-size:1.02em;line-height:1.44;color:var(--ink2)}
+.claim b{display:block;font-family:var(--mono);font-size:.68em;letter-spacing:.19em;text-transform:uppercase;margin-bottom:.5em;font-weight:400}
+.claim.l b{color:var(--terra)}.claim.r b{color:var(--teal)}
+.claim.l{rotate:-.3deg}.claim.r{rotate:.3deg}
+.tennote{font-family:var(--disp);font-size:1.5em;line-height:1.32;margin-top:1.2em;max-width:48em;color:var(--ink)}
+/* act iv */
+.qs{display:flex;flex-direction:column;gap:2.4em;margin-top:.4em}
+.q{position:relative;padding-left:2.8em}
+.q .no{position:absolute;left:0;top:.3em;font-family:var(--mono);font-size:.8em;letter-spacing:.12em;color:var(--amberink)}
+.q p{font-family:var(--disp);font-size:2.12em;line-height:1.24;color:var(--ink);text-wrap:pretty}
+.q:nth-child(1){rotate:-.3deg}.q:nth-child(2){rotate:.28deg}
+.stack{display:flex;flex-direction:column;justify-content:center;gap:1.1em;height:100%}
+.half{display:flex;flex-direction:column;gap:.5em}
+.half .cap{font-family:var(--mono);font-size:.72em;letter-spacing:.21em;text-transform:uppercase}
+.half.flat .cap{color:var(--slate)}.half.amp .cap{color:var(--amberink)}
+.marks4{display:grid;grid-template-columns:repeat(4,1fr);gap:0 1.3em}
+.marks4 svg{width:108%;margin-left:-4%;height:auto;display:block}
+.marks4>*:nth-child(1){rotate:-.6deg}.marks4>*:nth-child(2){rotate:.5deg}.marks4>*:nth-child(3){rotate:.4deg}.marks4>*:nth-child(4){rotate:-.5deg}
+/* close */
+.phase.dark h2{font-size:2.05em;max-width:22em;color:#FBF3E6}
+.closewrap{display:flex;flex-direction:column;height:100%;gap:1.1em}
+.eyebrow{font-family:var(--mono);font-size:.7em;letter-spacing:.22em;color:var(--amber);margin-bottom:.9em}
+.closecols{display:grid;grid-template-columns:1.1fr 1fr;gap:2.8em;flex:1;align-content:center}
+.closewrap p{font-size:.98em;line-height:1.6;color:rgba(242,232,216,.84);margin-bottom:.85em;text-wrap:pretty}
+.closewrap p b{font-weight:500;color:#FBF3E6}
+.closewrap p.canon{font-family:var(--disp);font-size:1.42em;line-height:1.32;color:#FBF3E6;margin-bottom:.7em}
+.sig{display:flex;justify-content:space-between;align-items:flex-end;gap:1.4em;flex-wrap:wrap;padding-top:1em;position:relative}
+.sig .nm2{font-family:var(--disp);font-size:1.35em;color:#FBF3E6}
+.sig .ct{font-family:var(--mono);font-size:.72em;letter-spacing:.06em;color:rgba(242,232,216,.6);margin-top:.35em}
+.links{font-family:var(--mono);font-size:.72em;letter-spacing:.1em;color:var(--amber);text-align:right}
+.sigrule{position:absolute;left:0;right:0;top:0;height:6px}
+@media (max-width:760px){#frame{aspect-ratio:auto;min-height:96vh;font-size:12px}.phase{padding:2.1em 1.5em 4em;overflow:auto}h2{font-size:1.85em}.ans,.sts,.panels,.qs,.closecols{grid-template-columns:1fr;gap:1em}.tenrow{grid-template-columns:1fr;gap:1em}.marks4{grid-template-columns:repeat(2,1fr)}.gfx{min-height:180px}}
+@media (prefers-reduced-motion:reduce){.phase,.phase.on *{animation:none!important;transition:none!important}.r0,.f0,.nm,.tmpl{opacity:1}.r0{translate:none}.walker{transform:translate(880px,300px) scale(1.1)}.ghz{stroke-dasharray:none}.tmpl{stroke-dashoffset:88;opacity:.95}}
+#frame.snap .phase,#frame.snap .phase *{transition:none!important;animation:none!important}
+#frame.snap .phase:not(.on){display:none!important}
+#frame.snap .hint,#frame.snap #bar{display:none!important}
+</style>
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute;left:-9999px" focusable="false">
+<filter id="rgh" x="-12%" y="-12%" width="124%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="rgh2" x="-12%" y="-12%" width="124%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+<defs>
+<g id="mkA" fill="none" stroke-linecap="round">
+<path d="M12,58 C22,40 30,62 40,46 C48,33 52,58 62,44 C70,32 78,54 90,42 C100,32 110,44 124,35" stroke="#B4552F" stroke-width="3"/>
+<path d="M118,31 C130,26 134,45 122,45" stroke="#B4552F" stroke-width="2.4"/>
+<path d="M10,72 C48,68 96,74 138,69" stroke="#8F5F09" stroke-width="1.6" opacity=".65"/>
+</g>
+<g id="mkB" fill="none" stroke-linecap="round">
+<path d="M16,72 C32,54 48,38 70,29" stroke="#B4552F" stroke-width="3.2"/>
+<path d="M80,20 C93,33 95,51 84,64" stroke="#B4552F" stroke-width="2.4" opacity=".7"/>
+<path d="M92,14 C109,30 111,55 98,71" stroke="#B4552F" stroke-width="1.9" opacity=".45"/>
+<path d="M104,9 C126,28 128,60 111,79" stroke="#B4552F" stroke-width="1.5" opacity=".26"/>
+</g>
+<g id="mkC" fill="none" stroke-linecap="round" stroke="#B4552F">
+<path d="M18,20 C16,40 19,58 17,74" stroke-width="3.2"/>
+<path d="M38,18 C36,38 39,56 37,72" stroke-width="3.2"/>
+<path d="M58,21 C56,41 59,59 57,75" stroke-width="3.2"/>
+<path d="M78,19 C76,39 79,57 77,73" stroke-width="3.2"/>
+<path d="M8,70 C34,50 64,36 90,23" stroke-width="3.2"/>
+</g>
+<g id="mkD" fill="none" stroke-linecap="round">
+<path d="M44,70 C24,56 30,28 58,20 C88,12 120,26 124,47 C127,65 108,78 86,74" stroke="#B4552F" stroke-width="2.9"/>
+<path d="M96,66 C90,70 86,73 82,74 C87,77 92,80 96,84" stroke="#B4552F" stroke-width="2.3"/>
+<circle cx="40" cy="42" r="2.8" fill="#8F5F09"/><circle cx="62" cy="26" r="2.8" fill="#8F5F09"/><circle cx="94" cy="28" r="2.8" fill="#8F5F09"/><circle cx="116" cy="52" r="2.8" fill="#8F5F09"/>
+</g>
+<g id="figW" fill="none" stroke="#241F19" stroke-linecap="round">
+<circle cx="30" cy="14" r="10.2" stroke-width="2.5"/>
+<path d="M27,26 C22,38 21,52 23,63 L40,62 C39,49 36,37 33,26 Z" stroke-width="2.5"/>
+<path d="M33,32 C40,38 46,42 50,39" stroke-width="2.3"/>
+<path d="M27,32 C20,37 15,44 13,51" stroke-width="2.3"/>
+<path d="M36,62 C40,75 44,88 46,100" stroke-width="2.5"/>
+<path d="M26,63 C23,76 20,88 18,100" stroke-width="2.5"/>
+</g>
+<g id="figL" fill="none" stroke="#241F19" stroke-linecap="round">
+<circle cx="27" cy="15" r="10.2" stroke-width="2.5" transform="rotate(-9 27 15)"/>
+<path d="M25,27 C19,39 18,53 21,64 L38,63 C38,50 34,38 31,27 Z" stroke-width="2.5"/>
+<path d="M30,35 C24,41 19,43 15,42" stroke-width="2.3"/>
+<path d="M25,35 C23,45 23,53 24,59" stroke-width="2.3"/>
+<path d="M27,64 C26,76 25,88 24,100" stroke-width="2.5"/>
+<path d="M36,63 C37,76 38,88 39,100" stroke-width="2.5"/>
+</g>
+</defs>
+</svg>
+
+<div class="page">
+<div id="frame">
+
+<!-- 1 -->
+<section class="phase" data-screen-label="01" data-act="ACT I · THE GROWING UP">
+<div class="txt"><h2>Most of us grow up learning one answer. <em>I grew up watching it change.</em></h2>
+<p class="sub">Brazil, Ecuador, the Dominican Republic, the Philippines, Italy. Five places, five working models of how an ordinary person gets heard, before I was old enough to know that was unusual.</p></div>
+<div class="gfx"><svg viewBox="0 0 1000 340" preserveAspectRatio="xMidYMax meet">
+<g filter="url(#rgh)">
+<g transform="translate(500,86)"><path class="tmpl" d="M0,-58 L56,-18 L34,50 L-34,50 L-56,-18" fill="none" stroke="#C98A1E" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></g>
+<path class="ghz" d="M18,298 C200,294 380,302 560,296 C720,291 870,300 982,294" fill="none" stroke="#8F5F09" stroke-width="2.2" stroke-linecap="round" opacity=".75"/>
+<g stroke="#8F5F09" stroke-width="1.6" stroke-linecap="round" opacity=".5">
+<path class="nm n1" d="M112,290 C113,296 111,302 112,308"/><path class="nm n2" d="M288,289 C289,295 287,301 288,307"/><path class="nm n3" d="M470,291 C471,297 469,303 470,309"/><path class="nm n4" d="M700,289 C701,295 699,301 700,307"/><path class="nm n5" d="M868,291 C869,297 867,303 868,309"/></g>
+</g>
+<text class="ti nm n1" x="112" y="328" text-anchor="middle">Brazil</text><text class="ti nm n2" x="288" y="327" text-anchor="middle">Ecuador</text><text class="ti nm n3" x="470" y="329" text-anchor="middle">Dominican Republic</text><text class="ti nm n4" x="700" y="327" text-anchor="middle">Philippines</text><text class="ti nm n5" x="868" y="329" text-anchor="middle">Italy</text>
+<g class="walker"><g class="sway" filter="url(#rgh2)"><use href="#figW" x="-30" y="-104"/></g></g>
+</svg></div>
+</section>
+
+<!-- 2 -->
+<section class="phase" data-screen-label="02" data-act="ACT I · THE GROWING UP">
+<div class="txt"><h2>So the template never set.</h2>
+<p class="sub">That is the whole inheritance. Not a view about how it should work. The habit of assuming I do not yet know.</p></div>
+<div class="gfx"><svg viewBox="0 0 1000 320" preserveAspectRatio="xMidYMid meet">
+<g filter="url(#rgh)">
+<g transform="translate(560,150)">
+<path class="r0 d1" d="M0,-124 L120,-38 L74,104 L-74,104 L-120,-38" fill="none" stroke="#C98A1E" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="r0 d3" d="M-6,-136 L128,-46 L82,112" fill="none" stroke="#C98A1E" stroke-width="1.6" stroke-linecap="round" stroke-opacity=".3"/>
+<circle class="r0 d2" cx="-120" cy="-38" r="3.4" fill="#C98A1E"/><circle class="r0 d2" cx="0" cy="-124" r="3.4" fill="#C98A1E"/>
+</g>
+<g class="r0 d2" transform="translate(320,214) scale(1.62)" filter="url(#rgh2)"><use href="#figL" x="-30" y="-104"/></g>
+</g>
+<text class="tm r0 d4" x="560" y="292" text-anchor="middle" style="fill:#8F5F09">NEVER CLOSED</text>
+</svg></div>
+</section>
+
+<!-- 3 -->
+<section class="phase" data-screen-label="03" data-act="THE HINGE">
+<div class="txt"><h2>Democracy has a spirit. <em>It does not have a template.</em></h2>
+<p class="sub">The value is shared everywhere. The form it takes never is: the institutions, the timeline, what counts as a voice, how dissent is expressed. Four answers, all of them true, none of them transferable.</p></div>
+<div class="gfx" style="display:flex;flex-direction:column;gap:.5em">
+<div class="qrow r0 d1">What does it look like when a person insists on being heard?</div>
+<div class="ans">
+<div class="a r0 d2"><svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkA"/></svg><p>A signature added to a list of thousands.</p></div>
+<div class="a r0 d3"><svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkB"/></svg><p>A name read aloud into a council record.</p></div>
+<div class="a r0 d4"><svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkC"/></svg><p>A queue that forms before dawn and does not leave.</p></div>
+<div class="a r0 d5"><svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkD"/></svg><p>A phone passed around a room until everyone has spoken.</p></div>
+</div></div>
+</section>
+
+<!-- 4 -->
+<section class="phase" data-screen-label="04" data-act="THE HINGE">
+<div class="txt"><h2>And still, not everything is relative.</h2>
+<p class="sub">The floor is narrow on purpose. It is about whether a person can speak at all, not about which answer they arrive at.</p></div>
+<div class="gfx" style="display:flex;flex-direction:column;justify-content:flex-start">
+<div class="travels r0 d2">some principles travel</div>
+<svg class="r0 d2" viewBox="0 0 420 14" preserveAspectRatio="none" style="width:15em;height:11px;margin-top:.3em" filter="url(#rgh2)"><path d="M6,8 C110,4 240,11 414,6" fill="none" stroke="#C98A1E" stroke-width="2.6" stroke-linecap="round"/></svg>
+<p class="floorline r0 d3">Where none of these is possible, and where speaking costs a person their safety, that is not a local variation. It is <b>the one thing that is not negotiable</b>. Above that line, difference is not a problem to be solved.</p>
+<svg class="r0 d5" viewBox="0 0 1000 18" preserveAspectRatio="none" style="height:16px;margin-top:auto" filter="url(#rgh)"><path d="M6,9 C220,4 460,14 700,7 C820,4 900,12 994,7" fill="none" stroke="#B23A2B" stroke-width="5.5" stroke-linecap="round"/></svg>
+<div class="mono r0 d6" style="margin-top:.6em;color:#B23A2B">THE FLOOR</div>
+</div>
+</section>
+
+<!-- 5 -->
+<section class="phase" data-screen-label="05" data-act="ACT II · THE WALK IN">
+<div class="txt"><h2>Which is a strange thing to bring to a first day. <em>Questions, and no template.</em></h2>
+<p class="sub">Everyone arrives carrying a picture of what good looks like. I arrive knowing mine would not survive contact with the room.</p></div>
+<div class="gfx"><svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMax meet">
+<g filter="url(#rgh)">
+<path d="M18,272 C220,269 480,275 720,270 C840,268 930,274 984,270" fill="none" stroke="#8F5F09" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+<path class="r0 d1" d="M132,272 C130,180 134,90 132,32 C132,20 142,14 154,14 C400,12 640,16 800,13 C814,13 822,20 822,32 C824,104 820,200 822,272" fill="none" stroke="#4A4038" stroke-width="2" stroke-linecap="round"/>
+<path class="r0 d2" d="M190,84 C420,80 640,86 764,82" fill="none" stroke="#4A4038" stroke-width="1.4" stroke-linecap="round" stroke-opacity=".35"/>
+<g class="f0 d3" transform="translate(590,272) scale(1.44)" filter="url(#rgh2)"><g class="sway"><use href="#figL" x="-30" y="-104"/></g></g>
+<path class="r0 d4" d="M840,272 C886,266 930,274 972,268" fill="none" stroke="#2C6E68" stroke-width="2" stroke-dasharray="4 8" stroke-linecap="round"/>
+</g>
+<text class="tm r0 d5" x="132" y="296" style="fill:#8F5F09">THE ROOM IS LARGER THAN SHE IS</text>
+</svg></div>
+</section>
+
+<!-- 6 -->
+<section class="phase" data-screen-label="06" data-act="ACT II · THE WALK IN">
+<div class="txt"><h2>So the first job is listening. The second is <em>answering back.</em></h2>
+<p class="sub">At every stop: what actually happens here, and what eats the week. And something left behind, because a leader who only collects is running a listening tour.</p></div>
+<div class="gfx" style="display:flex;flex-direction:column">
+<div class="sts">
+<div class="st r0 d1"><span class="lab">In</span><div class="inn">A workaround nobody wrote down is holding the week together.</div>
+<svg class="ar" viewBox="0 0 180 32" filter="url(#rgh2)"><path d="M6,21 C40,13 90,25 150,15" fill="none" stroke="#8F5F09" stroke-width="2.4" stroke-linecap="round"/><path d="M140,9 C148,13 154,15 160,15 C154,17 148,21 143,25" fill="none" stroke="#8F5F09" stroke-width="2.2" stroke-linecap="round"/></svg>
+<span class="lab">Out</span><div class="out">A question nobody had asked them: what breaks if it goes away.</div></div>
+<div class="st r0 d3"><span class="lab">In</span><div class="inn">A number everyone quotes and nobody can reproduce.</div>
+<svg class="ar" viewBox="0 0 180 32" filter="url(#rgh2)"><path d="M6,19 C42,26 92,12 150,20" fill="none" stroke="#8F5F09" stroke-width="2.4" stroke-linecap="round"/><path d="M141,13 C148,17 154,19 160,20 C154,22 147,25 142,29" fill="none" stroke="#8F5F09" stroke-width="2.2" stroke-linecap="round"/></svg>
+<span class="lab">Out</span><div class="out">A way to read the number as a decision, not a fact.</div></div>
+<div class="st r0 d5"><span class="lab">In</span><div class="inn">Something was tried, then dropped, and never written down as a lesson.</div>
+<svg class="ar" viewBox="0 0 180 32" filter="url(#rgh2)"><path d="M6,22 C44,12 88,26 150,14" fill="none" stroke="#8F5F09" stroke-width="2.4" stroke-linecap="round"/><path d="M140,8 C148,12 154,14 160,14 C154,17 148,20 143,24" fill="none" stroke="#8F5F09" stroke-width="2.2" stroke-linecap="round"/></svg>
+<span class="lab">Out</span><div class="out">A pattern from somewhere else where the same idea held.</div></div>
+</div>
+<svg class="r0 d6" viewBox="0 0 1000 74" preserveAspectRatio="none" style="height:56px;margin-top:1.9em" filter="url(#rgh)">
+<path d="M14,54 C90,50 160,58 232,52" fill="none" stroke="#2C6E68" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M232,52 C330,46 430,58 528,50" fill="none" stroke="#2C6E68" stroke-width="5" stroke-linecap="round"/>
+<path d="M528,50 C660,42 810,56 946,46" fill="none" stroke="#2C6E68" stroke-width="8.5" stroke-linecap="round"/>
+<circle cx="232" cy="52" r="4.5" fill="#B4552F"/><circle cx="528" cy="50" r="4.5" fill="#B4552F"/><circle cx="946" cy="46" r="4.5" fill="#B4552F"/>
+</svg>
+</div>
+</section>
+
+<!-- 7 -->
+<section class="phase" data-screen-label="07" data-act="ACT II · THE WALK IN">
+<div class="txt"><h2>What accumulates is the only thing worth starting from. <em class="r">The gap.</em></h2>
+<p class="sub">The distance between what is actually happening and what leadership believes is happening. That distance is not a problem to be managed. It is the roadmap.</p></div>
+<div class="gfx"><svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
+<g filter="url(#rgh)">
+<path class="r0 d3" d="M40,164 C180,161 320,167 430,164 C600,140 800,96 956,54 C958,150 956,220 956,276 C800,232 600,192 430,164 Z" fill="#B4552F" fill-opacity=".11"/>
+<path class="r0 d1" d="M40,164 C180,161 320,167 430,164 C600,140 800,96 956,54" fill="none" stroke="#8F5F09" stroke-width="2.4" stroke-dasharray="6 9" stroke-linecap="round"/>
+<path class="r0 d1" d="M40,166 C180,169 320,174 430,178 C600,206 800,250 956,278" fill="none" stroke="#241F19" stroke-width="3" stroke-linecap="round"/>
+<path class="r0 d4" d="M840,84 C843,140 838,200 841,250" fill="none" stroke="#B23A2B" stroke-width="2" stroke-linecap="round"/>
+</g>
+<text class="ti r0 d2" x="956" y="40" text-anchor="end" style="fill:#8F5F09">what we believe is happening</text>
+<text class="ti r0 d2" x="956" y="296" text-anchor="end" style="fill:#241F19">what is actually happening</text>
+<text class="r0 d5" x="822" y="170" text-anchor="end" style="font-family:var(--disp);font-size:26px;fill:#B23A2B" transform="rotate(-1.4 822 170)">the gap</text>
+</svg></div>
+</section>
+
+<!-- 8 -->
+<section class="phase" data-screen-label="08" data-act="ACT III · NAMING IT">
+<div class="txt"><h2>This is also the product manager's discipline.</h2>
+<p class="sub">It is the same refusal to project, practiced somewhere less romantic and just as demanding.</p></div>
+<div class="gfx" style="display:flex;flex-direction:column;justify-content:center">
+<div class="panels">
+<div class="pn civ r0 d1"><h3>THE CIVIC VERSION</h3><p>Do not arrive with the answer. <b>Find out what being heard means here</b>, and defend the right rather than the position.</p></div>
+<div class="pn prd r0 d2"><h3>THE PRODUCT VERSION</h3><p>Do not speak for the customer. <b>Represent them without distortion</b>, including when what they need is not what you expected.</p></div>
+</div>
+<div class="same r0 d4">Same discipline. Different room.</div>
+<svg class="r0 d4" viewBox="0 0 300 12" preserveAspectRatio="none" style="width:11em;height:10px;margin-top:.2em" filter="url(#rgh2)"><path d="M4,7 C80,3 190,10 296,5" fill="none" stroke="#C98A1E" stroke-width="2.4" stroke-linecap="round"/></svg>
+</div>
+</section>
+
+<!-- 9 -->
+<section class="phase" data-screen-label="09" data-act="ACT III · NAMING IT">
+<div class="txt"><h2>And the harder half: <em>championing them while owning the outcome.</em></h2>
+<p class="sub">The customer and the business both have a legitimate claim, and they collide often. That conflict is not a failure of the role. It is the role.</p></div>
+<div class="gfx" style="display:flex;flex-direction:column;justify-content:center">
+<div class="tenrow">
+<div class="claim l r0 d1"><b>The customer</b>The outcome they actually need, argued for by someone who will not soften it.</div>
+<svg class="r0 d3" viewBox="0 0 180 72" style="width:100%;height:auto" filter="url(#rgh2)">
+<path d="M6,36 C32,26 56,46 78,36" fill="none" stroke="#B4552F" stroke-width="2.8" stroke-linecap="round"/>
+<path d="M102,36 C124,46 148,26 174,36" fill="none" stroke="#2C6E68" stroke-width="2.8" stroke-linecap="round"/>
+<path d="M90,12 C83,22 83,50 90,60" fill="none" stroke="#241F19" stroke-width="3" stroke-linecap="round"/>
+<path d="M90,12 C97,22 97,50 90,60" fill="none" stroke="#241F19" stroke-width="3" stroke-linecap="round"/>
+</svg>
+<div class="claim r r0 d2"><b>The business</b>The outcome the organization has to reach to keep doing the work at all.</div>
+</div>
+<div class="tennote r0 d5">Both claims are legitimate. Someone has to hold them at the same time.</div>
+</div>
+</section>
+
+<!-- 10 -->
+<section class="phase" data-screen-label="10" data-act="ACT IV · THE NEW VERSION">
+<div class="txt"><h2>Today, AI introduces <em>a new version of the same challenge.</em></h2>
+<p class="sub">A system trained to produce the most probable answer is a system with a default. A default is a template, arriving faster and with more confidence than any I grew up around.</p></div>
+<div class="gfx"><svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
+<g filter="url(#rgh)" fill="none" stroke-linecap="round">
+<g class="r0 d1" stroke="#4A4038" stroke-width="3.4" stroke-opacity=".5">
+<path d="M60,232 C58,220 61,210 59,200"/><path d="M104,232 C102,212 105,190 103,172"/><path d="M148,232 C146,204 149,166 147,138"/><path d="M192,232 C190,196 193,140 191,104"/><path d="M236,233 C234,176 237,96 235,54"/><path d="M280,232 C278,192 281,134 279,100"/><path d="M324,232 C322,202 325,162 323,134"/><path d="M368,232 C366,212 369,188 367,168"/><path d="M412,232 C410,218 413,204 411,192"/>
+</g>
+<path class="r0 d3" d="M236,44 C266,42 282,64 276,92 C270,124 250,146 234,246 C214,150 198,124 192,92 C186,62 206,42 236,44" stroke="#C98A1E" stroke-width="2.6"/>
+<path class="r0 d5" d="M470,152 C520,146 560,158 604,150" stroke="#8F5F09" stroke-width="2.2" stroke-dasharray="5 8"/>
+<path class="r0 d5" d="M592,142 C601,148 608,151 616,151 C608,153 600,157 593,163" stroke="#8F5F09" stroke-width="2.2"/>
+<g class="r0 d6" transform="translate(786,148)"><path d="M0,-96 L92,-30 L57,80 L-57,80 L-92,-30 Z" stroke="#C98A1E" stroke-width="3.2" stroke-linejoin="round"/><path d="M0,-96 L92,-30 L57,80 L-57,80 L-92,-30 Z" stroke="#C98A1E" stroke-width="1.4" opacity=".35" transform="rotate(1.6) scale(1.06)"/></g>
+</g>
+<text class="tm r0 d4" x="236" y="272" text-anchor="middle" style="fill:#8F5F09">MOST PROBABLE</text>
+<text class="tm r0 d7" x="786" y="272" text-anchor="middle" style="fill:#8F5F09">THE DEFAULT · CLOSED THIS TIME</text>
+</svg></div>
+</section>
+
+<!-- 11 -->
+<section class="phase" data-screen-label="11" data-act="ACT IV · THE NEW VERSION">
+<div class="txt"><h2>Two questions I would carry into this role.</h2></div>
+<div class="gfx" style="display:flex;flex-direction:column;justify-content:center">
+<div class="qs">
+<div class="q r0 d1"><span class="no">01</span><p>How do we use AI to amplify human capability without replacing human judgment?</p></div>
+<div class="q r0 d3"><span class="no">02</span><p>How do we help people participate more effectively without designing systems that flatten difference or substitute automation for understanding?</p></div>
+</div>
+</div>
+</section>
+
+<!-- 12 -->
+<section class="phase" data-screen-label="12" data-act="ACT IV · THE NEW VERSION">
+<div class="txt"><h2 style="font-size:2.1em">Technology should amplify people's voices, <em>not replace them.</em></h2>
+<p class="sub" style="max-width:56em">The failure mode is not that AI is wrong. It is that AI is uniform. Four true answers become one confident answer, and the thing that was worth protecting is the part that got averaged away.</p></div>
+<div class="gfx">
+<div class="stack">
+<div class="half flat r0 d1">
+<div class="cap">flattened</div>
+<svg viewBox="0 0 900 34" preserveAspectRatio="none" style="width:100%;height:32px">
+<line x1="4" y1="17" x2="896" y2="17" stroke="#241F19" stroke-width="1.3"/>
+<line x1="188" y1="4" x2="188" y2="30" stroke="#241F19" stroke-width="1.3"/><line x1="366" y1="4" x2="366" y2="30" stroke="#241F19" stroke-width="1.3"/><line x1="544" y1="4" x2="544" y2="30" stroke="#241F19" stroke-width="1.3"/><line x1="722" y1="4" x2="722" y2="30" stroke="#241F19" stroke-width="1.3"/>
+</svg>
+</div>
+<svg class="r0 d2" viewBox="0 0 900 10" preserveAspectRatio="none" style="width:100%;height:9px" filter="url(#rgh2)"><path d="M4,5 C220,2 520,8 896,4" fill="none" stroke="rgba(36,31,25,.2)" stroke-width="1.4" stroke-linecap="round"/></svg>
+<div class="half amp r0 d3">
+<div class="cap">amplified</div>
+<div class="marks4">
+<svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkA"/></svg>
+<svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkB"/></svg>
+<svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkC"/></svg>
+<svg viewBox="0 0 150 86" filter="url(#rgh2)"><use href="#mkD"/></svg>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 13 -->
+<section class="phase dark" data-screen-label="13" data-act="CLOSE">
+<div class="closewrap">
+<div><div class="eyebrow r0">WHY THIS ONE</div><h2 class="r0 d1">I watched this work up close before I had a word for it.</h2></div>
+<div class="closecols">
+<div>
+<p class="r0 d2">The household profession was sitting between people who each had a real case and finding the thing that could hold. <b>That does not make the work easy. It makes it native rather than learned.</b></p>
+<p class="r0 d3">Then I spent twenty-five years doing the professional version, in rooms where the customer and the business both had a legitimate claim and my job was to carry the customer's without flinching and still land an outcome the business could live with.</p>
+</div>
+<div>
+<p class="canon r0 d4">Collaboration isn't neutral. Design sets the trajectory.</p>
+<p class="r0 d5">That is true of a product, and it is true of a platform built so that people can be heard by the institutions that affect them.</p>
+</div>
+</div>
+<div class="sig r0 d6">
+<svg class="sigrule" viewBox="0 0 1000 8" preserveAspectRatio="none" filter="url(#rgh2)"><path d="M4,4 C240,1 520,7 996,3" fill="none" stroke="rgba(242,232,216,.28)" stroke-width="1.4" stroke-linecap="round"/></svg>
+<div><div class="nm2">Maura K. Randall</div><div class="ct">maurakrandall@gmail.com · Austin, TX</div></div>
+<div class="links">maurakrandall.github.io · aigal.io<br>linkedin.com/in/maurakrandall</div>
+</div>
+</div>
+</section>
+
+<svg id="grain" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1060 596"><filter id="grn" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .55 0 0 0 0 .42 0 0 0 0 .24 0 0 0 .1 0"/></filter><rect width="1060" height="596" filter="url(#grn)"/></svg>
+<div id="anchor"><span id="actlab">ACT I · THE GROWING UP</span><div id="acts"></div></div>
+<div class="hint">SPACE PAUSE · ← → MOVE</div>
+<div id="bar"></div>
+</div>
+</div>
+<script>
+(function(){
+var frame=document.getElementById('frame'),ph=[].slice.call(frame.querySelectorAll('.phase')),
+D=[15,10,16,14,11,17,12,11,12,14,13,16,18],SEP=[2,4,7,9,12],N=ph.length,i=0,t=null,paused=false,
+dots=document.getElementById('acts'),lab=document.getElementById('actlab'),bar=document.getElementById('bar');
+ph.forEach(function(p,n){var b=document.createElement('button');b.className='dot'+(SEP.indexOf(n)>=0?' sep':'');b.setAttribute('aria-label','Moment '+(n+1));b.onclick=function(){go(n);restart()};dots.appendChild(b)});
+var dl=[].slice.call(dots.children);
+function updateDots(){dl.forEach(function(d,n){d.className='dot'+(SEP.indexOf(n)>=0?' sep':'')+(n<i?' done':'')+(n===i?' now':'')});lab.textContent=ph[i].dataset.act;bar.style.width=((i+1)/N*100)+'%'}
+function go(n){i=(n+N)%N;ph.forEach(function(p,k){p.classList.remove('on');if(k===i){void p.offsetWidth;p.classList.add('on')}});frame.classList.toggle('dark',ph[i].classList.contains('dark'));updateDots()}
+function restart(){clearTimeout(t);if(paused)return;t=setTimeout(function(){go(i+1);restart()},D[i]*1000)}
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){go(i+1);restart()}else if(e.key==='ArrowLeft'){go(i-1);restart()}else if(e.key===' '){e.preventDefault();paused=!paused;paused?clearTimeout(t):restart()}});
+/* export: bake every class-driven state into inline styles so nothing is pending at capture */
+function pinState(){
+  var p=ph[i];
+  [].slice.call(p.querySelectorAll('*')).concat([p]).forEach(function(el){
+    el.style.transition='none';el.style.animation='none';
+  });
+  [].slice.call(p.querySelectorAll('.r0,.f0,.nm')).forEach(function(el){el.style.opacity='1'});
+  [].slice.call(p.querySelectorAll('.r0')).forEach(function(el){el.style.translate='0 0'});
+  var w=p.querySelector('.walker');if(w)w.setAttribute('transform','translate(880,300) scale(1.1)');
+  [].slice.call(p.querySelectorAll('.sway')).forEach(function(el){el.style.transform='rotate(0deg)'});
+  var g=p.querySelector('.ghz');if(g){g.style.strokeDasharray='none';g.style.strokeDashoffset='0'}
+  var tm=p.querySelector('.tmpl');if(tm){tm.style.opacity='.95';tm.style.strokeDasharray='330';tm.style.strokeDashoffset='88'}
+  dl.forEach(function(d,n){d.style.transition='none';
+    d.style.background=n===i?'var(--terra)':(n<i?'rgba(36,31,25,.3)':'transparent');
+    d.style.borderColor=(n===i)?'var(--terra)':(n<i?'transparent':'rgba(36,31,25,.32)');
+    d.style.transform=n===i?'scale(1.35)':'none'});
+  if(frame.classList.contains('dark')){dl.forEach(function(d,n){
+    d.style.background=n===i?'var(--amber)':(n<i?'rgba(242,232,216,.42)':'transparent');
+    d.style.borderColor=n===i?'var(--amber)':(n<i?'transparent':'rgba(242,232,216,.45)')})}
+}
+function snap(n){paused=true;clearTimeout(t);frame.classList.add('snap');ph.forEach(function(p){p.style.transition='none'});go(n);pinState()}
+go(0);restart();
+window.__frame={};D.forEach(function(_,n){window.__frame['m'+(n+1)]=function(){snap(n)}});
+window.__frame.close=function(){snap(N-1)};
+window.__frame.showSnap=snap;window.__frame.pinState=pinState;
+})();
+</script>
+</body>
+</html>
