@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Anatomy of a Listing</title>
+<style>
+@font-face{font-family:'MKR Display';src:url('fonts/MKR-Display.woff') format('woff');font-weight:700;font-display:block}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Light.woff') format('woff');font-weight:300;font-display:block}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans.woff') format('woff');font-weight:400;font-display:block}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Italic.woff') format('woff');font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Medium.woff') format('woff');font-weight:500;font-display:block}
+@font-face{font-family:'MKR Sans';src:url('fonts/MKR-Sans-Bold.woff') format('woff');font-weight:700;font-display:block}
+@font-face{font-family:'MKR Mono';src:url('fonts/MKR-Mono.woff') format('woff');font-weight:400;font-display:block}
+:root{--cream:#FAF6EE;--card:#FFFDF7;--ink:#2A2620;--slate:#6E6659;--mute:#7D7466;--line:rgba(42,38,32,0.14);--amberink:#8F5F09;--amberstroke:#D99E1D;--petrol:#0A2E2E;--teal:#0E7C74;--leaf:#4F7D4A;--display:'MKR Display',Georgia,serif;--sans:'MKR Sans',system-ui,sans-serif;--mono:'MKR Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:#E8E1D5;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.page{max-width:1060px;margin:34px auto;padding:0 20px 40px}
+#frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--cream);border:1px solid rgba(143,95,9,.18);box-shadow:0 1px 0 rgba(42,38,32,.05),0 16px 34px -20px rgba(42,38,32,.25)}
+#stage{position:absolute;top:0;left:0;width:1080px;height:607.5px;transform-origin:0 0}
+.grain{position:absolute;inset:0;opacity:.05;pointer-events:none;z-index:1}
+.wash{position:absolute;inset:0;background:linear-gradient(115deg,rgba(217,158,29,.085) 0%,rgba(217,158,29,.02) 38%,rgba(10,46,46,.028) 100%);z-index:0}
+.phase{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 620ms ease;z-index:2}
+.phase.on{opacity:1;pointer-events:auto}
+/* ── chrome ── */
+.ctx{position:absolute;top:17px;left:26px;right:230px;font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--slate);z-index:7;rotate:-.18deg}
+.ctx b{color:var(--amberink);font-weight:400}
+.tracker{position:absolute;top:38px;left:26px;font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);z-index:7;display:flex;gap:6px;align-items:baseline}
+.tracker .agent{color:var(--leaf)}
+.tracker .you{color:var(--amberink);display:inline-block}
+.tracker .you.tick{animation:tp 900ms ease}
+@keyframes tp{0%{scale:1}35%{scale:1.16}100%{scale:1}}
+.anchor{position:absolute;right:24px;bottom:20px;z-index:8;display:flex;align-items:center;gap:11px}
+.dots{display:flex;gap:7px}
+.dots i{width:6px;height:6px;border-radius:50%;background:rgba(42,38,32,.17);cursor:pointer;transition:background 300ms,scale 300ms}
+.dots i.done{background:rgba(143,95,9,.42)}
+.dots i.now{background:var(--amberink);scale:1.5}
+.ring{width:34px;height:34px}
+.ring text{font-family:var(--mono);font-size:8.5px;fill:var(--amberink);letter-spacing:.04em}
+/* ── title ── */
+.titlecard{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 9%}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--amberink);margin-bottom:18px}
+.titlecard h1{font-family:var(--display);font-weight:700;font-size:46px;margin:0 0 15px;letter-spacing:.005em;rotate:-.22deg}
+.hook{font-family:var(--display);font-style:italic;font-size:18px;line-height:1.38;color:var(--slate);margin:0;font-weight:400}
+.sub{white-space:nowrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-top:17px}
+.title-glasses{width:330px;margin-bottom:6px}
+/* ── stage ── */
+.set{position:absolute;left:44%;right:-2%;top:4%;bottom:0;z-index:3}
+.set svg{width:100%;height:100%}
+.lightpool{position:absolute;left:0;right:22%;top:0;bottom:0;z-index:4;opacity:0;transition:opacity 600ms;pointer-events:none;background:radial-gradient(58% 62% at 62% 30%,rgba(217,158,29,.13) 0%,rgba(217,158,29,.05) 46%,rgba(217,158,29,0) 78%)}
+.mount{position:absolute;left:4.2%;top:18.5%;width:53%;z-index:5}
+#p-b3 .mount{top:66px;bottom:26px;display:flex;flex-direction:column;gap:6px}
+#p-b3 .intent{padding:3px 8px}
+#p-b3 .intent .fmt{font-size:10px;line-height:1.34}
+#p-b3 .netline{margin-top:7px;padding-top:7px}
+#p-b3 .chip,#p-b5 .chip{margin-top:0;align-self:flex-start;font-size:13.5px;padding:6px 12px}
+#p-b3 .caption,#p-b5 .caption{position:static;left:auto;right:auto;bottom:auto;margin-top:auto;padding-top:4px;max-width:86%;text-align:left;font-size:12.5px}
+#p-b5 .mount{top:64px;bottom:24px;width:57%;display:flex;flex-direction:column;gap:5px}
+#p-b5 .man .m{padding:2px 0}
+#p-b5 .man .m .mk{font-size:7.5px;width:96px}
+#p-b5 .man .m p{font-size:10px;line-height:1.28}
+#p-b5 .man .m em{font-size:7px;padding:2px 5px}
+#p-b5 .listit{margin-top:8px;padding:8px 0;font-size:10.5px}
+#p-b5 .card{padding:12px 15px 11px}
+#b1-seed{margin-bottom:12px}
+.seedrow{display:flex;gap:12px;align-items:flex-start}
+.seedshot{width:66px;flex-shrink:0}
+.seedline{font-family:var(--display);font-style:italic;font-size:14px;line-height:1.52;color:var(--ink);margin:0;min-height:64px;text-wrap:pretty}
+.card{background:linear-gradient(152deg,rgba(217,158,29,.055) 0%,var(--card) 44%);border:1px solid var(--line);border-radius:12px;padding:15px 17px 13px;box-shadow:0 2px 5px rgba(42,38,32,.05),0 18px 38px -24px rgba(42,38,32,.2);opacity:0;translate:0 10px;rotate:-.3deg}
+.card.pop{animation:ci 620ms cubic-bezier(.34,1.28,.6,1) forwards}
+.card.pop.b{animation-name:cib}
+@keyframes ci{to{opacity:1;translate:none}}
+@keyframes cib{to{opacity:1;translate:none}}
+.card.attn{border-color:var(--amberstroke)}
+.card.gone{opacity:0;translate:0 -6px;transition:opacity 420ms ease,translate 420ms ease}
+.chead{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:11px}
+.chead .dot{width:7px;height:7px;border-radius:50%;background:var(--leaf);flex-shrink:0}
+.chead .tag{margin-left:auto;font-size:8px;letter-spacing:.13em;color:var(--amberink);background:rgba(143,95,9,.07);padding:2px 8px;border-radius:3px;white-space:nowrap}
+.cbody{font-size:13.5px;line-height:1.62;margin:0}
+.fields{display:flex;flex-direction:column;gap:0}
+.fields .row{font-family:var(--mono);font-size:9.5px;letter-spacing:.085em;text-transform:uppercase;color:var(--slate);padding:6px 0;border-bottom:1px dotted rgba(42,38,32,.13);opacity:0;transition:opacity 420ms}
+.fields .row:last-child{border-bottom:0}
+.fields .row.on{opacity:1}
+.fields .row k{color:var(--mute)}
+.fields .row v{color:var(--ink)}
+.fields .row.flag v{color:var(--amberink)}
+.btnrow{display:flex;gap:10px;margin-top:12px}
+.btnrow button{font-family:var(--sans);font-size:12.5px;font-weight:500;padding:6px 22px;border-radius:16px;border:1.5px solid var(--teal);background:rgba(14,124,116,.05);color:var(--teal);cursor:pointer;opacity:0;transition:opacity 400ms}
+.btnrow button.show{opacity:1}
+.btnrow button.hot{border-color:var(--amberink);color:var(--amberink);background:rgba(143,95,9,.06);animation:tp 1.6s ease infinite}
+.btnrow button.pressed{background:var(--leaf);border-color:var(--leaf);color:#FFFDF7;animation:none}
+.hair{margin-top:12px;border-top:1px dashed var(--line);padding-top:11px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);display:flex;align-items:center;gap:9px;opacity:0;transition:opacity 500ms}
+.hair.on{opacity:1}
+.chk{width:14px;height:14px;border-radius:4px;background:rgba(79,125,74,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chk svg{width:9px;height:9px}
+.hair b{color:var(--leaf);font-weight:400}
+.hair .nw{white-space:nowrap}
+.hair .complete{color:var(--amberink)}
+.tier{display:flex;align-items:flex-end;gap:3px;margin-left:auto;flex-shrink:0}
+.tier i{width:7px;border-radius:2px;background:rgba(42,38,32,.14);transition:background 520ms ease,height 520ms cubic-bezier(.34,1.2,.6,1)}
+.tier i:nth-child(1){height:6px}
+.tier i:nth-child(2){height:10px}
+.tier i:nth-child(3){height:12px}
+.tier.up i:nth-child(1),.tier.up i:nth-child(2){background:rgba(143,95,9,.34)}
+.tier.up i:nth-child(3){height:17px;background:var(--amberink)}
+.caption{position:absolute;left:5.5%;right:44%;bottom:4.6%;font-style:italic;font-size:13px;line-height:1.52;color:var(--slate);text-align:center;opacity:0;transition:opacity 550ms;z-index:6;text-wrap:pretty;rotate:-.2deg}
+.caption.on{opacity:1}
+.chip{display:inline-block;max-width:100%;white-space:nowrap;font-family:var(--display);font-style:italic;font-size:14px;line-height:1.4;color:var(--ink);background:rgba(217,158,29,.09);border:1px solid rgba(217,158,29,.42);border-radius:9px;padding:7px 13px;margin-top:8px;opacity:0;translate:0 6px;transition:opacity 500ms,translate 500ms;rotate:.35deg}
+.chip.on{opacity:1;translate:none}
+/* ── b01 shots ── */
+.shots{display:flex;gap:9px;margin-top:12px}
+.shot{flex:1;opacity:0;translate:0 8px;transition:opacity 450ms,translate 450ms}
+.shot.on{opacity:1;translate:none}
+.shot svg{width:100%;display:block}
+.shot span{display:block;font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:5px;text-align:center;white-space:nowrap}
+/* ── b03 intents ── */
+.curvebox{margin:2px 0 10px}
+.curvebox svg{width:100%;display:block}
+.intent{display:block;padding:5px 8px;border-radius:7px;border:1px solid transparent;opacity:.7;transition:opacity 380ms,border-color 380ms,background 380ms}
+.intent.on{opacity:1}
+.intent.sel{opacity:1;border-color:rgba(217,158,29,.5);background:rgba(217,158,29,.06)}
+.intent.dim{opacity:.55}
+.itop{display:flex;gap:9px;align-items:baseline}
+.intent .k{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--amberink);white-space:nowrap}
+.intent .d{font-size:11px;line-height:1.4;color:var(--slate)}
+.intent .fmt{font-size:10.5px;line-height:1.38;color:var(--teal);margin-top:3px;opacity:0;transition:opacity 420ms}
+.intent .fmt.on{opacity:1}
+.intent .fmt s{color:var(--mute);text-decoration-color:rgba(143,95,9,.6);text-decoration-thickness:1.5px}
+.onchip{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--amberink);background:rgba(217,158,29,.12);border:1px solid rgba(217,158,29,.5);border-radius:4px;padding:2px 6px;margin-left:auto;white-space:nowrap;opacity:0;transition:opacity 420ms}
+.onchip.on{opacity:1}
+.netline{margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);opacity:0;transition:opacity 450ms}
+.netline.on{opacity:1}
+.lrow{padding:8px 0;border-bottom:1px dotted rgba(42,38,32,.13);opacity:0;transition:opacity 420ms}
+.lrow:last-child{border-bottom:0}
+.lrow.on{opacity:1}
+.lrow .ll{font-family:var(--mono);font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin-bottom:5px}
+.ltitle{font-size:12px;line-height:1.45;color:var(--ink);text-wrap:pretty}
+.ltitle u{text-decoration:none;border-bottom:1.5px solid rgba(14,124,116,.45);color:var(--teal);transition:border-color 380ms,color 380ms}
+.ltitle u.off{border-bottom-color:transparent;color:var(--ink)}
+.lopen{font-family:var(--display);font-style:italic;font-size:14px;line-height:1.45;color:var(--ink);margin:0}
+/* ── b04 words ── */
+.herline{font-family:var(--display);font-style:italic;font-size:15px;line-height:1.5;color:var(--ink);margin:2px 0 0;min-height:68px;text-wrap:pretty}
+i.car{font-style:normal;color:var(--amberink);animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.anchtag{font-family:var(--mono);font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:13px 0 8px;padding-top:11px;border-top:1px dashed var(--line);opacity:0;transition:opacity 400ms}
+.anchtag.on{opacity:1}
+.anchors{display:flex;flex-wrap:wrap;gap:7px}
+.anchors span{white-space:nowrap;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);border-bottom:1.5px solid rgba(14,124,116,.45);padding:2px 1px;opacity:0;transition:opacity 380ms,color 380ms,border-color 380ms}
+.anchors span.on{opacity:1}
+.anchors span.off{opacity:.18;border-bottom-color:transparent}
+.anchors span.swap{color:var(--amberink);border-bottom-color:rgba(217,158,29,.6)}
+/* ── b05 manifest ── */
+.man{display:flex;flex-direction:column}
+.man .m{display:flex;align-items:flex-start;gap:9px;padding:4px 0;border-bottom:1px dotted rgba(42,38,32,.13);opacity:0;transition:opacity 380ms}
+.man .m:last-child{border-bottom:0}
+.man .m.on{opacity:1}
+.man .m .mk{font-family:var(--mono);font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:var(--amberink);width:104px;flex-shrink:0;padding-top:2px;line-height:1.3}
+.man .m p{margin:0;font-size:10.5px;line-height:1.3;flex:1;text-wrap:pretty}
+.man .m em{font-family:var(--mono);font-style:normal;font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(14,124,116,.3);border-radius:4px;padding:2px 6px;white-space:nowrap;flex-shrink:0}
+.listit{width:100%;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:11px 0;border-radius:8px;border:1.5px solid var(--amberink);background:rgba(217,158,29,.08);color:var(--amberink);cursor:pointer;opacity:0;transition:opacity 420ms}
+.listit.show{opacity:1}
+.listit.pressed{background:var(--leaf);border-color:var(--leaf);color:#FFFDF7}
+/* ── close ── */
+.sold{position:absolute;left:5.5%;top:17%;width:53%;z-index:5}
+.soldnote{display:flex;align-items:flex-start;gap:11px;background:rgba(79,125,74,.075);border:1px solid rgba(79,125,74,.34);border-radius:11px;padding:13px 15px;opacity:0;translate:0 8px;transition:opacity 520ms,translate 520ms;rotate:-.3deg}
+.soldnote.on{opacity:1;translate:none}
+.soldnote .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--leaf);padding-top:2px;white-space:nowrap}
+.soldnote p{margin:0;font-size:13px;line-height:1.5}
+.loopbox{position:relative;margin-top:15px;opacity:0;transition:opacity 560ms}
+.loopbox.on{opacity:1}
+.loopbox svg{width:100%;display:block}
+.lchip{position:absolute;font-size:10.5px;padding:3px 9px;border-radius:12px;background:var(--card);border:1px solid var(--line);white-space:nowrap;opacity:0;translate:-18px 7px;transition:opacity 620ms ease,translate 720ms cubic-bezier(.3,.9,.4,1)}
+.lchip.on{opacity:1;translate:none}
+.lchip.yes{background:rgba(79,125,74,.11);border-color:rgba(79,125,74,.45);color:#3F6A3B;font-weight:500}
+.lchip.q{font-family:var(--display);font-style:italic;font-size:11.5px;background:rgba(217,158,29,.1);border-color:rgba(217,158,29,.44)}
+.lchip.anc{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);border-color:rgba(14,124,116,.32)}
+.nextline{margin-top:12px;font-size:13px;color:var(--slate);font-style:italic;opacity:0;transition:opacity 520ms;text-align:center}
+.nextline.on{opacity:1}
+.finalline{position:absolute;left:7%;right:7%;bottom:6.5%;font-family:var(--display);font-style:italic;font-size:19px;line-height:1.45;text-align:center;color:var(--ink);opacity:0;transition:opacity 640ms;z-index:6;text-wrap:pretty;rotate:-.15deg;padding:14px 22px;border-radius:16px;background:rgba(250,246,238,.94);box-shadow:0 0 34px 26px rgba(250,246,238,.94)}
+.finalline.on{opacity:1}
+/* ── sig ── */
+.sig{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 11%}
+.sig .q{font-family:var(--display);font-style:italic;font-size:23px;line-height:1.42;margin:0 0 26px;text-wrap:pretty;rotate:-.2deg}
+.sig .nm{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--amberink)}
+.sig .ln{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--mute);margin-top:11px}
+.sig .rule{width:64px;height:0;border-top:1.5px solid rgba(217,158,29,.5);margin:0 0 22px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="page">
+<div id="frame">
+<div id="stage">
+<div class="wash"></div>
+<div class="lightpool" id="lightpool"></div>
+<svg class="grain" width="100%" height="100%"><filter id="gr"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(#gr)"/></svg>
+<svg width="0" height="0" style="position:absolute"><defs>
+<filter id="hand"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/></filter>
+<filter id="hand2"><feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
+<linearGradient id="amber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C08A3E" stop-opacity=".82"/><stop offset=".45" stop-color="#8F5F09" stop-opacity=".9"/><stop offset="1" stop-color="#6E3B14" stop-opacity=".95"/></linearGradient>
+<linearGradient id="amberlite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C08A3E" stop-opacity=".55"/><stop offset="1" stop-color="#8F5F09" stop-opacity=".7"/></linearGradient>
+<g id="goblet">
+<path d="M -11.6 -58 L -10.4 -14 Q -10 -9 -5.6 -8 L 5.6 -8 Q 10 -9 10.4 -14 L 11.6 -58" fill="url(#amber)" style="fill-opacity:var(--go,.42)" stroke="#5A3010" stroke-width="1.5" stroke-linecap="round" filter="url(#hand)"/>
+<ellipse cx="0" cy="-58" rx="11.6" ry="2.6" fill="rgba(250,246,238,.25)" stroke="#5A3010" stroke-width="1.3" filter="url(#hand)"/>
+<path d="M -5.6 -10 L -5.2 3 M 5.6 -10 L 5.2 3" stroke="#5A3010" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M -8.5 -2 Q -11.5 -1 -11.5 2 Q -7.5 4.6 -3.8 3 Q 0 5.6 3.8 3 Q 7.5 4.6 11.5 2 Q 11.5 -1 8.5 -2 Z" fill="url(#amberlite)" style="fill-opacity:var(--gf,.7)" stroke="#5A3010" stroke-width="1.3" stroke-linecap="round" filter="url(#hand)"/>
+<path d="M -13 6 Q 0 9.4 13 6 L 11.5 2 Q 0 4.6 -11.5 2 Z" fill="url(#amber)" style="fill-opacity:var(--gf2,.6)" stroke="#5A3010" stroke-width="1.3" stroke-linecap="round" filter="url(#hand)"/>
+<path d="M -7.6 -52 L -6.9 -20" stroke="#FAF6EE" stroke-width="2" stroke-linecap="round" style="opacity:var(--hl,.65)" filter="url(#hand)"/>
+<path d="M 7.4 -50 L 6.9 -26" stroke="#E8C58A" stroke-width="1.2" stroke-linecap="round" opacity=".5" filter="url(#hand)"/>
+</g>
+<g id="wine">
+<path d="M -13.4 -54 Q -13 -30 -8.4 -18 Q -5 -10 0 -9 Q 5 -10 8.4 -18 Q 13 -30 13.4 -54" fill="url(#amber)" style="fill-opacity:var(--gow,.4)" stroke="#5A3010" stroke-width="1.5" stroke-linecap="round" filter="url(#hand)"/>
+<ellipse cx="0" cy="-54" rx="13.4" ry="2.8" fill="rgba(250,246,238,.24)" stroke="#5A3010" stroke-width="1.3" filter="url(#hand)"/>
+<path d="M -1.6 -11 L -1.4 3 M 1.6 -11 L 1.4 3" stroke="#5A3010" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M -12 6 Q 0 9.4 12 6 L 10.6 1 Q 0 4 -10.6 1 Z" fill="url(#amber)" style="fill-opacity:var(--gf2,.6)" stroke="#5A3010" stroke-width="1.3" stroke-linecap="round" filter="url(#hand)"/>
+<path d="M -8.4 -48 Q -8 -32 -4.6 -22" stroke="#FAF6EE" stroke-width="1.9" stroke-linecap="round" fill="none" style="opacity:var(--hl,.6)" filter="url(#hand)"/>
+</g>
+<!-- window + morning light -->
+<g id="window">
+<g transform="rotate(-0.5 300 116)" filter="url(#hand2)">
+<rect x="240" y="44" width="128" height="128" rx="3" fill="rgba(217,158,29,.13)" stroke="#B5A88C" stroke-width="2.2"/>
+<line x1="304" y1="46" x2="304" y2="170" stroke="#B5A88C" stroke-width="2.2"/>
+<line x1="242" y1="109" x2="366" y2="109" stroke="#B5A88C" stroke-width="2.2"/>
+<path d="M 250 164 q 20 -30 44 -6" stroke="rgba(217,158,29,.5)" stroke-width="2" fill="none"/>
+</g>
+<path d="M 250 180 L 6 356" stroke="rgba(217,158,29,.055)" stroke-width="58" stroke-linecap="round"/><path d="M 246 176 L 104 348 M 358 176 L 404 332" stroke="rgba(217,158,29,.10)" stroke-width="34" stroke-linecap="round"/>
+</g>
+<!-- counter + towel -->
+<g id="counter">
+<path d="M 30 328 L 416 324" stroke="#A8987B" stroke-width="3.2" stroke-linecap="round" filter="url(#hand2)"/>
+<path d="M 34 332 L 412 328 L 410 353 L 36 357 Z" fill="#EDE4D2" stroke="#B5A88C" stroke-width="1.6" filter="url(#hand2)"/>
+<path d="M 58 359 L 58 470 M 394 355 L 394 470" stroke="#C9BFA9" stroke-width="2.6" stroke-linecap="round" filter="url(#hand2)"/>
+<path d="M 352 330 q 7 26 -1 50 q 15 4 21 -2 q 7 -25 1 -46 Z" fill="#F2ECDD" stroke="#B5A88C" stroke-width="1.6" filter="url(#hand)"/>
+<path d="M 354 352 q 11 3 18 0 M 353 362 q 11 3 18 0" stroke="#C0392F" stroke-width="1.5" opacity=".55" filter="url(#hand)"/>
+</g>
+<!-- sixteen glasses, clustered and overlapping, three rows -->
+<g id="cluster">
+<g transform="translate(214 296) rotate(0.7) scale(0.84)" opacity=".84"><use href="#wine"/></g>
+<g transform="translate(238 293) rotate(-0.5) scale(0.83)" opacity=".82"><use href="#goblet"/></g>
+<g transform="translate(262 296) rotate(0.6) scale(0.85)" opacity=".84"><use href="#wine"/></g>
+<g transform="translate(287 293) rotate(-0.4) scale(0.83)" opacity=".82"><use href="#goblet"/></g>
+<g transform="translate(311 296) rotate(0.5) scale(0.85)" opacity=".84"><use href="#wine"/></g>
+<g transform="translate(336 294) rotate(-0.6) scale(0.83)" opacity=".82"><use href="#goblet"/></g>
+<g transform="translate(200 312) rotate(-0.5) scale(0.93)" opacity=".93"><use href="#goblet"/></g>
+<g transform="translate(226 314) rotate(0.6) scale(0.94)" opacity=".93"><use href="#wine"/></g>
+<g transform="translate(252 311) rotate(-0.7) scale(0.93)"><use href="#goblet"/></g>
+<g transform="translate(278 314) rotate(0.4) scale(0.95)"><use href="#wine"/></g>
+<g transform="translate(304 311) rotate(-0.5) scale(0.93)"><use href="#goblet"/></g>
+<g transform="translate(196 330) rotate(0.5)"><use href="#wine"/></g>
+<g transform="translate(224 333) rotate(-0.6) scale(1.05)"><use href="#goblet"/></g>
+<g transform="translate(254 330) rotate(0.7)"><use href="#wine"/></g>
+<g transform="translate(284 334) rotate(-0.4) scale(1.06)"><use href="#goblet"/></g>
+<g transform="translate(316 330) rotate(0.6) scale(1.02)"><use href="#wine"/></g>
+</g>
+<!-- a thinner cluster, for the packing beat -->
+<g id="cluster-thin">
+<g transform="translate(194 330) rotate(0.5)"><use href="#wine"/></g>
+<g transform="translate(220 333) rotate(-0.6) scale(1.05)"><use href="#goblet"/></g>
+</g>
+<!-- figure: leaning in, phone raised toward the glasses -->
+<g id="fig-photo" filter="url(#hand2)">
+<path d="M 118 250 Q 100 286 96 322" stroke="#8C5A3C" stroke-width="13" stroke-linecap="round" fill="none"/>
+<ellipse cx="96" cy="326" rx="9" ry="6" fill="#C89678"/>
+<path d="M 78 470 Q 74 330 100 244 Q 112 216 134 222 Q 156 232 154 268 Q 150 330 160 470 Z" fill="#8C5A3C" stroke="#6E4128" stroke-width="1.6"/>
+<path d="M 126 224 Q 128 210 132 202" stroke="#C89678" stroke-width="10" stroke-linecap="round"/>
+<g transform="rotate(9 138 182)"><circle cx="138" cy="182" r="21" fill="#C89678"/><path d="M 120 176 Q 118 152 142 152 Q 164 154 160 180 Q 158 162 144 160 Q 126 160 124 182 Z" fill="#2A2018"/><circle cx="121" cy="168" r="9" fill="#2A2018"/><path d="M 148 184 q 4 3 8 1" stroke="#8C5A3C" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+<path d="M 146 246 Q 178 240 198 252" stroke="#8C5A3C" stroke-width="13" stroke-linecap="round" fill="none"/>
+<ellipse cx="202" cy="253" rx="8" ry="6.5" fill="#C89678"/>
+<g transform="rotate(-12 214 250)"><rect x="204" y="240" width="15" height="26" rx="3.5" fill="#2A2620"/><rect x="206.5" y="243" width="10" height="17" rx="1.5" fill="#FAF6EE" opacity=".85"/></g>
+</g>
+<!-- figure: both hands down, arranging the glasses -->
+<g id="fig-arrange" filter="url(#hand2)">
+<path d="M 80 470 Q 76 332 104 248 Q 118 220 140 228 Q 160 240 156 274 Q 152 332 162 470 Z" fill="#8C5A3C" stroke="#6E4128" stroke-width="1.6"/>
+<path d="M 130 230 Q 133 214 138 206" stroke="#C89678" stroke-width="10" stroke-linecap="round"/>
+<g transform="rotate(17 144 186)"><circle cx="144" cy="186" r="21" fill="#C89678"/><path d="M 126 180 Q 124 156 148 156 Q 170 158 166 184 Q 164 166 150 164 Q 132 164 130 186 Z" fill="#2A2018"/><circle cx="127" cy="172" r="9" fill="#2A2018"/><path d="M 154 188 q 4 3 8 1" stroke="#8C5A3C" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+<path d="M 122 256 Q 138 296 172 314" stroke="#8C5A3C" stroke-width="12.5" stroke-linecap="round" fill="none"/>
+<ellipse cx="178" cy="317" rx="9" ry="6.5" fill="#C89678" transform="rotate(24 178 317)"/>
+<path d="M 150 252 Q 186 268 206 300" stroke="#8C5A3C" stroke-width="12.5" stroke-linecap="round" fill="none"/>
+<ellipse cx="210" cy="305" rx="9" ry="6.5" fill="#C89678" transform="rotate(50 210 305)"/>
+</g>
+<!-- figure: standing back, weighing it, phone at chest -->
+<g id="fig-watch" filter="url(#hand2)">
+<path d="M 84 470 Q 82 336 100 252 Q 110 224 132 228 Q 154 236 152 272 Q 150 336 164 470 Z" fill="#8C5A3C" stroke="#6E4128" stroke-width="1.6"/>
+<path d="M 124 230 Q 126 214 129 205" stroke="#C89678" stroke-width="10" stroke-linecap="round"/>
+<g transform="rotate(-3 134 184)"><circle cx="134" cy="184" r="21" fill="#C89678"/><path d="M 116 178 Q 114 154 138 154 Q 160 156 156 182 Q 154 164 140 162 Q 122 162 120 184 Z" fill="#2A2018"/><circle cx="117" cy="170" r="9" fill="#2A2018"/><path d="M 144 186 q 4 3 8 1" stroke="#8C5A3C" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+<path d="M 108 258 Q 96 292 118 300" stroke="#8C5A3C" stroke-width="12.5" stroke-linecap="round" fill="none"/>
+<path d="M 146 256 Q 162 284 142 298" stroke="#8C5A3C" stroke-width="12.5" stroke-linecap="round" fill="none"/>
+<ellipse cx="132" cy="300" rx="9.5" ry="6.5" fill="#C89678"/>
+<g transform="rotate(-6 130 288)"><rect x="122" y="272" width="16" height="27" rx="3.5" fill="#2A2620"/><rect x="124.5" y="275" width="11" height="18" rx="1.5" fill="#FAF6EE" opacity=".85"/></g>
+</g>
+<!-- figure: bent over the box, packing -->
+<g id="fig-pack" filter="url(#hand2)">
+<path d="M 74 470 Q 70 338 106 262 Q 124 236 146 248 Q 164 262 154 292 Q 142 340 156 470 Z" fill="#8C5A3C" stroke="#6E4128" stroke-width="1.6"/>
+<path d="M 136 252 Q 142 238 150 232" stroke="#C89678" stroke-width="10" stroke-linecap="round"/>
+<g transform="rotate(26 158 214)"><circle cx="158" cy="214" r="21" fill="#C89678"/><path d="M 140 208 Q 138 184 162 184 Q 184 186 180 212 Q 178 194 164 192 Q 146 192 144 214 Z" fill="#2A2018"/><circle cx="141" cy="200" r="9" fill="#2A2018"/><path d="M 168 216 q 4 3 8 1" stroke="#8C5A3C" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+<path d="M 130 278 Q 176 304 236 310" stroke="#8C5A3C" stroke-width="12.5" stroke-linecap="round" fill="none"/>
+<ellipse cx="244" cy="311" rx="9" ry="6.5" fill="#C89678" transform="rotate(16 244 311)"/>
+<path d="M 152 286 Q 198 312 254 316" stroke="#8C5A3C" stroke-width="12.5" stroke-linecap="round" fill="none"/>
+<ellipse cx="262" cy="317" rx="9" ry="6.5" fill="#C89678" transform="rotate(14 262 317)"/>
+</g>
+<!-- the shipping box, open, sized to sixteen -->
+<g id="box">
+<path d="M 246 268 L 380 264 L 384 340 L 250 346 Z" fill="#E4D8C0" stroke="#A8987B" stroke-width="2" filter="url(#hand2)"/>
+<path d="M 246 268 Q 236 250 252 246 L 378 242 Q 392 246 380 264" fill="#EFE6D2" stroke="#A8987B" stroke-width="1.8" filter="url(#hand2)"/>
+<path d="M 260 282 L 372 278 M 264 306 L 376 302" stroke="#C9BFA9" stroke-width="1.5" stroke-linecap="round" filter="url(#hand)"/>
+<path d="M 296 270 L 300 344 M 336 268 L 340 342" stroke="#C9BFA9" stroke-width="1.5" stroke-linecap="round" filter="url(#hand)"/>
+<g transform="translate(280 308) rotate(-0.6) scale(0.75)" opacity=".78"><use href="#goblet"/></g>
+<g transform="translate(318 306) rotate(0.5) scale(0.75)" opacity=".78"><use href="#wine"/></g>
+<g transform="translate(356 308) rotate(-0.5) scale(0.75)" opacity=".78"><use href="#goblet"/></g>
+</g>
+<!-- the counter, cleared, after -->
+<g id="cleared">
+<path d="M 232 322 q 26 8 52 0" stroke="#C9BFA9" stroke-width="2" fill="none" stroke-linecap="round" filter="url(#hand)"/>
+<path d="M 300 320 q 18 6 34 1" stroke="#C9BFA9" stroke-width="1.8" fill="none" stroke-linecap="round" filter="url(#hand)"/>
+</g>
+</defs></svg>
+
+<!-- ══ TITLE ══ -->
+<div class="phase titlecard" id="p-title" data-screen-label="Title">
+<svg class="title-glasses" viewBox="0 0 330 96" style="--go:.92;--gow:.9;--gf:1;--gf2:1;--hl:.32">
+<g transform="translate(50 82) rotate(-0.6)"><use href="#goblet"/></g>
+<g transform="translate(92 84) rotate(0.5) scale(1.05)"><use href="#wine"/></g>
+<g transform="translate(134 83) rotate(-0.4)"><use href="#goblet"/></g>
+<g transform="translate(176 85) rotate(0.7) scale(0.97)"><use href="#wine"/></g>
+<g transform="translate(218 83) rotate(-0.5) scale(1.03)"><use href="#goblet"/></g>
+<g transform="translate(262 85) rotate(0.6) scale(1.01)"><use href="#wine"/></g>
+<line x1="16" y1="90" x2="314" y2="90" stroke="#C9BFA9" stroke-width="2" stroke-linecap="round" filter="url(#hand2)"/>
+</svg>
+<div class="eyebrow">One Listing · Start to Sold</div>
+<h1>The Anatomy of a Listing</h1>
+<p class="hook">&ldquo;The agent knows the market. The seller knows the object.&rdquo;</p>
+<div class="sub">Sixteen glasses · Two kinds of knowing</div>
+</div>
+
+<!-- ══ BEAT 01 ══ -->
+<div class="phase" id="p-b1" data-screen-label="01 The Photo">
+<div class="ctx"><b>01</b> · THE PHOTO — SATURDAY · A KITCHEN COUNTER · SIXTEEN GLASSES</div>
+<div class="set"><svg viewBox="0 0 420 480" preserveAspectRatio="xMidYMax meet">
+<use href="#window"/><use href="#counter"/>
+<g id="b1-photo"><use href="#fig-photo"/></g>
+<g id="b1-arrange" style="display:none"><use href="#fig-arrange"/></g>
+<use href="#cluster"/>
+</svg></div>
+<div class="mount">
+<div class="card" id="b1-seed">
+<div class="chead"><span class="dot" style="background:#8F5F09"></span>Her Seed · One Photo, One Sentence<span class="tag" style="color:#0E7C74;background:rgba(14,124,116,.07)">She writes</span></div>
+<div class="seedrow">
+<svg class="seedshot" viewBox="0 0 66 48"><rect x="2" y="2" width="62" height="44" rx="4" fill="rgba(217,158,29,.07)" stroke="#C9BFA9" stroke-width="1.5" filter="url(#hand)"/><g transform="translate(33 24) scale(0.31)"><use href="#cluster" transform="translate(-278 -289)"/></g></svg>
+<p class="seedline" id="b1-her"></p>
+</div>
+</div>
+<div class="card" id="b1-draft" style="display:none">
+<div class="chead"><span class="dot"></span>Listing Agent · The Draft<span class="tag">Sourced</span></div>
+<div class="fields">
+<div class="row" id="b1r1"><k>Category ·</k> <v>Home &amp; Garden › Kitchen, Dining &amp; Bar › Glassware &amp; Drinkware</v></div>
+<div class="row" id="b1r2"><k>Era ·</k> <v>1970s</v>&nbsp;&nbsp;&nbsp;<k>Color ·</k> <v>Smoke brown</v>&nbsp;&nbsp;&nbsp;<k>Type ·</k> <v>Goblets</v></div>
+<div class="row" id="b1r3"><k>Attribution ·</k> <v>Mid-century American pressed stemware, 1971&ndash;78</v></div>
+<div class="row flag" id="b1r4"><k>Condition ·</k> <v>Two rims show wear &mdash; flagged for your confirmation</v></div>
+</div>
+</div>
+<div class="card b" id="b1-ask" style="display:none">
+<div class="chead"><span class="dot"></span>Listing Agent · The Ask<span class="tag">Needs you</span></div>
+<p class="cbody" id="b1-askbody"></p>
+<div class="shots">
+<div class="shot" id="b1s1"><svg viewBox="0 0 90 62"><rect x="2" y="2" width="86" height="58" rx="4" fill="rgba(217,158,29,.07)" stroke="#C9BFA9" stroke-width="1.5" filter="url(#hand)"/><g transform="translate(45 52) scale(0.62)"><use href="#goblet"/></g><path d="M 26 46 q 19 5 38 0" stroke="#B5A88C" stroke-width="1.4" fill="none" filter="url(#hand)"/></svg><span>Base of one</span></div>
+<div class="shot" id="b1s2"><svg viewBox="0 0 90 62"><rect x="2" y="2" width="86" height="58" rx="4" fill="rgba(217,158,29,.07)" stroke="#C9BFA9" stroke-width="1.5" filter="url(#hand)"/><path d="M 16 28 q 29 -9 58 0" stroke="#5A3010" stroke-width="2" fill="none" stroke-linecap="round" filter="url(#hand)"/><path d="M 18 34 q 27 -8 54 0" stroke="#5A3010" stroke-width="1.5" fill="none" opacity=".5" filter="url(#hand)"/><circle cx="34" cy="27" r="3.4" fill="none" stroke="#D99E1D" stroke-width="1.6"/><circle cx="60" cy="28" r="3.4" fill="none" stroke="#D99E1D" stroke-width="1.6"/></svg><span>Rims, close</span></div>
+<div class="shot" id="b1s3"><svg viewBox="0 0 90 62"><rect x="2" y="2" width="86" height="58" rx="4" fill="rgba(217,158,29,.07)" stroke="#C9BFA9" stroke-width="1.5" filter="url(#hand)"/><g transform="translate(45 31) scale(0.42)"><use href="#cluster" transform="translate(-278 -289)"/></g></svg><span>All sixteen</span></div>
+</div>
+</div>
+</div>
+<div class="caption" id="b1-cap">One photo and one true sentence. It filled in the rest &mdash; then asked for what only she could photograph.</div>
+</div>
+
+<!-- ══ BEAT 02 ══ -->
+<div class="phase" id="p-b2" data-screen-label="02 The Question">
+<div class="ctx"><b>02</b> · THE QUESTION — ITEM SPECIFICS · THE FIELD THE MARKET QUERIES</div>
+<div class="set"><svg viewBox="0 0 420 480" preserveAspectRatio="xMidYMax meet">
+<use href="#window"/><use href="#counter"/><use href="#fig-photo"/><use href="#cluster"/>
+</svg></div>
+<div class="mount">
+<div class="card" id="b2-card">
+<div class="chead"><span class="dot"></span>Listing Agent · The Question<span class="tag">Needs you</span></div>
+<p class="cbody" id="b2-body" style="min-height:66px"></p>
+<div class="btnrow"><button class="yes" id="b2-yes">Yes</button><button id="b2-no">No</button></div>
+<div class="hair" id="b2-field"><span class="chk"><svg viewBox="0 0 12 12"><path d="M2.5 6.2 L5 8.6 L9.5 3.4" stroke="#4F7D4A" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nw">Set includes · <b>Water + Wine</b>&nbsp;&nbsp;Service for · <b>8</b>&nbsp;&nbsp;<span class="complete">Complete</span></span><span class="tier" id="b2-tier"><i></i><i></i><i></i></span></div>
+</div>
+</div>
+<div class="caption" id="b2-cap">The photo suggested. Only she could confirm. Her answer moved the price.</div>
+</div>
+
+<!-- ══ BEAT 03 ══ -->
+<div class="phase" id="p-b3" data-screen-label="03 The Market Read">
+<div class="ctx"><b>03</b> · THE MARKET READ — PRICE &amp; FORMAT · EVIDENCE, THEN A DECISION</div>
+<div class="set"><svg viewBox="0 0 420 480" preserveAspectRatio="xMidYMax meet">
+<use href="#window"/><use href="#counter"/><use href="#fig-watch"/><use href="#cluster"/>
+</svg></div>
+<div class="mount">
+<div class="card" id="b3-card">
+<div class="chead"><span class="dot"></span>Listing Agent · The Market Read<span class="tag">Evidence</span></div>
+<p class="cbody" id="b3-ev" style="font-size:12.5px;min-height:30px"></p>
+<div class="curvebox" id="b3-curve" style="opacity:0;transition:opacity 500ms"><svg viewBox="0 0 400 40">
+<path d="M 14 8 Q 120 12 208 20 Q 292 28 386 33" fill="none" stroke="#C9BFA9" stroke-width="2.2" stroke-linecap="round" filter="url(#hand2)"/>
+<path d="M 14 36 L 386 36" stroke="rgba(42,38,32,.13)" stroke-width="1.4" stroke-linecap="round" filter="url(#hand)"/>
+<circle id="b3-handle" cx="14" cy="8" r="5" fill="#FFFDF7" stroke="#8F5F09" stroke-width="2.2" style="transition:cx 620ms cubic-bezier(.4,.1,.3,1),cy 620ms cubic-bezier(.4,.1,.3,1)"/>
+<text x="14" y="40" font-family="MKR Mono, monospace" font-size="6.5" fill="#7D7466" letter-spacing="1">DAYS</text>
+<text x="386" y="40" text-anchor="end" font-family="MKR Mono, monospace" font-size="6.5" fill="#7D7466" letter-spacing="1">PATIENCE</text>
+</svg></div>
+<div class="intent" id="b3i1"><div class="itop"><span class="k">Clear the cupboard</span><span class="d">priced to move in days</span></div><div class="fmt" id="b3f1">Buy It Now + Best Offer &mdash; a set price, and buyers can make an offer</div></div>
+<div class="intent" id="b3i2"><div class="itop"><span class="k">Fair market</span><span class="d">the trailing-market midpoint</span><span class="onchip" id="b3-on">Offers on</span></div><div class="fmt" id="b3f2">Buy It Now &mdash; a set price, firm</div></div>
+<div class="intent" id="b3i3"><div class="itop"><span class="k">The buyer completing a set</span><span class="d">patient, premium</span></div><div class="fmt" id="b3f3">Auction &mdash; let the watchers bid the price up</div></div>
+<div class="netline" id="b3-net">Net after fees · shown before she commits</div>
+</div>
+<div class="chip" id="b3-chip">&ldquo;Fair market. With offers on &mdash; someone should get to ask.&rdquo;</div>
+<div class="caption" id="b3-cap">Pricing is a tradeoff the agent can evidence. The intent is hers.</div>
+</div>
+</div>
+
+<!-- ══ BEAT 04 ══ -->
+<div class="phase" id="p-b4" data-screen-label="04 The Words">
+<div class="ctx"><b>04</b> · THE WORDS — TITLE &amp; DESCRIPTION · COMPELLING MEETS FINDABLE</div>
+<div class="set"><svg viewBox="0 0 420 480" preserveAspectRatio="xMidYMax meet">
+<use href="#window"/><use href="#counter"/><use href="#fig-watch"/><use href="#cluster"/>
+</svg></div>
+<div class="mount">
+<div class="card" id="b4-card">
+<div class="chead"><span class="dot"></span>The Listing · Title &amp; Description<span class="tag">Assembled</span></div>
+<div class="lrow" id="b4L1"><div class="ll">Title · for the search bar</div><p class="ltitle" style="margin:0">Vintage <u id="b4t70">1970s</u> <u>Smoke Brown</u> Glass <u>Goblets</u> · <u>Complete</u> <u>Service for 8</u> · Water + Wine</p></div>
+<div class="lrow" id="b4L2"><div class="ll">Opens · for the buyer &mdash; her line, kept whole</div><p class="lopen">&ldquo;These were on our table for every holiday&hellip;&rdquo;</p></div>
+<div class="lrow" id="b4L3"><div class="ll">Search anchors · drawn from listings that sold</div>
+<div class="anchors" id="b4-anch">
+<span id="b4a1">Smoke brown</span><span id="b4a2">Goblets</span><span id="b4a3">Service for 8</span><span id="b4a4">Complete set</span><span id="b4a5">1970s</span><span id="b4a6">Vintage stemware</span>
+</div>
+</div>
+</div>
+</div>
+<div class="caption" id="b4-cap">She wrote for the buyer. The agent wrote for the search bar. Neither replaced the other.</div>
+</div>
+
+<!-- ══ BEAT 05 ══ -->
+<div class="phase" id="p-b5" data-screen-label="05 The Manifest">
+<div class="ctx"><b>05</b> · THE MANIFEST — SIXTEEN PIECES OF GLASS IN A BOX</div>
+<div class="set"><svg viewBox="0 0 420 480" preserveAspectRatio="xMidYMax meet">
+<use href="#window"/><use href="#counter"/><use href="#box"/><use href="#fig-pack"/><use href="#cluster-thin"/>
+</svg></div>
+<div class="mount">
+<div class="card" id="b5-card">
+<div class="chead"><span class="dot"></span>Listing Agent · The Manifest<span class="tag">Yours to change</span></div>
+<div class="man">
+<div class="m" id="b5m1"><span class="mk">Photos</span><p>seven shots, clarity and close-ups enhanced &mdash; the object itself never altered</p><em>Modify</em></div>
+<div class="m" id="b5m2"><span class="mk">Condition</span><p>the wear named plainly &mdash; trust is part of the listing</p><em>Modify</em></div>
+<div class="m" id="b5m3"><span class="mk">Title &amp; description</span><p>written for buyers, indexed for search &mdash; her sentence leads</p><em>Modify</em></div>
+<div class="m" id="b5m4"><span class="mk">Category &amp; item specifics</span><p>placed where comparable sets actually sold; every field complete</p><em>Modify</em></div>
+<div class="m" id="b5m5"><span class="mk">Price</span><p>set for the complete service of sixteen, against the sold record</p><em>Modify</em></div>
+<div class="m" id="b5m6"><span class="mk">Format</span><p>Buy It Now with offers on &mdash; matched to her intent</p><em>Modify</em></div>
+<div class="m" id="b5m7"><span class="mk">Shipping</span><p>double-boxed glassware kit, calculated, paid by the buyer</p><em>Modify</em></div>
+<div class="m" id="b5m8"><span class="mk">Returns</span><p>matched to your seller profile</p><em>Modify</em></div>
+</div>
+<button class="listit" id="b5-list">List it</button>
+</div>
+<div class="caption" id="b5-cap">Eight decisions she never had to research. Every one of them hers to change.</div>
+</div>
+</div>
+
+<!-- ══ CLOSE ══ -->
+<div class="phase" id="p-close" data-screen-label="Close">
+<div class="ctx"><b>Close</b> · WHAT THE LISTING LEAVES BEHIND</div>
+<div class="set"><svg viewBox="0 0 420 480" preserveAspectRatio="xMidYMax meet">
+<use href="#window"/><use href="#counter"/><use href="#cleared"/>
+</svg></div>
+<div class="sold">
+<div class="soldnote" id="c-sold"><span class="k">Sold</span><p>To a kitchen three states away, where a set is whole again.</p></div>
+<div class="loopbox" id="c-loop"><svg viewBox="0 0 470 116">
+<path d="M 22 100 Q 152 96 250 62 Q 330 34 352 26" fill="none" stroke="#C9BFA9" stroke-width="2.2" stroke-linecap="round" filter="url(#hand2)"/>
+<path d="M 346 19 L 358 26 L 346 33" fill="none" stroke="#4F7D4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#hand)"/>
+<g transform="translate(390 26)"><circle cx="0" cy="0" r="17" fill="rgba(79,125,74,.08)" stroke="#4F7D4A" stroke-width="1.8" filter="url(#hand)"/><path d="M -7 1 L -2.5 5.6 L 7.5 -5" fill="none" stroke="#4F7D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="390" y="54" text-anchor="middle" font-family="MKR Mono, monospace" font-size="7.5" fill="#4F7D4A" letter-spacing="1.2">AGENT</text>
+</svg>
+<div class="lchip yes" id="lc1" style="left:2%;top:60%">Yes</div>
+<div class="lchip q" id="lc2" style="left:29%;top:44%">&ldquo;Fair market&rdquo;</div>
+<div class="lchip anc" id="lc3" style="left:50%;top:12%">Pressed goblets</div>
+</div>
+<div class="nextline" id="c-next">The next unsure seller starts closer than she did.</div>
+</div>
+<div class="finalline" id="c-final">The agent brought the market. She brought the object.<br>The judgment stayed human &mdash; and taught the agent.</div>
+</div>
+
+<!-- ══ SIG ══ -->
+<div class="phase sig" id="p-sig" data-screen-label="Signature">
+<div class="rule"></div>
+<p class="q">&ldquo;Human capability compounds or degrades based on how the collaboration is designed.&rdquo;</p>
+<div class="nm">Maura K. Randall</div>
+<div class="ln">maurakrandall.github.io · aigal.io · linkedin.com/in/maurakrandall</div>
+</div>
+
+<!-- ══ ANCHOR ══ -->
+<div class="anchor">
+<div class="dots" id="dots"></div>
+<svg class="ring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15.5" fill="none" stroke="rgba(42,38,32,.11)" stroke-width="2.6"/><circle id="ringfill" cx="20" cy="20" r="15.5" fill="none" stroke="#8F5F09" stroke-width="2.6" stroke-linecap="round" transform="rotate(-90 20 20)" stroke-dasharray="97.4" stroke-dashoffset="97.4" style="transition:stroke-dashoffset 800ms cubic-bezier(.4,.1,.3,1)"/><text id="ringtxt" x="20" y="23.4" text-anchor="middle">0%</text></svg>
+</div>
+
+<!-- tracker lives above the card region on every beat -->
+<div class="tracker" id="tracker" style="opacity:0;transition:opacity 500ms">SOURCED BY AGENT <span class="agent">84%</span><span>·</span>APPROVED BY YOU <span class="you" id="you">0%</span></div>
+</div>
+</div>
+</div>
+
+<script>
+(()=>{const f=document.getElementById('frame'),s=document.getElementById('stage');
+const fit=()=>{s.style.transform='scale('+(f.clientWidth/1080)+')'};
+fit();addEventListener('resize',fit);if(window.ResizeObserver)new ResizeObserver(fit).observe(f);})();
+(()=>{
+const $=s=>document.querySelector(s);
+const T=[],later=(ms,fn)=>{const t=setTimeout(fn,ms);T.push(t);return t};
+const clear=()=>{T.forEach(clearTimeout);T.length=0};
+const PH=['p-title','p-b1','p-b2','p-b3','p-b4','p-b5','p-close','p-sig'];
+const LABELS=['Title','01','02','03','04','05','Close','Sig'];
+let cur=0,pct=0;
+
+// dots
+const dotwrap=$('#dots');
+LABELS.forEach((l,i)=>{const d=document.createElement('i');d.title=l;d.onclick=()=>jump(i);dotwrap.appendChild(d)});
+const dotEls=[...dotwrap.children];
+function updateDots(){dotEls.forEach((d,i)=>{d.className=i<cur?'done':i===cur?'now':''})}
+
+function setPct(v,pulse){pct=v;const y=$('#you');y.textContent=v+'%';$('#ringtxt').textContent=v+'%';$('#ringfill').setAttribute('stroke-dashoffset',(97.4*(1-v/100)).toFixed(2));if(pulse){y.classList.remove('tick');void y.offsetWidth;y.classList.add('tick')}}
+
+function show(i){PH.forEach((p,n)=>$('#'+p).classList.toggle('on',n===i));cur=i;updateDots();
+  const beat=i>=1&&i<=6;$('#tracker').style.opacity=beat?'1':'0';$('#lightpool').style.opacity=beat?'1':'0';}
+
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CAR='<i class="car">|</i>';
+function typer(el,text,cps,done,serif){
+  if(RM){if(serif)el.innerHTML=text;else el.textContent=text;later(160,()=>done&&done());return}
+  const dur=Math.max(300,text.length*cps),t0=performance.now();
+  el.textContent='';
+  const step=now=>{const p=Math.min(1,(now-t0)/dur),n=Math.round(p*text.length);
+    if(serif)el.innerHTML=text.slice(0,n)+(p<1?CAR:'');else el.textContent=text.slice(0,n);
+    if(p<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+  later(dur+140,()=>{if(serif)el.innerHTML=text;else el.textContent=text;done&&done()});
+}
+const type=(el,text,cps,done)=>typer(el,text,cps,done,false);
+const typeHer=(el,text,cps,done)=>typer(el,text,cps,done,true);
+
+const Q2="Most sets like this on the market are partial — fours and sixes. Your photos show sixteen: a complete service for eight, in both forms. Confirm?";
+const ASK="Most listings like this carry three photos. Complete sets photographed in detail sell faster and closer to ask. Three shots would help: the base of one goblet · the rims, close · all sixteen, together.";
+const EV="Complete sets in both forms are scarce; partial fours and sixes are not.";
+const HER="These were on our table for every holiday. I remember toasting Thanksgiving with one the year we lived in Ecuador.";
+
+function reset(){
+  unpin();
+  // b1
+  ['b1r1','b1r2','b1r3','b1r4','b1s1','b1s2','b1s3'].forEach(id=>$('#'+id).classList.remove('on'));
+  $('#b1-seed').style.display='';$('#b1-seed').className='card';$('#b1-her').innerHTML='';
+  $('#b1-draft').style.display='none';$('#b1-draft').className='card';$('#b1-ask').style.display='none';$('#b1-ask').className='card b';
+  $('#b1-askbody').textContent='';$('#b1-cap').classList.remove('on');
+  $('#b1-photo').style.display='';$('#b1-arrange').style.display='none';
+  // b2
+  $('#b2-card').className='card';$('#b2-body').textContent='';
+  $('#b2-yes').className='yes';$('#b2-no').className='';$('#b2-field').classList.remove('on');$('#b2-tier').classList.remove('up');$('#b2-cap').classList.remove('on');
+  // b3
+  $('#b3-card').className='card';$('#b3-ev').textContent='';$('#b3-curve').style.opacity='0';
+  ['b3i1','b3i2','b3i3'].forEach(id=>$('#'+id).className='intent');
+  [1,2,3].forEach(n=>$('#b3f'+n).classList.remove('on'));
+  $('#b3f2').innerHTML=F2;$('#b3-on').classList.remove('on');$('#b3-net').classList.remove('on');
+  $('#b3-handle').setAttribute('cx',14);$('#b3-handle').setAttribute('cy',8);
+  $('#b3-chip').classList.remove('on');$('#b3-cap').classList.remove('on');
+  // b4
+  $('#b4-card').className='card';['b4L1','b4L2','b4L3'].forEach(id=>$('#'+id).classList.remove('on'));
+  $('#b4t70').classList.remove('off');
+  [1,2,3,4,5,6].forEach(n=>{const e=$('#b4a'+n);e.className='';e.textContent=['Smoke brown','Goblets','Service for 8','Complete set','1970s','Vintage stemware'][n-1]});
+  $('#b4-cap').classList.remove('on');
+  // b5
+  $('#b5-card').className='card';[1,2,3,4,5,6,7,8].forEach(n=>$('#b5m'+n).classList.remove('on'));
+  $('#b5-list').className='listit';$('#b5-cap').classList.remove('on');
+  // close
+  $('#c-sold').classList.remove('on');$('#c-loop').classList.remove('on');$('#c-next').classList.remove('on');$('#c-final').classList.remove('on');
+  [1,2,3].forEach(n=>$('#lc'+n).classList.remove('on'));
+}
+
+// ── beats ──
+function title(){clear();reset();setPct(0);show(0);later(5800,b1)}
+
+function b1(){show(1);setPct(0);
+  later(350,()=>$('#b1-seed').classList.add('pop'));
+  later(900,()=>typeHer($('#b1-her'),HER,27,()=>{
+    later(600,()=>{$('#b1-draft').style.display='';$('#b1-draft').classList.add('pop')});
+    [1000,1500,2000,2500].forEach((t,i)=>later(t,()=>$('#b1r'+(i+1)).classList.add('on')));
+    later(4200,()=>{$('#b1-seed').classList.add('gone');$('#b1-draft').classList.add('gone')});
+    later(4750,()=>{$('#b1-seed').style.display='none';$('#b1-draft').style.display='none';
+      $('#b1-ask').style.display='';$('#b1-ask').classList.add('pop','attn')});
+    later(5350,()=>type($('#b1-askbody'),ASK,16,()=>{
+      later(600,()=>{$('#b1-photo').style.display='none';$('#b1-arrange').style.display=''});
+      [800,1500,2200].forEach((t,i)=>later(t,()=>$('#b1s'+(i+1)).classList.add('on')));
+      later(2700,()=>{$('#b1-ask').classList.remove('attn');setPct(22,true)});
+      later(3400,()=>$('#b1-cap').classList.add('on'));
+      later(7400,b2);
+    }));
+  }));
+}
+
+function b2(){show(2);setPct(22);
+  later(450,()=>$('#b2-card').classList.add('pop','attn'));
+  later(1100,()=>type($('#b2-body'),Q2,19,()=>{
+    $('#b2-yes').classList.add('show','hot');$('#b2-no').classList.add('show');
+    later(2000,()=>{
+      $('#b2-yes').classList.remove('hot');$('#b2-yes').classList.add('pressed');
+      later(450,()=>{$('#b2-field').classList.add('on');$('#b2-card').classList.remove('attn')});
+      later(1050,()=>$('#b2-tier').classList.add('up'));
+      later(1200,()=>setPct(34,true));
+      later(2100,()=>$('#b2-cap').classList.add('on'));
+      later(6600,b3);
+    });
+  }));
+}
+
+const POS=[[14,8],[208,20],[386,33]];
+const F1="<s>a set price, firm</s> &nbsp;Buy It Now &mdash; a set price, and buyers can make an offer";
+const F2="Buy It Now &mdash; a set price, firm";
+function b3(){show(3);setPct(34);
+  later(400,()=>$('#b3-card').classList.add('pop'));
+  later(900,()=>type($('#b3-ev'),EV,19,()=>{
+    later(500,()=>$('#b3-curve').style.opacity='1');
+    [900,1150,1400].forEach((t,i)=>later(t,()=>$('#b3i'+(i+1)).classList.add('on')));
+    later(2100,()=>{$('#b3i1').classList.add('sel');$('#b3-handle').setAttribute('cx',POS[0][0]);$('#b3-handle').setAttribute('cy',POS[0][1])});
+    later(3300,()=>{$('#b3i1').classList.remove('sel');$('#b3i3').classList.add('sel');$('#b3-handle').setAttribute('cx',POS[2][0]);$('#b3-handle').setAttribute('cy',POS[2][1])});
+    [4600,5300,6000].forEach((t,i)=>later(t,()=>$('#b3f'+(i+1)).classList.add('on')));
+    later(7100,()=>{$('#b3i3').classList.remove('sel');$('#b3i2').classList.add('sel');
+      $('#b3i1').classList.add('dim');$('#b3i3').classList.add('dim');
+      $('#b3-handle').setAttribute('cx',POS[1][0]);$('#b3-handle').setAttribute('cy',POS[1][1])});
+    later(8500,()=>{$('#b3-on').classList.add('on');$('#b3f2').innerHTML=F1});
+    later(9700,()=>$('#b3-net').classList.add('on'));
+    later(10600,()=>$('#b3-chip').classList.add('on'));
+    later(11400,()=>setPct(56,true));
+    later(12200,()=>$('#b3-cap').classList.add('on'));
+    later(17400,b4);
+  }));
+}
+
+function b4(){show(4);setPct(56);
+  later(400,()=>$('#b4-card').classList.add('pop'));
+  [900,1700,2500].forEach((t,i)=>later(t,()=>$('#b4L'+(i+1)).classList.add('on')));
+  later(2900,()=>[1,2,3,4,5,6].forEach(n=>later(n*180,()=>$('#b4a'+n).classList.add('on'))));
+  later(4800,()=>{$('#b4a5').classList.add('off');$('#b4t70').classList.add('off')});
+  later(5700,()=>{const e=$('#b4a2');e.textContent='Pressed goblets';e.classList.add('swap')});
+  later(6800,()=>setPct(78,true));
+  later(7500,()=>$('#b4-cap').classList.add('on'));
+  later(11600,b5);
+}
+
+function b5(){show(5);setPct(78);
+  later(400,()=>$('#b5-card').classList.add('pop'));
+  [1,2,3,4,5,6,7,8].forEach(n=>later(800+(n-1)*130,()=>$('#b5m'+n).classList.add('on')));
+  later(2500,()=>$('#b5-list').classList.add('show'));
+  later(9000,()=>$('#b5-list').classList.add('pressed'));
+  later(9800,()=>setPct(100,true));
+  later(10700,()=>$('#b5-cap').classList.add('on'));
+  later(21000,close);
+}
+
+function close(){show(6);setPct(100);
+  later(500,()=>$('#c-sold').classList.add('on'));
+  later(1900,()=>$('#c-loop').classList.add('on'));
+  [2400,3100,3800].forEach((t,i)=>later(t,()=>$('#lc'+(i+1)).classList.add('on')));
+  later(5000,()=>$('#c-next').classList.add('on'));
+  later(6600,()=>$('#c-final').classList.add('on'));
+  later(12600,sig);
+}
+
+function sig(){show(7);later(7600,title)}
+
+const RUN=[title,b1,b2,b3,b4,b5,close,sig];
+function jump(i){clear();reset();const p=[0,0,22,34,56,78,100,100][i];setPct(p);RUN[i]()}
+
+// ── export hooks ──
+function killT(sel){document.querySelectorAll(sel).forEach(e=>{mark(e);e.style.transition='none'})}
+const PCT=[0,22,34,56,78,100,100,100];
+function showSnap(i){clear();reset();
+  killT('.phase');killT('.card');killT('.caption');killT('.chip');killT('.hair');killT('.fields .row');
+  killT('.shot');killT('.intent');killT('.intent .fmt');killT('.onchip');killT('.netline');killT('.man .m');killT('.listit');killT('.anchors span');
+  killT('.anchtag');killT('.lrow');killT('.ltitle u');killT('.soldnote');killT('.loopbox');killT('.nextline');killT('.finalline');killT('#tracker');killT('.lchip');killT('.seedline');
+  killT('#b3-curve');killT('#b3-meters');killT('#b3-handle');killT('#ringfill');killT('#lightpool');killT('.tier i');
+  show(i);setPct(PCT[i]);$('#you').classList.remove('tick');
+}
+const PINNED=new Map();
+function mark(el){if(el&&!PINNED.has(el))PINNED.set(el,el.getAttribute('style'))}
+function unpin(){PINNED.forEach((s,e)=>{if(s===null)e.removeAttribute('style');else e.setAttribute('style',s)});PINNED.clear()}
+function pin(el,o){if(!el)return;mark(el);el.style.transition='none';el.style.animation='none';for(const k in o)el.style.setProperty(k,o[k])}
+function on(id){pin($('#'+id),{opacity:'1',translate:'none'})}
+function pinTracker(v){$('#tracker').style.opacity='1';setPct(v);$('#you').classList.remove('tick');
+  pin($('#ringfill'),{});$('#ringfill').setAttribute('stroke-dashoffset',(97.4*(1-v/100)).toFixed(2))}
+function pinCard(id,attn){const c=$('#'+id);c.style.animation='none';pin(c,{opacity:'1',translate:'none'});if(attn)c.classList.add('attn')}
+// SVG text replacements for wrap-sensitive runs
+function svgtext(el,size,color,ls,weight){
+  const txt=el.textContent.trim(),w=el.getBoundingClientRect().width||300;
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('width',w);s.setAttribute('height',size*1.5);s.setAttribute('viewBox','0 0 '+w+' '+(size*1.5));
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',0);t.setAttribute('y',size*1.08);t.setAttribute('font-family',"MKR Mono, monospace");
+  t.setAttribute('font-size',size);t.setAttribute('fill',color);t.setAttribute('letter-spacing',ls);
+  if(weight)t.setAttribute('font-weight',weight);
+  t.textContent=txt;s.appendChild(t);el.textContent='';el.appendChild(s);el.style.whiteSpace='nowrap';
+}
+function pinCtx(){const c=document.querySelector('.phase.on .ctx');if(c)svgtext(c,9.5,'#6E6659','1.4');}
+function pinChips(){}
+
+window.__frame={
+  title(){showSnap(0)},
+  b1(){showSnap(1);pinTracker(22);$('#b1-seed').style.display='none';$('#b1-draft').style.display='none';$('#b1-ask').style.display='';
+    pinCard('b1-ask');[1,2,3].forEach(n=>on('b1s'+n));$('#b1-askbody').textContent=ASK;
+    $('#b1-photo').style.display='none';$('#b1-arrange').style.display='';on('b1-cap');pinCtx()},
+  b1draft(){showSnap(1);pinTracker(0);$('#b1-ask').style.display='none';$('#b1-draft').style.display='';
+    pinCard('b1-seed');pinCard('b1-draft');$('#b1-her').innerHTML=HER;
+    [1,2,3,4].forEach(n=>on('b1r'+n));pinCtx()},
+  b2(){showSnap(2);pinTracker(34);pinCard('b2-card');$('#b2-body').textContent=Q2;
+    $('#b2-yes').className='yes show pressed';$('#b2-yes').style.animation='none';$('#b2-no').className='show';
+    pin($('#b2-yes'),{opacity:'1'});pin($('#b2-no'),{opacity:'1'});on('b2-field');
+    $('#b2-tier').classList.add('up');const ti=$('#b2-tier').children;
+    pin(ti[0],{background:'rgba(143,95,9,.34)'});pin(ti[1],{background:'rgba(143,95,9,.34)'});
+    pin(ti[2],{background:'#8F5F09',height:'17px'});
+    on('b2-cap');pinCtx()},
+  b3(){showSnap(3);pinTracker(56);pinCard('b3-card');$('#b3-ev').textContent=EV;
+    pin($('#b3-curve'),{opacity:'1'});
+    ['b3i1','b3i2','b3i3'].forEach((id,i)=>{const e=$('#'+id);e.className='intent on'+(i===1?' sel':' dim');
+      pin(e,{opacity:i===1?'1':'.55'});if(i===1)pin(e,{opacity:'1','border-color':'rgba(217,158,29,.5)',background:'rgba(217,158,29,.06)'})});
+    [1,2,3].forEach(n=>{const f=$('#b3f'+n);f.classList.add('on');pin(f,{opacity:'1'})});
+    $('#b3f2').innerHTML=F1;$('#b3-on').classList.add('on');pin($('#b3-on'),{opacity:'1'});
+    on('b3-net');
+    $('#b3-handle').setAttribute('cx',POS[1][0]);$('#b3-handle').setAttribute('cy',POS[1][1]);
+    on('b3-chip');on('b3-cap');pinCtx();pinChips()},
+  b4(){showSnap(4);pinTracker(78);pinCard('b4-card');['b4L1','b4L2','b4L3'].forEach(id=>on(id));
+    [1,2,3,4,5,6].forEach(n=>{const e=$('#b4a'+n);e.className='on';pin(e,{opacity:'1'})});
+    const a5=$('#b4a5');a5.className='on off';pin(a5,{opacity:'.18','border-bottom-color':'transparent'});
+    const t7=$('#b4t70');t7.classList.add('off');pin(t7,{'border-bottom-color':'transparent',color:'#2A2620'});
+    const a2=$('#b4a2');a2.textContent='Pressed goblets';a2.className='on swap';
+    pin(a2,{opacity:'1',color:'#8F5F09','border-bottom-color':'rgba(217,158,29,.6)'});
+    on('b4-cap');pinCtx()},
+  b5(){showSnap(5);pinTracker(100);pinCard('b5-card');[1,2,3,4,5,6,7,8].forEach(n=>on('b5m'+n));
+    const b=$('#b5-list');b.className='listit show pressed';
+    pin(b,{opacity:'1',background:'#4F7D4A','border-color':'#4F7D4A',color:'#FFFDF7'});on('b5-cap');pinCtx()},
+  close(){showSnap(6);$('#tracker').style.opacity='0';$('#lightpool').style.opacity='1';on('c-sold');on('c-loop');[1,2,3].forEach(n=>on('lc'+n));on('c-next');on('c-final');pinCtx()},
+  sig(){showSnap(7)}
+};
+
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>later(300,title));
+})();
+</script>
+</body>
+</html>
