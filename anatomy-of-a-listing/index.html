@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Anatomy of a Listing — Maura K. Randall · Product Vision Artifact</title>
+<meta name="description" content="A product vision artifact prepared for eBay · C2C & Seller Experience · Director of Product, AI Listing. One listing, two kinds of knowing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --cream:#FAF6EE; --card:#FFFDF7; --ink:#2A2620; --muted:#6E6659; --soft:#7D7466;
+    --line:rgba(42,38,32,0.14); --leaf:#4F7D4A; --teal:#0E7C74; --amber:#D99E1D; --amberink:#8F5F09;
+    --petrol:#0A2E2E; --glass:#8F5F09;
+    --sans:'Inter Tight',system-ui,sans-serif; --serif:'Instrument Serif',Georgia,serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.55}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--leaf)}
+  .section-eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin:0 0 18px;text-align:center}
+  .section-intro{max-width:70ch;margin:0 auto 8px;text-align:center}
+  .pov-frame{background:var(--card);border:1.5px solid var(--leaf);border-radius:14px;padding:26px 30px 20px;max-width:720px;margin:8px auto 0;box-shadow:0 1px 0 rgba(42,38,32,0.04),0 16px 36px -24px rgba(42,38,32,0.18)}
+  .pov .pov-frame p{max-width:none}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  p{font-size:15.5px;color:var(--ink)}
+
+  /* HERO */
+  .hero{padding:84px 0 64px;text-align:center}
+  .hero .eyebrow{display:block;margin-bottom:26px}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,7vw,64px);line-height:1.05;margin:0 0 10px}
+  .hero .sub{font-family:var(--mono);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
+  .statrow{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--soft);margin-bottom:40px}
+  .statrow b{color:var(--leaf);font-weight:600}
+  .hook{font-family:var(--serif);font-size:clamp(20px,3vw,26px);font-style:italic;color:var(--ink);max-width:36ch;margin:0 auto 34px;line-height:1.35}
+  .thesis{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:30px 12px;max-width:760px;margin:0 auto 30px}
+  .thesis p{font-family:var(--serif);font-size:clamp(22px,3.2vw,28px);line-height:1.3;margin:0}
+  .hero .lede{max-width:66ch;margin:0 auto;color:var(--muted);font-size:15px}
+  .sig-line{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft);margin-top:34px}
+
+  /* SCENE */
+  .scene-intro{max-width:70ch}
+  .scene-shell{position:relative;width:100%;aspect-ratio:2160/1216;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 1px 0 rgba(42,38,32,0.05),0 20px 44px -22px rgba(42,38,32,0.28);background:var(--card);margin:28px 0 14px}
+  .scene-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .scene-note{font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);text-align:center;margin-bottom:34px}
+  .beats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .beat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .beat h3{font-family:var(--mono);font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--leaf);margin:0 0 4px}
+  .beat p{font-size:12.5px;margin:0 0 8px}
+  .beat em{display:block;font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--muted)}
+
+  /* ANATOMY */
+  .anat{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:22px;background:var(--card)}
+  .anat-head{display:grid;grid-template-columns:1.05fr 1.35fr 1.35fr .9fr;font-family:var(--mono);font-size:8.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft);border-bottom:1px solid var(--line);padding:10px 16px;gap:12px}
+  .anat-row{display:grid;grid-template-columns:1.05fr 1.35fr 1.35fr .9fr;gap:12px;padding:10px 16px;border-bottom:1px dashed var(--line);align-items:baseline}
+  .anat-row:last-child{border-bottom:0}
+  .anat-row .organ{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--amberink)}
+  .anat-row .a,.anat-row .s{font-size:12px;color:var(--ink)}
+  .anat-row .a:before{content:"AGENT · ";font-family:var(--mono);font-size:8px;letter-spacing:.12em;color:var(--leaf);font-weight:600}
+  .anat-row .s:before{content:"SELLER · ";font-family:var(--mono);font-size:8px;letter-spacing:.12em;color:var(--amberink);font-weight:600}
+  .anat-row .p{font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal)}
+  .anat-note{font-family:var(--mono);font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--soft);text-align:center;margin-top:12px}
+
+  /* PRIMITIVES */
+  .prim-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+  .prim{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .prim h3{font-family:var(--mono);font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--leaf);margin:0 0 8px}
+  .prim p{font-size:12.5px;margin:0;color:var(--ink)}
+
+  /* POV */
+  .pov p{max-width:72ch}
+  .closing{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:34px 12px;max-width:720px;margin:38px auto 34px;text-align:center}
+  .closing p{font-family:var(--serif);font-size:clamp(24px,3.6vw,32px);line-height:1.3;margin:0}
+  .sigblock{text-align:center;padding-bottom:12px}
+  .sigblock .name{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--leaf);margin-bottom:12px}
+  .sigblock .links{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase}
+  .sigblock .links a{color:var(--teal);text-decoration:none}
+  .sigblock .links a:hover{text-decoration:underline}
+  footer{border-top:1px solid var(--line);padding:26px 0 44px;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft)}
+
+  /* PRINT-ONLY */
+  .print-scene{display:none}
+
+  @media print{
+    html,body{background:var(--cream) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    @page{size:Letter;margin:0.45in}
+    .scene-shell,.scene-note{display:none !important}
+    .print-scene{display:block;margin:20px 0 24px}
+    .see-live{border:2px solid var(--leaf);border-radius:12px;background:var(--card);padding:12px 16px;text-align:center;margin:0 0 16px}
+    .see-live .big{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--leaf)}
+    .see-live .url{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--amberink);margin-top:6px}
+    .print-frames{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:86%;margin:0 auto}
+    .print-frames figure{margin:0}
+    .print-frames img{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;display:block}
+    .print-frames figcaption{font-family:var(--mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);margin-top:5px;text-align:center}
+    .hero{page-break-after:always;padding:36px 0 16px}
+    section{page-break-after:always;padding:10px 0;border-top:0}
+    section:last-of-type,.pov{page-break-after:auto}
+    h2.section-eyebrow{margin:10px 0 6px !important;font-size:9.5px}
+    section p{margin-bottom:5px}
+    .beat,.prim,.anat-row,.see-live,.print-frames figure,.thesis,.closing{page-break-inside:avoid;break-inside:avoid}
+    .scene-intro{max-width:none;font-size:12.5px}
+    .beats{grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+    .beat{padding:9px 11px}
+    .beat h3{font-size:9px}
+    .beat p{font-size:8.6px;line-height:1.45;margin-bottom:5px}
+    .beat em{font-size:9.5px}
+    section p{font-size:11.5px}
+    .anat{margin-top:12px}
+    .anat-row .a,.anat-row .s{font-size:9px;line-height:1.3}
+    .anat-row .organ{font-size:9px}
+    .anat-row .p{font-size:8px}
+    .anat-row{padding:3.5px 12px;gap:10px}
+    .anat-head{padding:6px 12px;font-size:8px;gap:10px}
+    .prim{padding:7px 10px}
+    .prim p{font-size:9.3px;line-height:1.35}
+    .prim h3{font-size:8.8px;margin-bottom:5px}
+    .prim-grid{gap:7px;margin-top:8px}
+    .anat-note{margin-top:7px;font-size:8.5px}
+    .closing{padding:8px 10px;margin:8px auto 6px}
+    .closing p{font-size:16px}
+    .sigblock .links{font-size:8.5px}
+    .sigblock .name{font-size:9.5px}
+    .sigblock{padding-bottom:0}
+    .sigblock .name{margin-bottom:6px}
+    .pov p{font-size:10.8px;line-height:1.42;margin-bottom:5px}
+    .sigblock,.closing{page-break-inside:avoid}
+    .pov-frame{border:1.5px solid var(--leaf);border-radius:10px;background:var(--card);box-shadow:none;padding:9px 16px 5px;margin:2px auto 0;max-width:560px;page-break-inside:avoid}
+    .section-intro{margin:0 auto 5px}
+    .closing{text-align:center}
+    .closing p{font-size:18px;line-height:1.3}
+    footer{display:none}
+    a{color:inherit;text-decoration:none}
+  }
+
+  @media (max-width:760px){
+    .beats{grid-template-columns:1fr}
+    .prim-grid{grid-template-columns:1fr}
+    .anat-head{display:none}
+    .anat-row{grid-template-columns:1fr;gap:4px}
+    section{padding:48px 0}
+    .hero{padding:56px 0 44px}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO / PRINT PAGE 1 -->
+<div class="wrap hero">
+  <span class="eyebrow">Product Vision Artifact · Prepared for eBay · C2C &amp; Seller Experience</span>
+  <h1>The Anatomy of a&nbsp;Listing</h1>
+  <div class="sub">One listing · start to sold</div>
+  <div class="statrow"><span><b>16</b> pieces of glass</span><span><b>2</b> kinds of knowing</span><span><b>1</b> judgment that stays human</span></div>
+  <p class="hook">&ldquo;The agent knows the market. The seller knows the object.&rdquo;</p>
+
+  <div class="print-scene">
+    <div class="see-live">
+      <div class="big">This page is alive — &sect;01 is an animated scene</div>
+      <div class="url">Watch it live: maurakrandall.github.io/anatomy-of-a-listing/</div>
+    </div>
+  </div>
+
+  <div class="thesis"><p>A listing is where two kinds of knowing meet. The judgment call at the end stays human — and teaches the agent.</p></div>
+  <p class="lede">Magical Listing's promise is a listing from a photo or a prompt. This artifact is a point of view on what makes that promise compound: an agent that carries the market's knowledge to the seller, asks for the knowledge only the seller holds, and leaves every judgment call in her hands. Told through one real listing: sixteen pieces of smoke brown glass on a kitchen counter.</p>
+  <div class="sig-line">Maura K. Randall · Product Vision Artifact · August 2026</div>
+</div>
+
+<!-- 01 · THE SCENE / PRINT PAGE 2 -->
+<section>
+  <div class="wrap">
+    <h2 class="section-eyebrow">01 · One Listing · Five Beats</h2>
+    <p class="scene-intro section-intro">What follows is the life of one listing, from a Saturday-morning photo to sold — a seller who does not know what her glasses are worth, and an agent that knows the market but not her cupboard. The item is deliberately ordinary, because the discipline is about the seller, not the category. Its anchor is the State Tracker: <span style="font-family:var(--mono);font-size:11px;letter-spacing:.06em">SOURCED BY AGENT 84% · APPROVED BY YOU 0% → 100%</span>. The second number is the plot.</p>
+    <div class="scene-shell">
+      <iframe src="https://maurakrandall.github.io/anatomy-of-a-listing-scene/" title="The Anatomy of a Listing — animated scene" loading="eager" allowfullscreen></iframe>
+    </div>
+    <div class="scene-note">The scene plays on a loop · five beats and a close · ~112 seconds</div>
+
+    <!-- PRINT FALLBACK -->
+    <div class="print-scene">
+      <div class="print-frames">
+        <figure><img src="frames/aoal-02-beat01seed.png" alt="Beat 01: her seed — one photo and one sentence, and the draft assembles"><figcaption>Beat 01 · Her Seed · The Draft Assembles</figcaption></figure>
+        <figure><img src="frames/aoal-04-beat02question.png" alt="Beat 02: the agent asks what only she can confirm — a complete service for eight"><figcaption>Beat 02 · The Question · Her Answer Moves the Price</figcaption></figure>
+        <figure><img src="frames/aoal-05-beat03marketread.png" alt="Beat 03: the market read — three intents, and her override turns offers on"><figcaption>Beat 03 · The Market Read · Her Override, Visible</figcaption></figure>
+        <figure><img src="frames/aoal-07-beat05manifest.png" alt="Beat 05: the manifest — eight decisions handled, every one hers to change"><figcaption>Beat 05 · The Manifest · Everything, Handled</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="beats">
+      <div class="beat">
+        <h3>Beats 01–02 · The Seed &amp; the Question</h3>
+        <p>She gives the agent one photo and one true sentence. The draft assembles around them — category, era, condition read — then the agent asks for what only she can give: three more shots, and the confirmation the photo can't prove. Sixteen, complete, both forms. Her answer moves the price.</p>
+        <em>It filled in what she couldn't type. She confirmed what it couldn't see.</em>
+      </div>
+      <div class="beat">
+        <h3>Beat 03 · The Market Read</h3>
+        <p>Evidence first: complete sets are scarce, partial fours and sixes are not. Then three intents on a curve — clear the cupboard, fair market, the buyer completing a set — each with its format, in plain words. She picks fair market and flips offers on. The agent's pairing was a default; her judgment adjusted it.</p>
+        <em>&ldquo;Fair market. With offers on — someone should get to ask.&rdquo;</em>
+      </div>
+      <div class="beat">
+        <h3>Beats 04–05 · The Words &amp; the Manifest</h3>
+        <p>Her sentence leads the description; the agent's title serves the search bar; the anchors underneath are drawn from listings that sold, each removable. Then the manifest: eight decisions handled — photos, condition truth, price, format, the box for sixteen pieces of glass — every one carrying a Modify.</p>
+        <em>Eight decisions she never had to research. Every one of them hers to change.</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · THE ANATOMY / PRINT PAGE 3 -->
+<section class="pov">
+  <div class="wrap">
+    <h2 class="section-eyebrow">02 · The Anatomy, Annotated</h2>
+    <p class="section-intro">Every organ of a listing has two authors and a system behind it — and the role's named platform partners each own part of the anatomy.</p>
+    <div class="anat">
+      <div class="anat-head"><span>Organ</span><span>Sourced</span><span>Confirmed</span><span>Powered by</span></div>
+      <div class="anat-row"><span class="organ">Photos</span><span class="a">shot list, clarity, close-ups — never altering the object</span><span class="s">the shots only she can take</span><span class="p">Core AI · Vision</span></div>
+      <div class="anat-row"><span class="organ">Item specifics</span><span class="a">category path, era, attribution, every field</span><span class="s">the completeness the photo can't prove</span><span class="p">Knowledge Graph</span></div>
+      <div class="anat-row"><span class="organ">Condition</span><span class="a">wear detected and named plainly</span><span class="s">the truth of the object in hand</span><span class="p">Core AI · Trust</span></div>
+      <div class="anat-row"><span class="organ">Price &amp; format</span><span class="a">sold comps, liquidity intents, format tradeoffs</span><span class="s">the intent — and the override</span><span class="p">Knowledge Graph</span></div>
+      <div class="anat-row"><span class="organ">Title &amp; description</span><span class="a">the search bar's language, from listings that sold</span><span class="s">the story that makes a buyer trust it</span><span class="p">Core AI · Search</span></div>
+      <div class="anat-row"><span class="organ">Shipping</span><span class="a">the box, the weight, the cost, calculated</span><span class="s">one tap on Modify if she knows better</span><span class="p">Shipping</span></div>
+      <div class="anat-row"><span class="organ">Returns &amp; policies</span><span class="a">matched to her seller profile</span><span class="s">hers to change</span><span class="p">Trust</span></div>
+      <div class="anat-row"><span class="organ">What flows back</span><span class="a">a richer catalog for the next unsure seller</span><span class="s">her judgment calls, as training signal</span><span class="p">The whole loop</span></div>
+    </div>
+    <h2 class="section-eyebrow" style="margin-top:34px">03 · What Makes It Scale</h2>
+    <div class="prim-grid">
+      <div class="prim"><h3>Inference over input</h3><p>Every field a seller must research is friction the agent can carry. The burden moves from her typing to the system's evidence — and the evidence is shown, not asserted.</p></div>
+      <div class="prim"><h3>The ask-back</h3><p>The agent that asks the seller a question is not failing to automate. It is reaching for the one knowledge source the market lacks: the person holding the object.</p></div>
+      <div class="prim"><h3>Defaults, not decisions</h3><p>Recommendations arrive paired and evidenced — an intent with its format, a price with its record. The seller's override is expected, visible, and teaches the agent.</p></div>
+      <div class="prim"><h3>Symmetric value</h3><p>The wear named plainly; the object never altered; and the cleaner her path, the richer the structured data she leaves behind. The listing that admits its flaws is the listing buyers believe — trust compounds one honest listing at a time.</p></div>
+    </div>
+
+    <h2 class="section-eyebrow" style="margin-top:34px">04 · Point of View</h2>
+    <div class="pov-frame">
+    <p>&ldquo;Magical&rdquo; can mean two things. The seller disappears from the loop, or the seller is elevated by it. Only one of those builds a marketplace. A first-time seller with an agent should list like a five-thousand-sale professional — graded condition, complete specifics, evidenced price — without surrendering the story, the intent, or the final click.</p>
+    <p>I have built for this marketplace before: Best Offer, launched in 2004, drove more than $1B in transactions in its first year and was patented — and it worked because it was designed around how buyers and sellers feel about negotiating. The emotion is the spec. For the past two and a half years I have practiced human-AI collaboration design daily and in public. eBay surely tests every change to a page that matters this much; the agentic era is still the moment to step back and rebuild the listing page around what earns trust — the object, the condition truth, and the human behind it.</p>
+    </div>
+    <div class="closing"><p>&ldquo;The agent brings the market. The seller brings the object. The judgment stays human — and teaches the agent.&rdquo;</p></div>
+    <div class="sigblock">
+      <div class="name">Maura K. Randall</div>
+      <div class="links">
+        <a href="https://maurakrandall.github.io" target="_blank" rel="noopener">maurakrandall.github.io</a> ·
+        <a href="https://aigal.io" target="_blank" rel="noopener">aigal.io</a> ·
+        <a href="https://thehumanailoop.com" target="_blank" rel="noopener">thehumanailoop.com</a> ·
+        <a href="https://try.thehumanailoop.com" target="_blank" rel="noopener">try.thehumanailoop.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Prepared for eBay · C2C &amp; Seller Experience · Director of Product, AI Listing · August 2026
+</footer>
+
+</body>
+</html>
