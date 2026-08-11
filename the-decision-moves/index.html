@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Decision Moves · Commerce × Community × Human–AI Collaboration · Maura K. Randall</title>
+<meta name="description" content="What happens to commerce when AI can participate in the decision? A product exploration of shopping, delegation, community intelligence, attribution, and the systems that must measure how decisions move.">
+<link rel="canonical" href="https://maurakrandall.github.io/the-decision-moves/">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Maura K. Randall">
+<meta property="og:url" content="https://maurakrandall.github.io/the-decision-moves/">
+<meta property="og:title" content="The Decision Moves · Commerce × Community × Human–AI Collaboration · Maura K. Randall">
+<meta property="og:description" content="What happens to commerce when AI can participate in the decision? A product exploration of shopping, delegation, community intelligence, attribution, and the systems that must measure how decisions move.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Decision Moves · Commerce × Community × Human–AI Collaboration · Maura K. Randall">
+<meta name="twitter:description" content="What happens to commerce when AI can participate in the decision? A product exploration of shopping, delegation, community intelligence, attribution, and the systems that must measure how decisions move.">
+<style>
+@font-face{font-family:'DM Sans';src:url('fonts/DMSans.ttf') format('truetype-variations');font-weight:100 1000;font-style:normal;font-display:swap}
+@font-face{font-family:'DM Mono';src:url('fonts/DMMono-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'DM Mono';src:url('fonts/DMMono-Medium.ttf') format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('fonts/PlayfairDisplay.ttf') format('truetype-variations');font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('fonts/PlayfairDisplay-Italic.ttf') format('truetype-variations');font-weight:400 900;font-style:italic;font-display:swap}
+</style>
+<style>
+:root{
+  --cream:#FAF6EE; --card:#FFFDF7; --ink:#29251F; --muted:#6E6659; --soft:#918779;
+  --line:rgba(42,38,32,.14); --amber:#D99E1D; --amberink:#8F5F09;
+  --teal:#0E7C74; --forest:#56724F; --petrol:#0A2E2E; --petrol2:#103A3A;
+  --red:#A55243; --display:'Playfair Display',Georgia,serif;
+  --serif:'Playfair Display',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'DM Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 26px}
+section{padding:76px 0;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:500}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--soft)}
+h1,h2,h3,p{margin-top:0}
+.display{font-family:var(--display);font-weight:400}
+.serif{font-family:var(--serif)}
+.muted{color:var(--muted)}
+.rule{height:1px;background:var(--line)}
+.gold{color:var(--amberink)}
+.teal{color:var(--teal)}
+
+/* ───────── ACT 1 / COLD OPEN ───────── */
+.cold{min-height:100vh;display:flex;align-items:center;background:var(--cream);border-top:none}
+.cold-inner{width:100%;padding:68px 0}
+.cold .eyebrow{text-align:center;display:block;margin-bottom:42px}
+.prompt{font-family:var(--display);font-size:clamp(42px,7vw,76px);line-height:1.02;text-align:center;max-width:820px;margin:0 auto 34px}
+.context-stream{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;max-width:760px;margin:0 auto 42px}
+.context-stream span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:999px;opacity:0;transform:translateY(8px);animation:rise .55s forwards}
+.context-stream span:nth-child(1){animation-delay:.2s}.context-stream span:nth-child(2){animation-delay:.6s}
+.context-stream span:nth-child(3){animation-delay:1s}.context-stream span:nth-child(4){animation-delay:1.4s}
+.context-stream span:nth-child(5){animation-delay:1.8s}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+.intel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:850px;margin:0 auto 28px}
+.intel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;min-height:132px}
+.intel h3{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 10px}
+.intel:nth-child(1) h3{color:var(--teal)} .intel:nth-child(2) h3{color:var(--forest)} .intel:nth-child(3) h3{color:var(--amberink)}
+.intel p{font-size:13px;color:var(--muted);margin:0;line-height:1.55}
+.reco{max-width:820px;margin:24px auto 0;background:var(--petrol);border-radius:16px;padding:28px 30px;color:#E7F4F2;box-shadow:0 18px 44px rgba(10,46,46,.14)}
+.reco .ai{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#73C8C1;margin-bottom:10px}
+.reco .lead{font-family:var(--serif);font-size:23px;line-height:1.35;margin-bottom:12px}
+.reco p{font-size:13.5px;color:#B8D3D0;margin:0 0 7px}
+.freeze{text-align:center;padding:60px 0 0}
+.freeze .small{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-bottom:16px}
+.freeze h2{font-family:var(--display);font-size:clamp(40px,7vw,70px);font-weight:400;margin:0}
+.scrollcue{text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);margin-top:54px}
+
+/* ───────── ACT 2 / XRAY ───────── */
+.act-head{text-align:center;max-width:760px;margin:0 auto 42px}
+.act-head .eyebrow{display:block;margin-bottom:12px}
+.act-head h2{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:400;line-height:1.06;margin-bottom:14px}
+.act-head p{color:var(--muted);font-size:15.5px}
+.era{display:grid;grid-template-columns:150px 1fr 250px;gap:22px;align-items:center;padding:26px 0;border-top:1px solid var(--line)}
+.era:last-child{border-bottom:1px solid var(--line)}
+.era-num{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.era-name{font-family:var(--display);font-size:28px;line-height:1.05;margin:4px 0 4px}
+.era-years{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--amberink)}
+.era-main .thesisline{font-family:var(--serif);font-size:20px;line-height:1.35;margin-bottom:12px}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain .chip{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 9px}
+.chain .chip.decide{border:2px solid var(--amber);color:var(--amberink)}
+.chain .arrow{color:var(--soft);font-size:10px}
+.evidence{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.evidence .label{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.evidence p{font-size:12.5px;color:var(--muted);margin:0}
+.xray-close{font-family:var(--display);font-size:clamp(26px,4vw,40px);line-height:1.18;text-align:center;max-width:760px;margin:46px auto 0}
+.xray-close em{font-style:normal;color:var(--teal)}
+
+/* ───────── ACT 3 / BREAK THE FUNNEL ───────── */
+.break{background:var(--petrol);color:#E7F4F2;border-top:none}
+.break .act-head h2{color:#F8F2E8}
+.break .act-head p{color:#AFCBC8}
+.break .act-head .eyebrow{color:#73C8C1}
+.network{max-width:820px;margin:42px auto 34px;position:relative;padding:24px}
+.node{border:1px solid rgba(231,244,242,.25);border-radius:12px;padding:14px 16px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.04)}
+.node.people{color:#D8C69A}.node.ai{color:#7EE0D6;border-color:#7EE0D6;font-size:11px;padding:22px}
+.node.merchant{color:#D8C69A}.node.human{color:#F5B24E;border-color:#F5B24E}
+.net-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:18px;align-items:center}
+.net-top,.net-bottom{grid-column:1/4;max-width:500px;margin:0 auto;width:100%}
+.net-arrow{text-align:center;color:#73C8C1;font-size:22px}
+.decideq{text-align:center;font-family:var(--display);font-size:clamp(42px,7vw,74px);margin:34px 0 8px;color:#F8F2E8}
+.breakline{text-align:center;font-family:var(--serif);font-size:22px;color:#D8E9E7;max-width:700px;margin:0 auto 18px}
+.breakline strong{color:#F5B24E;font-weight:600}
+
+/* ───────── DELEGATION / AUTHORITY ───────── */
+.delegation .act-head{margin-bottom:48px}
+.auth-row{display:grid;grid-template-columns:260px 1fr 170px;gap:22px;align-items:center;padding:22px 0;border-top:1px solid var(--line)}
+.auth-row:last-child{border-bottom:1px solid var(--line)}
+.ask{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.35}
+.scale-wrap{position:relative;height:42px}
+.scale-line{position:absolute;left:0;right:0;top:20px;height:4px;background:linear-gradient(90deg,var(--amber) 0 50%,var(--teal) 50% 100%);border-radius:3px}
+.scale-labels{position:absolute;left:0;right:0;top:28px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.marker{position:absolute;top:10px;width:22px;height:22px;border-radius:50%;background:var(--card);border:4px solid var(--ink);transform:translateX(-50%);box-shadow:0 2px 6px rgba(42,38,32,.12)}
+.marker.one{left:88%}.marker.two{left:62%}.marker.three{left:32%}
+.contract{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);text-align:right}
+.big-rule{text-align:center;font-family:var(--display);font-size:clamp(30px,5vw,48px);margin:46px auto 14px}
+.big-rule-sub{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 36px}
+.boundary{background:var(--petrol);border-radius:16px;padding:34px 28px;color:#DCEFED}
+.boundary .eyebrow{color:#73C8C1;text-align:center;display:block;margin-bottom:18px}
+.boundary .chain{justify-content:center}
+.boundary .chain .chip{background:rgba(255,255,255,.04);border-color:rgba(231,244,242,.22);color:#DCEFED}
+.boundary .chain .chip.act{border:2px solid var(--amber);color:#F5B24E}
+.boundary p{font-family:var(--serif);font-size:20px;line-height:1.45;text-align:center;max-width:720px;margin:24px auto 0}
+
+/* ───────── COMMUNITY SCENE ───────── */
+.community-scene{max-width:860px;margin:42px auto 0}
+.summary-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px}
+.summary-card .label{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:9px}
+.summary-card .statement{font-family:var(--serif);font-size:26px;line-height:1.3}
+.ci{max-width:660px;margin:56px auto 0}
+.ci-move{padding:0 0 52px}
+.ci-move+.ci-move{border-top:1px solid var(--line);padding-top:44px}
+.ci-intro{max-width:520px;margin-left:auto;margin-right:auto;text-wrap:balance}
+.ci-step{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:20px}
+.ci .statement{font-family:var(--serif);font-size:clamp(21px,2.9vw,27px);line-height:1.3}
+.ci-sources{font-family:var(--mono);font-size:11px;line-height:2.1;letter-spacing:.02em;color:var(--muted);margin:0 0 26px;max-width:600px}
+.minority{font-family:var(--serif);font-size:clamp(18px,2.4vw,21px);line-height:1.44;margin:0;padding-left:20px;border-left:2px solid var(--amber)}
+.bad-summary{color:var(--red);text-decoration:line-through;text-decoration-thickness:2px}
+.good-summary{font-family:var(--serif);font-size:clamp(19px,2.5vw,23px);line-height:1.42;margin:0}
+.ci-bridge{margin:74px auto 0;max-width:360px}
+.ci-bridge svg{display:block;width:100%;height:auto;overflow:visible}
+.ci-bridge .t{fill:none;stroke:var(--ink);stroke-width:.9;opacity:.34;stroke-linecap:round}
+.ci-bridge .t.amber{stroke:var(--amber);stroke-width:1.3;opacity:.95}
+.community-close{text-align:center;font-family:var(--display);font-size:clamp(30px,5vw,46px);line-height:1.1;max-width:860px;margin:46px auto 0}
+.community-note{text-align:center;font-size:13px;line-height:1.65;color:var(--soft);max-width:600px;margin:34px auto 0}
+
+/* ───────── CLOSE ───────── */
+.final{background:var(--cream);text-align:center;padding:100px 0 88px}
+.final .eyebrow{display:block;margin-bottom:24px}
+.final .old{font-family:var(--serif);font-size:clamp(24px,4vw,34px);color:var(--muted);margin-bottom:12px}
+.final .new{font-family:var(--display);font-size:clamp(42px,7vw,72px);line-height:1.05;max-width:820px;margin:0 auto 38px}
+.final .question{font-family:var(--serif);font-size:clamp(26px,4vw,38px);line-height:1.25;max-width:760px;margin:0 auto 40px}
+.final .thesis{font-family:var(--display);font-size:clamp(30px,5vw,48px);line-height:1.1;color:var(--petrol);max-width:760px;margin:0 auto}
+.final .sig{margin-top:54px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.final .sig a{color:var(--teal);text-decoration:none}
+
+@media(max-width:760px){
+  .intel-grid,.net-grid{grid-template-columns:1fr}
+  .net-top,.net-bottom{grid-column:auto}
+  .era{grid-template-columns:1fr;gap:10px}
+  .auth-row{grid-template-columns:1fr;gap:12px}
+  .contract{text-align:left}
+  .ci-move{padding-bottom:40px}
+  .ci-move+.ci-move{padding-top:34px}
+  .ci-bridge{margin-top:56px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ─ the shift ─ */
+.shift{background:var(--cream);text-align:center;padding:108px 0 96px}
+.shift .eyebrow{display:block;margin-bottom:30px}
+.shift .old{font-family:var(--serif);font-size:clamp(19px,2.7vw,25px);line-height:1.4;color:var(--muted);max-width:620px;margin:0 auto 16px}
+.shift .new{font-family:var(--display);font-size:clamp(34px,6vw,62px);line-height:1.06;max-width:760px;margin:0 auto}
+.shift-ill{margin:56px auto 0}
+.shift-ill svg{display:block;width:min(430px,74vw);height:auto;margin:0 auto;overflow:visible}
+.shift-ill .org{fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.shift-ill .geo{fill:none;stroke:var(--ink);stroke-width:1.3;stroke-linecap:butt;stroke-linejoin:miter}
+.shift-ill .fine{stroke-width:1.1;opacity:.42}
+.shift-ill .dia{fill:rgba(217,158,29,.16);stroke:var(--amber);stroke-width:1.8;stroke-linejoin:round}
+.shift-cue{display:inline-block;white-space:nowrap;margin-top:60px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px}
+.shift-cue:hover{color:var(--ink)}
+
+/* ─ merchant's view ─ */
+.merchant .act-head h2{max-width:640px;margin-left:auto;margin-right:auto}
+.mv{max-width:840px;margin:44px auto 0}
+.mv-origins{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.mv-card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px 20px}
+.mv-card .who{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.mv-card.human .who{color:#1E5AA8}
+.mv-card.agent .who{color:var(--teal)}
+.mv-card p{font-size:14.5px;line-height:1.5;margin:0;color:var(--ink)}
+.mv-converge{display:grid;grid-template-columns:1fr 1fr;height:34px;margin:0 0 -1px}
+.mv-converge span{border-right:1px solid var(--line)}
+.mv-converge span:last-child{border-right:none;border-left:1px solid var(--line)}
+.mv-signal{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:20px 22px;text-align:center}
+.mv-signal .who{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:12px}
+.mv-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.mv-row span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.mv-identical{display:flex;align-items:center;justify-content:center;gap:18px;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amberink);text-align:center;margin-top:26px}
+.mv-identical:before,.mv-identical:after{content:'';flex:0 0 44px;height:1px;background:rgba(217,158,29,.45)}
+.mv-readings{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.mv-reading{font-family:var(--serif);font-size:16px;line-height:1.45;color:var(--ink)}
+.mv-reading .src{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:9px}
+.mv-reading .src.human{color:#1E5AA8}.mv-reading .src.agent{color:var(--teal)}
+.mv-observers{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px;max-width:840px;margin:40px auto 0;padding-top:22px;border-top:1px solid var(--line)}
+.mv-observers .label{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.mv-observers .set{display:flex;flex-wrap:wrap;gap:7px}
+.mv-observers .set span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:5px 11px}
+.mv-pivot{font-size:15px;line-height:1.6;text-align:center;max-width:560px;margin:56px auto 0;color:var(--muted)}
+.mv-bridge{font-family:var(--display);font-size:clamp(24px,3.8vw,36px);line-height:1.14;text-align:center;max-width:780px;margin:26px auto 0}
+
+/* ─ product agenda ─ */
+.agenda{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.agenda .framing{font-family:var(--serif);font-size:clamp(17px,2.3vw,21px);line-height:1.5;text-align:center;max-width:700px;margin:0 auto 48px;color:var(--muted)}
+.terr{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:900px;margin:0 auto}
+.terr>div{border:1px solid var(--line);border-radius:14px;padding:24px 24px 26px;background:var(--cream)}
+.terr .t{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.terr .q{font-family:var(--serif);font-size:clamp(17px,2.1vw,20px);line-height:1.36;margin:0}
+.terr .support{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-top:14px;line-height:1.8}
+.terr .subq{font-size:13.5px;line-height:1.5;color:var(--muted);margin:14px 0 0;padding-top:13px;border-top:1px solid var(--line)}
+.trustline{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.1vw,19px);line-height:1.5;text-align:center;max-width:660px;margin:44px auto 0;color:var(--muted)}
+
+/* ─ final statement ─ */
+.close-final{background:var(--cream);text-align:center;padding:104px 0 88px}
+.close-final .stmt{font-family:var(--display);font-size:clamp(28px,5vw,52px);line-height:1.1;max-width:900px;margin:0 auto}
+.close-final .sig{margin-top:58px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.close-final .sig a{color:var(--teal);text-decoration:none;white-space:nowrap}
+.close-final .sig a:hover{color:var(--amberink)}
+@media(max-width:760px){
+  .mv-origins,.mv-readings,.terr{grid-template-columns:1fr}
+  .mv-identical{gap:12px}
+  .mv-observers{flex-direction:column;gap:12px}
+  .mv-converge{display:none}
+  .mv-signal{margin-top:20px}
+}
+
+/* display face weight — Playfair variable, 800 */
+.display,.prompt,.freeze h2,.act-head h2,.era-name,.xray-close,.decideq,.big-rule,.community-close,
+.final .new,.final .thesis,.shift .new,.mv-bridge,.close-final .stmt,.principle,.tuner-payoff,
+.dm-pre-reduce b,.dm-pre-q,.dm-pre-a,.dm-pre-title h1,.dm-delegation-caption.land .dm-delegation-quote,
+.dm-delegation-printclose .a{font-weight:800}
+
+/* ─ integration ─ */
+.evidence-now{max-width:600px;margin:38px auto 0}
+.principle{font-family:var(--display);font-size:clamp(19px,2.6vw,25px);line-height:1.2;text-align:center;max-width:560px;margin:34px auto 0}
+.tuner{max-width:600px;margin:34px auto 0}
+.tuner-track{position:relative;height:1px;background:var(--line);margin:0 6px}
+.tuner-dot{position:absolute;left:52%;top:50%;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:var(--card);border:2px solid var(--ink)}
+.tuner-ends{display:flex;justify-content:space-between;gap:16px;white-space:nowrap;margin-top:16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tuner-criteria{text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-top:22px}
+.tuner-payoff{font-family:var(--display);font-size:clamp(22px,3.4vw,32px);line-height:1.14;text-align:center;max-width:620px;margin:44px auto 12px}
+.tuner-sub{font-family:var(--serif);font-size:clamp(15px,2vw,19px);line-height:1.45;color:var(--muted);text-align:center;max-width:600px;margin:0 auto 44px}
+@media(max-width:520px){.tuner-ends{font-size:8.5px;letter-spacing:.1em}.tuner-criteria{letter-spacing:.12em}}
+.commseat{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--soft);margin-top:11px;line-height:1.6}
+.commseat span{color:var(--teal);letter-spacing:.16em;text-transform:uppercase;margin-right:9px}
+.handoff{text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);padding:34px 0 8px}
+.handoff a{color:var(--soft);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px}
+.handoff a:hover{color:var(--ink)}
+a{color:var(--teal)}a:hover{color:var(--amberink)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:3px}
+.dm-embed{margin:0 -26px}
+.dm-embed .dm-delegation{padding:0 26px}
+.dm-embed .dm-delegation-eyebrow,.dm-embed #dmLede,.dm-embed #dmSub{display:none}
+.dm-pre{border-bottom:1px solid var(--line)}
+
+@media print{
+  html{scroll-behavior:auto}
+  body{background:#FAF6EE}
+  section{padding:26px 0;break-inside:avoid}
+  .cold{min-height:0;background:var(--cream)}
+  .cold-inner{padding:10px 0}
+  .scrollcue,.handoff,.dm-pre-controls{display:none!important}
+  .era,.boundary,.ci-move,.ci-bridge,.summary-card,.intel-grid,.network,.tuner,.evidence-now,.principle,.mv,.mv-card,.mv-signal,.terr>div,.close-final{break-inside:avoid}
+  .agenda,.mv-signal,.terr>div{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .close-final{padding:34px 0}
+  .shift{padding:40px 0}
+  .shift-cue{border-bottom:none}
+  .tuner-payoff,.tuner-sub{break-inside:avoid}
+  .prompt,.final .new,.decideq{font-size:34px}
+  .freeze h2{font-size:30px}
+  .reco,.break,.boundary{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .final{padding:34px 0}
+}
+@media(max-width:640px){
+  .wrap{padding:0 18px}
+  section{padding:54px 0}
+  .dm-embed{margin:0 -18px}
+  .dm-embed .dm-delegation{padding:0 18px}
+}
+</style>
+<style>
+/* ══ Pre-cold open — scoped component ══ */
+.dm-pre{--dm-cream:#FAF6EE;--dm-card:#FFFDF7;--dm-ink:#29251F;--dm-muted:#6E6659;--dm-soft:#918779;--dm-line:rgba(42,38,32,.14);--dm-amber:#D99E1D;--dm-amberink:#8F5F09;--dm-teal:#0E7C74;--dm-display:'Playfair Display',Georgia,serif;--dm-serif:'Playfair Display',Georgia,serif;--dm-sans:'DM Sans',system-ui,sans-serif;--dm-mono:'DM Mono',ui-monospace,monospace;background:var(--dm-cream);color:var(--dm-ink);font-family:var(--dm-sans);box-sizing:border-box;padding:56px 26px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.dm-pre *{box-sizing:border-box}
+.dm-pre-inner{max-width:820px;margin:0 auto}
+.dm-pre-stage{position:relative;min-height:470px;display:flex;align-items:center;justify-content:center;text-align:center}
+.dm-pre-scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 620ms ease}
+.dm-pre-scene.on{opacity:1;pointer-events:auto}
+
+/* 1 — reductions */
+.dm-pre-reduce{display:flex;flex-direction:column;gap:6px}
+.dm-pre-reduce b{white-space:nowrap;font-family:var(--dm-display);font-weight:700;font-size:clamp(30px,5.4vw,52px);line-height:1.05;letter-spacing:-.01em;opacity:0;transform:translateY(7px);transition:opacity 560ms ease,transform 560ms ease}
+.dm-pre-reduce b.on{opacity:1;transform:none}
+.dm-pre-reduce b.off{opacity:.13;transform:none}
+
+/* 2 — history */
+.dm-pre-history{font-family:var(--dm-serif);font-size:clamp(17px,2.35vw,21px);line-height:1.5;max-width:660px;text-wrap:pretty}
+
+/* 3 — funnel */
+.dm-pre-funnel{width:100%;max-width:760px}
+.dm-pre-funnel-label{font-family:var(--dm-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dm-soft);margin-bottom:22px}
+.dm-pre-track{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:nowrap}
+.dm-pre-step{font-family:var(--dm-mono);font-size:clamp(9px,1.25vw,11.5px);letter-spacing:.13em;text-transform:uppercase;color:var(--dm-ink);white-space:nowrap;padding-bottom:20px;opacity:0;transition:opacity 420ms ease}
+.dm-pre-step.on{opacity:1}
+.dm-pre-gap{flex:1;min-width:14px;position:relative;padding:0 4px}
+.dm-pre-gap:before{content:'';display:block;height:1px;background:var(--dm-line);margin-top:7px}
+.dm-pre-gap i{position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:var(--dm-mono);font-style:normal;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--dm-teal);white-space:nowrap;opacity:0;transition:opacity 500ms ease}
+.dm-pre-gap.on i{opacity:.85}
+.dm-pre-foot{font-family:var(--dm-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dm-soft);margin-top:26px;opacity:0;transition:opacity 500ms ease}
+.dm-pre-foot.on{opacity:1}
+
+/* illustrations */
+.dm-pre-ill{margin-bottom:36px}
+.dm-pre-ill svg{display:block;width:min(470px,78vw);height:auto;margin:0 auto;overflow:visible}
+.dm-pre-ill .org{fill:none;stroke:var(--dm-ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.dm-pre-ill .geo{fill:none;stroke:var(--dm-ink);stroke-width:1.3;stroke-linecap:butt;stroke-linejoin:miter}
+.dm-pre-ill .fine{stroke-width:1.1;opacity:.42}
+.dm-pre-ill .h-l,.dm-pre-ill .h-r,.dm-pre-ill .tok{opacity:0;transition:opacity 1000ms ease,transform 1200ms cubic-bezier(.22,.61,.36,1)}
+.dm-pre-ill .h-l{transform:translateX(-15px)}
+.dm-pre-ill .h-r{transform:translateX(15px)}
+.dm-pre-ill .tok{transform:scale(.86);transform-origin:275px 110px;transition-delay:620ms}
+.dm-pre-scene.on .dm-pre-ill .h-l,.dm-pre-scene.on .dm-pre-ill .h-r,.dm-pre-scene.on .dm-pre-ill .tok{opacity:1;transform:none}
+.dm-pre-margin{margin-top:30px;opacity:0;transition:opacity 900ms ease 700ms}
+.dm-pre-scene.on .dm-pre-margin{opacity:.64}
+.dm-pre-margin svg{display:block;width:min(300px,64vw);height:auto;margin:0 auto}
+.dm-pre-margin .m{fill:none;stroke:var(--dm-ink);stroke-width:1.2;stroke-linecap:round}
+
+/* 4 — provocation */
+.dm-pre-q{font-family:var(--dm-display);font-weight:700;font-size:clamp(26px,4.5vw,44px);line-height:1.1;letter-spacing:-.01em;max-width:740px;text-wrap:balance}
+.dm-pre-a{white-space:nowrap;font-family:var(--dm-display);font-weight:700;font-size:clamp(30px,5.4vw,54px);line-height:1.05;letter-spacing:-.01em;margin-top:30px;opacity:0;transition:opacity 200ms linear}
+.dm-pre-a.on{opacity:1}
+
+/* 5 — title */
+.dm-pre-title h1{font-family:var(--dm-display);font-weight:700;font-size:clamp(32px,6vw,62px);line-height:1;letter-spacing:-.015em;margin:0}
+.dm-pre-title .kicker{white-space:nowrap;font-family:var(--dm-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dm-teal);margin-bottom:18px}
+.dm-pre-title .sub{font-family:var(--dm-serif);font-style:italic;font-size:clamp(15px,2vw,19px);color:var(--dm-muted);margin-top:20px}
+.dm-pre-title .by{white-space:nowrap;font-family:var(--dm-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dm-soft);margin-top:12px}
+.dm-pre-rule{width:40px;height:1px;background:rgba(217,158,29,.6);margin:22px auto 0}
+
+.dm-pre-controls{display:flex;justify-content:center;margin-top:30px}
+.dm-pre-btn{font-family:var(--dm-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dm-muted);background:var(--dm-card);border:1px solid var(--dm-line);border-radius:999px;padding:8px 16px;line-height:1.1;white-space:nowrap;cursor:pointer;transition:color 300ms ease,border-color 300ms ease}
+.dm-pre-btn:hover{color:var(--dm-amberink);border-color:var(--dm-amber)}
+
+@media print{
+  .dm-pre-stage{min-height:0;display:block}
+  .dm-pre-scene{position:static;opacity:1!important;page-break-inside:avoid;padding:22px 0;border-bottom:1px solid var(--dm-line)}
+  .dm-pre-scene:last-of-type{border-bottom:0}
+  .dm-pre-reduce b,.dm-pre-step,.dm-pre-gap i,.dm-pre-foot,.dm-pre-a{opacity:1!important;transform:none!important}
+  .dm-pre-controls{display:none}
+}
+@media(max-width:640px){
+  .dm-pre{padding:40px 16px}
+  .dm-pre-stage{min-height:340px}
+  .dm-pre-track{flex-wrap:wrap;justify-content:center;gap:8px 0}
+  .dm-pre-gap{min-width:10px}
+}
+@media(prefers-reduced-motion:reduce){.dm-pre *{transition:none!important}}
+</style>
+<style>
+/* ══ Delegation Shift — scoped component ══ */
+.dm-delegation{--dm-cream:#FAF6EE;--dm-card:#FFFDF7;--dm-ink:#29251F;--dm-muted:#6E6659;--dm-soft:#918779;--dm-line:rgba(42,38,32,.14);--dm-amber:#D99E1D;--dm-amberink:#8F5F09;--dm-teal:#0E7C74;--dm-petrol:#0A2E2E;--dm-display:'Playfair Display',Georgia,serif;--dm-serif:'Playfair Display',Georgia,serif;--dm-sans:'DM Sans',system-ui,sans-serif;--dm-mono:'DM Mono',ui-monospace,monospace;background:var(--dm-cream);color:var(--dm-ink);font-family:var(--dm-sans);line-height:1.55;box-sizing:border-box;padding:64px 26px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.dm-delegation *{box-sizing:border-box}
+.dm-delegation-inner{max-width:820px;margin:0 auto}
+.dm-delegation-eyebrow{font-family:var(--dm-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dm-teal);font-weight:500;display:block;text-align:center;margin-bottom:14px}
+.dm-delegation-lede{font-family:var(--dm-serif);font-size:clamp(18px,2.6vw,22px);line-height:1.42;text-align:center;max-width:700px;margin:0 auto 12px}
+.dm-delegation-sub{font-family:var(--dm-mono);font-size:11px;letter-spacing:.05em;color:var(--dm-soft);text-align:center;max-width:640px;margin:0 auto 40px;line-height:1.7}
+
+/* ── stage ── */
+.dm-delegation-stage{background:var(--dm-card);border:1px solid var(--dm-line);border-radius:16px;padding:26px clamp(16px,3vw,30px) 22px}
+.dm-delegation-heads{display:grid;grid-template-columns:1fr 0fr;gap:0;transition:grid-template-columns 700ms cubic-bezier(.4,0,.2,1);margin-bottom:14px}
+.dm-delegation-rows{display:grid;gap:0}
+.dm-delegation-row{display:grid;grid-template-columns:1fr 0fr;gap:0;align-items:center;border-top:1px solid var(--dm-line);transition:grid-template-columns 700ms cubic-bezier(.4,0,.2,1)}
+.dm-delegation-row:last-child{border-bottom:1px solid var(--dm-line)}
+.dm-delegation.is-split .dm-delegation-heads,.dm-delegation.is-split .dm-delegation-row{grid-template-columns:1fr 1fr}
+.dm-delegation-head{font-family:var(--dm-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dm-soft);padding:0 14px;white-space:nowrap;overflow:hidden}
+.dm-delegation-head.ai{color:var(--dm-teal);opacity:0;transition:opacity 500ms ease}
+.dm-delegation.is-split .dm-delegation-head.ai{opacity:1}
+.dm-delegation-cell{padding:11px 14px;min-height:52px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;font-size:15px;font-weight:400;color:var(--dm-ink);opacity:.5;transition:opacity 620ms ease,font-size 620ms ease,font-weight 620ms ease,letter-spacing 620ms ease,color 620ms ease}
+.dm-delegation-cell.ai{color:var(--dm-teal);border-left:1px solid var(--dm-line);opacity:0}
+.dm-delegation.is-solo .dm-delegation-cell.ai{border-left-color:transparent;padding-left:0;padding-right:0}
+.dm-delegation-tick{width:3px;height:22px;border-radius:2px;background:var(--dm-amber);margin-right:10px;flex:none;opacity:0;transition:opacity 500ms ease}
+.dm-delegation-row.decide .dm-delegation-tick{opacity:.85}
+.dm-delegation-seq{font-family:var(--dm-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dm-soft);margin-right:12px;flex:none;opacity:1;transition:opacity 500ms ease}
+.dm-delegation.is-split .dm-delegation-seq{opacity:0}
+
+/* ── caption ── */
+.dm-delegation-caption{min-height:112px;margin-top:22px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.dm-delegation-quote{font-family:var(--dm-serif);font-style:italic;font-size:clamp(19px,2.8vw,24px);line-height:1.34;max-width:640px;margin:0 0 10px;transition:opacity 500ms ease}
+.dm-delegation-msg{font-size:14px;color:var(--dm-muted);max-width:560px;margin:0;transition:opacity 500ms ease}
+.dm-delegation-caption.land{background:rgba(217,158,29,.07);border:1px solid rgba(217,158,29,.28);border-radius:13px;padding:24px 26px;margin-top:26px}
+.dm-delegation-caption.land .dm-delegation-quote{font-family:var(--dm-display);font-style:normal;font-size:clamp(22px,3vw,29px);line-height:1.14;max-width:620px;margin-bottom:16px;position:relative;padding-bottom:16px}
+.dm-delegation-caption.land .dm-delegation-quote:after{content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:44px;height:1px;background:rgba(217,158,29,.55)}
+.dm-delegation-caption.land .dm-delegation-msg{font-family:var(--dm-serif);font-style:italic;font-weight:400;font-size:clamp(14.5px,1.9vw,17px);color:var(--dm-muted);line-height:1.5;max-width:520px;margin-top:0}
+.dm-delegation-fade{opacity:0}
+
+/* ── controls ── */
+.dm-delegation-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:26px}
+.dm-delegation-tab{font-family:var(--dm-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dm-muted);background:var(--dm-card);border:1px solid var(--dm-line);border-radius:999px;padding:8px 14px;line-height:1.1;white-space:nowrap;cursor:pointer;transition:color 300ms ease,border-color 300ms ease}
+.dm-delegation-tab:hover{color:var(--dm-ink)}
+.dm-delegation-tab[aria-selected="true"]{border-color:var(--dm-amber);color:var(--dm-amberink)}
+.dm-delegation-note{font-family:var(--dm-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dm-soft);text-align:center;margin-top:14px}
+
+/* ── print stills ── */
+.dm-delegation-print,.dm-delegation-printclose{display:none}
+@media print{
+  .dm-delegation{padding:0}
+  .dm-delegation-stage,.dm-delegation-controls,.dm-delegation-note,.dm-delegation-caption{display:none}
+  .dm-delegation-print{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px;break-inside:avoid}
+  .dm-delegation-panel{border:1px solid var(--dm-line);border-radius:12px;padding:14px;background:var(--dm-card)}
+  .dm-delegation-panel h4{font-family:var(--dm-serif);font-style:italic;font-size:12.5px;line-height:1.3;margin:0 0 10px;font-weight:400}
+  .dm-delegation-panel .ph{display:grid;grid-template-columns:1fr 1fr;font-family:var(--dm-mono);font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dm-soft);border-bottom:1px solid var(--dm-line);padding-bottom:5px;margin-bottom:4px}
+  .dm-delegation-panel .ph span:last-child{color:var(--dm-teal)}
+  .dm-delegation-panel .pr{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:4px 0;border-bottom:1px solid rgba(42,38,32,.07);font-size:10px}
+  .dm-delegation-panel .pr span:last-child{color:var(--dm-teal)}
+  .dm-delegation-panel .pm{font-size:9.5px;color:var(--dm-muted);margin:9px 0 0;line-height:1.4}
+  .dm-delegation-printclose{display:block;text-align:center;margin-top:16px}
+  .dm-delegation-printclose .a{font-family:var(--dm-display);font-size:22px}
+  .dm-delegation-printclose .b{font-family:var(--dm-serif);font-size:13px;margin-top:5px}
+}
+@media(max-width:640px){
+  .dm-delegation{padding:44px 16px}
+  .dm-delegation-cell{font-size:13px;padding:10px 8px;min-height:46px}
+  .dm-delegation-head{padding:0 8px}
+  .dm-delegation-seq{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .dm-delegation *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<section class="dm-pre" id="dmPre">
+  <div class="dm-pre-inner">
+    <div class="dm-pre-stage">
+
+      <div class="dm-pre-scene" data-scene="reduce">
+        <div class="dm-pre-reduce">
+          <b>Fewer steps.</b>
+          <b>Fewer clicks.</b>
+          <b>Less friction.</b>
+        </div>
+      </div>
+
+      <div class="dm-pre-scene" data-scene="history">
+        <p class="dm-pre-history">For decades, commerce product teams have optimized how people move through the shopping funnel—scrutinizing every click, reducing friction and improving conversion at every milestone.</p>
+        <div class="dm-pre-margin" aria-hidden="true"><svg viewBox="0 0 320 56"><g class="m"><path d="M8 42H312" opacity=".38"/><path d="M8 36v12M69 37v10M130 37v10M191 37v10M252 37v10M312 36v12" opacity=".5"/><circle cx="152" cy="12" r="4.2"/><path d="M151 17l-3 13M148 30l-8 11M148 30l9 10M150 21l9 5"/></g></svg></div>
+      </div>
+
+      <div class="dm-pre-scene" data-scene="funnel">
+        <div class="dm-pre-funnel">
+          <div class="dm-pre-funnel-label">The funnel</div>
+          <div class="dm-pre-track" id="dmTrack"></div>
+          <div class="dm-pre-foot">Conversion is measured between milestones</div>
+        </div>
+      </div>
+
+      <div class="dm-pre-scene" data-scene="provocation">
+        <div class="dm-pre-ill" aria-hidden="true"><svg viewBox="0 0 520 200">
+          <g class="h-l"><g class="org">
+            <path d="M0 168C40 166 76 160 106 150"/>
+            <path d="M0 140C36 138 68 134 94 127"/>
+            <path d="M106 150C124 143 138 138 150 135"/>
+            <path d="M94 127C112 122 128 120 142 120"/>
+            <path d="M142 120c20-7 40-12 58-14 8-1 10 6 3 9-13 5-31 10-47 15"/>
+            <path d="M150 135c20-5 40-9 55-9 7 0 8 7 1 9-14 3-32 7-46 10"/>
+            <path d="M160 145c16-2 30-3 39-2 6 1 6 7-1 8-12 2-26 3-38 3"/>
+            <path d="M160 154c-16 1-34 0-48-2"/>
+            <path d="M120 134c6-14 16-24 28-28 6-2 10 4 4 9-8 6-16 13-20 21"/>
+            <g class="fine"><path d="M60 152c12 3 24 4 32 3"/><path d="M132 141c8-3 14-4 20-4"/></g>
+          </g></g>
+          <g class="h-r"><g class="geo">
+            <path d="M520 60 470 68 432 78"/>
+            <path d="M432 78 392 88 360 94 348 97 344 102 350 107 372 102 396 96"/>
+            <path d="M396 96 368 104 352 108 347 113 354 117 378 111 400 106"/>
+            <path d="M400 106 376 114 360 118 356 123 364 126 386 121 406 116"/>
+            <path d="M406 116 442 108 480 100 520 92"/>
+            <path d="M424 92 408 100 398 108"/>
+            <g class="fine"><path d="M434 80 438 88"/><path d="M470 82 478 84"/></g>
+          </g></g>
+          <g class="tok"><path d="M275 96 289 110 275 124 261 110Z" fill="rgba(217,158,29,.16)" stroke="#D99E1D" stroke-width="1.8" stroke-linejoin="round"/></g>
+        </svg></div>
+        <div class="dm-pre-q">What if the next conversion problem isn’t a click?</div>
+        <div class="dm-pre-a">It’s a handoff.</div>
+      </div>
+
+      <div class="dm-pre-scene dm-pre-title" data-scene="title">
+        <div class="kicker">A Collaboration Design Study</div>
+        <h1>The Decision Moves</h1>
+        <div class="sub">Commerce × Community × Human–AI Collaboration</div>
+        <div class="dm-pre-rule"></div>
+        <div class="by">Maura K. Randall</div>
+      </div>
+
+    </div>
+    <div class="dm-pre-controls"><button class="dm-pre-btn" type="button" id="dmReplay">Replay</button></div>
+  </div>
+</section>
+<div class="handoff"><a href="#actI">↓ Continue</a></div>
+
+<div id="actI"></div>
+<!-- ACT 1 -->
+<section class="cold">
+  <div class="wrap cold-inner">
+    <span class="eyebrow">Act I · The moment</span>
+    <h1 class="prompt">“I need a carry-on.”</h1>
+
+    <div class="context-stream">
+      <span>international travel</span>
+      <span>under $400</span>
+      <span>I overpack</span>
+      <span>hate flimsy wheels</span>
+      <span>leaving Thursday</span>
+    </div>
+
+    <div class="intel-grid">
+      <div class="intel">
+        <h3>Product intelligence</h3>
+        <p>Dimensions · price · inventory · warranty · delivery · materials</p>
+      </div>
+      <div class="intel">
+        <h3>Collective intelligence</h3>
+        <p>Owner reviews · travel communities · repair complaints · expert tests</p>
+      </div>
+      <div class="intel">
+        <h3>Personal context</h3>
+        <p>Priorities · preferences · airline habits · past purchases · tolerance for tradeoffs</p>
+      </div>
+    </div>
+
+    <div class="reco">
+      <div class="ai">AI collaborator · recommendation</div>
+      <div class="lead">I’d put Bag B first.</div>
+      <p>Bag A is lighter, but long-term owners repeatedly flag wheel failures.</p>
+      <p>Bag C has the strongest warranty, but exceeds the carry-on dimensions of two airlines you use.</p>
+      <p>Bag B is $42 above your target. Want to see why I kept it in?</p>
+    </div>
+
+    <div class="freeze">
+      <div class="small">Freeze the moment</div>
+      <h2>Who just made that decision?</h2>
+    </div>
+    <div class="scrollcue">↓ X-ray the moment</div>
+  </div>
+</section>
+
+<!-- ACT 2 -->
+<section>
+  <div class="wrap">
+    <div class="act-head">
+      <span class="eyebrow">Act II · The X-ray</span>
+      <h2>This moment is two decades in the making.</h2>
+      <p>The interface looks new. The problems underneath it are not: trust, discovery, attribution, handoffs, community intelligence, and where the decision actually lives.</p>
+    </div>
+
+    <div class="era">
+      <div>
+        <div class="era-num">Era 01</div>
+        <div class="era-name">Marketplace</div>
+        <div class="era-years">eBay · 2004–2005</div>
+      </div>
+      <div class="era-main">
+        <div class="thesisline">The interface created trust between strangers.</div>
+        <div class="chain">
+          <span class="chip">Find</span><span class="arrow">→</span><span class="chip">Inspect</span><span class="arrow">→</span>
+          <span class="chip">Compare</span><span class="arrow">→</span><span class="chip decide">Decide</span><span class="arrow">→</span><span class="chip">Transact</span>
+        </div>
+        <div class="commseat"><span>Community’s seat</span>Feedback scores made strangers legible to one another. Reputation was the product.</div>
+        
+      </div>
+      <div class="evidence">
+        <div class="label">Seen firsthand</div>
+        <p>Best Offer · negotiation inside a trust-based marketplace · $1B+ in transactions in year one.</p>
+      </div>
+    </div>
+
+    <div class="era">
+      <div>
+        <div class="era-num">Era 02</div>
+        <div class="era-name">Search</div>
+        <div class="era-years">Yahoo! Shopping · 2006–2010</div>
+      </div>
+      <div class="era-main">
+        <div class="thesisline">The interface began routing intent — and value crossed a handoff.</div>
+        <div class="chain">
+          <span class="chip">Query</span><span class="arrow">→</span><span class="chip">Compare</span><span class="arrow">→</span>
+          <span class="chip">Click</span><span class="arrow">→</span><span class="chip">Merchant</span><span class="arrow">→</span>
+          <span class="chip decide">Decide</span><span class="arrow">→</span><span class="chip">Transact</span>
+        </div>
+        <div class="commseat"><span>Community’s seat</span>Ratings and reviews became ranking inputs. The crowd started routing intent.</div>
+        
+      </div>
+      <div class="evidence">
+        <div class="label">Seen firsthand</div>
+        <p>CPC → CPA · attribution across third-party checkout · cookie stomping · SEO reshaping discovery.</p>
+      </div>
+    </div>
+
+    <div class="era">
+      <div>
+        <div class="era-num">Era 03</div>
+        <div class="era-name">Contextual commerce</div>
+        <div class="era-years">Condé Nast + consulting · 2010–2018</div>
+      </div>
+      <div class="era-main">
+        <div class="thesisline">Discovery moved away from the store. Transaction moved closer to intent.</div>
+        <div class="chain">
+          <span class="chip">Content</span><span class="arrow">→</span><span class="chip">Inspiration</span><span class="arrow">→</span>
+          <span class="chip">Product</span><span class="arrow">→</span><span class="chip decide">Decide</span><span class="arrow">→</span><span class="chip">Transact</span>
+        </div>
+        <div class="commseat"><span>Community’s seat</span>Editors, experts and creators became the discovery layer. Trust moved to people.</div>
+      </div>
+      <div class="evidence">
+        <div class="label">Seen firsthand</div>
+        <p>Early dynamic checkout experiments with Skimlinks and TwoTap: bring transaction closer to the moment of discovery.</p>
+      </div>
+    </div>
+
+    <div class="xray-close">Those interfaces moved the shopper <em>through</em> the decision.<br>The next one can enter the decision with them.</div>
+  </div>
+</section>
+
+<!-- ACT 3 -->
+<section class="break">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="eyebrow">Act III · The break</span>
+      <h2>The funnel stops being a funnel.</h2>
+      <p>The interface can interpret intent, research, compare, challenge, remember — and act.</p>
+    </div>
+
+    <div class="network">
+      <div class="net-grid">
+        <div class="node people net-top">Community · reviews · experts · people · lived experience</div>
+        <div class="net-arrow">↓</div><div class="net-arrow">↓</div><div class="net-arrow">↓</div>
+        <div class="node human">Shopper</div>
+        <div class="node ai">AI collaborator<br><span style="opacity:.65">interprets · researches · compares · challenges · remembers</span></div>
+        <div class="node merchant">Merchant ecosystem</div>
+        <div class="net-arrow">↑</div><div class="net-arrow">↑</div><div class="net-arrow">↑</div>
+        <div class="node net-bottom">Product data · price · inventory · history · preferences · context</div>
+      </div>
+    </div>
+
+    <div class="decideq">DECIDE?</div>
+    <div class="breakline"><strong>What does conversion optimization look like when the shopper isn’t the only one shopping?</strong></div>
+  </div>
+</section>
+
+<!-- ACT IV · DELEGATION -->
+<section class="delegation" id="delegation">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="eyebrow">Act IV · The delegation shift</span>
+      <h2>The steps did not disappear.</h2>
+      <p>The same six stages stay in the journey. What changes is who does what — and that allocation is different for every purchase.</p>
+    </div>
+    <div class="dm-embed">
+      <section class="dm-delegation is-solo" id="dmDelegation">
+        <div class="dm-delegation-inner">
+          <span class="dm-delegation-eyebrow">The decision moves · Delegation shift</span>
+          <p class="dm-delegation-lede" id="dmLede">For decades, commerce product teams optimized every step of a journey the human had to take.</p>
+          <p class="dm-delegation-sub" id="dmSub">Remove friction. Improve conversion.</p>
+      
+          <div class="dm-delegation-stage">
+            <div class="dm-delegation-heads">
+              <div class="dm-delegation-head">Human</div>
+              <div class="dm-delegation-head ai">AI</div>
+            </div>
+            <div class="dm-delegation-rows" id="dmRows"></div>
+            <div class="dm-delegation-caption" id="dmCaption">
+              <p class="dm-delegation-quote" id="dmQuote">The same six steps. One operator.</p>
+              <p class="dm-delegation-msg" id="dmMsg">Every step was work the person had to do.</p>
+            </div>
+          </div>
+      
+          <div class="dm-delegation-controls" id="dmTabs" role="tablist" aria-label="Delegation examples"></div>
+          <div class="dm-delegation-note" id="dmNote">Auto-playing · select an example to hold it</div>
+      
+          <div class="dm-delegation-print" id="dmPrint"></div>
+          <div class="dm-delegation-printclose">
+            <div class="a">There is no universal setting for agency.</div>
+            <div class="b">If the human no longer has to take every step, which steps should AI take — and who decides?</div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="evidence evidence-now">
+      <div class="label">Seen firsthand</div>
+      <p>Two years intentionally designing and testing Human-AI collaboration. Across models, workflows, products, prototypes and real-world scenarios.</p>
+    </div>
+
+    <div class="big-rule">The boundary moves.</div>
+    <div class="big-rule-sub">The product challenge is not to maximize autonomy. It is to help each person place the boundary intentionally — and move it as trust, context, and stakes change.</div>
+
+    <p class="principle">Human judgment determines the boundary.</p>
+
+    <div class="tuner" role="img" aria-label="A boundary marker sitting between less delegation and more delegation. Its position depends on person, task, context, stakes and trust — neither end is the goal.">
+      <div class="tuner-track"><span class="tuner-dot"></span></div>
+      <div class="tuner-ends"><span>Less delegation</span><span>More delegation</span></div>
+      <div class="tuner-criteria">Person · Task · Context · Stakes · Trust</div>
+    </div>
+    <p class="tuner-payoff">There isn’t a correct amount of AI.</p>
+    <p class="tuner-sub">There’s an appropriate allocation for this person, this task, this context and these stakes.</p>
+
+    <div class="boundary">
+      <span class="eyebrow">The decision boundary</span>
+      <div class="chain">
+        <span class="chip">Surface</span><span class="arrow">→</span>
+        <span class="chip">Narrow</span><span class="arrow">→</span>
+        <span class="chip">Recommend</span><span class="arrow">→</span>
+        <span class="chip">Prepare</span><span class="arrow">→</span>
+        <span class="chip act">Act</span>
+      </div>
+      <p>AI can travel the whole chain. The human decides where the boundary sits — what to delegate, and where to stay in the decision — and accountability stays human.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- COMMUNITY -->
+<section>
+  <div class="wrap">
+    <div class="act-head">
+      <span class="eyebrow">The third intelligence</span>
+      <h2>AI can compress the crowd. It shouldn’t erase the crowd.</h2>
+      <p class="ci-intro">Shopping has never been only shopper and merchant. Other people are part of the decision architecture too.</p>
+    </div>
+
+    <div class="ci">
+      <div class="ci-move">
+        <div class="ci-step">01 · AI compresses the crowd</div>
+        <div class="statement bad-summary">“Customers generally love this vacuum.”</div>
+      </div>
+
+      <div class="ci-move">
+        <div class="ci-step">02 · The crowd contains important differences</div>
+        <p class="ci-sources">owner reviews · long-term users · repair forums · expert tests · pet owners · community Q&amp;A · creator reviews · contradictory experience</p>
+        <p class="minority">The useful signal may be the minority one: heavy pet-hair users consistently describe a failure mode that the average rating hides.</p>
+      </div>
+
+      <div class="ci-move">
+        <div class="ci-step">03 · Good compression preserves the difference</div>
+        <div class="good-summary">“Most owners rate it highly. Heavy pet-hair users are the important exception. Here’s what they report — and why it matters for you.”</div>
+      </div>
+    </div>
+
+    <div class="ci-bridge" role="img" aria-label="Many distinct signals converging into an organized bundle while remaining separate, one of them amber.">
+      <svg viewBox="0 0 360 76" preserveAspectRatio="xMidYMid meet"><path class="t" d="M0 1.5C151 1.5 209 23.6 360 23.6"/><path class="t" d="M0 15.0C151 15.0 209 27.2 360 27.2"/><path class="t" d="M0 18.5C151 18.5 209 30.8 360 30.8"/><path class="t" d="M0 32.0C151 32.0 209 34.4 360 34.4"/><path class="t" d="M0 35.5C151 35.5 209 38.0 360 38.0"/><path class="t" d="M0 49.0C151 49.0 209 41.6 360 41.6"/><path class="t amber" d="M0 52.5C151 52.5 209 45.2 360 45.2"/><path class="t" d="M0 66.0C151 66.0 209 48.8 360 48.8"/><path class="t" d="M0 69.5C151 69.5 209 52.4 360 52.4"/></svg>
+    </div>
+
+    <div class="community-close">Collective intelligence should become more usable — not more invisible.</div>
+    <p class="community-note">Community is not an appendix to shopping. Reputation, reviews, lived experience, expertise, and dissent are trust infrastructure. The AI layer now has to surface them without flattening them into false consensus.</p>
+  </div>
+</section>
+
+<!-- THE SHIFT -->
+<section class="shift">
+  <div class="wrap">
+    <span class="eyebrow">The shift</span>
+    <div class="old">Shopping interfaces used to help us find the decision.</div>
+    <div class="new">Now the interface can help make it.</div>
+
+    <div class="shift-ill" aria-hidden="true"><svg viewBox="0 0 520 210">
+      <g class="org">
+        <path d="M12 202C56 184 96 162 128 140"/>
+        <path d="M44 208C82 190 114 168 140 148"/>
+        <path d="M128 140c22-15 46-27 68-34"/>
+        <path d="M196 106c14-5 27-8 37-8 7 0 7 7 0 9-13 2-27 6-39 11"/>
+        <path d="M184 120c14-7 28-12 39-13 7-1 8 6 1 8-13 3-26 8-37 13"/>
+        <path d="M170 134c12-9 25-16 35-19 6-2 8 5 2 8-10 5-21 11-29 17"/>
+        <path d="M140 148c4-16 12-28 22-35"/>
+        <g class="fine"><path d="M74 178c10-6 19-12 26-18"/><path d="M158 126c6-3 11-5 16-6"/></g>
+      </g>
+      <g class="geo">
+        <path d="M520 202C476 184 436 162 404 140"/>
+        <path d="M488 208C450 190 418 168 392 148"/>
+        <path d="M404 140c-22-15-46-27-68-34"/>
+        <path d="M336 106c-14-5-27-8-37-8-7 0-7 7 0 9 13 2 27 6 39 11"/>
+        <path d="M348 120c-14-7-28-12-39-13-7-1-8 6-1 8 13 3 26 8 37 13"/>
+        <path d="M362 134c-12-9-25-16-35-19-6-2-8 5-2 8 10 5 21 11 29 17"/>
+        <path d="M392 148c-4-16-12-28-22-35"/>
+        <g class="fine"><path d="M458 178c-10-6-19-12-26-18"/><path d="M374 126c-6-3-11-5-16-6"/></g>
+      </g>
+      <path class="dia" d="M266 86 282 102 266 118 250 102Z"/>
+    </svg></div>
+
+    <a class="shift-cue" href="#merchant">What does that change for the retailer? ↓</a>
+  </div>
+</section>
+
+<!-- ACT V · THE MERCHANT'S VIEW -->
+<section class="merchant" id="merchant">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="eyebrow">Act V · The merchant’s view</span>
+      <h2>The questions stay the same.<br>The evidence changes.</h2>
+    </div>
+
+    <div class="mv">
+      <div class="mv-origins">
+        <div class="mv-card human">
+          <div class="who">A person</div>
+          <p>Opens the product page. Reads the specs. Moves on.</p>
+        </div>
+        <div class="mv-card agent">
+          <div class="who">An agent, on their behalf</div>
+          <p>Opens the product page. Checks the dimensions against the alcove. Eliminates it.</p>
+        </div>
+      </div>
+      <div class="mv-converge"><span></span><span></span></div>
+      <div class="mv-signal">
+        <div class="who">What the retailer may see</div>
+        <div class="mv-row"><span>product accessed</span><span>specifications retrieved</span><span>no purchase</span></div>
+      </div>
+      <div class="mv-identical">Familiar signals · different intent</div>
+      <div class="mv-readings">
+        <div class="mv-reading"><span class="src human">Person</span>Someone considered the product and moved on.</div>
+        <div class="mv-reading"><span class="src agent">Agent</span>An agent evaluated the product against a requirement and ruled it out.</div>
+      </div>
+    </div>
+
+    <div class="mv-observers">
+      <span class="label">Everyone reconstructs from a partial set</span>
+      <span class="set"><span>AI platform</span><span>Retailer</span><span>Marketplace</span><span>Payments</span><span>Creators &amp; communities</span></span>
+    </div>
+
+    <p class="mv-pivot">Every time more of the shopping journey moved elsewhere, retailers adapted to protect the customer relationship. Agentic shopping creates the next adaptation problem.</p>
+    <p class="mv-bridge">The shopper’s intent can now generate actions the shopper never personally took.</p>
+  </div>
+</section>
+
+<!-- THE PRODUCT AGENDA -->
+<section class="agenda">
+  <div class="wrap">
+    <div class="act-head">
+      <span class="eyebrow">The product agenda</span>
+      <h2>Four questions that decide the shape of the system.</h2>
+    </div>
+    <p class="framing">These aren’t questions to answer after the system is built. They’re questions the team has to answer before the answers harden into systems.</p>
+
+    <div class="terr">
+      <div>
+        <div class="t">Progress</div>
+        <p class="q">What happens when “bot traffic” goes from noise to one of our strongest signals of customer intent?</p>
+      </div>
+      <div>
+        <div class="t">Handoff</div>
+        <p class="q">How do we know when a handoff between human and AI worked?</p>
+        <div class="support">Acting · Asking · Challenging · Returning control · Executing</div>
+      </div>
+      <div>
+        <div class="t">Attribution + observability</div>
+        <p class="q">How do we connect intent, influence and outcome when the journey moves across humans, agents and retailers?</p>
+        <p class="subq">If a review or creator changes an agent’s recommendation without the shopper ever seeing the source, how is that influence recognized — or attributed?</p>
+      </div>
+      <div>
+        <div class="t">Optimization</div>
+        <p class="q">What happens when the optimization isn’t to remove the step — but to move it?</p>
+      </div>
+    </div>
+
+    <p class="trustline">And underneath all of them: how does the system earn — and keep earning — the right to more of the journey?</p>
+  </div>
+</section>
+
+<!-- FINAL STATEMENT -->
+<section class="close-final">
+  <div class="wrap">
+    <p class="stmt">The funnel measured how humans moved. The next system has to measure how decisions move.</p>
+    <div class="sig">Commerce × Community × Human–AI Collaboration · Maura K. Randall<br><br>
+      <a href="https://maurakrandall.github.io">maurakrandall.github.io</a> ·
+      <a href="https://maurakrandall.substack.com">maurakrandall.substack.com</a> ·
+      <a href="https://aigal.io">aigal.io</a> ·
+      <a href="https://thehumanailoop.com">thehumanailoop.com</a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+(function(){
+  var STEPS=['Discover','Search','Compare','Evaluate','Decide','Transact'];
+  var track=document.getElementById('dmTrack'),stepEls=[],gapEls=[];
+  STEPS.forEach(function(s,i){
+    if(i){var g=document.createElement('div');g.className='dm-pre-gap';g.innerHTML='<i>cvr</i>';track.appendChild(g);gapEls.push(g);}
+    var e=document.createElement('div');e.className='dm-pre-step';e.textContent=s;track.appendChild(e);stepEls.push(e);
+  });
+
+  var scenes={};
+  Array.prototype.forEach.call(document.querySelectorAll('.dm-pre-scene'),function(el){scenes[el.dataset.scene]=el;});
+  var words=document.querySelectorAll('.dm-pre-reduce b');
+  var answer=document.querySelector('.dm-pre-a');
+  var foot=document.querySelector('.dm-pre-foot');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timers=[];
+  function at(ms,fn){timers.push(setTimeout(fn,ms));}
+  function only(name){for(var k in scenes)scenes[k].classList.toggle('on',k===name);}
+  function reset(){
+    timers.forEach(clearTimeout);timers=[];
+    for(var k in scenes)scenes[k].classList.remove('on');
+    words.forEach(function(w){w.classList.remove('on','off');});
+    stepEls.forEach(function(e){e.classList.remove('on');});
+    gapEls.forEach(function(g){g.classList.remove('on');});
+    foot.classList.remove('on');answer.classList.remove('on');
+  }
+
+  function run(){
+    reset();
+    var t=0;
+    only('reduce');
+    at(t+=300,function(){words[0].classList.add('on');});
+    at(t+=900,function(){words[1].classList.add('on');});
+    at(t+=900,function(){words[2].classList.add('on');});
+    at(t+=1500,function(){words[0].classList.add('off');});
+    at(t+=520,function(){words[1].classList.add('off');});
+    at(t+=520,function(){words[2].classList.add('off');});
+
+    at(t+=1100,function(){only('history');});
+    at(t+=5200,function(){
+      only('funnel');
+      stepEls.forEach(function(e,i){at(i*260,function(){e.classList.add('on');});});
+      gapEls.forEach(function(g,i){at(360+i*260,function(){g.classList.add('on');});});
+      at(2100,function(){foot.classList.add('on');});
+    });
+    at(t+=5400,function(){only('provocation');});
+    at(t+=3400,function(){answer.classList.add('on');});
+    at(t+=3200,function(){only('title');});
+  }
+
+  document.getElementById('dmReplay').addEventListener('click',run);
+
+  /* ── export hooks ── */
+  function killTransitions(){
+    var all=[].concat([].slice.call(document.querySelectorAll('.dm-pre-scene')),
+      [].slice.call(words),stepEls,gapEls,
+      [].slice.call(document.querySelectorAll('.dm-pre-gap i')),
+      [].slice.call(document.querySelectorAll('.dm-pre-ill .h-l,.dm-pre-ill .h-r,.dm-pre-ill .tok,.dm-pre-margin')),[foot,answer]);
+    all.forEach(function(el){if(el)el.style.transition='none';});
+  }
+  function pin(el,o,y){el.style.opacity=String(o);el.style.transform=y?'none':'none';}
+  function base(name){
+    reset();killTransitions();
+    for(var k in scenes)scenes[k].style.opacity=(k===name?'1':'0');
+    only(name);
+    words.forEach(function(w){pin(w,0);});
+    stepEls.forEach(function(e){pin(e,0);});
+    gapEls.forEach(function(g){pin(g.querySelector('i'),0);});
+    pin(foot,0);pin(answer,0);
+    [].forEach.call(document.querySelectorAll('.dm-pre-ill .h-l,.dm-pre-ill .h-r,.dm-pre-ill .tok'),function(e){e.style.opacity='0';e.style.transform='none';});
+    document.querySelector('.dm-pre-margin').style.opacity='0';
+    void document.getElementById('dmPre').offsetHeight;
+  }
+  function pinFunnel(){
+    stepEls.forEach(function(e){pin(e,1);});
+    gapEls.forEach(function(g){pin(g.querySelector('i'),.85);});
+    pin(foot,1);
+  }
+  window.__frame={
+    showReduce:function(){base('reduce');words.forEach(function(w){pin(w,1);});},
+    showHistory:function(){base('history');document.querySelector('.dm-pre-margin').style.opacity='.64';},
+    showFunnel:function(){base('funnel');pinFunnel();},
+    showProvocation:function(){base('provocation');pin(answer,1);[].forEach.call(document.querySelectorAll('.dm-pre-ill .h-l,.dm-pre-ill .h-r,.dm-pre-ill .tok'),function(e){e.style.opacity='1';});},
+    showTitle:function(){base('title');}
+  };
+
+  if(reduce){
+    only('title');
+    words.forEach(function(w){w.classList.add('on');});
+    stepEls.forEach(function(e){e.classList.add('on');});
+    gapEls.forEach(function(g){g.classList.add('on');});
+    foot.classList.add('on');answer.classList.add('on');
+  }else{
+    run();
+  }
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('dmDelegation');
+  var STEPS=['Discover','Search','Compare','Evaluate','Decide','Transact'];
+  var CASES=[
+    {id:'dog',tab:'Dog food',
+     quote:'“Buy my usual dog food.”',
+     msg:'I don’t need a frictionless journey. I barely need a journey.',
+     h:[.15,.15,.15,.1,2.9,.5], a:[3,3,3,3,.7,3]},
+    {id:'washer',tab:'Washing machine',
+     quote:'“Find three washing machines that fit this opening, have reliable local service, and stay under $1,200.”',
+     msg:'AI does the prework, drawing on collective intelligence. I return where my judgment matters.',
+     h:[.6,.6,1.1,1,3,1.1], a:[3,3,2.9,2,.9,1.1]},
+    {id:'wedding',tab:'Wedding',
+     quote:'“Help me find what I’m wearing to my sister’s wedding.”',
+     msg:'Not every step is friction. Sometimes looking is part of the fun.',
+     h:[3,2.5,2.6,2,3,2], a:[1.9,2.4,2,1.1,.5,1.4]}
+  ];
+  var NEUTRAL={h:[1.5,1.5,1.5,1.5,1.5,1.5],a:[1.5,1.5,1.5,1.5,1.5,1.5]};
+  var SOLO={h:[2.4,2.4,2.4,2.4,2.4,2.4],a:[0,0,0,0,0,0]};
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* rows */
+  var rows=document.getElementById('dmRows'),cells={h:[],a:[]};
+  STEPS.forEach(function(s,i){
+    var r=document.createElement('div');
+    r.className='dm-delegation-row'+(s==='Decide'?' decide':'');
+    var hc=document.createElement('div');hc.className='dm-delegation-cell';
+    hc.innerHTML='<span class="dm-delegation-tick"></span><span class="dm-delegation-seq">'+String(i+1).padStart(2,'0')+'</span><span>'+s+'</span>';
+    var ac=document.createElement('div');ac.className='dm-delegation-cell ai';
+    ac.innerHTML='<span>'+s+'</span>';
+    r.appendChild(hc);r.appendChild(ac);rows.appendChild(r);
+    cells.h.push(hc);cells.a.push(ac);
+  });
+
+  function style(el,l,isAI){
+    var t=Math.max(0,Math.min(3,l))/3;
+    el.style.opacity=(0.2+t*0.8).toFixed(3);
+    el.style.fontWeight=Math.round(300+t*400);
+    el.style.fontSize=(14+t*6).toFixed(2)+'px';
+    el.style.letterSpacing=(0.02-t*0.03).toFixed(3)+'em';
+    el.style.color=isAI?(t>.55?'#0E7C74':'#6E6659'):(t>.55?'#29251F':'#6E6659');
+  }
+  function paint(w){for(var i=0;i<STEPS.length;i++){style(cells.h[i],w.h[i],false);style(cells.a[i],w.a[i],true);}}
+
+  var cap=document.getElementById('dmCaption'),q=document.getElementById('dmQuote'),m=document.getElementById('dmMsg');
+  function caption(quote,msg,land){
+    cap.classList.add('dm-delegation-fade');
+    setTimeout(function(){
+      q.textContent=quote;m.textContent=msg;
+      cap.classList.toggle('land',!!land);
+      cap.classList.remove('dm-delegation-fade');
+    },reduce?0:420);
+  }
+
+  /* tabs */
+  var tabsEl=document.getElementById('dmTabs');
+  CASES.forEach(function(c,i){
+    var b=document.createElement('button');
+    b.className='dm-delegation-tab';b.type='button';b.setAttribute('role','tab');
+    b.setAttribute('aria-selected','false');b.textContent=c.tab;
+    b.addEventListener('click',function(){stop();show(i,true);});
+    tabsEl.appendChild(b);
+  });
+  function markTab(i){
+    Array.prototype.forEach.call(tabsEl.children,function(b,j){b.setAttribute('aria-selected',j===i?'true':'false');});
+  }
+  function show(i,manual){
+    var c=CASES[i];
+    root.classList.remove('is-solo');root.classList.add('is-split');
+    paint(c);caption(c.quote,c.msg,false);markTab(i);
+    if(manual)document.getElementById('dmNote').textContent='Paused · '+c.tab;
+  }
+
+  /* timeline */
+  var timers=[],playing=true;
+  function at(ms,fn){timers.push(setTimeout(fn,ms));}
+  function stop(){playing=false;timers.forEach(clearTimeout);timers=[];}
+  function run(){
+    playing=true;timers=[];
+    root.classList.add('is-solo');root.classList.remove('is-split');
+    markTab(-1);paint(SOLO);
+    q.textContent='The same six steps. One operator.';m.textContent='Every step was work the person had to do.';
+    cap.classList.remove('land');
+    var t=0;
+    at(t+=5200,function(){root.classList.remove('is-solo');root.classList.add('is-split');paint(NEUTRAL);
+      caption('The steps did not disappear. They got distributed.','The same activity stays visible on both sides. What changes is who does what.',false);});
+    at(t+=4200,function(){show(0);});
+    at(t+=4800,function(){show(1);});
+    at(t+=5400,function(){show(2);});
+    at(t+=4800,function(){markTab(-1);paint(NEUTRAL);
+      caption('Same steps. Different participation.','The right allocation changes by purchase, person, context, stakes, and trust.',false);});
+    at(t+=3600,function(){caption('There is no universal setting for agency.','If the human no longer has to take every step, which steps should AI take — and who decides?',true);});
+    at(t+=7000,function(){if(playing)run();});
+  }
+
+  window.__dmDelegationRun=run;window.__dmDelegationStop=stop;
+  if(reduce){
+    root.classList.remove('is-solo');root.classList.add('is-split');
+    show(1,false);
+    document.getElementById('dmNote').textContent='Select an example';
+  }else{ run(); }
+})();
+
+/* print stills */
+(function(){
+  var P=[
+    {q:'“Buy my usual dog food.”',m:'I don’t need a frictionless journey. I barely need a journey.',h:[.15,.15,.15,.1,2.9,.5],a:[3,3,3,3,.7,3]},
+    {q:'“Find three washing machines under $1,200.”',m:'AI does the prework, drawing on collective intelligence. I return where my judgment matters.',h:[.6,.6,1.1,1,3,1.1],a:[3,3,2.9,2,.9,1.1]},
+    {q:'“Help me find what I’m wearing to my sister’s wedding.”',m:'Not every step is friction. Sometimes looking is part of the fun.',h:[3,2.5,2.6,2,3,2],a:[1.9,2.4,2,1.1,.5,1.4]}
+  ],S=['Discover','Search','Compare','Evaluate','Decide','Transact'],out='';
+  function st(l){var t=l/3;return 'opacity:'+(0.28+t*0.72).toFixed(2)+';font-weight:'+Math.round(300+t*400)+';font-size:'+(9+t*2.6).toFixed(1)+'px';}
+  P.forEach(function(p){
+    var r='';
+    for(var i=0;i<S.length;i++){r+='<div class="pr"><span style="'+st(p.h[i])+'">'+S[i]+'</span><span style="'+st(p.a[i])+'">'+S[i]+'</span></div>';}
+    out+='<div class="dm-delegation-panel"><h4>'+p.q+'</h4><div class="ph"><span>Human</span><span>AI</span></div>'+r+'<p class="pm">'+p.m+'</p></div>';
+  });
+  document.getElementById('dmPrint').innerHTML=out;
+})();
+</script>
+<script>
+/* start the delegation timeline when it first enters view, not on page load */
+(function(){
+  var el=document.getElementById('dmDelegation');
+  if(!el||!window.__dmDelegationRun)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  window.__dmDelegationStop&&window.__dmDelegationStop();
+  var started=false;
+  if(!('IntersectionObserver' in window)){window.__dmDelegationRun();return;}
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(!e.isIntersecting||started)return;
+      started=true;io.disconnect();
+      /* respect a reader who already picked an example */
+      if(!el.querySelector('.dm-delegation-tab[aria-selected="true"]'))window.__dmDelegationRun();
+    });
+  },{threshold:.25});
+  io.observe(el);
+})();
+</script>
+</body>
+</html>
