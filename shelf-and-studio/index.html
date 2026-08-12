@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Shelf and the Studio · Maura K. Randall</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Maura K. Randall">
+<meta name="description" content="Every customer experience is downstream of the system that creates it. A commerce systems study of the storefront, the content studio behind it, and how AI changes the loop between them.">
+<link rel="canonical" href="https://maurakrandall.github.io/shelf-and-studio/">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Maura K. Randall">
+<meta property="og:title" content="The Shelf and the Studio · Maura K. Randall">
+<meta property="og:description" content="Every customer experience is downstream of the system that creates it. A commerce systems study of the storefront, the content studio behind it, and how AI changes the loop between them.">
+<meta property="og:url" content="https://maurakrandall.github.io/shelf-and-studio/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Shelf and the Studio · Maura K. Randall">
+<meta name="twitter:description" content="Every customer experience is downstream of the system that creates it. A commerce systems study of the storefront, the content studio behind it, and how AI changes the loop between them.">
+<style>
+@font-face{font-family:'DM Sans';src:url('fonts/DMSans.ttf') format('truetype-variations');font-weight:100 1000;font-style:normal;font-display:swap}
+@font-face{font-family:'DM Mono';src:url('fonts/DMMono-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'DM Mono';src:url('fonts/DMMono-Medium.ttf') format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('fonts/PlayfairDisplay.ttf') format('truetype-variations');font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('fonts/PlayfairDisplay-Italic.ttf') format('truetype-variations');font-weight:400 900;font-style:italic;font-display:swap}
+</style>
+<style>
+:root{--cream:#FAF6EE;--card:#FFFDF7;--ink:#29251F;--muted:#6E6659;--soft:#918779;--line:rgba(42,38,32,.14);--amber:#D99E1D;--amberink:#8F5F09;--teal:#0E7C74;--blue:#1E5AA8;--petrol:#0A2E2E;
+--display:'Playfair Display',Georgia,serif;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+@page{size:Letter portrait;margin:0}
+html,body{background:var(--cream);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--sans);color:var(--ink);font-size:11px;line-height:1.5}
+.page{height:10.98in;padding:.58in .62in .5in;display:flex;flex-direction:column;page-break-after:always;position:relative;background:var(--cream)}
+.page:last-child{page-break-after:auto}
+.eyebrow{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);display:block}
+h2{font-family:var(--display);font-weight:700;font-size:27px;line-height:1.08;margin:9px 0 0;letter-spacing:-.01em}
+.lead{font-size:10.8px;line-height:1.55;color:var(--muted);margin:9px 0 0;max-width:5.4in}
+.pfoot{position:absolute;left:.62in;right:.62in;bottom:.34in;display:flex;justify-content:space-between;font-family:var(--mono);font-size:6.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.pfoot a{color:var(--soft);text-decoration:none}
+
+/* cover */
+.cover{justify-content:center;text-align:center}
+.cover .kick{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+.cover h1{font-family:var(--display);font-weight:700;font-size:54px;line-height:1;margin:18px 0 0;letter-spacing:-.015em}
+.cover .sub{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--muted);margin-top:16px}
+.cover .rule{width:44px;height:1px;background:rgba(217,158,29,.6);margin:22px auto}
+.cover .by{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.thesis{max-width:4.6in;margin:34px auto 0}
+.thesis p{font-family:var(--display);font-size:21px;line-height:1.25}
+.cta{margin:38px auto 0;width:4.9in;background:var(--card);border:1px solid rgba(217,158,29,.42);border-radius:12px;padding:15px 20px 16px}
+.cta .t{font-family:var(--mono);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--amberink)}
+.cta .u{margin-top:9px;font-family:var(--mono);font-size:10px}
+.cta .u a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(14,124,116,.4);padding-bottom:2px}
+
+/* shelf */
+.jobs{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.jobs span{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);border-radius:99px;padding:5px 11px;color:var(--muted);background:var(--card)}
+.big{font-family:var(--display);font-size:25px;line-height:1.22;text-align:center;margin:26px auto 0;max-width:5.2in}
+.land{margin-top:30px}
+.slot{margin-top:auto;min-height:1.1in}
+.dw{display:block;width:100%;height:auto}
+.slot[data-visual="A"]{min-height:0;padding-top:6px}
+.slotc{margin:18px 0 4px;flex-shrink:0}
+
+/* store / studio */
+.ss{margin-top:22px}
+.ssrow{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px 17px}
+.ssrow .h{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
+.ssrow.store .h{color:var(--amberink)}
+.ssrow.studio .h{color:var(--teal)}
+.ssrow p{font-size:10.4px;line-height:1.5;color:var(--muted)}
+.ssarrow{text-align:center;font-size:15px;color:var(--soft);margin:7px 0;letter-spacing:.3em}
+
+/* firsthand */
+.fh{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:22px}
+.fh>div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+.fh .w{font-family:var(--mono);font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);margin-bottom:4px}
+.fh .n{font-family:var(--serif);font-size:14px;line-height:1.15;margin-bottom:7px}
+.fh p{font-size:9.4px;line-height:1.5;color:var(--muted)}
+
+/* loop */
+.loop{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:5px;margin-top:24px}
+.st{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:9px 8px;text-align:center;min-width:.78in}
+.st .s{font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:5px}
+.st .m{font-family:var(--mono);font-size:6.5px;letter-spacing:.08em;text-transform:uppercase;line-height:1.5}
+.st.ai{border-color:rgba(14,124,116,.5)} .st.ai .s{color:var(--teal)} .st.ai .m{color:var(--teal)}
+.st.hu{border-color:rgba(217,158,29,.6)} .st.hu .s{color:var(--amberink)} .st.hu .m{color:var(--amberink)}
+.st.both .s{color:var(--ink)} .st.both .m{color:var(--soft)}
+.legend{display:flex;justify-content:center;gap:20px;font-family:var(--mono);font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-top:12px}
+.legend b{font-weight:400}
+.legend .a{color:var(--teal)} .legend .h{color:var(--amberink)}
+
+/* boundary ladder */
+.lad{margin-top:20px}
+.lrow{display:grid;grid-template-columns:1.75in 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line);align-items:center}
+.lrow .what{font-size:10.2px;font-weight:500}
+.lrow .bar{position:relative;height:15px}
+.lrow .track{position:absolute;left:0;right:0;top:7px;height:1px;background:var(--line)}
+.lrow .dot{position:absolute;top:2px;width:11px;height:11px;border-radius:50%;background:var(--card);border:2px solid var(--ink);margin-left:-5.5px}
+.lends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin:6px 0 0 calc(1.75in + 14px)}
+
+/* two readers */
+.tr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.tr>div{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:15px 17px}
+.tr .w{font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.tr.a .w{color:var(--blue)}
+.tr>div.human .w{color:var(--amberink)} .tr>div.agent .w{color:var(--teal)}
+.tr .needs{font-family:var(--mono);font-size:8.5px;line-height:2;color:var(--muted)}
+
+/* measures */
+.mz{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.mz>div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 13px}
+.mz .t{font-family:var(--mono);font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:5px}
+.mz p{font-size:9.4px;line-height:1.45;color:var(--muted)}
+
+/* petrol + final */
+.pet{background:var(--petrol);border-radius:13px;padding:26px 24px;text-align:center;margin-top:34px}
+.sechead{margin-top:56px}
+.pet .e{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#7AABAB}
+.pet .q{font-family:var(--display);font-size:23px;line-height:1.18;color:#F2EDE2;margin-top:11px;max-width:4.9in;margin-left:auto;margin-right:auto}
+.final{margin-top:34px;text-align:center;padding-bottom:10px}
+.final .st2{font-family:var(--display);font-size:30px;line-height:1.18;max-width:5.4in;margin:0 auto}
+.close{justify-content:center;text-align:center}
+.bookend{font-family:var(--serif);font-style:italic;font-size:15.5px;line-height:1.45;color:var(--muted);max-width:4.4in;margin:0 auto}
+.bookend .k{display:block;font-family:var(--mono);font-style:normal;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.crule{width:44px;height:1px;background:rgba(217,158,29,.6);margin:28px auto 0}
+.final .sg{font-family:var(--mono);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-top:34px;line-height:2}
+.final .sg a{color:var(--teal);text-decoration:none}
+
+@media screen{
+  body{background:#f0efec;padding:28px 16px}
+  .page{width:8.5in;height:auto;min-height:0;margin:0 auto 22px;padding:.58in .62in .46in;box-shadow:0 2px 14px rgba(20,20,19,.18);border-radius:4px}
+  .pfoot{position:static;margin-top:34px;padding-top:12px;border-top:1px solid var(--line)}
+  .slot{margin-top:30px;min-height:0}
+  .cover{padding-top:1.15in;padding-bottom:1.15in}
+  .close{padding-top:1.5in;padding-bottom:1.5in}
+}
+@media screen and (max-width:9in){
+  body{padding:16px 10px}
+  .page{width:100%;max-width:8.5in;padding:34px 26px 46px}
+  .pfoot{margin-top:26px;padding-top:14px}
+  .cover,.close{padding-top:52px;padding-bottom:52px}
+}
+@media screen and (max-width:640px){
+  .page{padding:26px 18px 34px}
+  .cover h1{font-size:38px}
+  .cover .thesis p{font-size:18px}
+  .cta{width:100%}
+  h2{font-size:22px}
+  .big,.final .st2,.pet .q{font-size:20px}
+  .fh,.mz,.tr{grid-template-columns:1fr}
+  .lrow{grid-template-columns:1.35in 1fr;gap:10px}
+  .lends{margin-left:calc(1.35in + 10px)}
+  .loop{gap:4px}
+  .st{min-width:.72in;flex:1 1 auto}
+}
+</style>
+</head>
+<body>
+
+<!-- 1 · COVER -->
+<section class="page cover">
+  <div class="kick">A Commerce Systems Study</div>
+  <h1>The Shelf and the Studio</h1>
+  <div class="sub">Storefront × Authoring Platform × Human–AI Collaboration</div>
+  <div class="rule"></div>
+  <div class="by">Maura K. Randall</div>
+  <div class="thesis"><p>Every customer experience is downstream of the system that creates it.</p></div>
+  <div class="cta">
+    <div class="t">Also live</div>
+    <div class="u"><a href="https://maurakrandall.github.io/shelf-and-studio/">maurakrandall.github.io/shelf-and-studio/</a></div>
+  </div>
+</section>
+
+<!-- 2 · THE SHELF + THE STUDIO -->
+<section class="page">
+  <span class="eyebrow">One · The shelf</span>
+  <h2>The page is the shelf.</h2>
+  <p class="lead">A first-party store carries few products and an enormous content surface. Nothing on the page is neutral information. Every element is doing a job.</p>
+  <div class="jobs"><span>Merchandising</span><span>Education</span><span>Comparison</span><span>Persuasion</span><span>Brand</span><span>Promotion</span><span>Conversion</span></div>
+
+  <span class="eyebrow" style="margin-top:38px">Two · The studio</span>
+  <h2>Every experience has a system behind it.</h2>
+  <div class="ss">
+    <div class="ssrow store"><div class="h">The store</div><p>Homepage, navigation, product pages, promotional messaging. What the customer experiences.</p></div>
+    <div class="ssarrow">↕</div>
+    <div class="ssrow studio"><div class="h">The studio</div><p>Briefing, authoring, review, publishing, scheduling, localization, measurement. What the organization creates, governs and changes.</p></div>
+  </div>
+  <div class="fh">
+    <div><div class="w">Seen firsthand</div><div class="n">Yahoo! Shine</div><p>Launched the destination and the authoring tools behind it, built separately for editors, for content producers, and for community members.</p></div>
+    <div><div class="w">Seen firsthand</div><div class="n">Condé Nast</div><p>Launched both halves from zero: the content and affiliate shopping experience, and the editorial authoring tools editors published through.</p></div>
+    <div><div class="w">Seen firsthand</div><div class="n">Atlassian</div><p>Authoring for every kind of author at 78M+ MAU: executives publishing to the community, members creating articles and guides, moderation, help content.</p></div>
+  </div>
+  <div class="big land">The store changes at the speed of the studio.</div>
+  <div class="slot" data-visual="A"><svg class="dw" viewBox="0 0 1040 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cross-section: the storefront above the line, the studio that produces it below.">
+<g fill="none" stroke="#29251F" stroke-linecap="round" stroke-linejoin="round">
+<path d="M150 186 V34 H890 V186" stroke-width="1.5"/>
+<rect x="168" y="48" width="302" height="60" rx="2" stroke-width="1.6"/>
+<circle cx="206" cy="68" r="7" stroke-width="1.3"/>
+<path d="M186 100 L232 74 L262 92 L296 62 L352 100" stroke-width="1.3" opacity=".55"/>
+<g stroke-width="1.3" opacity=".45"><path d="M492 58 H862"/><path d="M492 74 H802"/><path d="M492 90 H842"/></g>
+<rect x="492" y="102" width="96" height="22" rx="11" stroke-width="1.5"/>
+<rect x="168" y="118" width="704" height="16" rx="2" stroke-width="1.3" opacity=".5"/>
+<g stroke-width="1.4"><rect x="168" y="144" width="164" height="40" rx="2"/><rect x="348" y="144" width="164" height="40" rx="2"/><rect x="528" y="144" width="164" height="40" rx="2"/></g>
+<g stroke-width="1.2" opacity=".4"><path d="M182 174 H252"/><path d="M362 174 H432"/><path d="M542 174 H612"/><path d="M722 174 H792"/></g>
+<rect x="708" y="144" width="164" height="40" rx="2" fill="#D99E1D" fill-opacity=".16" stroke="#D99E1D" stroke-width="1.6"/>
+<path d="M20 196 H1020" stroke-width="1.7"/>
+<g stroke-width="1.1" opacity=".28" stroke-dasharray="3 4"><path d="M130 250 V202"/><path d="M310 250 V202"/><path d="M490 250 V202"/><path d="M670 250 V202"/></g>
+<g stroke-width="1.5"><rect x="60" y="250" width="140" height="44" rx="6"/><rect x="240" y="250" width="140" height="44" rx="6"/><rect x="420" y="250" width="140" height="44" rx="6"/><rect x="600" y="250" width="140" height="44" rx="6"/><rect x="780" y="250" width="140" height="44" rx="6"/></g>
+<g stroke-width="1.3" opacity=".5"><path d="M200 272 H240"/><path d="M380 272 H420"/><path d="M560 272 H600"/><path d="M740 272 H780"/></g>
+<g stroke="#D99E1D" stroke-width="1.5" opacity=".6"><path d="M310 294 V320"/><path d="M490 294 V320"/><path d="M670 294 V320"/></g>
+<path d="M130 294 V320 H850 V184" stroke="#D99E1D" stroke-width="1.9"/>
+<g fill="#D99E1D" stroke="none"><circle cx="130" cy="320" r="3"/><circle cx="310" cy="320" r="3"/><circle cx="490" cy="320" r="3"/><circle cx="670" cy="320" r="3"/><circle cx="850" cy="320" r="3"/></g>
+</g>
+<g font-family="'DM Mono',ui-monospace,monospace" font-size="10.5" letter-spacing="1.6" fill="#29251F">
+<text x="130" y="277" text-anchor="middle">BRIEF</text><text x="310" y="277" text-anchor="middle">AUTHOR</text><text x="490" y="277" text-anchor="middle">REVIEW</text><text x="670" y="277" text-anchor="middle">PUBLISH</text><text x="850" y="277" text-anchor="middle">LOCALIZE</text>
+</g>
+<g font-family="'DM Mono',ui-monospace,monospace" font-size="9" letter-spacing="2.4" fill="#918779">
+<text x="22" y="182">THE STORE</text><text x="22" y="220">THE STUDIO</text>
+</g>
+</svg></div>
+  <div class="pfoot"><span>The Shelf and the Studio · Maura K. Randall</span><span>2</span></div>
+</section>
+
+<!-- 3 · AI ENTERS THE LOOP + THE BOUNDARY -->
+<section class="page">
+  <span class="eyebrow">Three · The loop</span>
+  <h2>AI doesn't enter the store. It enters the studio.</h2>
+  <p class="lead">Follow one launch page from brief to published. AI changes the work at nearly every step, but it does not change it the same way twice.</p>
+  <div class="loop">
+    <div class="st both"><span class="s">Brief</span><span class="m">Human sets<br>the intent</span></div>
+    <div class="st ai"><span class="s">Create</span><span class="m">Draft, variants,<br>imagery</span></div>
+    <div class="st ai"><span class="s">Adapt</span><span class="m">Formats,<br>surfaces</span></div>
+    <div class="st ai"><span class="s">Localize</span><span class="m">Scale, then<br>nuance</span></div>
+    <div class="st hu"><span class="s">Review</span><span class="m">Claims, brand,<br>culture</span></div>
+    <div class="st both"><span class="s">Publish</span><span class="m">Governed,<br>scheduled</span></div>
+    <div class="st ai"><span class="s">Measure</span><span class="m">Signal at<br>volume</span></div>
+    <div class="st hu"><span class="s">Learn</span><span class="m">What it<br>means</span></div>
+  </div>
+  <div class="legend"><span class="a"><b>■</b> AI carries more</span><span class="h"><b>■</b> Human carries more</span><span><b>■</b> Genuinely shared</span></div>
+  <div class="big" style="margin-top:52px">Some work gets faster. Some changes hands.<br>Some becomes more human, not less.</div>
+
+  <span class="eyebrow" style="margin-top:62px">Four · The boundary</span>
+  <h2>There isn't a correct amount of AI.</h2>
+  <p class="lead">The same content operation needs a different setting for every kind of content it produces.</p>
+  <div class="lad">
+    <div class="lrow"><span class="what">A specification table</span><span class="bar"><span class="track"></span><span class="dot" style="left:88%"></span></span></div>
+    <div class="lrow"><span class="what">A product description</span><span class="bar"><span class="track"></span><span class="dot" style="left:66%"></span></span></div>
+    <div class="lrow"><span class="what">A promotional claim</span><span class="bar"><span class="track"></span><span class="dot" style="left:34%"></span></span></div>
+    <div class="lrow"><span class="what">A market-specific campaign</span><span class="bar"><span class="track"></span><span class="dot" style="left:26%"></span></span></div>
+    <div class="lrow" style="border-bottom:1px solid var(--line)"><span class="what">An image of the physical object</span><span class="bar"><span class="track"></span><span class="dot" style="left:18%"></span></span></div>
+  </div>
+  <div class="lends"><span>Human judgment</span><span>AI participation</span></div>
+  <p class="lead" style="text-align:center;max-width:4.7in;margin:22px auto 0"><b style="color:var(--ink)">There's an appropriate allocation for this content, this market, this moment and these stakes.</b> The system has to make that boundary visible and adjustable, not fixed in a template.</p>
+  <div class="slot" data-visual="B"></div>
+  <div class="pfoot"><span>The Shelf and the Studio · Maura K. Randall</span><span>3</span></div>
+</section>
+
+<!-- 4 · TWO READERS + MEASURES + CLOSE -->
+<section class="page">
+  <span class="eyebrow">Five · Two readers</span>
+  <h2>The page now has two readers.</h2>
+  <p class="lead">The studio has always produced a page for a person. Increasingly it produces a surface read by both a shopper and an agent shopping on their behalf.</p>
+  <div class="tr">
+    <div class="human"><div class="w">A human shopper</div><div class="needs">understand · compare · trust<br>desire · decide</div></div>
+    <div class="agent"><div class="w">An AI agent, on their behalf</div><div class="needs">accurate · structured · current<br>machine-legible · reason-over-able</div></div>
+  </div>
+  <div class="slotc" data-visual="C"><svg class="dw" viewBox="0 0 1040 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The same product page read two ways: a shopper's attention and an agent's parse.">
+<g fill="none" stroke="#29251F" stroke-linecap="round" stroke-linejoin="round">
+<rect x="70" y="46" width="380" height="224" rx="3" stroke-width="1.5"/>
+<g opacity="1"><rect x="92" y="70" width="148" height="96" rx="2" stroke-width="2.1"/><circle cx="120" cy="98" r="7" stroke-width="1.3"/><path d="M104 152 L142 118 L166 136 L194 106 L228 152" stroke-width="1.3"/></g>
+<rect x="256" y="72" width="154" height="14" rx="2" fill="#D99E1D" fill-opacity=".16" stroke="#D99E1D" stroke-width="1.6"/>
+<rect x="256" y="100" width="68" height="18" rx="2" fill="#D99E1D" fill-opacity=".16" stroke="#D99E1D" stroke-width="1.6"/>
+<rect x="256" y="130" width="112" height="8" rx="4" stroke-width="1.9" opacity="1"/>
+<path d="M92 180 H428" stroke-width="1.1" opacity=".3"/>
+<g stroke-width=".9" opacity=".25">
+<rect x="92" y="190" width="96" height="9" rx="2"/><rect x="204" y="190" width="224" height="9" rx="2"/>
+<rect x="92" y="208" width="96" height="9" rx="2"/><rect x="204" y="208" width="224" height="9" rx="2"/>
+<rect x="92" y="226" width="96" height="9" rx="2"/><rect x="204" y="226" width="224" height="9" rx="2"/>
+<rect x="92" y="244" width="96" height="9" rx="2"/><rect x="204" y="244" width="224" height="9" rx="2"/>
+</g>
+<path d="M166 118 C 220 152 250 142 290 112 S 328 122 314 138" stroke-width="1.2" stroke-dasharray="2 5" opacity=".55"/>
+</g>
+<g fill="none" stroke="#29251F" stroke-linecap="round" stroke-linejoin="round">
+<rect x="590" y="46" width="380" height="224" rx="3" stroke-width="1.5"/>
+<g opacity=".2"><rect x="612" y="70" width="148" height="96" rx="2" stroke-width="1"/><circle cx="640" cy="98" r="7" stroke-width="1.3"/><path d="M624 152 L662 118 L686 136 L714 106 L748 152" stroke-width="1.3"/></g>
+<rect x="776" y="72" width="154" height="14" rx="2" fill="#D99E1D" fill-opacity=".16" stroke="#D99E1D" stroke-width="1.6"/>
+<rect x="776" y="100" width="68" height="18" rx="2" fill="#D99E1D" fill-opacity=".16" stroke="#D99E1D" stroke-width="1.6"/>
+<rect x="776" y="130" width="112" height="8" rx="4" stroke-width="1" opacity=".3"/>
+<path d="M612 180 H948" stroke-width="1.1" opacity=".3"/>
+<g stroke-width="1.8" opacity="1">
+<rect x="612" y="190" width="96" height="9" rx="2"/><rect x="724" y="190" width="224" height="9" rx="2"/>
+<rect x="612" y="208" width="96" height="9" rx="2"/><rect x="724" y="208" width="224" height="9" rx="2"/>
+<rect x="612" y="226" width="96" height="9" rx="2"/><rect x="724" y="226" width="224" height="9" rx="2"/>
+<rect x="612" y="244" width="96" height="9" rx="2"/><rect x="724" y="244" width="224" height="9" rx="2"/>
+</g>
+<g stroke-width="1.4" opacity=".8"><path d="M710 190 l6 4 -6 4"/><path d="M710 208 l6 4 -6 4"/><path d="M710 226 l6 4 -6 4"/><path d="M710 244 l6 4 -6 4"/></g>
+<g fill="#29251F" fill-opacity=".07" stroke="none"><rect x="724" y="190" width="224" height="9" rx="2"/><rect x="724" y="208" width="224" height="9" rx="2"/><rect x="724" y="226" width="224" height="9" rx="2"/><rect x="724" y="244" width="224" height="9" rx="2"/></g>
+</g>
+<g stroke="#D99E1D" stroke-width="1.4" stroke-dasharray="3 5" opacity=".65" fill="none"><path d="M450 79 H590"/><path d="M450 109 H590"/></g>
+<g font-family="'DM Mono',ui-monospace,monospace" font-size="10" letter-spacing="2.2" fill="#918779">
+<text x="70" y="30">A HUMAN READS</text><text x="590" y="30">AN AGENT PARSES</text>
+<text x="520" y="152" text-anchor="middle" font-size="9" letter-spacing="1.6" fill="#8F5F09">BOTH NEED THESE</text>
+</g>
+</svg></div>
+  <div class="pet">
+    <div class="e">The next authoring problem</div>
+    <div class="q">How do you create once for an experience that has two readers who need different things from the same page?</div>
+  </div>
+  <span class="eyebrow sechead">The outcome</span>
+  <h2>The goal isn't more content.</h2>
+  <p class="lead">A faster studio that produces a worse store is not a win. Measure across the whole loop, not the half of it that got quicker.</p>
+  <div class="mz">
+    <div><div class="t">Creation</div><p>Speed, effort, throughput per launch</p></div>
+    <div><div class="t">Quality</div><p>Accuracy, brand fidelity, localization</p></div>
+    <div><div class="t">Experience</div><p>Relevance, clarity, usefulness</p></div>
+    <div><div class="t">Commerce</div><p>Engagement, conversion, outcome</p></div>
+  </div>
+  <div class="pfoot"><span>The Shelf and the Studio · Maura K. Randall</span><span>4</span></div>
+</section>
+
+<!-- 5 · CLOSE -->
+<section class="page close">
+  <div class="bookend"><span class="k">Where this started</span>Every customer experience is downstream of the system that creates it.</div>
+  <div class="crule"></div>
+  <div class="final">
+    <div class="st2">Don't measure how much the studio produces. Measure what the store becomes.</div>
+    <div class="sg">Storefront × Authoring Platform × Human–AI Collaboration · Maura K. Randall<br>
+      <a href="https://maurakrandall.github.io/">maurakrandall.github.io</a> · <a href="https://maurakrandall.substack.com">maurakrandall.substack.com</a> · <a href="https://aigal.io">aigal.io</a> · <a href="https://thehumanailoop.com">thehumanailoop.com</a></div>
+  </div>
+  <div class="pfoot"><span>The Shelf and the Studio · Maura K. Randall</span><span>5</span></div>
+</section>
+
+</body>
+</html>
