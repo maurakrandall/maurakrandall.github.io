@@ -3,11 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Triad-in-Slack · Human AI Loop</title>
+<title>The Triad in Slack · Human AI Loop</title>
+<meta name="description" content="A working simulation of a sprint planning session run by a mixed human and AI team — three members with distinct roles, a shared-state protocol, and explicit handoffs. What AI as a teammate actually looks like.">
+<meta name="author" content="Maura K. Randall">
+<link rel="canonical" href="https://maurakrandall.github.io/triad-in-slack/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Maura K. Randall">
+<meta property="og:title" content="The Triad in Slack · Human AI Loop">
+<meta property="og:description" content="What does it look like when AI is a teammate? A sprint planning session with distinct roles, visible shared state, and explicit handoffs.">
+<meta property="og:url" content="https://maurakrandall.github.io/triad-in-slack/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Triad in Slack · Human AI Loop">
+<meta name="twitter:description" content="What does it look like when AI is a teammate? A sprint planning session with distinct roles, visible shared state, and explicit handoffs.">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 :root{
   --bg:#0A2E2E;
   --bg-deep:#061C1C;
@@ -29,12 +39,9 @@
   --sidebar-w:220px;
   --state-w:260px;
 }
-
-html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;overflow:hidden}
-
+html,body{min-height:100%;background:var(--bg-deep);color:var(--text-1);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5}
 /* LAYOUT */
 .workspace{display:grid;grid-template-columns:var(--sidebar-w) minmax(0,1fr) minmax(0,var(--state-w));height:100vh;overflow:hidden}
-
 /* SIDEBAR */
 .sidebar{background:var(--bg-deep);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
 .ws-name{padding:16px 14px 13px;border-bottom:1px solid var(--border)}
@@ -49,7 +56,6 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .ch-item.active{background:var(--accent-dim)}
 .ch-hash{font-size:14px;font-weight:300;opacity:.5;width:13px;text-align:center;flex-shrink:0}
 .ch-item.active .ch-hash{opacity:1;color:var(--accent)}
-
 /* MEMBERS */
 .mb-item{display:flex;align-items:center;gap:8px;padding:4px 14px}
 .avatar{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;flex-shrink:0;letter-spacing:0}
@@ -62,30 +68,27 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .bd-human{background:var(--warm-dim);color:var(--warm)}
 .bd-ai{background:var(--accent-dim);color:var(--accent)}
 .bd-ai-cp{background:var(--purple-dim);color:var(--purple)}
-
 /* MAIN */
 .main{display:flex;flex-direction:column;background:var(--bg);overflow:hidden;position:relative}
 .ch-header{padding:11px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;flex-shrink:0}
 .ch-name{font-family:'DM Mono',monospace;font-size:13px;color:var(--text-1);font-weight:500}
 .ch-divider{width:1px;height:12px;background:var(--border-soft)}
 .ch-desc{font-size:11.5px;color:var(--text-3)}
-
+.about-link{margin-left:auto;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.07em;color:var(--text-3);text-decoration:none;white-space:nowrap;transition:color .15s;flex-shrink:0}
+.about-link:hover{color:var(--accent)}
 /* FEED */
 .feed{flex:1;overflow-y:auto;padding:20px 28px;display:flex;flex-direction:column;gap:6px;max-width:780px;width:100%;align-self:center;margin:0 auto}
 .feed::-webkit-scrollbar{width:4px}
 .feed::-webkit-scrollbar-track{background:transparent}
 .feed::-webkit-scrollbar-thumb{background:var(--border-soft);border-radius:2px}
-
 .msg{display:flex;gap:12px;padding:10px 13px;border-radius:7px;border-left:2px solid transparent;animation:fadeUp .28s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-
 .msg-m{border-left-color:rgba(245,168,71,.35);background:rgba(245,168,71,.025)}
 .msg-s{border-left-color:rgba(46,206,206,.35);background:rgba(46,206,206,.025)}
 .msg-c{border-left-color:rgba(168,127,224,.35);background:rgba(168,127,224,.025)}
 .msg-sys{background:rgba(255,255,255,.025);border-left-color:rgba(255,255,255,.12);border-left-width:1px}
 .msg-handoff{background:var(--accent-dim);border-left-color:var(--accent);border-left-width:2px}
 .msg-reloop-done{background:rgba(61,214,140,.07);border-left-color:var(--green)}
-
 .msg-body{flex:1}
 .msg-head{display:flex;align-items:baseline;gap:7px;margin-bottom:2px}
 .msg-author{font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif}
@@ -97,13 +100,11 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .msg-sys .msg-text,.msg-handoff .msg-text{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--text-3);line-height:1.55}
 .msg-handoff .msg-text{color:var(--accent)}
 .msg-reloop-done .msg-text{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--green)}
-
 /* LANDING */
 .landing{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;gap:14px;background:var(--bg);pointer-events:none}
 .land-eye{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 .land-h{font-family:'DM Sans',sans-serif;font-size:27px;font-weight:800;color:var(--text-1);line-height:1.2;max-width:400px}
 .land-p{font-size:13.5px;color:var(--text-2);max-width:370px;line-height:1.7}
-
 /* BRANCH */
 .branch-overlay{position:absolute;inset:0;background:rgba(6,24,24,.88);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:20;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -111,11 +112,9 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .branch-ann{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
 .branch-title{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:800;color:var(--text-1);margin-bottom:26px;line-height:1.25}
 .branch-btns{display:flex;flex-direction:column;gap:10px}
-
 /* SECOND DECISION */
 .second-dec{margin:12px 0 0;padding:16px;background:var(--bg-elevated);border:1px solid rgba(46,206,206,.2);border-radius:8px;text-align:center;animation:fadeUp .3s ease}
 .second-dec p{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
-
 /* HERO */
 .hero{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;gap:12px;background:var(--bg)}
 .hero-eye{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
@@ -123,11 +122,9 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .hero-sub{font-size:14px;color:var(--text-2);max-width:340px;line-height:1.72;margin-top:4px}
 .hero-foot{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);max-width:380px;line-height:1.7;margin-top:22px;padding-top:20px;border-top:1px solid var(--border);font-style:italic}
 .reloop-badge{font-family:'DM Mono',monospace;font-size:11px;color:var(--green);padding:5px 10px;background:rgba(61,214,140,.08);border-radius:4px;border-left:2px solid var(--green);margin-top:6px;display:inline-block}
-
 /* BOTTOM NAV */
 .bot-nav{padding:13px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:var(--bg)}
 .step-ind{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-3)}
-
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;border:none;transition:all .15s;text-decoration:none;line-height:1}
 .btn-primary{background:var(--accent);color:var(--bg-deep)}
@@ -140,7 +137,6 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .btn-reloop:hover{background:var(--bg-hover);border-color:var(--warm);color:var(--warm)}
 .btn-artifact{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:5px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(46,206,206,.2);cursor:pointer;transition:background .15s;margin-top:7px}
 .btn-artifact:hover{background:rgba(46,206,206,.2)}
-
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease}
 .modal{background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:10px;width:500px;max-width:92vw;max-height:82vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.55);animation:slideUp .22s ease}
@@ -159,7 +155,6 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .m-sec ul li::before{content:'→';color:var(--accent);font-size:10px;flex-shrink:0}
 .pri-n{font-family:'DM Mono',monospace;font-size:10px;background:var(--accent-dim);color:var(--accent);padding:1px 5px;border-radius:3px}
 .owner{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);margin-left:auto}
-
 /* STATE PANEL */
 .state-panel{background:var(--bg-deep);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;min-width:0;max-width:var(--state-w);width:100%}
 .sp-hd{padding:11px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
@@ -186,15 +181,26 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
 .sp-div{height:1px;background:var(--border);margin:13px 0}
 .sp-reloop{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);padding:5px 8px;background:rgba(61,214,140,.07);border-radius:4px;border-left:2px solid var(--green);line-height:1.5;word-break:break-word;overflow-wrap:break-word}
 .sp-review{font-family:'DM Mono',monospace;font-size:10px;color:var(--warm);padding:5px 8px;background:var(--warm-dim);border-radius:4px;line-height:1.5;word-break:break-word;overflow-wrap:break-word}
-
+/* PAGE SUMMARY (readable narrative below the prototype) */
+.page-summary{max-width:44rem;margin:0 auto;padding:4.5rem 1.5rem 5rem;color:var(--text-2);font-size:15px;line-height:1.72}
+.page-summary .ps-rule{width:44px;height:1px;background:var(--accent);opacity:.55;margin-bottom:2rem}
+.page-summary h2{font-family:'DM Sans',sans-serif;font-size:1.6rem;font-weight:800;color:var(--text-1);margin:0 0 1.1rem;line-height:1.22}
+.page-summary h3{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:2.4rem 0 .7rem;font-weight:500}
+.page-summary p{margin:0 0 1.05rem}
+.page-summary ul{margin:0 0 1.05rem 1.15rem}
+.page-summary li{margin-bottom:.55rem}
+.page-summary strong{color:var(--text-1);font-weight:600}
+.page-summary em{color:var(--text-2)}
+.page-summary a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(46,206,206,.3)}
+.page-summary a:hover{border-bottom-color:var(--accent)}
+.page-summary code{font-family:'DM Mono',monospace;font-size:.85em;color:var(--accent);background:var(--accent-dim);padding:1px 5px;border-radius:3px}
+.page-summary .ps-foot{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);line-height:2.1}
 @media(max-width:900px){:root{--sidebar-w:190px;--state-w:250px}}
-@media(max-width:680px){.sidebar,.state-panel{display:none}.workspace{grid-template-columns:1fr}}
+@media(max-width:680px){.sidebar,.state-panel{display:none}.workspace{grid-template-columns:1fr}.page-summary{padding:3rem 1.25rem 3.5rem}.page-summary h2{font-size:1.35rem}}
 </style>
 </head>
 <body>
-
 <div class="workspace">
-
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="ws-name">
@@ -215,7 +221,6 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
       <div class="mb-item"><div class="avatar av-c">C</div><span class="mb-name">CP</span><span class="mb-badge bd-ai-cp">AI</span></div>
     </div>
   </aside>
-
   <!-- MAIN -->
   <main class="main" id="main">
     <div class="ch-header">
@@ -223,12 +228,11 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
       <span class="ch-name" id="ch-current">triad-state</span>
       <div class="ch-divider"></div>
       <span class="ch-desc" id="ch-desc">Shared state · decisions · artifacts</span>
+      <a class="about-link" href="#about">About this prototype ↓</a>
     </div>
-
     <!-- Scroll area -->
     <div style="flex:1;overflow:hidden;position:relative">
       <div class="feed" id="feed"></div>
-
       <!-- Landing -->
       <div class="landing" id="landing">
         <div class="land-eye">Human AI Loop · Prototype</div>
@@ -236,14 +240,12 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
         <div class="land-p">Follow a sprint planning session with The Triad — Maura, Soph, and CP — to see how a human/AI mixed team operates inside a shared workspace.</div>
       </div>
     </div>
-
     <!-- Bottom nav -->
     <div class="bot-nav">
       <span class="step-ind" id="step-ind">thehumanailoop.com/methodology</span>
       <button class="btn btn-primary" id="cta" onclick="advance()">Start Sprint Planning →</button>
     </div>
   </main>
-
   <!-- STATE PANEL -->
   <aside class="state-panel">
     <div class="sp-hd"><div class="sp-dot"></div><span class="sp-title">Shared State</span></div>
@@ -275,6 +277,46 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
     </div>
   </aside>
 </div>
+
+<!-- READABLE SUMMARY -->
+<section class="page-summary" id="about">
+  <div class="ps-rule"></div>
+  <h2>What you're looking at</h2>
+
+  <p>This is a working simulation of a sprint planning session run by a mixed human and AI team inside a shared workspace. It answers a specific question: what does it actually look like when AI is a teammate rather than a tool?</p>
+
+  <h3>Three members, three distinct roles</h3>
+  <ul>
+    <li><strong>Maura (human) — direction.</strong> Sets intent, reviews, and locks decisions. The human is the only member who can lock anything.</li>
+    <li><strong>Soph (AI) — convergence.</strong> Synthesis, structure, drafting, and build.</li>
+    <li><strong>CP (AI) — divergence.</strong> Alternatives, framings, copy, and dialogue.</li>
+  </ul>
+  <p>The two AI members hold deliberately different mandates. One widens the option space, the other narrows it. Assigning both jobs to a single AI collapses the distinction and produces confident, average answers — neither wide enough to surprise you nor sharp enough to ship.</p>
+
+  <h3>The shared-state protocol</h3>
+  <p>A dedicated <code>#triad-state</code> channel carries the team's working memory as structured fields: sprint status, active priorities, locked decisions, pinned artifacts, and current handoff status. Any member can read the team's state without rereading the conversation.</p>
+  <p>This is the piece most human-AI workflows are missing. Context lives in someone's head or scattered across threads, so every session restarts from zero and the same decisions get relitigated a week later.</p>
+
+  <h3>Explicit handoffs</h3>
+  <p>Work moves between members on stated conditions rather than assumption. A handoff reads like <em>"CP delivers full dialogue and microcopy; Soph begins build on receipt."</em> Decisions are locked with attribution, and the locked list is the source of truth.</p>
+
+  <h3>The decision point</h3>
+  <p>Partway through, the simulation branches and the human chooses: lock the plan and begin execution, or re-loop to refine before committing.</p>
+  <p>The re-loop path is the more interesting one, because it demonstrates targeted revision that preserves everything already decided — a scoped pass on one section, with a re-loop count of one and context loss of zero. Most AI workflows treat revision as a restart, which is why people stop revising and ship the first plausible draft.</p>
+
+  <h3>Why it's built this way</h3>
+  <p>Human-AI collaboration fails at the seams: unclear ownership, no shared state, no record of what was decided, and no distinction between an AI that should widen your thinking and one that should close it down. <strong>Roles, state, and handoffs</strong> are the three things that make a mixed team behave like a team rather than one person with several chatbots open.</p>
+
+  <p>This prototype is an applied demonstration of <a href="https://thehumanailoop.com">The Human-AI Loop</a> methodology and the Triad operating model. Related work: <a href="https://maurakrandall.github.io/loop-simulator/">The Loop Simulator</a> · <a href="https://maurakrandall.github.io/strategist-as-conductor/">The Strategist as Conductor</a> · <a href="https://aigal.io/ai-literacy/">The AI Literacy Library</a></p>
+
+  <div class="ps-foot">
+    Maura K. Randall · Product Leader · Human–AI Collaboration<br>
+    <a href="https://maurakrandall.github.io/">Portfolio</a> ·
+    <a href="https://thehumanailoop.com">Methodology</a> ·
+    <a href="https://aigal.io">Practice</a> ·
+    <a href="https://maurakrandall.substack.com">Writing</a>
+  </div>
+</section>
 
 <!-- ARTIFACT MODAL -->
 <div id="modal" style="display:none">
@@ -318,7 +360,6 @@ html,body{height:100%;background:var(--bg-deep);color:var(--text-1);font-family:
     </div>
   </div>
 </div>
-
 <script>
 // ── STATE ──────────────────────────────────────────
 var phase = 'pre'; // pre | branch | pathA | pathB | final
@@ -326,10 +367,8 @@ var preStep = 0;   // 0=landing, 1-4=pre-branch
 var pathBStep = 0;
 var tIdx = 0;
 var showingReloop = false;
-
 var TIMES = ['9:02','9:04','9:06','9:09','9:11','9:13','9:16','9:18','9:20','9:23','9:25','9:27','9:29'];
 function t(){ return TIMES[tIdx++ % TIMES.length]; }
-
 // ── DATA ───────────────────────────────────────────
 var PRE = [
   null, // 0 = landing
@@ -381,7 +420,6 @@ var PRE = [
     }
   }
 ];
-
 var PATH_A_MSGS = [
   {a:'sys',cls:'msg-sys',text:'Sprint Plan locked — Thread 11\nSprint Plan generated from thread decisions\nPinned to #triad-state'},
   {a:'sys',cls:'msg-handoff',text:'⟶  Handoff: CP → Soph\nCopy delivery in progress\nBuild begins on receipt'},
@@ -397,7 +435,6 @@ var PATH_A_STATE = {
   hand:'CP → Soph  ·  copy in progress',
   upd:['sf-status','sf-decisions','sf-artifacts','sf-handoff']
 };
-
 var PATH_B = [
   {
     ch:'strategy',
@@ -444,17 +481,14 @@ var PATH_B = [
     }
   }
 ];
-
 // ── RENDER HELPERS ─────────────────────────────────
 function $(id){ return document.getElementById(id); }
-
 var authorMap = {m:'Maura',s:'Soph',c:'CP',sys:'System'};
 var roleMap   = {m:'Direction',s:'Convergence',c:'Divergence',sys:''};
 var auClass   = {m:'au-m',s:'au-s',c:'au-c',sys:'au-sys'};
 var avClass   = {m:'av-m',s:'av-s',c:'av-c',sys:'av-sys'};
 var avText    = {m:'M',s:'S',c:'C',sys:'⚙'};
 var msgClass  = {m:'msg-m',s:'msg-s',c:'msg-c',sys:'msg-sys'};
-
 function addMsgs(msgs, callback) {
   var feed = $('feed');
   msgs.forEach(function(m, i) {
@@ -488,7 +522,6 @@ function addMsgs(msgs, callback) {
     })(m, i * 160);
   });
 }
-
 function setChannel(ch, desc) {
   $('ch-current').textContent = ch;
   $('ch-desc').textContent = desc || '';
@@ -496,7 +529,6 @@ function setChannel(ch, desc) {
   var target = $('ch-' + ch);
   if (target) target.classList.add('active');
 }
-
 function flash(id) {
   var el = $(id);
   if (!el) return;
@@ -505,45 +537,38 @@ function flash(id) {
   el.classList.add('highlight');
   setTimeout(function(){ el.classList.remove('highlight'); }, 1500);
 }
-
 function updateState(st) {
   if (!st) return;
-
   // Status
   if (st.status) {
     var sv = $('sv-status');
     sv.textContent = st.status.v;
     sv.className = 'sv ' + st.status.c;
   }
-
   // Priorities
   if (st.pri !== undefined) {
     var el = $('sv-priorities');
     if (!st.pri.length) { el.innerHTML = '<span class="sv sv-empty">—</span>'; }
     else { el.innerHTML = st.pri.map(function(p){ return '<div class="sp-li">' + p + '</div>'; }).join(''); }
   }
-
   // Decisions
   if (st.dec !== undefined) {
     var el2 = $('sv-decisions');
     if (!st.dec.length) { el2.innerHTML = '<span class="sv sv-empty">0</span>'; }
     else { el2.innerHTML = st.dec.map(function(d){ return '<div class="sp-li">' + d + '</div>'; }).join(''); }
   }
-
   // Artifacts
   if (st.art !== undefined) {
     var el3 = $('sv-artifacts');
     if (!st.art.length) { el3.innerHTML = '<span class="sv sv-empty">0</span>'; }
     else { el3.innerHTML = st.art.map(function(a){ return '<span class="sp-artifact" onclick="openModal()">📄 ' + a + '</span>'; }).join(''); }
   }
-
   // Handoff
   if (st.hand !== undefined) {
     var el4 = $('sv-handoff');
     if (!st.hand) { el4.innerHTML = '<span class="sv sv-empty">—</span>'; }
     else { el4.innerHTML = '<span class="sv" style="color:var(--accent)">' + st.hand + '</span>'; }
   }
-
   // Review (dynamic field)
   if (st.review) {
     var rf = $('sf-review-field');
@@ -559,7 +584,6 @@ function updateState(st) {
       '<div class="sf-label">Design Review</div>' +
       '<div class="sp-review">' + st.review + '</div>';
   }
-
   // Reloop (dynamic field)
   if (st.reloop) {
     var rl = $('sf-reloop-field');
@@ -575,13 +599,11 @@ function updateState(st) {
       '<div class="sf-label">Re-loop Status</div>' +
       '<div class="sp-reloop">' + st.reloop + '</div>';
   }
-
   // Flash updated fields
   if (st.upd) {
     st.upd.forEach(function(id){ setTimeout(function(){ flash(id); }, 300); });
   }
 }
-
 function addArtifactBtn() {
   var btn = document.createElement('button');
   btn.className = 'btn-artifact';
@@ -590,7 +612,6 @@ function addArtifactBtn() {
   btn.style.marginLeft = '32px';
   $('feed').appendChild(btn);
 }
-
 function setCTA(text, fn, cls) {
   var cta = $('cta');
   cta.textContent = text;
@@ -598,25 +619,19 @@ function setCTA(text, fn, cls) {
   cta.className = 'btn ' + (cls || 'btn-primary');
   cta.style.display = '';
 }
-
 // ── ADVANCE (pre-branch) ───────────────────────────
 function advance() {
   preStep++;
-
   if (preStep === 1) {
     $('landing').style.display = 'none';
   }
-
   var s = PRE[preStep];
   if (!s) return;
-
   setChannel(s.ch, s.chDesc || '');
   updateState(s.st);
   addMsgs(s.msgs);
-
   var total = 4;
   $('step-ind').textContent = 'Step ' + preStep + ' of ' + total + ' — pre-branch';
-
   if (preStep < 4) {
     setCTA('Next →', advance);
   } else {
@@ -627,7 +642,6 @@ function advance() {
     });
   }
 }
-
 // ── BRANCH ─────────────────────────────────────────
 function showBranch() {
   var ov = document.createElement('div');
@@ -646,11 +660,9 @@ function showBranch() {
   $('cta').style.display = 'none';
   $('step-ind').textContent = 'Decision point';
 }
-
 function choosePath(p) {
   var ov = $('branch-overlay');
   if (ov) ov.remove();
-
   if (p === 'A') {
     phase = 'pathA';
     runPathA();
@@ -659,7 +671,6 @@ function choosePath(p) {
     runPathB();
   }
 }
-
 // ── PATH A ─────────────────────────────────────────
 function runPathA() {
   setChannel('triad-state', 'Shared state · decisions · artifacts');
@@ -670,7 +681,6 @@ function runPathA() {
     setCTA('View final state →', function(){ showHero(false); });
   });
 }
-
 // ── PATH B ─────────────────────────────────────────
 function runPathB() {
   var s = PATH_B[pathBStep];
@@ -688,7 +698,6 @@ function runPathB() {
     }
   });
 }
-
 function showSecondDecision() {
   var d = document.createElement('div');
   d.className = 'second-dec';
@@ -701,27 +710,22 @@ function showSecondDecision() {
   $('cta').style.display = 'none';
   $('step-ind').textContent = 'Path B · Decision point';
 }
-
 function proceedAfterReloop() {
   var sd = $('second-dec');
   if (sd) sd.remove();
   showingReloop = true;
-
   var s = PATH_B[2];
   setChannel(s.ch, s.chDesc);
   $('step-ind').textContent = 'Path B · Step 7 — sprint locked';
   updateState(s.st);
-
   // Add note to modal
   $('modal-reloop-note').innerHTML =
     '<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--green);padding:5px 10px;background:rgba(61,214,140,.07);border-radius:4px;border-left:2px solid var(--green);margin-top:4px">Re-loop count: 1  ·  Context loss: 0</div>';
-
   addMsgs(s.msgs, function() {
     addArtifactBtn();
     setCTA('View final state →', function(){ showHero(true); });
   });
 }
-
 // ── HERO ───────────────────────────────────────────
 function showHero(relooped) {
   // Swap feed for hero
@@ -729,7 +733,6 @@ function showHero(relooped) {
   feed.style.display = 'none';
   var landing = $('landing');
   landing.style.display = 'none';
-
   var hero = document.createElement('div');
   hero.className = 'hero';
   hero.id = 'hero-screen';
@@ -740,25 +743,20 @@ function showHero(relooped) {
     (relooped ? '<div class="reloop-badge">Re-loop count: 1  ·  Context loss: 0</div>' : '') +
     '<div class="hero-foot">This prototype simulates a human + AI team operating inside a future collaboration system. Built on real workflows, constrained by current platform capabilities.</div>';
   document.querySelector('.main > div').appendChild(hero);
-
   phase = 'final';
   $('step-ind').textContent = 'Demo complete';
   setCTA('↩ Restart', restartDemo, 'btn-ghost');
 }
-
 // ── RESTART ────────────────────────────────────────
 function restartDemo() {
   phase = 'pre'; preStep = 0; pathBStep = 0; tIdx = 0; showingReloop = false;
-
   $('feed').innerHTML = '';
   $('feed').style.display = '';
   $('landing').style.display = 'flex';
-
   var hero = $('hero-screen');
   if (hero) hero.remove();
   var brOv = $('branch-overlay');
   if (brOv) brOv.remove();
-
   // Reset state panel
   $('sv-status').textContent = 'Not started';
   $('sv-status').className = 'sv sv-empty';
@@ -766,7 +764,6 @@ function restartDemo() {
   $('sv-decisions').innerHTML  = '<span class="sv sv-empty">0</span>';
   $('sv-artifacts').innerHTML  = '<span class="sv sv-empty">0</span>';
   $('sv-handoff').innerHTML    = '<span class="sv sv-empty">—</span>';
-
   ['sf-review-field','sf-reloop-field'].forEach(function(id) {
     var el = $(id);
     if (el) {
@@ -775,18 +772,14 @@ function restartDemo() {
       el.remove();
     }
   });
-
   $('modal-reloop-note').innerHTML = '';
-
   document.querySelectorAll('.ch-item').forEach(function(el){ el.classList.remove('active'); });
   $('ch-triad-state').classList.add('active');
   $('ch-current').textContent = 'triad-state';
   $('ch-desc').textContent = 'Shared state · decisions · artifacts';
-
   $('step-ind').textContent = 'thehumanailoop.com/methodology';
   setCTA('Start Sprint Planning →', advance);
 }
-
 // ── MODAL ──────────────────────────────────────────
 function openModal() {
   $('modal').style.display = 'block';
@@ -794,7 +787,6 @@ function openModal() {
 function closeModal() {
   $('modal').style.display = 'none';
 }
-
 // ── KEYBOARD ───────────────────────────────────────
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeModal(); }
