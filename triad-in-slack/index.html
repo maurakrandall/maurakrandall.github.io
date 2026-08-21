@@ -59,7 +59,8 @@ a:hover{color:#3ADADA}
 .feed::-webkit-scrollbar-track{background:transparent}
 .feed::-webkit-scrollbar-thumb,.sheet::-webkit-scrollbar-thumb,.panel-bd::-webkit-scrollbar-thumb{background:var(--border-soft);border-radius:2px}
 .botnav{padding:11px 16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;background:var(--bg)}
-.step{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text-3)}
+.step{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.controls{display:flex;gap:8px;align-items:center;flex-shrink:0}
 .cta{padding:9px 16px;border-radius:6px;border:none;background:var(--accent);color:var(--bg-deep);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s,transform .15s}
 .cta:hover{background:#3ADADA;transform:translateY(-1px)}
 .cta[disabled]{background:rgba(255,255,255,.04);color:var(--text-3);cursor:default;transform:none}
@@ -273,7 +274,10 @@ a:hover{color:#3ADADA}
 
     <div class="botnav">
       <span class="step" id="step">thehumanailoop.com/methodology</span>
-      <button class="cta" id="cta">Start sprint planning →</button>
+      <div class="controls">
+        <button class="cta ghost" id="next" style="display:none">Next →</button>
+        <button class="cta" id="cta">Start sprint planning →</button>
+      </div>
     </div>
   </main>
 
@@ -477,7 +481,7 @@ var BLANK = {status:'Not started',statusColor:'',pri:[],dec:[],art:[],hand:'',re
 var S, timers = [];
 function reset(){
   S = {queue:PRE.slice(), played:0, agreement:[], current:null, running:false,
-       waiting:false, started:false, relooped:false, sheetOpen:false, unseen:false,
+       waiting:false, started:false, paused:false, relooped:false, sheetOpen:false, unseen:false,
        channel:'triad-state', channelDesc:'Shared state · decisions · artifacts',
        panel:JSON.parse(JSON.stringify(BLANK))};
 }
@@ -494,7 +498,13 @@ function avatar(key,cls){
   a.style.color=m.c;a.style.background=rgba(m.c,.12);a.style.border='1px solid '+rgba(m.c,.24);
   return a;
 }
-function scrollFeed(){var f=$('feed');f.scrollTop=f.scrollHeight;}
+/* only follow the conversation if the reader is already at the bottom,
+   so scrolling back to reread does not get yanked away */
+function scrollFeed(){
+  var f=$('feed');
+  var near = f.scrollHeight - f.scrollTop - f.clientHeight < 90;
+  if(near || !S.started) f.scrollTop=f.scrollHeight;
+}
 /* the 9:02 line is the starting state, not something anyone agreed to */
 function entryCount(){var n=0;S.agreement.forEach(function(e){if(!e.seed)n++;});return n;}
 
@@ -727,9 +737,21 @@ function tail(b){
   S.running=false;
   if(b.done) return finish(b.done==='reloop');
   syncNav();
-  tick(b.agree?1900:1250);
+  tick(dwell(b));
 }
-function tick(ms){if(!S.waiting&&S.queue.length&&S.started) at(ms,advance);}
+/* how long to hold before the next beat, scaled to how much there is to
+   read. a fixed pause gave a 90 word message the same time as "Read it." */
+function dwell(b){
+  var chars=0;
+  b.msgs.forEach(function(m){ if(m.text) chars+=m.text.length; });
+  var ms = 700 + chars*15;                 /* about 65 characters a second */
+  if(b.agree) ms += 900;                   /* the agreement needs a look */
+  return Math.max(1000, Math.min(6800, ms));
+}
+function tick(ms){
+  if(S.paused||S.waiting||!S.queue.length||!S.started){syncNav();return;}
+  at(ms,advance);
+}
 
 function finish(relooped){
   syncNav();
@@ -750,18 +772,28 @@ function setCTA(text,fn,ghost){
   var c=$('cta');
   c.textContent=text;c.onclick=fn;c.disabled=false;
   c.className='cta'+(ghost?' ghost':'');
+  $('next').style.display='none';
 }
+/* One control while it plays. Pausing is how you take the wheel, and only
+   then does a step control appear. */
 function syncNav(){
+  if(!S.started||$('hero')) return;
   var done=!S.queue.length&&!S.running&&!S.waiting;
-  if(!S.started) return;
-  if($('hero')) return;
+  var c=$('cta'),nx=$('next');
   $('step').textContent = S.waiting ? 'Decision point'
-    : done ? 'Session complete' : 'Beat '+S.played+' · '+entryCount()+' agreed';
-  var c=$('cta');
-  if(S.waiting){c.textContent='Maura’s call';c.disabled=true;c.className='cta';}
-  else if(done){c.disabled=true;c.className='cta';}
-  else {c.textContent='Next →';c.disabled=false;c.className='cta';}
+    : done ? 'Session complete'
+    : (S.paused?'Paused · ':'')+'Beat '+S.played+' · '+entryCount()+' agreed';
+  if(S.waiting||done){
+    c.textContent = S.waiting ? 'Maura’s call' : 'Session complete';
+    c.disabled=true;c.className='cta';nx.style.display='none';return;
+  }
+  c.disabled=false;c.className='cta'+(S.paused?'':' ghost');
+  c.textContent = S.paused ? '▶ Play' : '❚❚ Pause';
+  c.onclick = S.paused ? resume : pause;
+  nx.style.display = S.paused ? '' : 'none';
 }
+function pause(){ S.paused=true; syncNav(); }        /* holds after this beat */
+function resume(){ S.paused=false; syncNav(); if(!S.running&&!S.waiting) tick(250); }
 
 /* ══ MODAL ═══════════════════════════════════════════════════════════ */
 function openModal(){
@@ -819,7 +851,7 @@ $('strip').onclick=function(){
 function start(){
   S.started=true;
   var l=$('landing');if(l)l.remove();
-  setCTA('Next →',advance,false);
+  $('next').onclick=advance;
   syncNav();
   at(500,advance);
 }
@@ -832,14 +864,16 @@ function restart(){
   $('ch-name').textContent='triad-state';$('ch-desc').textContent=S.channelDesc;
   closeModal();
   renderChrome();renderState();
-  setCTA('Next →',advance,false);
+  $('next').onclick=advance;
   syncNav();
   at(600,advance);
 }
 $('cta').onclick=start;
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape') return closeModal();
-  if((e.key==='ArrowRight'||e.key===' ')&&!$('cta').disabled){e.preventDefault();$('cta').click();}
+  if(!S.started||S.waiting||$('hero')) return;
+  if(e.key===' '){e.preventDefault();S.paused?resume():pause();}
+  if(e.key==='ArrowRight'){e.preventDefault();advance();}
 });
 
 renderChrome();renderState();
