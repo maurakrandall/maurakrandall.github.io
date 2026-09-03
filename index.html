@@ -68,6 +68,9 @@
   .diverge .lbl-up{fill:var(--accent);transition:fill .4s}
   .diverge .lbl-down{fill:#9A958C}
   .thesis-kick{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--soft);line-height:1.7;max-width:36ch}
+  /* metrics strip — receipts under the hero, both tracks */
+  .metrics-strip{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:36px;padding-top:22px;border-top:1px solid var(--line-soft);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--soft);letter-spacing:.02em}
+  .metrics-strip b{color:var(--accent);font-weight:500;margin-right:6px;font-variant-numeric:tabular-nums;transition:color .4s}
   @media(max-width:880px){
     .hero-grid{grid-template-columns:1fr;gap:34px}
     .thesis-aside{padding-left:0;border-left:none;border-top:1px solid var(--line);padding-top:28px;max-width:560px}
@@ -188,6 +191,13 @@
         <p class="thesis-kick">Collaboration isn't neutral. Design sets the trajectory.</p>
       </aside>
     </div>
+    <div class="metrics-strip" aria-label="Career metrics">
+      <span><b>78M+</b>MAU · Atlassian</span>
+      <span><b>$1B+</b>year one · eBay Best Offer</span>
+      <span><b>14M</b>users · <b>$40M</b>year one · Yahoo!</span>
+      <span><b>2</b>US patents</span>
+      <span><b>20+</b>years · 0→1 to hyper-growth</span>
+    </div>
   </div>
 </header>
 <!-- BUILDER TRACK: the practice, organized by the loop -->
@@ -229,6 +239,7 @@
     <div class="stage-label"><span class="s">Share</span><span class="d">Teaching the practice in public</span></div>
     <div class="links-row">
       <a href="https://aigal.io/ai-literacy/" target="_blank" rel="noopener"><div class="t">AI Literacy Library</div><div class="desc">Frameworks and coined terms</div></a>
+      <a href="ecosystem/"><div class="t">The Ecosystem</div><div class="desc">Three sites, one methodology, one team — how it all connects</div></a>
       <a href="triad-in-slack-infographic/"><div class="t">Triad in Slack — Infographic</div><div class="desc">The methodology at a glance</div></a>
       <a href="https://maurakrandall.substack.com" target="_blank" rel="noopener"><div class="t">Writing &amp; Reflections</div><div class="desc">The philosophy series on Substack</div></a>
       <a href="https://aigal.io/manifesto/" target="_blank" rel="noopener"><div class="t">AI on Our Teams Manifesto</div><div class="desc">Eight beliefs for human-centered AI collaboration</div></a>
@@ -245,7 +256,7 @@
     <p class="sec-note">A record of <b>0→1 launches that scaled</b>, at eBay, Yahoo!, and Condé Nast. Two of those launches are patented.</p>
     <div class="ledger">
       <div class="row"><div class="co">Atlassian</div><div class="met"><span><b>78M</b>monthly active users</span><span><b>7×</b>more likely to repurchase, community-engaged users</span></div><div class="q-line"><span class="qt">“A strong grasp of the AI/ML landscape — how ranking algorithms work, and how to apply them to real user problems. A true thought partner to engineering and ML teams.”</span><span class="at">Fan Jiang · Head of Engineering, Core Machine Learning, Atlassian</span></div></div>
-      <div class="row"><div class="co">eBay</div><div class="met"><span><b>0→1</b>launched Best Offer from zero</span><span><b>$1B+</b>transactions, year one</span><span><b>Patented</b>US 8,160,928</span></div><div class="q-line"><span class="qt">“An outstanding product management talent with a keen eye for customer needs — widely respected as a collaborative teammate who delivers results.”</span><span class="at">Tom Tsao · managed Maura at eBay &amp; Yahoo! · GVP, DocuSign</span></div></div>
+      <div class="row"><div class="co">eBay</div><div class="met"><span><b>0→1</b>launched Best Offer from zero</span><span><b>$1B+</b>transactions, year one</span><span><b>Patented</b>US 8,160,928</span></div><div class="q-line"><span class="qt">“Her ability to work with internal teams and with customers was a standout skill on my product team at eBay. She got the rare opportunity to define a commerce method (Best Offer) and nailed it.”</span><span class="at">Renee VonBergen · VP Product Management, Data &amp; AI · managed Maura at eBay · 2026</span></div></div>
       <div class="row"><div class="co">Yahoo!</div><div class="met"><span><b>0→1</b>first community UGC platform, from zero</span><span><b>14M</b>users</span><span><b>$40M</b>revenue, year one</span><span><b>50M+</b>MAU</span><span><b>Patented</b>US D611,490</span></div><div class="q-line"><span class="qt">“Shine ended up being very profitable for Yahoo — and owed much of that to Maura’s leadership.”</span><span class="at">James Long · Staff Engineer, Yahoo! &amp; Condé Nast</span></div></div>
       <div class="row"><div class="co">Condé Nast</div><div class="met"><span><b>2M+</b>monthly uniques</span><span><b>4×</b>social growth</span><span><b>’13–’14</b>Best Community</span></div><div class="q-line"><span class="qt">“Under her leadership, Lucky’s redesign launched in record-breaking time — and garnered the industry’s top awards.”</span><span class="at">Jun Lee · Product Designer, Condé Nast</span></div></div>
       <div class="row"><div class="co">Consulting</div><div class="met"><span><b>100%</b>of clients secured funding</span><span><b>50%</b>into accelerators</span></div></div>
@@ -280,6 +291,7 @@
       <a href="team-context-builder/"><div class="t">Team Context Builder</div><div class="desc">Methodology becoming shipped product</div></a>
       <a href="daily-fuel/"><div class="t">Daily Fuel</div><div class="desc">A live AI-native product, in alpha</div></a>
       <a href="strategist-as-conductor/"><div class="t">Strategist as Conductor</div><div class="desc">A point of view on directing AI in real time</div></a>
+      <a href="ecosystem/"><div class="t">The Ecosystem</div><div class="desc">How the whole body of work connects</div></a>
     </div>
   </div>
 </section>
@@ -288,8 +300,9 @@
     <p class="cta-line">I’m looking for a Head of Product role where owning AI strategy is the job.</p>
     <div class="actions">
       <a class="btn primary" href="resume/" target="_blank" rel="noopener">Résumé</a>
+      <a class="btn ghost" href="ecosystem/">The Ecosystem</a>
       <a class="btn ghost" href="https://www.linkedin.com/in/maurakrandall/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn ghost" href="mailto:hello@maurakrandall.com">Email</a>
+      <a class="btn ghost" href="mailto:maurakrandall@gmail.com">Email</a>
     </div>
     <div class="meta">
       Austin, TX · open to remote, Bay Area hybrid, or relocation<br>
