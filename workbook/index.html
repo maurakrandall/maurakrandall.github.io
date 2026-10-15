@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collaboration by Design · a Human–AI Loop workbook</title>
+<meta name="description" content="A guided way to design how our teams work with AI, one real workflow at a time. Opening November 2026.">
+<meta property="og:title" content="Collaboration by Design · a Human–AI Loop workbook">
+<meta property="og:description" content="A guided way to design how our teams work with AI, one real workflow at a time. Opening November 2026.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A2E2E;
+    --bg-2:#0D3838;
+    --surface:#133E3E;
+    --line:rgba(220,240,240,0.14);
+    --text:#DCF0F0;
+    --soft:#9CC4C4;
+    --teal:#2ECECE;
+    --amber:#F5A847;
+    --display:'Cooper Black','Rockwell Extra Bold',Clarendon,Georgia,serif;
+    --body:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'DM Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal)}
+  a:hover{color:var(--text)}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:960px;margin:0 auto;padding:0 16px}
+  @media(min-width:640px){.wrap{padding:0 28px}}
+
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+
+  header{padding:56px 0 48px;border-bottom:1px solid var(--line)}
+  .status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--amber);border:1px solid rgba(245,168,71,.5);border-radius:999px;padding:6px 12px;margin-bottom:28px}
+  .status .dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+  h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,8vw,72px);line-height:1.02;letter-spacing:-.01em;margin:14px 0 10px}
+  .sub{font-family:var(--mono);font-size:14px;color:var(--soft);letter-spacing:.04em;margin-bottom:28px}
+  .lede{font-size:clamp(18px,2.4vw,21px);max-width:56ch}
+  .lede + .lede{margin-top:14px;color:var(--soft)}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.5vw,38px);line-height:1.1;margin:10px 0 18px}
+  .section-intro{color:var(--soft);max-width:60ch;margin-bottom:26px}
+
+  .table-note{background:var(--bg-2);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;padding:18px 20px;max-width:640px}
+  .table-note strong{color:var(--amber);font-weight:600}
+
+  .steps{list-style:none;display:grid;gap:10px;counter-reset:step}
+  @media(min-width:720px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .steps li{counter-increment:step;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px 16px 58px;position:relative}
+  .steps li::before{content:counter(step);position:absolute;left:18px;top:16px;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--teal);color:var(--teal);font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center}
+  .steps b{display:block;font-weight:600;margin-bottom:2px}
+  .steps span{color:var(--soft);font-size:15px}
+
+  .later{margin-top:26px;border:1px dashed var(--line);border-radius:12px;padding:18px 20px}
+  .later .eyebrow{color:var(--amber);margin-bottom:10px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:14px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--soft)}
+
+  .cards{display:grid;gap:14px}
+  @media(min-width:720px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  .card{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;text-decoration:none;color:var(--text);min-height:44px;transition:border-color .2s}
+  .card:hover{border-color:var(--teal);color:var(--text)}
+  .card .eyebrow{font-size:10px}
+  .card b{font-size:18px;font-weight:600;line-height:1.3}
+  .card span{color:var(--soft);font-size:15px}
+  .card .go{margin-top:auto;color:var(--teal);font-weight:600;font-size:15px}
+  .compare{margin-top:18px;font-size:15px;color:var(--soft)}
+
+  .signup{background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:28px 22px;display:grid;gap:18px;align-items:center}
+  @media(min-width:720px){.signup{grid-template-columns:1fr auto;padding:32px 34px}}
+  .signup h2{margin:6px 0 8px}
+  .signup p{color:var(--soft);max-width:52ch}
+  .btn{display:inline-block;text-align:center;background:var(--amber);color:#0A2E2E;font-weight:700;text-decoration:none;padding:14px 22px;border-radius:10px;min-height:48px;white-space:nowrap}
+  .btn:hover{background:var(--text);color:#0A2E2E}
+
+  footer{padding:36px 0 56px;color:var(--soft);font-size:14px}
+  footer p + p{margin-top:8px}
+  footer .mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="status"><span class="dot" aria-hidden="true"></span>Opening November 2026 · alpha in progress</div>
+    <div class="eyebrow">The Human–AI Loop</div>
+    <h1>Collaboration by Design</h1>
+    <p class="sub">a Human–AI Loop workbook</p>
+    <p class="lede">A guided way to design how our teams work with AI, one real workflow at a time. From teammates to tools, from who decides to how we’ll know it’s working.</p>
+    <p class="lede">The goal isn’t just faster. It’s sharper.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="table-note">
+      <strong>Came from the roundtable?</strong> Keep the canvas we filled in together. When the workbook opens, it picks up right where the table left off.
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="inside">
+  <div class="wrap">
+    <div class="eyebrow">What’s inside</div>
+    <h2 id="inside">Six steps for one real workflow</h2>
+    <p class="section-intro">About 20 minutes. We bring the work, the workbook asks the questions, and we leave with a one-page design we can print, share, and test.</p>
+    <ol class="steps">
+      <li><b>Pick a workflow</b><span>What we’re trying to do, and what a new teammate would need to know first.</span></li>
+      <li><b>Sort the work</b><span>What AI can automate, what it can augment, and what stays reserved for people.</span></li>
+      <li><b>Choose AI’s role</b><span>Execute, explore, or challenge the frame. The role should fit the work.</span></li>
+      <li><b>Design the handoffs</b><span>Where a person steps in, what they see, and what they can decide.</span></li>
+      <li><b>Choose our signals</b><span>How we’ll know we’re getting sharper, and how we’ll notice if we’re slipping.</span></li>
+      <li><b>Run a short test, then learn</b><span>Try it for a week or two, look back together, and carry what we learn into the next cycle.</span></li>
+    </ol>
+    <div class="later">
+      <div class="eyebrow">Coming after launch</div>
+      <div class="chips">
+        <span class="chip">Team context</span>
+        <span class="chip">Our AI teammates</span>
+        <span class="chip">Tool roles</span>
+        <span class="chip">Working agreement</span>
+        <span class="chip">Our handoff routine</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="meanwhile">
+  <div class="wrap">
+    <div class="eyebrow">While we wait</div>
+    <h2 id="meanwhile">Start here</h2>
+    <div class="cards">
+      <a class="card" href="https://try.thehumanailoop.com/">
+        <span class="eyebrow">Interactive · 5 min</span>
+        <b>Watch a session play out</b>
+        <span>See the difference between asking AI for an answer and setting it up like a teammate.</span>
+        <span class="go">Try the simulation →</span>
+      </a>
+      <a class="card" href="https://aigal.io/ai-literacy/">
+        <span class="eyebrow">Library</span>
+        <b>The Human–AI Literacy Library</b>
+        <span>The ideas behind the workbook, one page per concept.</span>
+        <span class="go">Browse the library →</span>
+      </a>
+      <a class="card" href="https://maurakrandall.substack.com/p/three-acts-human-ai-collaboration">
+        <span class="eyebrow">Essay</span>
+        <b>We Stayed in the Loop. That Was the Problem.</b>
+        <span>Three acts of working with AI, and why a checkpoint isn’t the same as participation.</span>
+        <span class="go">Read the essay →</span>
+      </a>
+    </div>
+    <p class="compare">Wondering how this differs from human-in-the-loop? Both have a place. <a href="https://thehumanailoop.com/hitl-vs-loop/">See the comparison →</a></p>
+  </div>
+</section>
+
+<section aria-labelledby="notify" style="border-bottom:none">
+  <div class="wrap">
+    <div class="signup">
+      <div>
+        <div class="eyebrow">Get a note when it opens</div>
+        <h2 id="notify">Be first in</h2>
+        <p>I’ll send one note when the workbook opens. It comes through my Substack, where I write about this work as we learn it.</p>
+      </div>
+      <a class="btn" href="https://maurakrandall.substack.com/subscribe">Send me the note</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Built in public by <a href="https://maurakrandall.github.io/">Maura K. Randall</a> and her AI teammates. Written from practice, not theory.</p>
+    <p class="mono"><a href="https://thehumanailoop.com/">thehumanailoop.com</a> · <a href="https://aigal.io/">aigal.io</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
