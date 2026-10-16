@@ -50,6 +50,9 @@
 
   .table-note{background:var(--bg-2);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;padding:18px 20px;max-width:640px}
   .table-note strong{color:var(--amber);font-weight:600}
+  .quick{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .btn.ghost{background:transparent;color:var(--text);border:1.5px solid var(--teal)}
+  .btn.ghost:hover{background:var(--teal);color:#0A2E2E}
 
   .steps{list-style:none;display:grid;gap:10px;counter-reset:step}
   @media(min-width:720px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -104,6 +107,10 @@
   <div class="wrap">
     <div class="table-note">
       <strong>Came from the roundtable?</strong> Keep the canvas we filled in together. When the workbook opens, it picks up right where the table left off.
+    </div>
+    <div class="quick">
+      <a class="btn" href="https://try.thehumanailoop.com/">Try the 5-minute simulation</a>
+      <a class="btn ghost" href="https://aigal.io/ai-literacy/">Browse the library</a>
     </div>
   </div>
 </section>
@@ -168,9 +175,9 @@
       <div>
         <div class="eyebrow">Get a note when it opens</div>
         <h2 id="notify">Be first in</h2>
-        <p>I’ll send one note when the workbook opens. It comes through my Substack, where I write about this work as we learn it.</p>
+        <p>Subscribe through my Substack for the launch note and future writing about what we learn as we build this.</p>
       </div>
-      <a class="btn" href="https://maurakrandall.substack.com/subscribe">Send me the note</a>
+      <a class="btn" href="https://maurakrandall.substack.com/subscribe">Subscribe for the launch note</a>
     </div>
   </div>
 </section>
