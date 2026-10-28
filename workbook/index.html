@@ -68,6 +68,7 @@
 
   .cards{display:grid;gap:14px}
   @media(min-width:720px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(min-width:720px){.cards.cards-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
   .card{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;text-decoration:none;color:var(--text);min-height:44px;transition:border-color .2s}
   .card:hover{border-color:var(--teal);color:var(--text)}
   .card .eyebrow{font-size:10px}
@@ -106,10 +107,11 @@
 <section>
   <div class="wrap">
     <div class="table-note">
-      <strong>Came from the roundtable?</strong> Keep the canvas we filled in together. When the workbook opens, it picks up right where the table left off.
+      <strong>Came from the roundtable?</strong> Keep your workbook, your Our Team sheet, and your Our Project board. Your read-back from my AI teammates, Soph and CP, arrives by Friday, Nov 6. When the online workbook opens, it picks up right where the table left off.
     </div>
     <div class="quick">
-      <a class="btn" href="https://try.thehumanailoop.com/">Try the 5-minute simulation</a>
+      <a class="btn" href="#alpha">Join the alpha</a>
+      <a class="btn ghost" href="https://try.thehumanailoop.com/">Try the 5-minute simulation</a>
       <a class="btn ghost" href="https://aigal.io/ai-literacy/">Browse the library</a>
     </div>
   </div>
@@ -118,15 +120,15 @@
 <section aria-labelledby="inside">
   <div class="wrap">
     <div class="eyebrow">What’s inside</div>
-    <h2 id="inside">Six steps for one real workflow</h2>
-    <p class="section-intro">About 20 minutes. We bring the work, the workbook asks the questions, and we leave with a one-page design we can print, share, and test.</p>
+    <h2 id="inside">Our team, then one real project</h2>
+    <p class="section-intro">About 20 minutes. We set up how our team works once, then design one real project with it. We leave with a design we can print, share, and test.</p>
     <ol class="steps">
-      <li><b>Pick a workflow</b><span>What we’re trying to do, and what a new teammate would need to know first.</span></li>
-      <li><b>Sort the work</b><span>What AI can automate, what it can augment, and what stays reserved for people.</span></li>
-      <li><b>Choose AI’s role</b><span>Execute, explore, or challenge the frame. The role should fit the work.</span></li>
-      <li><b>Design the handoffs</b><span>Where a person steps in, what they see, and what they can decide.</span></li>
-      <li><b>Choose our signals</b><span>How we’ll know we’re getting sharper, and how we’ll notice if we’re slipping.</span></li>
-      <li><b>Run a short test, then learn</b><span>Try it for a week or two, look back together, and carry what we learn into the next cycle.</span></li>
+      <li><b>Build our team</b><span>Who is on it, person or AI, teammate or tool, and the rules we ask of each other. Set it once, reuse it.</span></li>
+      <li><b>Pick a real project</b><span>The work, the outcome, and how much judgment it needs.</span></li>
+      <li><b>Design the work, phase by phase</b><span>Frame, Explore, Refine, Decide, Learn. What people do and don’t do, and what AI does and doesn’t.</span></li>
+      <li><b>Name the handoffs</b><span>Who makes the call, who may redirect, and who checks AI’s work before it moves on.</span></li>
+      <li><b>Look across the pattern</b><span>Anything that showed up in every phase may belong in how our team works.</span></li>
+      <li><b>Test it, then learn</b><span>Try it for a week or two, look back together, and bring what we learn into the next project.</span></li>
     </ol>
     <div class="later">
       <div class="eyebrow">Coming after launch</div>
@@ -137,6 +139,41 @@
         <span class="chip">Working agreement</span>
         <span class="chip">Our handoff routine</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="print" id="print">
+  <div class="wrap">
+    <div class="eyebrow">Print the paper prototype</div>
+    <h2 id="print">Play it at your own table</h2>
+    <p class="section-intro">Everything from the roundtable, ready to print. Print at 100%, not “fit to page.” Write directly on the pages, or use blank removable labels (Avery 5422 fits) so you can move things as the design changes.</p>
+    <div class="quick"><a class="btn" href="https://maurakrandall.github.io/workbook/kit/collaboration-by-design-kit-letter.pdf">Download the whole kit (PDF, 20 letter pages)</a></div>
+    <div class="cards cards-2" style="margin-top:16px">
+      <a class="card" href="https://maurakrandall.github.io/workbook/kit/collaboration-by-design-workbook.pdf">
+        <span class="eyebrow">12 pages · letter</span>
+        <b>The workbook</b>
+        <span>Two ways to work with AI, Make it yours, how to use Our Project, and Inspiration Sheets 1–5.</span>
+        <span class="go">Download →</span>
+      </a>
+      <a class="card" href="https://maurakrandall.github.io/workbook/kit/our-team.pdf">
+        <span class="eyebrow">2 pages · letter</span>
+        <b>Our Team</b>
+        <span>Who is on the team, our rules, and what we ask of each other. A how-to on the back.</span>
+        <span class="go">Download →</span>
+      </a>
+      <a class="card" href="https://maurakrandall.github.io/workbook/kit/our-project-11x17.pdf">
+        <span class="eyebrow">3 pages · 11 × 17</span>
+        <b>Our Project board</b>
+        <span>The board as printed for the roundtable. Tape the three panels side by side.</span>
+        <span class="go">Download →</span>
+      </a>
+      <a class="card" href="https://maurakrandall.github.io/workbook/kit/our-project-letter-6-pages.pdf">
+        <span class="eyebrow">6 pages · letter · tape together</span>
+        <b>Our Project board, home printer</b>
+        <span>The same board in letter-size halves. Tape each panel's halves, then the panels.</span>
+        <span class="go">Download →</span>
+      </a>
     </div>
   </div>
 </section>
@@ -166,6 +203,19 @@
       </a>
     </div>
     <p class="compare">Wondering how this differs from human-in-the-loop? Both have a place. <a href="https://thehumanailoop.com/hitl-vs-loop/">See the comparison →</a></p>
+  </div>
+</section>
+
+<section aria-labelledby="alpha-title" id="alpha">
+  <div class="wrap">
+    <div class="signup">
+      <div>
+        <div class="eyebrow">Help build it</div>
+        <h2 id="alpha-title">Be an alpha tester</h2>
+        <p>The roundtable kit is a paper prototype of this workbook. Alpha testers try the online version early with a real project, and tell us what works and what doesn’t. It takes about a minute to sign up, and you can step away anytime.</p>
+      </div>
+      <a class="btn" href="https://forms.gle/98Rn9A6VkahNgDWM8">Join the alpha</a>
+    </div>
   </div>
 </section>
 
